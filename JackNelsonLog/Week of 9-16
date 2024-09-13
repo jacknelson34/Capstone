@@ -1,0 +1,5 @@
+Last week I tested background design, text alignment, and designing paths in WinForms in VSCode.
+I was able to create a step-by-step page that returned to the main page when finished.
+I was able to create a window that kept text centered when the window was resized.
+I was able to create a random gradient background for the window.
+My plan for this week is to test how file/image uploading works in WinForms and create a demo file that can upload large images.
