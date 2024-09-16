@@ -1,3 +1,4 @@
 For this week, I researched some more into neural networks and how to effectively utilize TensorFlow. 
 I created an example convolutional neural network that can analyze and predict handwritten numbers in order to get practice with creating ML models. 
 I have also planned how to implement the given sheep data into the models as well.
+My goal for this week is to understand how to further classify the data into training and testing sets
