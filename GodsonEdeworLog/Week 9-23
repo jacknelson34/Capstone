@@ -1,0 +1,4 @@
+For last week, I formulated a rough plan for creating a data folder pipeline to train the 5 feature CNN
+I wrote a file searching python script to help me snip the grass images using their bounding boxes
+Then I learned more about implementing custom datasets using tensorflow
+My goal for this week is to work on the subsystem intro project, fsr, and create the 5 custom training sets for each grass/feature type
