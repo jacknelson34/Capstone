@@ -1,1 +1,4 @@
-
+For last week, I implemented the 5 custom feature folders to create the training and test sets
+I wrote the tensorflow script to automatically shuffle the features in custom sets
+I made a rough plan for creating the percentage maps
+My goal for this week is to train the first version of GrazeView AI with a limited dataset
