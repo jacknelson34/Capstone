@@ -22,7 +22,7 @@ namespace GrazeViewV1
         public MainPage()
         {
             // Initialize Form Properties
-            this.Text = "Main Page : Utilities";
+            this.Text = "Main Page : Utilities";  // Text for title 
             this.Size = new Size(800, 600);
             this.StartPosition = FormStartPosition.CenterScreen;
 
