@@ -10,3 +10,5 @@ UserInterface/GrazeViewV1/.vs/GrazeViewV1/v17/.suo
 UserInterface/GrazeViewV1/GrazeViewV1/obj/GrazeViewV1.csproj.nuget.g.props
 UserInterface/GrazeViewV1/GrazeViewV1/obj/project.nuget.cache
 UserInterface/GrazeViewV1/GrazeViewV1/obj/Debug/net8.0-windows/GrazeViewV1.assets.cache
+*.sqlite
+*.sqlite
