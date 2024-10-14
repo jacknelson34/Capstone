@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\UserInterface",
-    "\\UserInterface\\GrazeViewV1"
+    "\\UserInterface\\GrazeViewV1",
+    "\\UserInterface\\GrazeViewV1\\GrazeViewV1"
   ],
-  "SelectedNode": "\\UserInterface\\GrazeViewV1\\GrazeViewV1.sln",
+  "SelectedNode": "\\UserInterface\\GrazeViewV1\\GrazeViewV1\\Data_Upload.cs",
   "PreviewInSolutionExplorer": false
 }

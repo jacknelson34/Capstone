@@ -46,7 +46,8 @@
               "RelativeToolTip": "UserInterface\\GrazeViewV1\\GrazeViewV1\\WelcomePage.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-14T23:32:03.978Z"
+              "WhenOpened": "2024-10-14T23:32:03.978Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -58,7 +59,8 @@
               "RelativeToolTip": "UserInterface\\GrazeViewV1\\GrazeViewV1\\UserGuide.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-14T23:31:59.937Z"
+              "WhenOpened": "2024-10-14T23:31:59.937Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -70,7 +72,8 @@
               "RelativeToolTip": "UserInterface\\GrazeViewV1\\GrazeViewV1\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-14T23:31:58.774Z"
+              "WhenOpened": "2024-10-14T23:31:58.774Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -95,7 +98,8 @@
               "RelativeToolTip": "UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-14T23:31:48.144Z"
+              "WhenOpened": "2024-10-14T23:31:48.144Z",
+              "EditorCaption": ""
             }
           ]
         }

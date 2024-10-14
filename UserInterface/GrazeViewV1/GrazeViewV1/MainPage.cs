@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GrazeViewV1
 {
-    public partial class MainPage : Form
+    public partial class MainPage : ConsistentForm
     {
         // Initialize Controls for use across multiple methods
         private Label mainLabel;
@@ -18,18 +18,19 @@ namespace GrazeViewV1
         private Button dataButton;
         private LinkLabel userGuide;
         private Button returntoWelcome;
+        private Image uploadedImage;
 
         public MainPage()
         {
+            InitializeComponent();
+
             // Initialize Form Properties
-            this.Text = "Main Page : Utilities";  // Text for title 
-            this.Size = new Size(800, 600);
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Main Page : Utilities";
 
             // Initialize Temporary Label
-            mainLabel = new Label();
-            mainLabel.Text = "Main Page : Options Below";
-            mainLabel.Font = new Font("Times New Roman", 24, FontStyle.Bold);
+            mainLabel = new Label();                                        // Create new label
+            mainLabel.Text = "Main Page : Options Below";                   // Text in label
+            mainLabel.Font = new Font("Times New Roman", 24, FontStyle.Bold);   // Select font
             mainLabel.AutoSize = true;
             this.Controls.Add(mainLabel);
 
@@ -48,7 +49,7 @@ namespace GrazeViewV1
             userGuide.Size = new Size(100, 50);
             userGuide.AutoSize = true;
             userGuide.Click += HelpLabel_Click;
-            this.Controls.Add(userGuide);  
+            this.Controls.Add(userGuide);
 
             // Initialize Data Viewer Button
             dataButton = new Button();
@@ -73,6 +74,36 @@ namespace GrazeViewV1
         private void uploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
         {
             // Image Upload Code here
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+
+                openFileDialog.Filter = "Image Files|*.jpg;*jpeg;*.png;*.gif";  // Filter upload to only these types of image : .jpg, .jpeg, .png, .gif
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)  // Make sure that file selected fits criteria for upload
+                {
+                    string ImageFilePath = openFileDialog.FileName;  // String to hold the image's file path
+                    uploadedImage = Image.FromFile(ImageFilePath);  // pull the image from its file path
+                }
+            }
+
+            if (uploadedImage != null)  // Check for upload image
+            {
+                // --------------- BACKEND TO ML HERE ---------------
+
+                // Image --> ML --> Results
+
+                // --------------- BACKEND TO ML HERE ---------------
+
+                LoadingPage loadingPage = new LoadingPage(uploadedImage);  // Ready the next page with the image stored and this page's size
+                loadingPage.Show();  // open loading page while image is analyzed
+                this.Hide();  // hide main page
+            }
+            else
+            {
+                MessageBox.Show("Invalid Upload Type.");  // output if uploadedImage is null by this step
+            }
+
+
         }
 
         private void dataButton_Click(object? sender, EventArgs e)  // Data Viewer Button Clicked
@@ -86,9 +117,9 @@ namespace GrazeViewV1
             UserGuide.ShowHelpGuide();  // Call Method to only allow one instance open at a time
         }
 
-        private void returnButton_Click(object? sender, EventArgs e)  // Return button Clicked
+        private void returnButton_Click(object? sender, EventArgs e)  // Method to return to WelcomePage
         {
-            WelcomePage welcomepage = new WelcomePage();
+            WelcomePage welcomepage = new WelcomePage();   // Create page at same size as previous page
             welcomepage.Show();
             this.Hide();
         }
@@ -123,7 +154,7 @@ namespace GrazeViewV1
                 this.ClientSize.Height - 40);
         }
 
-        private void MainPage_Resize(object? sender, EventArgs e)  
+        private void MainPage_Resize(object? sender, EventArgs e)  // Method for aligning page components when resized
         {
             CenterControls();  // Call CenterControls when form is resized
         }
