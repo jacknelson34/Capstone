@@ -1,6 +1,6 @@
-﻿namespace GrazeView_Design
+﻿namespace GrazeViewV1
 {
-    partial class Data_Upload
+    partial class LoadingPage
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,13 @@
         {
             SuspendLayout();
             // 
-            // Data_Upload
+            // LoadingPage
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1383, 893);
-            Name = "Data_Upload";
-            Text = "Data_Upload";
+            ClientSize = new Size(800, 450);
+            Name = "LoadingPage";
+            Text = "LoadingPage";
             ResumeLayout(false);
         }
 

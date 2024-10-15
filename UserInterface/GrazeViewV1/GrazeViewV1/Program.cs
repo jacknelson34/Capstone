@@ -1,4 +1,4 @@
-namespace GrazeView_Design
+namespace GrazeViewV1
 {
     internal static class Program
     {
@@ -11,7 +11,7 @@ namespace GrazeView_Design
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Welcome());
+            Application.Run(new WelcomePage());
         }
     }
 }

@@ -49,7 +49,7 @@ namespace GrazeViewV1
             userGuide.Size = new Size(100, 50);
             userGuide.AutoSize = true;
             userGuide.Click += HelpLabel_Click;
-            this.Controls.Add(userGuide);
+            this.Controls.Add(userGuide);  
 
             // Initialize Data Viewer Button
             dataButton = new Button();
@@ -74,12 +74,12 @@ namespace GrazeViewV1
         private void uploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
         {
             // Image Upload Code here
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            using(OpenFileDialog openFileDialog = new OpenFileDialog())
             {
 
                 openFileDialog.Filter = "Image Files|*.jpg;*jpeg;*.png;*.gif";  // Filter upload to only these types of image : .jpg, .jpeg, .png, .gif
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)  // Make sure that file selected fits criteria for upload
+                if(openFileDialog.ShowDialog() == DialogResult.OK)  // Make sure that file selected fits criteria for upload
                 {
                     string ImageFilePath = openFileDialog.FileName;  // String to hold the image's file path
                     uploadedImage = Image.FromFile(ImageFilePath);  // pull the image from its file path
