@@ -1,0 +1,4 @@
+Updated the image snipper to a sub image splicer and uploaded it
+Created sub images data set and implemented it into CNN
+Achieved 60% accuracy
+Working next week on tweaking the neural network's architecture to be more optimal
