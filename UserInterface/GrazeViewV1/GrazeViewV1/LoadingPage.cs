@@ -24,6 +24,8 @@ namespace GrazeViewV1
 
             // Initialize Form Properties
             this.Text = "Loading Page";
+            //this.Size = previousPageSize;    // Create page at same size as previous page
+            // this.Location = previousPageLocation;
 
             // Initialize PictureBox Properties
             uploadedSlide = new PictureBox();

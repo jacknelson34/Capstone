@@ -14,11 +14,10 @@ namespace GrazeViewV1
     {
         // Initialize Controls for use across multiple methods
         private Label mainLabel;
-        private Button uploadButton;
-        private Button dataButton;
+        private Button dataUploadButton;
+        private Button dataViewerButton;
         private LinkLabel userGuide;
         private Button returntoWelcome;
-        private Image uploadedImage;
 
         public MainPage()
         {
@@ -35,12 +34,12 @@ namespace GrazeViewV1
             this.Controls.Add(mainLabel);
 
             // Initialize Upload Button
-            uploadButton = new Button();
-            uploadButton.Text = "Upload New Data";
-            uploadButton.Font = new Font("Times New Roman", 12, FontStyle.Italic);
-            uploadButton.AutoSize = true;
-            uploadButton.Click += uploadButton_Click;
-            this.Controls.Add(uploadButton);
+            dataUploadButton = new Button();
+            dataUploadButton.Text = "Upload New Data";
+            dataUploadButton.Font = new Font("Times New Roman", 12, FontStyle.Italic);
+            dataUploadButton.AutoSize = true;
+            dataUploadButton.Click += dataUploadButton_Click;
+            this.Controls.Add(dataUploadButton);
 
             // Initialize User Guide Button
             userGuide = new LinkLabel();
@@ -49,15 +48,15 @@ namespace GrazeViewV1
             userGuide.Size = new Size(100, 50);
             userGuide.AutoSize = true;
             userGuide.Click += HelpLabel_Click;
-            this.Controls.Add(userGuide);  
+            this.Controls.Add(userGuide);
 
             // Initialize Data Viewer Button
-            dataButton = new Button();
-            dataButton.Text = "Data Viewer";
-            dataButton.Font = new Font("Times New Roman", 12, FontStyle.Italic);
-            dataButton.AutoSize = true;
-            dataButton.Click += dataButton_Click;
-            this.Controls.Add(dataButton);
+            dataViewerButton = new Button();
+            dataViewerButton.Text = "Data Viewer";
+            dataViewerButton.Font = new Font("Times New Roman", 12, FontStyle.Italic);
+            dataViewerButton.AutoSize = true;
+            dataViewerButton.Click += dataViewerButton_Click;
+            this.Controls.Add(dataViewerButton);
 
             // Initialize Return to Welcome Page Button
             returntoWelcome = new Button();
@@ -71,14 +70,14 @@ namespace GrazeViewV1
             this.Resize += MainPage_Resize;  // Call Resize Method if form is resized
         }
 
-        private void uploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
+        private void dataUploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
         {
             DataUpload dataupload = new DataUpload();
             dataupload.Show();
             this.Hide();
         }
 
-        private void dataButton_Click(object? sender, EventArgs e)  // Data Viewer Button Clicked
+        private void dataViewerButton_Click(object? sender, EventArgs e)  // Data Viewer Button Clicked
         {
             // Connect to Data Viewer
         }
@@ -106,13 +105,13 @@ namespace GrazeViewV1
                 (this.ClientSize.Height / 6));
 
             // Center Upload Button (Based on Page Label's Height)
-            uploadButton.Location = new Point(
-                (this.ClientSize.Width / 2) - (uploadButton.Width / 2),
+            dataUploadButton.Location = new Point(
+                (this.ClientSize.Width / 2) - (dataUploadButton.Width / 2),
                 (this.ClientSize.Height - mainLabel.Height) / 3);
 
             // Position Data Viewer Button to bottom right corner
-            dataButton.Location = new Point(
-                (this.ClientSize.Width / 2) - (dataButton.Width / 2),
+            dataViewerButton.Location = new Point(
+                (this.ClientSize.Width / 2) - (dataViewerButton.Width / 2),
                 (this.ClientSize.Height - mainLabel.Height) / 2);
 
             // Center Help Guide Button

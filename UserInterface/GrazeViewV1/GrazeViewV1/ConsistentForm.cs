@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace GrazeViewV1
 {
-
-    // Inherited Class used to keep form size consistent when switching pages
     public class ConsistentForm : Form
     {
         // Static variables to store the size and location of the last form

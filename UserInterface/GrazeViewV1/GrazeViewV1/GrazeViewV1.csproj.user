@@ -4,6 +4,15 @@
     <Compile Update="ConsistentForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="DataLibrary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="DataLibraryExpandedView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="DataUpload.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="LoadingPage.cs">
       <SubType>Form</SubType>
     </Compile>

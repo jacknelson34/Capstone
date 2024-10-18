@@ -13,49 +13,62 @@ namespace GrazeViewV1
     public partial class DataUpload : Form
     {
         private Image uploadedImage;
+        private Button uploadButton;
 
-        public DataUpload()  
+        public DataUpload()
         {
+            // Form Properties
             InitializeComponent();
-
             this.Text = "Data Upload";
+
+
+            // Upload Button Properties
+            uploadButton = new Button();
+            uploadButton.Text = "Upload Image";
+            uploadButton.AutoSize = true;
+            uploadButton.Click += uploadButton_Click;
+            this.Controls.Add(uploadButton);
+
+
+
 
 
         }
 
-        /*          MOVE INTO BUTTON PRESSED
-         * 
-           // Image Upload Code here
-           using(OpenFileDialog openFileDialog = new OpenFileDialog())
-           {
+        private void uploadButton_Click(object? sender, EventArgs e)
+        {
+            // Image Upload Code here
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
 
-               openFileDialog.Filter = "Image Files|*.jpg;*jpeg;*.png;*.gif";  // Filter upload to only these types of image : .jpg, .jpeg, .png, .gif
+                openFileDialog.Filter = "Image Files|*.jpg;*jpeg;*.png;*.gif";  // Filter upload to only these types of image : .jpg, .jpeg, .png, .gif
 
-               if(openFileDialog.ShowDialog() == DialogResult.OK)  // Make sure that file selected fits criteria for upload
-               {
-                   string ImageFilePath = openFileDialog.FileName;  // String to hold the image's file path
-                   uploadedImage = Image.FromFile(ImageFilePath);  // pull the image from its file path
-               }
-           }
+                if (openFileDialog.ShowDialog() == DialogResult.OK)  // Make sure that file selected fits criteria for upload
+                {
+                    string ImageFilePath = openFileDialog.FileName;  // String to hold the image's file path
+                    uploadedImage = Image.FromFile(ImageFilePath);  // pull the image from its file path
+                }
+            }
 
-           if (uploadedImage != null)  // Check for upload image
-           {
-               // --------------- BACKEND TO ML HERE ---------------
+            if (uploadedImage != null)  // Check for upload image
+            {
+                // --------------- BACKEND TO ML HERE ---------------
 
-               // Image --> ML --> Results
+                // Image --> ML --> Results
 
-               // --------------- BACKEND TO ML HERE ---------------
+                // --------------- BACKEND TO ML HERE ---------------
 
-               LoadingPage loadingPage = new LoadingPage(uploadedImage);  // Ready the next page with the image stored and this page's size
-               loadingPage.Show();  // open loading page while image is analyzed
-               this.Hide();  // hide main page
-           }
-           else
-           {
-               MessageBox.Show("Invalid Upload Type.");  // output if uploadedImage is null by this step
-           }
+                LoadingPage loadingPage = new LoadingPage(uploadedImage);  // Ready the next page with the image stored and this page's size
+                loadingPage.Show();  // open loading page while image is analyzed
+                this.Hide();  // hide main page
+            }
+            else
+            {
+                MessageBox.Show("Invalid Upload Type.");  // output if uploadedImage is null by this step
+            }
+        }
 
-           */
+
 
     }
 }

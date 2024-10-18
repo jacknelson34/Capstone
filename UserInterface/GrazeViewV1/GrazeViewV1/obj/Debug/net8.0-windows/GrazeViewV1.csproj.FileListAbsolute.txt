@@ -38,6 +38,15 @@ C:\Users\jackn\source\repos\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\Gra
 C:\Users\jackn\source\repos\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\ref\GrazeViewV1.dll
 C:\Users\Jack\source\repos\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.LoadingPage.resources
 C:\Users\Jack\source\repos\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.ResultPage.resources
+C:\Users\Jack\source\repos\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.DataUpload.resources
+C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.exe
+C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.deps.json
+C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.runtimeconfig.json
+C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.dll
+C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.pdb
+C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.DataLibrary.resources
+C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.DataLibraryExpandedView.resources
+C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.DataUpload.resources
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.LoadingPage.resources
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.MainPage.resources
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.ResultPage.resources
@@ -52,11 +61,5 @@ C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\Graze
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.dll
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\refint\GrazeViewV1.dll
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.pdb
-C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.DataUpload.resources
-C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.exe
-C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.deps.json
-C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.runtimeconfig.json
-C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.dll
-C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.pdb
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.genruntimeconfig.cache
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\ref\GrazeViewV1.dll
