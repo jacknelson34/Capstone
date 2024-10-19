@@ -40,5 +40,23 @@ namespace GrazeViewV1
                 previousFormLocation = this.Location;
             };
         }
+
+        
+    }
+
+    public class UploadInfo  // Global Class to ensure all data uploaded is stored in library
+    {
+        public string UploadDataText { get; set; }     // Global variable for name of upload
+        public DateTime SampleTime { get; set; }   // Global variable for time sample was taken
+        public DateTime UploadTime { get; set; }   // Global variable for time sample was uploaded
+        public string SampleLocationText { get; set; } // Global variable for location sample is from
+        public string SheepBreedText { get; set; }     // Global variable for sheep breed
+
+    }
+
+    public static class GlobalData  // Public class to store uploaded data - Temporary until SQ is used
+    {
+        public static List<UploadInfo> Uploads { get; } = new List<UploadInfo>();   // Add all data to public list
+
     }
 }
