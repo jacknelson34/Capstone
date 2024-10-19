@@ -34,18 +34,21 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(237, 152);
+            label1.Location = new Point(440, 324);
+            label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
-            label1.Size = new Size(331, 15);
+            label1.Size = new Size(668, 32);
             label1.TabIndex = 0;
             label1.Text = "Welcome Page(To be Designed) : Click Anywhere to Continue";
+            label1.Click += label1_Click;
             // 
             // WelcomePage
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1617, 921);
             Controls.Add(label1);
+            Margin = new Padding(6, 6, 6, 6);
             Name = "WelcomePage";
             Text = "WelcomePage";
             ResumeLayout(false);

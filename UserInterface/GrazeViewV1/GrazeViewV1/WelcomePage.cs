@@ -2,8 +2,8 @@ namespace GrazeViewV1
 {
 
     public partial class WelcomePage : ConsistentForm
-    { 
-        
+    {
+
         private Label titlelabel = new Label();
         public WelcomePage()
         {
@@ -14,7 +14,7 @@ namespace GrazeViewV1
             this.Click += new EventHandler(WelcomePage_Click);
 
             // Initialize Welcome Page Title
-            
+
             titlelabel.Text = "Welcome to GrazeView(To be designed)";           // Title in center of page
             titlelabel.Font = new Font("Times New Roman", 24, FontStyle.Bold);  // Font size/style for title
             titlelabel.AutoSize = true;                                         // Autosize title
@@ -25,7 +25,7 @@ namespace GrazeViewV1
 
             CenterLabel();
             this.Resize += welcomeResize;                           // Call CenterLabel through welcomeResize if form is resized
-            
+
         }
         private void WelcomePage_Click(object? sender, EventArgs e) // Click anywhere on Welcome Page
         {
@@ -45,6 +45,11 @@ namespace GrazeViewV1
         private void welcomeResize(object? sender, EventArgs e)
         {
             CenterLabel();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
