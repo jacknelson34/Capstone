@@ -38,44 +38,56 @@
             // mainLabel
             // 
             mainLabel.AutoSize = true;
-            mainLabel.Font = new Font("Times New Roman", 24F, FontStyle.Bold);
-            mainLabel.Location = new Point(364, 209);
+            mainLabel.Font = new Font("Times New Roman", 28.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            mainLabel.Location = new Point(346, 208);
             mainLabel.Name = "mainLabel";
-            mainLabel.Size = new Size(452, 73);
+            mainLabel.Size = new Size(526, 85);
             mainLabel.TabIndex = 0;
             mainLabel.Text = "GRAZE VIEW";
             // 
             // dataUploadButton
             // 
             dataUploadButton.AutoSize = true;
-            dataUploadButton.Cursor = Cursors.Hand;
-            dataUploadButton.Font = new Font("Times New Roman", 12F);
-            dataUploadButton.Location = new Point(380, 336);
+            dataUploadButton.BackColor = Color.White;
+            dataUploadButton.FlatAppearance.BorderColor = Color.Gray;
+            dataUploadButton.FlatAppearance.BorderSize = 2;
+            dataUploadButton.FlatAppearance.MouseDownBackColor = Color.Silver;
+            dataUploadButton.FlatAppearance.MouseOverBackColor = Color.Gainsboro;
+            dataUploadButton.FlatStyle = FlatStyle.Flat;
+            dataUploadButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataUploadButton.ForeColor = Color.Black;
+            dataUploadButton.Location = new Point(399, 366);
             dataUploadButton.Name = "dataUploadButton";
-            dataUploadButton.Size = new Size(417, 116);
+            dataUploadButton.Size = new Size(421, 116);
             dataUploadButton.TabIndex = 1;
             dataUploadButton.Text = "Upload New Data";
-            dataUploadButton.UseVisualStyleBackColor = true;
+            dataUploadButton.UseVisualStyleBackColor = false;
             dataUploadButton.Click += dataUploadButton_Click;
             // 
             // dataViewerButton
             // 
             dataViewerButton.AutoSize = true;
-            dataViewerButton.Cursor = Cursors.Hand;
+            dataViewerButton.BackColor = Color.White;
+            dataViewerButton.FlatAppearance.BorderColor = Color.Gray;
+            dataViewerButton.FlatAppearance.BorderSize = 2;
+            dataViewerButton.FlatAppearance.MouseDownBackColor = Color.Silver;
+            dataViewerButton.FlatAppearance.MouseOverBackColor = Color.Gainsboro;
+            dataViewerButton.FlatStyle = FlatStyle.Flat;
             dataViewerButton.Font = new Font("Times New Roman", 12F);
-            dataViewerButton.Location = new Point(380, 484);
+            dataViewerButton.ForeColor = Color.Black;
+            dataViewerButton.Location = new Point(399, 514);
             dataViewerButton.Name = "dataViewerButton";
-            dataViewerButton.Size = new Size(417, 116);
+            dataViewerButton.Size = new Size(421, 116);
             dataViewerButton.TabIndex = 2;
             dataViewerButton.Text = "Data Viewer";
-            dataViewerButton.UseVisualStyleBackColor = true;
+            dataViewerButton.UseVisualStyleBackColor = false;
             dataViewerButton.Click += dataViewerButton_Click;
             // 
             // helpButton
             // 
             helpButton.Cursor = Cursors.Hand;
             helpButton.Image = Properties.Resources.Help_Icon;
-            helpButton.Location = new Point(1156, 12);
+            helpButton.Location = new Point(1167, 12);
             helpButton.Name = "helpButton";
             helpButton.Size = new Size(50, 50);
             helpButton.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -87,6 +99,7 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LightBlue;
             ClientSize = new Size(1229, 887);
             Controls.Add(helpButton);
             Controls.Add(dataViewerButton);

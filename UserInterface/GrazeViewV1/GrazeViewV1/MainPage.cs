@@ -13,8 +13,6 @@ namespace GrazeViewV1
     public partial class MainPage : ConsistentForm
     {
         // Initialize Controls for use across multiple methods
-        private LinkLabel userGuide;
-        private Button returntoWelcome;
 
         public MainPage()
         {
@@ -39,41 +37,28 @@ namespace GrazeViewV1
 
             this.Controls.Add(dataViewerButton);
 
-            // Initialize Return to Welcome Page Button
-            returntoWelcome = new Button();
-            returntoWelcome.Text = "Return to Welcome Page";
-            returntoWelcome.Font = new Font("Times New Roman", 10, FontStyle.Regular);
-            returntoWelcome.AutoSize = true;
-            returntoWelcome.Click += returnButton_Click;
-            this.Controls.Add(returntoWelcome);
-
             CenterControls();  // Center Buttons/Labels when created
             this.Resize += MainPage_Resize;  // Call Resize Method if form is resized
         }
 
         private void dataUploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
         {
-            DataUpload dataupload = new DataUpload();
+            DataUpload dataupload = new DataUpload(this);
             dataupload.Show();
             this.Hide();
         }
 
         private void dataViewerButton_Click(object? sender, EventArgs e)  // Data Viewer Button Clicked
         {
-            // Connect to Data Viewer
+            DataLibrary datalibrary = new DataLibrary(this);
+            datalibrary.Show();
+            this.Hide();
         }
 
         private void helpButton_Click(object sender, EventArgs e)
         {
             // Connect to help page
             UserGuide.ShowHelpGuide();  // Call Method to only allow one instance open at a time
-        }
-
-        private void returnButton_Click(object? sender, EventArgs e)  // Method to return to WelcomePage
-        {
-            WelcomePage welcomepage = new WelcomePage();   // Create page at same size as previous page
-            welcomepage.Show();
-            this.Hide();
         }
 
         private void CenterControls()  // Method for centering labels and buttons
@@ -98,11 +83,6 @@ namespace GrazeViewV1
             // Center Help Button to top right corner
             helpButton.Location = new Point(
                 (this.ClientSize.Width - 60), 10);
-
-            // Center Return button to bottom
-            returntoWelcome.Location = new Point(
-                (this.ClientSize.Width / 2) - (returntoWelcome.Width / 2),
-                this.ClientSize.Height - 40);
         }
 
         private void ResizeControls()  // Method for centering labels and buttons
@@ -124,11 +104,6 @@ namespace GrazeViewV1
             //// Center Help Button to top right corner
             //helpButton.Location = new Point(
             //    (this.ClientSize.Width - 60), 10);
-
-            //// Center Return button to bottom
-            //returntoWelcome.Location = new Point(
-            //    (this.ClientSize.Width / 2) - (returntoWelcome.Width / 2),
-            //    this.ClientSize.Height - 40);
         }
 
         private void MainPage_Resize(object? sender, EventArgs e)  // Method for aligning page components when resized

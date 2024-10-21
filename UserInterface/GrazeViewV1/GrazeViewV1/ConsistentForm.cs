@@ -46,11 +46,13 @@ namespace GrazeViewV1
 
     public class UploadInfo  // Global Class to ensure all data uploaded is stored in library
     {
-        public string UploadDataText { get; set; }     // Global variable for name of upload
+        public string UploadName { get; set; }     // Global variable for name of file upload
+        public DateTime SampleDate { get; set; }   // Global variable for date sample was taken
         public DateTime SampleTime { get; set; }   // Global variable for time sample was taken
         public DateTime UploadTime { get; set; }   // Global variable for time sample was uploaded
-        public string SampleLocationText { get; set; } // Global variable for location sample is from
-        public string SheepBreedText { get; set; }     // Global variable for sheep breed
+        public string SampleLocation { get; set; } // Global variable for location sample is from
+        public string SheepBreed { get; set; }     // Global variable for sheep breed
+        public string Comments { get; set; }       // Global variable for user comments
 
     }
 

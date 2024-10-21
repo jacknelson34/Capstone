@@ -63,11 +63,11 @@ namespace GrazeViewV1
             if (GlobalData.Uploads.Any())
             {
                 UploadInfo lastUpload = GlobalData.Uploads.Last();  // Get the most recent upload
-                uploadNameTextBox.Text = lastUpload.UploadDataText;         // Upload Name
+                uploadNameTextBox.Text = lastUpload.UploadName;               // Upload Name
                 dateUploadedTextBox.Text = lastUpload.UploadTime.ToString();  // Date Uploaded
                 dateOfSampleTextBox.Text = lastUpload.SampleTime.ToString();  // Date of Sample
-                sampleLocationTextBox.Text = lastUpload.SampleLocationText;     // Location of Sample
-                sheepBreedTextBox.Text = lastUpload.SheepBreedText;         // Sheep Breed
+                sampleLocationTextBox.Text = lastUpload.SampleLocation;       // Location of Sample
+                sheepBreedTextBox.Text = lastUpload.SheepBreed;               // Sheep Breed
             }
             else
             {
