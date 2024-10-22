@@ -12,11 +12,13 @@ namespace GrazeViewV1
 {
     public partial class MainPage : ConsistentForm
     {
-        // Initialize Controls for use across multiple methods
+        // Hold reference for datalibrary
+        private DataLibrary _datalibrary;
 
         public MainPage()
         {
             InitializeComponent();
+            _datalibrary = new DataLibrary(this);
 
             // Initialize Form Properties
             this.Text = "Main Page";
@@ -59,6 +61,27 @@ namespace GrazeViewV1
         {
             // Connect to help page
             UserGuide.ShowHelpGuide();  // Call Method to only allow one instance open at a time
+        }
+
+        private void OpenDataLibrary()
+        {
+            if (_datalibrary != null)  // Only create a new instance if one doesn't exist
+            {
+                _datalibrary.LoadUploadsFromGlobalData();
+            }
+            else
+            {
+                _datalibrary = new DataLibrary(this);
+            }
+
+            _datalibrary.Show();  // Show the existing instance
+            this.Hide();          // Hide the MainPage
+        }
+
+        // Method to call DataLibrary from any page connected to main
+        public DataLibrary GetDataLibrary()
+        {
+            return _datalibrary; 
         }
 
         private void CenterControls()  // Method for centering labels and buttons

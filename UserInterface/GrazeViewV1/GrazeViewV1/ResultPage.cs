@@ -62,7 +62,7 @@ namespace GrazeViewV1
             // Populate text boxes with data from the last upload
             if (GlobalData.Uploads.Any())
             {
-                UploadInfo lastUpload = GlobalData.Uploads.Last();  // Get the most recent upload
+                UploadInfo lastUpload = GlobalData.Uploads.Last();            // Get the most recent upload
                 uploadNameTextBox.Text = lastUpload.UploadName;               // Upload Name
                 dateUploadedTextBox.Text = lastUpload.UploadTime.ToString();  // Date Uploaded
                 dateOfSampleTextBox.Text = lastUpload.SampleTime.ToString();  // Date of Sample

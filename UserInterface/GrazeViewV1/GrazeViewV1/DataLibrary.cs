@@ -22,6 +22,9 @@ namespace GrazeViewV1
             _mainPage = mainpage;
             this.Text = "Data Viewer";
 
+            // Vertical scroller functionality
+            this.Controls.Add(verticalScroll);
+
             // Back Button Functionality
             backButton.Click += backButton_Click; // handles click event
             this.Controls.Add(backButton);
@@ -29,6 +32,10 @@ namespace GrazeViewV1
             // Help Button Functionality
             helpButton.Click += helpButton_Click; // handles click event
             this.Controls.Add(helpButton);
+
+            // Handle data errors
+            dataGridView1.DataError += dataGridView1_DataError;
+
         }
 
         // when the back button is clicked on
@@ -43,5 +50,63 @@ namespace GrazeViewV1
         {
             UserGuide.ShowHelpGuide();  // Call Method to only allow one instance open at a time
         }
+
+        // Method to add data from DataUpload to the Library
+        public void LoadUploadsFromGlobalData()
+        {
+            // Clear the grid to avoid duplicating rows
+            dataGridView1.Rows.Clear();
+
+            // Add all uploads from GlobalData to the DataGridView
+            foreach (var upload in GlobalData.Uploads)
+            {
+                // Check if there's an image to display, otherwise pass null
+                Image imageToDisplay = null;
+                if (upload.ImageFile != null)  // Assuming UploadInfo has an ImageFile property (change as per your structure)
+                {
+                    imageToDisplay = upload.ImageFile;  // This should be an Image object
+                }
+
+                dataGridView1.Rows.Add(
+                    false,                                        // Checkbox column
+                    upload.UploadName,                            // Upload Name
+                    upload.SampleDate.ToString("MM/dd/yyyy"),     // Date Sample Taken
+                    upload.SampleTime.ToString("hh:mm tt"),       // Time Sample Taken
+                    upload.UploadTime.ToString("MM/dd/yyyy"),     // Upload Date
+                    upload.UploadTime.ToString("hh:mm tt"),       // Upload Time
+                    null,                                         // ComboBox (optional, null here)
+                    upload.SampleLocation,                        // Sample Location
+                    upload.SheepBreed,                            // Sheep Breed
+                    upload.Comments,                              // Comments
+                    imageToDisplay,                               // ImageColumn (pass Image or null)
+                    "Export"                                      // Button column for Export
+                );
+            }
+
+            // Refresh the grid to ensure the new data is visible
+            dataGridView1.Refresh();
+        }
+
+        // Test
+        private void LoadUploads()
+        {
+            foreach(var upload in GlobalData.Uploads)
+            {
+                LoadUploadsFromGlobalData();
+            }
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            LoadUploadsFromGlobalData();  // Reload the uploads into the DataGridView each time it's shown
+        }
+
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            MessageBox.Show($"Error in DataGridView: {e.Exception.Message}");
+            e.ThrowException = false;  // Prevent the exception from crashing the application
+        }
+
     }
 }

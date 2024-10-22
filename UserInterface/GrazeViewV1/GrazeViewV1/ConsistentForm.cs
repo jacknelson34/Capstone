@@ -53,6 +53,7 @@ namespace GrazeViewV1
         public string SampleLocation { get; set; } // Global variable for location sample is from
         public string SheepBreed { get; set; }     // Global variable for sheep breed
         public string Comments { get; set; }       // Global variable for user comments
+        public Image ImageFile { get; set; }       // Global variable for image uploaded
 
     }
 

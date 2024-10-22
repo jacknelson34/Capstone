@@ -124,21 +124,6 @@ namespace GrazeViewV1
                 {
                     try
                     {
-                        //// Use FileStream to efficiently load the large image file
-                        //using (FileStream fs = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
-                        //{
-                        //    // Load the image without fully decoding it into memory
-                        //    Image originalImage = Image.FromStream(fs);
-                        //    fileuploadPictureBox.Image = originalImage;   // Display the image in the PictureBox
-                        //    fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;  // Adjust image to fit PictureBox
-
-                        //    // If the textbox is empty, populate it with the file name
-                        //    if (string.IsNullOrWhiteSpace(filenameTextbox.Text))
-                        //    {
-                        //        filenameTextbox.Text = Path.GetFileName(openFileDialog.FileName); // Extracts just the file name
-                        //    }
-                        //}
-
                         // Load the selected image into the PictureBox
                         fileuploadPictureBox.Image = Image.FromFile(openFileDialog.FileName);
                         fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -236,8 +221,27 @@ namespace GrazeViewV1
                 Comments = commentsTextbox.Text                // Store user comments
             };
 
+            // Debugging: Confirm data is added to the UploadInfo object
+            MessageBox.Show($"Captured UploadName: {uploadInfo.UploadName}");
+
+
             // Add the new upload info to the GlobalData uploads list
             GlobalData.Uploads.Add(uploadInfo);
+
+            // Debugging: Check the contents of GlobalData.Uploads
+            MessageBox.Show($"Total uploads in GlobalData: {GlobalData.Uploads.Count}");
+
+            // Add user inputs and image to data library
+            var dataLibrary = _mainPage.GetDataLibrary();
+            if (dataLibrary != null)
+            {
+                // Ensure the DataLibrary updates its grid with all uploads
+                dataLibrary.LoadUploadsFromGlobalData();  // Call the new method to reload all data from GlobalData
+            }
+            else
+            {
+                MessageBox.Show("DataLibrary not connected.");
+            }
 
             // checks to see if a file was uploaded to the picturebox
             if (fileuploadPictureBox.Image != null)
@@ -254,77 +258,5 @@ namespace GrazeViewV1
             }
         }
 
-        //private void CenterControls()  // Method for centering all textboxes/buttons with labels on the left
-        //{
-        //    // Set a fixed width for the text boxes
-        //    int textBoxWidth = 250;    // Fixed width for all text boxes
-        //    int labelSpacing = 20;     // Spacing between labels and text boxes
-        //    int verticalSpacing = 30;  // Vertical spacing between rows of controls
-
-        //    // Calculate the longest label width to align text boxes based on it
-        //    int longestLabelWidth = Math.Max(uploadNameLabel.Width,
-        //                            Math.Max(sampleLocationLabel.Width,
-        //                            Math.Max(sampleTimeLabel.Width, sheepBreedLabel.Width)));
-
-        //    // Calculate the total width of the label and text box combination
-        //    int totalWidth = longestLabelWidth + labelSpacing + textBoxWidth;
-
-        //    // Calculate the center X position for the label-text box combination
-        //    int centerX = (this.ClientSize.Width / 2) - (totalWidth / 2);
-
-        //    // Center the upload button
-        //    uploadButton.Location = new Point(
-        //        (this.ClientSize.Width / 2) - (uploadButton.Width / 2),
-        //        (this.ClientSize.Height / 8));
-
-        //    // Calculate vertical position based on form height
-        //    int topMargin = uploadButton.Bottom + 30;
-
-        //    // Set the width for all text boxes and position them with their labels
-
-        //    // Position uploadName and its label
-        //    uploadNameLabel.Location = new Point(centerX, topMargin);
-        //    uploadName.Size = new Size(textBoxWidth, uploadName.Height);  // Fixed width
-        //    uploadName.Location = new Point(centerX + longestLabelWidth + labelSpacing, topMargin);
-
-        //    // Position sampleLocation and its label
-        //    topMargin += uploadName.Height + verticalSpacing;
-        //    sampleLocationLabel.Location = new Point(centerX, topMargin);
-        //    sampleLocation.Size = new Size(textBoxWidth, sampleLocation.Height);  // Fixed width
-        //    sampleLocation.Location = new Point(centerX + longestLabelWidth + labelSpacing, topMargin);
-
-        //    // Position sampleTime and its label
-        //    topMargin += sampleLocation.Height + verticalSpacing;
-        //    sampleTimeLabel.Location = new Point(centerX, topMargin);
-        //    sampleTime.Size = new Size(textBoxWidth, sampleTime.Height);  // Fixed width
-        //    sampleTime.Location = new Point(centerX + longestLabelWidth + labelSpacing, topMargin);
-
-        //    // Position sheepBreed and its label
-        //    topMargin += sampleTime.Height + verticalSpacing;
-        //    sheepBreedLabel.Location = new Point(centerX, topMargin);
-        //    sheepBreed.Size = new Size(textBoxWidth, sheepBreed.Height);  // Fixed width
-        //    sheepBreed.Location = new Point(centerX + longestLabelWidth + labelSpacing, topMargin);
-        //}
-
-        //private void ResizeControls()
-        //{
-        //    int controlWidth = this.ClientSize.Width / 3;
-        //    int controlHeight = this.ClientSize.Height / 15;
-
-        //    // Resize all textboxes
-        //    uploadName.Size = new Size(controlWidth, controlHeight);
-        //    sampleLocation.Size = new Size(controlWidth, controlHeight);
-        //    sampleTime.Size = new Size(controlWidth, controlHeight);
-        //    sheepBreed.Size = new Size(controlWidth, controlHeight);
-
-        //    // Resize upload button
-        //    uploadButton.Size = new Size(controlWidth, controlHeight);
-        //}
-
-        //private void DataPageResize(object? sender, EventArgs e)
-        //{
-        //    ResizeControls(); // Adjust control sizes
-        //    CenterControls(); // Adjust control positions
-        //}
     }
 }

@@ -30,7 +30,7 @@
         {
             backButton = new Button();
             dataGridView1 = new DataGridView();
-            Column1 = new DataGridViewCheckBoxColumn();
+            /*Column1 = new DataGridViewCheckBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewLinkColumn();
             Column4 = new DataGridViewLinkColumn();
@@ -41,11 +41,46 @@
             Column9 = new DataGridViewTextBoxColumn();
             Column10 = new DataGridViewTextBoxColumn();
             Column11 = new DataGridViewImageColumn();
-            Column12 = new DataGridViewButtonColumn();
+            Column12 = new DataGridViewButtonColumn();*/
             helpButton = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
+
+            // TESTING ---------------------------------------------
+            // Initialize DataGridView
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+
+            // Add columns (these should match the data you're adding in AddUploadToGrid)
+            dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn { HeaderText = "Select Uploads" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Upload Name" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Date Sample Taken" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Time Sample Taken" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Upload Date" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Upload Time" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Sample Location" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Sheep Breed" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Comments" });
+            dataGridView1.Columns.Add(new DataGridViewImageColumn { HeaderText = "Sample Image Preview" });
+            dataGridView1.Columns.Add(new DataGridViewButtonColumn { HeaderText = "Export" });
+
+            // Ensure dataViewGrid1 fills the page
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.BackgroundColor = Color.LightBlue;
+            dataGridView1.Visible = true;
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.DataSource = null;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.RowTemplate.Height = 40;
+
+            // Test row to ensure DataGridView works
+            // dataGridView1.Rows.Add(false, "Test Upload", "01/01/2024", "12:00 PM", "01/01/2024", "12:01 PM", null, "Test Location", "Test Sheep", "Test Comment", null, "Export");
+
+
+
+            // TESTING ---------------------------------------------------------
+
+
             // 
             // backButton
             // 
@@ -64,6 +99,7 @@
             backButton.Text = "Back";
             backButton.UseVisualStyleBackColor = false;
             backButton.Click += backButton_Click;
+            /*
             // 
             // dataGridView1
             // 
@@ -81,7 +117,7 @@
             Column1.HeaderText = "Select Uploads";
             Column1.MinimumWidth = 10;
             Column1.Name = "Column1";
-            Column1.Width = 200;
+            Column1.Width = 100;
             // 
             // Column2
             // 
@@ -159,6 +195,7 @@
             Column12.MinimumWidth = 10;
             Column12.Name = "Column12";
             Column12.Width = 200;
+            */
             // 
             // helpButton
             // 
@@ -171,6 +208,14 @@
             helpButton.TabIndex = 3;
             helpButton.TabStop = false;
             helpButton.Click += helpButton_Click;
+            //
+            // ScrollBar - Horizontal
+            //
+            verticalScroll = new Panel();
+            verticalScroll.Dock = DockStyle.Fill;
+            verticalScroll.AutoScroll = true;
+            verticalScroll.AutoScrollMinSize = new Size(0, 200);
+            verticalScroll.Controls.Add(dataGridView1);
             // 
             // DataLibrary
             // 
@@ -191,7 +236,7 @@
 
         private Button backButton;
         private DataGridView dataGridView1;
-        private DataGridViewCheckBoxColumn Column1;
+        /*private DataGridViewCheckBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewLinkColumn Column3;
         private DataGridViewLinkColumn Column4;
@@ -202,7 +247,8 @@
         private DataGridViewTextBoxColumn Column9;
         private DataGridViewTextBoxColumn Column10;
         private DataGridViewImageColumn Column11;
-        private DataGridViewButtonColumn Column12;
+        private DataGridViewButtonColumn Column12;*/
         private PictureBox helpButton;
+        private Panel verticalScroll;
     }
 }
