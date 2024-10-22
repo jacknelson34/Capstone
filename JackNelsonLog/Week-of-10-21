@@ -1,0 +1,4 @@
+Over the past two weeks, I created a demo loading page that works on a timer.  This will be updated once the application is connected to the ML model.
+As well, I created fields for user input to allow more information with the image.
+These inputs are also saved globally in order to display them on the results page.
+This week, I will begin building the data library, in order to store all uploads in a list view.
