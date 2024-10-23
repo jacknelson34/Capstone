@@ -86,8 +86,6 @@ namespace GrazeViewV1
 
         private void CenterControls()  // Method for centering labels and buttons
         {
-            // COME BACK TO THIS TO FIX POSITIONING!!!
-
             // Center Page Label
             mainLabel.Location = new Point(
                 (this.ClientSize.Width / 2) - (mainLabel.Width / 2),
@@ -110,12 +108,6 @@ namespace GrazeViewV1
 
         private void ResizeControls()  // Method for centering labels and buttons
         {
-            // COME BACK TO THIS TO FIX POSITIONING!!!
-
-            //// Center Page Label
-            //mainLabel.Size = new Size(
-            //    2, 2);
-
             // Center Upload Button (Based on Page Label's Height)
             dataUploadButton.Size = new Size(
                 (this.ClientSize.Width / 3), (this.ClientSize.Height / 9));
@@ -123,10 +115,6 @@ namespace GrazeViewV1
             // Position Data Viewer Button to bottom right corner
             dataViewerButton.Size = new Size(
                 (this.ClientSize.Width / 3), (this.ClientSize.Height / 9));
-
-            //// Center Help Button to top right corner
-            //helpButton.Location = new Point(
-            //    (this.ClientSize.Width - 60), 10);
         }
 
         private void MainPage_Resize(object? sender, EventArgs e)  // Method for aligning page components when resized

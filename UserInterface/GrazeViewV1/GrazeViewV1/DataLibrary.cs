@@ -22,13 +22,6 @@ namespace GrazeViewV1
             _mainPage = mainpage;
             this.Text = "Data Viewer";
 
-            // Vertical scroller functionality
-            this.Controls.Add(verticalScroll);
-
-            // Back Button Functionality
-            backButton.Click += backButton_Click; // handles click event
-            this.Controls.Add(backButton);
-
             // Help Button Functionality
             helpButton.Click += helpButton_Click; // handles click event
             this.Controls.Add(helpButton);
@@ -36,6 +29,38 @@ namespace GrazeViewV1
             // Handle data errors
             dataGridView1.DataError += dataGridView1_DataError;
 
+            // Adjust positions when the form is fully shown
+            this.Shown += (sender, e) => {
+                AdjustButtonLayout(buttonPanel, sortByBox, exportButton, backButton);
+            };
+
+            // Adjust buttonPanel when form is resized
+            this.Resize += (sender, e) =>
+            {
+                AdjustButtonLayout(buttonPanel, sortByBox, exportButton, backButton);
+            };
+
+        }
+
+        // Method to adjust buttonPanel components' positioning
+        private void AdjustButtonLayout(Panel buttonPanel, ComboBox sortByBox, Button exportButton, Button backButton)
+        {
+            int panelWidth = buttonPanel.ClientSize.Width;
+            // Center ComboBox in the panel, below the SortBy Label
+            sortByBox.Left = (panelWidth - sortByBox.Width) / 2;
+            sortByBox.Top = ((buttonPanel.Height - sortByBox.Height) / 2) + 10;  // 20px below center of buttonPanel
+
+            // Position the SortBy Label
+            sortByLabel.Left = sortByBox.Left - 6;
+            sortByLabel.Top = sortByBox.Top - 20;  // 10px padding from the top of the panel
+
+            // Position Export button to the left of ComboBox with spacing
+            exportButton.Left = sortByBox.Left - exportButton.Width - 20;  // 20px spacing from ComboBox
+            exportButton.Top = sortByBox.Top;
+
+            // Position Return button to the right of ComboBox with spacing
+            backButton.Left = (panelWidth - backButton.Width) - 10;  // 20px spacing from ComboBox
+            backButton.Top = sortByBox.Top;
         }
 
         // when the back button is clicked on
@@ -49,6 +74,12 @@ namespace GrazeViewV1
         private void helpButton_Click(object sender, EventArgs e)
         {
             UserGuide.ShowHelpGuide();  // Call Method to only allow one instance open at a time
+        }
+
+        // Method for when export button is click --- TODO ---
+        private void exportButton_Click(object sender, EventArgs e) 
+        {
+    
         }
 
         // Method to add data from DataUpload to the Library
@@ -74,12 +105,10 @@ namespace GrazeViewV1
                     upload.SampleTime.ToString("hh:mm tt"),       // Time Sample Taken
                     upload.UploadTime.ToString("MM/dd/yyyy"),     // Upload Date
                     upload.UploadTime.ToString("hh:mm tt"),       // Upload Time
-                    null,                                         // ComboBox (optional, null here)
                     upload.SampleLocation,                        // Sample Location
                     upload.SheepBreed,                            // Sheep Breed
                     upload.Comments,                              // Comments
-                    imageToDisplay,                               // ImageColumn (pass Image or null)
-                    "Export"                                      // Button column for Export
+                    imageToDisplay                               // ImageColumn (pass Image or null)
                 );
             }
 

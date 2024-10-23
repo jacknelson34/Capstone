@@ -68,8 +68,6 @@ namespace GrazeViewV1
 
             // Add other needed information text boxes here ->
 
-            //CenterControls(); // Method for positioning all buttons/textboxes
-            //this.Resize += DataPageResize;
         }
 
         // when the back button is clicked on
@@ -222,14 +220,14 @@ namespace GrazeViewV1
             };
 
             // Debugging: Confirm data is added to the UploadInfo object
-            MessageBox.Show($"Captured UploadName: {uploadInfo.UploadName}");
+            // MessageBox.Show($"Captured UploadName: {uploadInfo.UploadName}");
 
 
             // Add the new upload info to the GlobalData uploads list
             GlobalData.Uploads.Add(uploadInfo);
 
             // Debugging: Check the contents of GlobalData.Uploads
-            MessageBox.Show($"Total uploads in GlobalData: {GlobalData.Uploads.Count}");
+            // MessageBox.Show($"Total uploads in GlobalData: {GlobalData.Uploads.Count}");
 
             // Add user inputs and image to data library
             var dataLibrary = _mainPage.GetDataLibrary();

@@ -57,7 +57,7 @@ namespace GrazeViewV1
 
     }
 
-    public static class GlobalData  // Public class to store uploaded data - Temporary until SQ is used
+    public static class GlobalData  // Public class to store uploaded data
     {
         public static List<UploadInfo> Uploads { get; } = new List<UploadInfo>();   // Add all data to public list
 
