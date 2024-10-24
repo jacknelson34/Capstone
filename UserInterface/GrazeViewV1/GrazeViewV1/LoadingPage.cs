@@ -75,6 +75,49 @@ namespace GrazeViewV1
 
             // ----------------------- DEMO ONLY -----------------------
 
+            // Demo for randomized grass percentages
+            // Initialize random number generator
+            Random random = new Random();
+
+            // Create array to store the 5 numbers (one for each grass type + air bubble)
+            double[] randomNumbers = new double[5];
+
+            // Generate 5 random numbers
+            for(int i = 0; i <randomNumbers.Length; i++)
+            {
+                randomNumbers[i] = random.NextDouble();
+            }
+
+            // Sum them all up
+            double randomTotal = 0;
+            foreach(var num in randomNumbers)
+            {
+                randomTotal += num;
+            }
+
+            // Create array for the percentages to be used (one for each grass type + air bubble)
+            double[] percentages = new double[5];
+
+            // Normalize these so that they add up to 100%
+            for (int i = 0; i < percentages.Length; i++) 
+            {
+                percentages[i] = (randomNumbers[i] / randomTotal) * 100;
+            }
+
+            // Set each grass type percentage by accessing the properties of the object
+            MLData mlData = new MLData
+            {
+                nalePercentage = percentages[0].ToString("0.00") + "%",
+                qufuPercentage = percentages[1].ToString("0.00") + "%",
+                erciPercentage = percentages[2].ToString("0.00") + "%",
+                bubblePercentage = percentages[3].ToString("0.00") + "%",
+                qufustemPercentage = percentages[4].ToString("0.00") + "%"
+            };
+
+            // Add random percentages to the global list
+            GlobalData.machineLearningData.Add(mlData);
+
+
             // Simulation for progress (will be replaced once connected to ML)
             // Timer for demo file
             System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();       // Initialize Timer

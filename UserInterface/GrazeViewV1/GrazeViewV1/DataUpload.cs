@@ -15,6 +15,7 @@ namespace GrazeViewV1
     {
         // hold reference to Main Page form
         private MainPage _mainPage;
+        Image thumbnail;
 
         // variable that tracks if a file has or has not been uploaded
         private bool imageUploaded = false;
@@ -125,14 +126,26 @@ namespace GrazeViewV1
                         // Load the selected image into the PictureBox
                         fileuploadPictureBox.Image = Image.FromFile(openFileDialog.FileName);
                         fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                        Image originalImage = fileuploadPictureBox.Image; // Store for thumbnail method
+
+                        // Generate the thumbnail image
+                        thumbnail = CreateThumbnail(originalImage, 100, 100);  // 100x100 size, adjust as needed
 
                         // Delete Text in the Picture Box
                         imageUploaded = true;
 
-                        // If the textbox is empty, populate it with the file name
+                        // If the textbox is empty, populate it with the upload time/date
                         if (string.IsNullOrWhiteSpace(filenameTextbox.Text))
                         {
-                            filenameTextbox.Text = Path.GetFileName(openFileDialog.FileName); // Extracts just the file name
+                            // filenameTextbox.Text = Path.GetFileName(openFileDialog.FileName); // Extracts just the file name
+                            // Access current time and date
+                            DateTime currentTime = DateTime.Now;
+
+                            // Access upload #
+                            int uploadNum = GlobalData.Uploads.Count + 1;
+                            string nameForcurrentTime = currentTime.ToString("MM-dd-yyyy-") + uploadNum + ".png";
+                            filenameTextbox.Text = "Upload-" + nameForcurrentTime;
+
                         }
                     }
                     catch (Exception ex)
@@ -207,16 +220,22 @@ namespace GrazeViewV1
         // when the upload button is clicked on
         private void uploadButton_Click(object? sender, EventArgs e)
         {
+            // Check if the Sample Location, Sheep Breed, or Comments are empty, and set them to "N/A" if they are
+            string sampleLocation = string.IsNullOrWhiteSpace(locationTextbox.Text) ? "N/A" : locationTextbox.Text;
+            string sheepBreed = string.IsNullOrWhiteSpace(breedTextbox.Text) ? "N/A" : breedTextbox.Text;
+            string comments = string.IsNullOrWhiteSpace(commentsTextbox.Text) ? "N/A" : commentsTextbox.Text;
+
             // Create a new instance of UploadInfo
             UploadInfo uploadInfo = new UploadInfo
             {
                 UploadName = filenameTextbox.Text,             // Store the upload name
-                SampleLocation = locationTextbox.Text,         // Store the sample location
+                SampleLocation = sampleLocation,               // Store the sample location (or N/A)
                 SampleDate = DateTime.Parse(datePicker.Text),  // Store the sample date
                 SampleTime = DateTime.Parse(timePicker.Text),  // Assuming sampleTime.Text is a valid date/time string
                 UploadTime = DateTime.Now,                     // Store the current time of upload
-                SheepBreed = breedTextbox.Text,                // Store the sheep breed
-                Comments = commentsTextbox.Text                // Store user comments
+                SheepBreed = sheepBreed,                       // Store the sheep breed (or N/A)
+                Comments = comments,                           // Store user comments (or N/A)
+                ThumbNail = thumbnail                          // Store thumbnail image
             };
 
             // Debugging: Confirm data is added to the UploadInfo object
@@ -256,5 +275,10 @@ namespace GrazeViewV1
             }
         }
 
+        // helper method to create a thumbnail version of the uploaded image
+        private Image CreateThumbnail(Image originalImage, int width, int height)
+        {
+            return originalImage.GetThumbnailImage(width, height, () => false, IntPtr.Zero);
+        }
     }
 }

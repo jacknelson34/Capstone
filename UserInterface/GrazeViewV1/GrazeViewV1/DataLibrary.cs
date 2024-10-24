@@ -88,28 +88,39 @@ namespace GrazeViewV1
             // Clear the grid to avoid duplicating rows
             dataGridView1.Rows.Clear();
 
-            // Add all uploads from GlobalData to the DataGridView
-            foreach (var upload in GlobalData.Uploads)
-            {
-                // Check if there's an image to display, otherwise pass null
-                Image imageToDisplay = null;
-                if (upload.ImageFile != null)  // Assuming UploadInfo has an ImageFile property (change as per your structure)
-                {
-                    imageToDisplay = upload.ImageFile;  // This should be an Image object
-                }
+            int uploadCount = GlobalData.Uploads.Count;
+            int mlDataCount = GlobalData.machineLearningData.Count;
 
+            // Add all uploads from GlobalData to the DataGridView
+            for (int i = 0; i < GlobalData.Uploads.Count; i++)
+            {
+                var userUploads = GlobalData.Uploads[i];
+
+                // Check if there is an image to display, if not pass null
+                Image imageToDisplay = userUploads.ThumbNail ?? null;
+
+                // Check if there is a corresponding MLData entry (Prevents error from first upload)
+                var mlData = (i < mlDataCount) ? GlobalData.machineLearningData[i] : null;
+
+                // Add information from both UploadInfo and MLData
                 dataGridView1.Rows.Add(
-                    false,                                        // Checkbox column
-                    upload.UploadName,                            // Upload Name
-                    upload.SampleDate.ToString("MM/dd/yyyy"),     // Date Sample Taken
-                    upload.SampleTime.ToString("hh:mm tt"),       // Time Sample Taken
-                    upload.UploadTime.ToString("MM/dd/yyyy"),     // Upload Date
-                    upload.UploadTime.ToString("hh:mm tt"),       // Upload Time
-                    upload.SampleLocation,                        // Sample Location
-                    upload.SheepBreed,                            // Sheep Breed
-                    upload.Comments,                              // Comments
-                    imageToDisplay                               // ImageColumn (pass Image or null)
+                    false,                                             // Checkbox column
+                    userUploads.UploadName,                            // Name of upload
+                    imageToDisplay,                                    // Image uploaded
+                    mlData?.qufuPercentage + "%",                       // Qufu percentage
+                    mlData?.qufustemPercentage + "%",                   // Qufu stem percentage
+                    mlData?.nalePercentage + "%",                       // Nale percentage
+                    mlData?.erciPercentage + "%",                       // Erci Percentage
+                    mlData?.bubblePercentage + "%",                     // Air bubble percentage
+                    userUploads.SampleDate.ToString("MM/dd/yyyy"),     // Date Sample Taken
+                    userUploads.SampleTime.ToString("hh:mm tt"),       // Time Sample Taken
+                    userUploads.UploadTime.ToString("MM/dd/yyyy"),     // Upload Date
+                    userUploads.UploadTime.ToString("hh:mm tt"),       // Upload Time
+                    userUploads.SampleLocation,                        // Sample Location
+                    userUploads.SheepBreed,                            // Sheep Breed
+                    userUploads.Comments                               // Comments
                 );
+
             }
 
             // Refresh the grid to ensure the new data is visible

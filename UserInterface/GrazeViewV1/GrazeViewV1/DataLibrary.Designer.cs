@@ -45,7 +45,13 @@
 
             // Add columns (these should match the data you're adding in AddUploadToGrid)
             dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn { HeaderText = "Select Uploads" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Upload Name" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Upload Name", Width = 150 });
+            dataGridView1.Columns.Add(new DataGridViewImageColumn { HeaderText = "Sample Image Preview" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Qufu(%):" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Qufu Stem(%):" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nale(%):" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Erci(%):" });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Air Bubble(%):" });
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Date Sample Taken" });
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Time Sample Taken" });
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Upload Date" });
@@ -53,7 +59,6 @@
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Sample Location" });
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Sheep Breed" });
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Comments" });
-            dataGridView1.Columns.Add(new DataGridViewImageColumn { HeaderText = "Sample Image Preview" });
 
             // Ensure dataViewGrid1 fills the page
             dataGridView1.Dock = DockStyle.Fill;
