@@ -44,21 +44,21 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 
             // Add columns (these should match the data you're adding in AddUploadToGrid)
-            dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn { HeaderText = "Select Uploads" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Upload Name", Width = 150 });
-            dataGridView1.Columns.Add(new DataGridViewImageColumn { HeaderText = "Sample Image Preview" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Qufu(%):" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Qufu Stem(%):" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Nale(%):" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Erci(%):" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Air Bubble(%):" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Date Sample Taken" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Time Sample Taken" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Upload Date" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Upload Time" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Sample Location" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Sheep Breed" });
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Comments" });
+            dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn { Name = "SelectCol", HeaderText = "Select Uploads" });            // 0
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "NameCol", HeaderText = "Upload Name", Width = 150 });     // 1
+            dataGridView1.Columns.Add(new DataGridViewImageColumn { Name = "ImageCol", HeaderText = "Sample Image Preview" });          // 2
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "QufuCol", HeaderText = "Qufu(%):" });                     // 3
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "QufuStemCol", HeaderText = "Qufu Stem(%):" });            // 4
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "NaleCol", HeaderText = "Nale(%):" });                     // 5
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "ErciCol", HeaderText = "Erci(%):" });                     // 6
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "AirBubbleCol", HeaderText = "Air Bubble(%):" });          // 7
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleDateCol", HeaderText = "Date Sample Taken" });      // 8
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleTimeCol", HeaderText = "Time Sample Taken" });      // 9
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "UploadDateCol", HeaderText = "Upload Date" });            // 10
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "UploadTimeCol", HeaderText = "Upload Time" });            // 11
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleLocationCol", HeaderText = "Sample Location" });    // 12
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SheepBreedCol", HeaderText = "Sheep Breed" });            // 13
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "CommentsCol", HeaderText = "Comments" });                 // 14
 
             // Ensure dataViewGrid1 fills the page
             dataGridView1.Dock = DockStyle.Fill;
@@ -78,11 +78,12 @@
 
             // ComboBox to sort dataLibrary by different elements
             // Currently can sort by name, upload time, sample time, sheep breed
-            sortByBox.Items.AddRange(new string[] { "Upload Name", "Upload Date/Time", "Sample Date/Time", "Sheep Breed" });
+            sortByBox.Items.AddRange(new string[] { "Upload Name", "Upload Date/Time", "Sample Date/Time", "Sheep Breed", "Nale %", "Erci %", "Qufu %", "Qufu Stem %", "Air Bubble %" });
             sortByBox.DropDownStyle = ComboBoxStyle.DropDownList;
             sortByBox.SelectedIndex = 0;
             sortByBox.Width = 250;
             sortByBox.Anchor = AnchorStyles.None;
+            sortByBox.SelectedIndexChanged += sortByBox_SelectedIndexChanged;
             buttonPanel.Controls.Add(sortByBox);
 
             // SortByLabel Setup -------------------------------------------------------

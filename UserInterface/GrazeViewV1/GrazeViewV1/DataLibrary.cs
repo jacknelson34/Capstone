@@ -107,11 +107,11 @@ namespace GrazeViewV1
                     false,                                             // Checkbox column
                     userUploads.UploadName,                            // Name of upload
                     imageToDisplay,                                    // Image uploaded
-                    mlData?.qufuPercentage + "%",                       // Qufu percentage
-                    mlData?.qufustemPercentage + "%",                   // Qufu stem percentage
-                    mlData?.nalePercentage + "%",                       // Nale percentage
-                    mlData?.erciPercentage + "%",                       // Erci Percentage
-                    mlData?.bubblePercentage + "%",                     // Air bubble percentage
+                    mlData?.qufuPercentage,                            // Qufu percentage
+                    mlData?.qufustemPercentage,                        // Qufu stem percentage
+                    mlData?.nalePercentage,                            // Nale percentage
+                    mlData?.erciPercentage,                            // Erci Percentage
+                    mlData?.bubblePercentage,                          // Air bubble percentage
                     userUploads.SampleDate.ToString("MM/dd/yyyy"),     // Date Sample Taken
                     userUploads.SampleTime.ToString("hh:mm tt"),       // Time Sample Taken
                     userUploads.UploadTime.ToString("MM/dd/yyyy"),     // Upload Date
@@ -142,10 +142,70 @@ namespace GrazeViewV1
             LoadUploadsFromGlobalData();  // Reload the uploads into the DataGridView each time it's shown
         }
 
+        // Method to handle data errors in the library
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show($"Error in DataGridView: {e.Exception.Message}");
             e.ThrowException = false;  // Prevent the exception from crashing the application
+        }
+
+        // Method for sorting box
+        private void sortByBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // string to hold user selection in sorting box
+            string sortSelection = sortByBox.SelectedItem.ToString();
+
+            // Switch cases for each possible selection
+            switch(sortSelection){
+
+                // Upload name sort
+                case "Upload Name":
+                    dataGridView1.Sort(dataGridView1.Columns[1], ListSortDirection.Ascending);
+                    break;
+
+                // Upload date/time sort
+                case "Upload Date/Time":
+                    dataGridView1.Sort(dataGridView1.Columns[10], ListSortDirection.Ascending);
+                    break;
+
+                // Sample Data/time sort
+                case "Sample Date/Time":
+                    dataGridView1.Sort(dataGridView1.Columns[8], ListSortDirection.Ascending);
+                    break;
+
+                // Sheep breed sort
+                case "Sheep Breed":
+                    dataGridView1.Sort(dataGridView1.Columns[13], ListSortDirection.Ascending);
+                    break;
+
+                // Highest % Nale sort
+                case "Nale %":
+                    dataGridView1.Sort(dataGridView1.Columns[5], ListSortDirection.Ascending);
+                    break;
+
+                // Highest % Erci sort
+                case "Erci %":
+                    dataGridView1.Sort(dataGridView1.Columns[6], ListSortDirection.Ascending);
+                    break;
+
+                // Highest % qufu sort
+                case "Qufu %":
+                    dataGridView1.Sort(dataGridView1.Columns[3], ListSortDirection.Ascending);
+                    break;
+
+                // Highest % qufu stem sort
+                case "Qufu Stem %":
+                    dataGridView1.Sort(dataGridView1.Columns[4], ListSortDirection.Ascending);
+                    break;
+
+                // Highest % Air bubble sort
+                case "Air Bubble %":
+                    dataGridView1.Sort(dataGridView1.Columns[7], ListSortDirection.Ascending);
+                    break;
+
+            }
+
+
         }
 
     }
