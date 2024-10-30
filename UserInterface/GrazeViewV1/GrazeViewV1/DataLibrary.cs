@@ -79,7 +79,31 @@ namespace GrazeViewV1
         // Method for when export button is click --- TODO ---
         private void exportButton_Click(object sender, EventArgs e) 
         {
-    
+            // List to hold each user selected upload
+            List<UploadInfo> selectedUploads = new List<UploadInfo>;
+
+            // Loop to check which rows are selected
+            foreach (DataGridView row in dataGridView1.Rows)
+            {
+
+                // Boolean to check only the first column of each row
+                bool selected = Convert.ToBoolean(row.Cells[0].Value);
+
+                // Check if row was selected
+                if (selected)
+                {
+                    // Retrieve Upload info from row
+                    int rowIndex = row.Index;
+                    // Ensure that row is a correct index
+                    if(rowIndex < GlobalData.Uploads.Count)
+                    {
+                        // Add upload data to the selectedUploads list
+                        selectedUploads.Add(GlobalData.Uploads[rowIndex]);
+                    }
+                }
+
+            }
+
         }
 
         // Method to add data from DataUpload to the Library
