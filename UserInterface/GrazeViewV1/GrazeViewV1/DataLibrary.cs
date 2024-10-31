@@ -80,29 +80,36 @@ namespace GrazeViewV1
         private void exportButton_Click(object sender, EventArgs e) 
         {
             // List to hold each user selected upload
-            List<UploadInfo> selectedUploads = new List<UploadInfo>;
+            // Get selected rows
+            var selectedRows = dataGridView1.Rows.Cast<DataGridViewRow>()
+                                                 .Where(row => Convert.ToBoolean(row.Cells[0].Value))  // Assuming checkbox is at index 0
+                                                 .ToList();
 
-            // Loop to check which rows are selected
-            foreach (DataGridView row in dataGridView1.Rows)
+            // Check to make sure at least one upload was selected
+            // Output message if 0
+            if (selectedRows.Count == 0)
             {
-
-                // Boolean to check only the first column of each row
-                bool selected = Convert.ToBoolean(row.Cells[0].Value);
-
-                // Check if row was selected
-                if (selected)
-                {
-                    // Retrieve Upload info from row
-                    int rowIndex = row.Index;
-                    // Ensure that row is a correct index
-                    if(rowIndex < GlobalData.Uploads.Count)
-                    {
-                        // Add upload data to the selectedUploads list
-                        selectedUploads.Add(GlobalData.Uploads[rowIndex]);
-                    }
-                }
-
+                MessageBox.Show("Must select at least one upload", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            // Open DataLibraryExpandedView
+            DataLibraryExpandedView expandedView = new DataLibraryExpandedView();
+
+            // Loop through each row and add selected rows to a list
+            foreach (var row in selectedRows)
+            {
+                int rowIndex = row.Index;
+                if (rowIndex < GlobalData.Uploads.Count && rowIndex < GlobalData.machineLearningData.Count)
+                {
+                    var uploadInfo = GlobalData.Uploads[rowIndex];
+                    var mlData = GlobalData.machineLearningData[rowIndex];
+                    expandedView.AddUploadPanel(uploadInfo, mlData);
+                }
+            }
+
+            expandedView.Show();
+            this.Hide();
 
         }
 
