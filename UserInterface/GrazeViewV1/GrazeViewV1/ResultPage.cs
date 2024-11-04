@@ -61,9 +61,6 @@ namespace GrazeViewV1
                 MessageBox.Show("Results Error : ML Data is unavailable");
             }
 
-            // Call CenterControls for page resize Events
-            CenterControls();
-            this.Resize += ResultsPage_Resize;
         }
 
         private void returnButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
@@ -73,18 +70,5 @@ namespace GrazeViewV1
             this.Hide();        // Hide current page
         }
 
-        private void CenterControls()  // Method for centering elements of the form
-        {
-            // Center outputImage to top-center of the page
-            outputImage.Location = new Point(
-                (this.ClientSize.Width / 2) - (outputImage.Width / 2),
-                20);  // Set top margin to 20px
-
-        }
-
-        private void ResultsPage_Resize(object? sender, EventArgs e)  // Event Handler when the Form is resized by user
-        {
-            CenterControls();  // Call method for adjusting controls
-        }
     }
 }

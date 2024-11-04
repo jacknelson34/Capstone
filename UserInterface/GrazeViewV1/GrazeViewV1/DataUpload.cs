@@ -25,49 +25,6 @@ namespace GrazeViewV1
             // Form Properties
             InitializeComponent();
             _mainPage = mainpage;
-            this.Text = "Data Upload";
-
-            // Back Button Functionality
-            backButton.Click += backButton_Click; // handles click event
-            this.Controls.Add(backButton);
-
-            // Help Button Functionality
-            helpButton.Click += helpButton_Click; // handles click event
-            this.Controls.Add(helpButton);
-
-            // File Upload Picture Box Functionality
-            fileuploadPictureBox.Click += fileuploadPictureBox_Click;           // handles click-to-upload event
-            fileuploadPictureBox.DragEnter += fileuploadPictureBox_DragEnter;   // handles drag enter event
-            fileuploadPictureBox.DragDrop += fileuploadPictureBox_DragDrop;     // handles drag-and-drop event
-            fileuploadPictureBox.Paint += fileuploadPictureBox_Prompt;          // adds prompt to picture box
-            this.Controls.Add(fileuploadPictureBox);
-
-            // File Name Text Box Functionality
-            this.Controls.Add(filenameTextbox);
-
-            // Upload Button Functionality
-            uploadButton.Click += uploadButton_Click;
-            this.Controls.Add(uploadButton);
-
-            // File Name Text Box Functionality
-            this.Controls.Add(filenameTextbox);
-
-            // Sample Location Text Box Functionality
-            this.Controls.Add(locationTextbox);
-
-            // Sample Date Picker Functionality
-            this.Controls.Add(datePicker);
-
-            // Sample Time Picker Functionality
-            this.Controls.Add(timePicker);
-
-            // Sheep Breed Text Box Functionality
-            this.Controls.Add(breedTextbox);
-
-            // Comments Text Box Functionality
-            this.Controls.Add(commentsTextbox);
-
-            // Add other needed information text boxes here ->
 
         }
 

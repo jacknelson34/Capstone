@@ -214,6 +214,9 @@
         private Label sheepBreedLabel;
         private TextBox sheepBreedTextBox;
 
+        // Panel 3 - For resizing purposes
+        private Panel resultsPagePanel;
+
         // if there is any easier way of initializing these please tell me lol
     }
 }

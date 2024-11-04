@@ -20,27 +20,8 @@ namespace GrazeViewV1
             InitializeComponent();
             _datalibrary = new DataLibrary(this);
 
-            // Initialize Form Properties
-            this.Text = "Main Page";
-
-            // Initialize Temporary Label
-
-            this.Controls.Add(mainLabel);
-
-            // Initialize Upload Button
-
-            this.Controls.Add(dataUploadButton);
-
-            // Initialize User Guide Button
-            
-            this.Controls.Add(helpButton);
-
-            // Initialize Data Viewer Button
-
-            this.Controls.Add(dataViewerButton);
-
-            CenterControls();  // Center Buttons/Labels when created
-            this.Resize += MainPage_Resize;  // Call Resize Method if form is resized
+            /*CenterControls();  // Center Buttons/Labels when created
+            this.Resize += MainPage_Resize;  // Call Resize Method if form is resized*/
         }
 
         private void dataUploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
@@ -84,7 +65,7 @@ namespace GrazeViewV1
             return _datalibrary; 
         }
 
-        private void CenterControls()  // Method for centering labels and buttons
+        /*private void CenterControls()  // Method for centering labels and buttons
         {
             // Center Page Label
             mainLabel.Location = new Point(
@@ -121,7 +102,7 @@ namespace GrazeViewV1
         {
             CenterControls();  // Call CenterControls when form is resized
             ResizeControls();  // Call ResizeControls when form is resized
-        }
+        }*/
 
         
     }

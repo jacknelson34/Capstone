@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            uploadPanel = new Panel();
             backButton = new Button();
             helpButton = new PictureBox();
             uploadButton = new Button();
@@ -46,6 +47,19 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).BeginInit();
             SuspendLayout();
+            ClientSize = new Size(1241, 918);
+            MinimumSize = new Size(1280, 918);
+            //
+            // uploadPanel
+            //
+            uploadPanel.Size = new Size(1280, 918);
+            uploadPanel.BorderStyle = BorderStyle.None;
+            uploadPanel.Anchor = AnchorStyles.None;
+            uploadPanel.Location = new Point((this.ClientSize.Width - uploadPanel.Width) / 2,
+                                           (this.ClientSize.Height - uploadPanel.Height) / 2);
+            uploadPanel.BackColor = Color.Transparent;
+            Controls.Add(uploadPanel);
+            uploadPanel.SendToBack();
             // 
             // backButton
             // 
@@ -58,24 +72,28 @@
             backButton.Font = new Font("Times New Roman", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             backButton.ForeColor = Color.Black;
             backButton.Location = new Point(28, 23);
+            backButton.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             backButton.Name = "backButton";
             backButton.Size = new Size(123, 69);
             backButton.TabIndex = 0;
             backButton.Text = "Back";
             backButton.UseVisualStyleBackColor = false;
             backButton.Click += backButton_Click;
+            backButton.BringToFront();
             // 
             // helpButton
             // 
             helpButton.Cursor = Cursors.Hand;
             helpButton.Image = Properties.Resources.Help_Icon;
-            helpButton.Location = new Point(1156, 12);
-            helpButton.Name = "helpButton";
             helpButton.Size = new Size(73, 68);
+            helpButton.Location = new Point(1156, 12);
+            helpButton.Anchor = AnchorStyles.Top | AnchorStyles.Right; 
+            helpButton.Name = "helpButton";
             helpButton.SizeMode = PictureBoxSizeMode.StretchImage;
             helpButton.TabIndex = 1;
             helpButton.TabStop = false;
             helpButton.Click += helpButton_Click;
+            helpButton.BringToFront();
             // 
             // uploadButton
             // 
@@ -87,11 +105,13 @@
             uploadButton.Font = new Font("Times New Roman", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
             uploadButton.ForeColor = Color.Black;
             uploadButton.Location = new Point(1002, 819);
+            //uploadButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             uploadButton.Name = "uploadButton";
             uploadButton.Size = new Size(210, 76);
             uploadButton.TabIndex = 2;
             uploadButton.Text = "Upload";
             uploadButton.UseVisualStyleBackColor = false;
+            uploadButton.Click += uploadButton_Click;
             // 
             // fileuploadPictureBox
             // 
@@ -105,11 +125,17 @@
             fileuploadPictureBox.TabIndex = 3;
             fileuploadPictureBox.TabStop = false;
             fileuploadPictureBox.Tag = "";
+            fileuploadPictureBox.BackColor = Color.White;
+            // File Upload Picture Box Functionality
+            fileuploadPictureBox.Click += fileuploadPictureBox_Click;           // handles click-to-upload event
+            fileuploadPictureBox.DragEnter += fileuploadPictureBox_DragEnter;   // handles drag enter event
+            fileuploadPictureBox.DragDrop += fileuploadPictureBox_DragDrop;     // handles drag-and-drop event
+            fileuploadPictureBox.Paint += fileuploadPictureBox_Prompt;          // adds prompt to picture box
             // 
             // filenameTextbox
             // 
             filenameTextbox.Cursor = Cursors.IBeam;
-            filenameTextbox.Location = new Point(74, 163);
+            filenameTextbox.Location = new Point(74, 130);
             filenameTextbox.Name = "filenameTextbox";
             filenameTextbox.Size = new Size(552, 39);
             filenameTextbox.TabIndex = 4;
@@ -117,7 +143,7 @@
             // filenameLabel
             // 
             filenameLabel.AutoSize = true;
-            filenameLabel.Location = new Point(74, 128);
+            filenameLabel.Location = new Point(69, 95);
             filenameLabel.Name = "filenameLabel";
             filenameLabel.Size = new Size(166, 32);
             filenameLabel.TabIndex = 5;
@@ -126,7 +152,7 @@
             // locationLabel
             // 
             locationLabel.AutoSize = true;
-            locationLabel.Location = new Point(74, 251);
+            locationLabel.Location = new Point(69, 200);
             locationLabel.Name = "locationLabel";
             locationLabel.Size = new Size(195, 32);
             locationLabel.TabIndex = 6;
@@ -135,7 +161,7 @@
             // locationTextbox
             // 
             locationTextbox.Cursor = Cursors.IBeam;
-            locationTextbox.Location = new Point(74, 286);
+            locationTextbox.Location = new Point(74, 235);
             locationTextbox.Name = "locationTextbox";
             locationTextbox.Size = new Size(552, 39);
             locationTextbox.TabIndex = 7;
@@ -145,7 +171,7 @@
             datePicker.CustomFormat = "MM/dd/yyyy";
             datePicker.Format = DateTimePickerFormat.Custom;
             datePicker.ImeMode = ImeMode.NoControl;
-            datePicker.Location = new Point(74, 412);
+            datePicker.Location = new Point(74, 362);
             datePicker.Name = "datePicker";
             datePicker.Size = new Size(210, 39);
             datePicker.TabIndex = 8;
@@ -153,7 +179,7 @@
             // datetimeLabel
             // 
             datetimeLabel.AutoSize = true;
-            datetimeLabel.Location = new Point(74, 377);
+            datetimeLabel.Location = new Point(69, 327);
             datetimeLabel.Name = "datetimeLabel";
             datetimeLabel.Size = new Size(262, 32);
             datetimeLabel.TabIndex = 9;
@@ -163,7 +189,7 @@
             // 
             timePicker.Cursor = Cursors.IBeam;
             timePicker.InsertKeyMode = InsertKeyMode.Overwrite;
-            timePicker.Location = new Point(337, 412);
+            timePicker.Location = new Point(337, 362);
             timePicker.Mask = "90:00 LL";
             timePicker.Name = "timePicker";
             timePicker.Size = new Size(207, 39);
@@ -174,7 +200,7 @@
             // breedLabel
             // 
             breedLabel.AutoSize = true;
-            breedLabel.Location = new Point(74, 499);
+            breedLabel.Location = new Point(69, 449);
             breedLabel.Name = "breedLabel";
             breedLabel.Size = new Size(155, 32);
             breedLabel.TabIndex = 12;
@@ -183,7 +209,7 @@
             // breedTextbox
             // 
             breedTextbox.Cursor = Cursors.IBeam;
-            breedTextbox.Location = new Point(74, 534);
+            breedTextbox.Location = new Point(74, 484);
             breedTextbox.Name = "breedTextbox";
             breedTextbox.Size = new Size(552, 39);
             breedTextbox.TabIndex = 13;
@@ -191,7 +217,7 @@
             // commentsLabel
             // 
             commentsLabel.AutoSize = true;
-            commentsLabel.Location = new Point(74, 623);
+            commentsLabel.Location = new Point(69, 565);
             commentsLabel.Name = "commentsLabel";
             commentsLabel.Size = new Size(135, 32);
             commentsLabel.TabIndex = 14;
@@ -200,7 +226,7 @@
             // commentsTextbox
             // 
             commentsTextbox.Cursor = Cursors.IBeam;
-            commentsTextbox.Location = new Point(74, 658);
+            commentsTextbox.Location = new Point(74, 600);
             commentsTextbox.Multiline = true;
             commentsTextbox.Name = "commentsTextbox";
             commentsTextbox.Size = new Size(552, 192);
@@ -210,24 +236,26 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1241, 918);
-            Controls.Add(commentsTextbox);
-            Controls.Add(commentsLabel);
-            Controls.Add(breedTextbox);
-            Controls.Add(breedLabel);
-            Controls.Add(timePicker);
-            Controls.Add(datetimeLabel);
-            Controls.Add(datePicker);
-            Controls.Add(locationTextbox);
-            Controls.Add(locationLabel);
-            Controls.Add(filenameLabel);
-            Controls.Add(filenameTextbox);
-            Controls.Add(fileuploadPictureBox);
-            Controls.Add(uploadButton);
+            uploadPanel.Controls.Add(commentsTextbox);
+            uploadPanel.Controls.Add(commentsLabel);
+            uploadPanel.Controls.Add(breedTextbox);
+            uploadPanel.Controls.Add(breedLabel);
+            uploadPanel.Controls.Add(timePicker);
+            uploadPanel.Controls.Add(datetimeLabel);
+            uploadPanel.Controls.Add(datePicker);
+            uploadPanel.Controls.Add(locationTextbox);
+            uploadPanel.Controls.Add(locationLabel);
+            uploadPanel.Controls.Add(filenameLabel);
+            uploadPanel.Controls.Add(filenameTextbox);
+            uploadPanel.Controls.Add(fileuploadPictureBox);
+            uploadPanel.Controls.Add(uploadButton);
             Controls.Add(helpButton);
+            helpButton.BringToFront();
             Controls.Add(backButton);
+            backButton.BringToFront();
             Name = "DataUpload";
             Text = "DataUpload";
+            BackColor = Color.LightBlue;
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).EndInit();
             ResumeLayout(false);
@@ -236,6 +264,7 @@
 
         #endregion
 
+        private Panel uploadPanel;
         private Button backButton;
         private PictureBox helpButton;
         private Button uploadButton;
