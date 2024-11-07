@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             mainLabel = new Label();
-            dataUploadButton = new Button();
-            dataViewerButton = new Button();
+            dataUploadButton = new roundButton();
+            dataViewerButton = new roundButton();
             helpButton = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
@@ -52,7 +52,7 @@
             mainLabel.Font = new Font("Times New Roman", 28.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
             mainLabel.Size = new Size(526, 85);
             mainLabel.Location = new Point(
-                (mainPanel.Width / 2) - (mainLabel.Width / 2) + 25,
+                (mainPanel.Width / 2) - (mainLabel.Width / 2),
                 (mainPanel.Height / 6) - 50);
             mainLabel.Name = "mainLabel";
             mainLabel.TabIndex = 0;
@@ -60,37 +60,20 @@
             // 
             // dataUploadButton
             // 
-            dataUploadButton.AutoSize = true;
-            dataUploadButton.BackColor = Color.White;
-            dataUploadButton.FlatAppearance.BorderColor = Color.Gray;
-            dataUploadButton.FlatAppearance.BorderSize = 2;
-            dataUploadButton.FlatAppearance.MouseDownBackColor = Color.Silver;
-            dataUploadButton.FlatAppearance.MouseOverBackColor = Color.Gainsboro;
-            dataUploadButton.FlatStyle = FlatStyle.Flat;
-            dataUploadButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataUploadButton.ForeColor = Color.Black;
             dataUploadButton.Size = new Size(421, 150);
+            dataUploadButton.borderRadius = 50;
             dataUploadButton.Location = new Point(
                 (mainPanel.Width / 2) - (dataUploadButton.Width / 2),
                 (mainPanel.Height - mainLabel.Height) / 2 - 75);
             dataUploadButton.Name = "dataUploadButton";
             dataUploadButton.TabIndex = 1;
             dataUploadButton.Text = "Upload New Data";
-            dataUploadButton.UseVisualStyleBackColor = false;
             dataUploadButton.Click += dataUploadButton_Click;
             // 
             // dataViewerButton
             // 
-            dataViewerButton.AutoSize = true;
-            dataViewerButton.BackColor = Color.White;
-            dataViewerButton.FlatAppearance.BorderColor = Color.Gray;
-            dataViewerButton.FlatAppearance.BorderSize = 2;
-            dataViewerButton.FlatAppearance.MouseDownBackColor = Color.Silver;
-            dataViewerButton.FlatAppearance.MouseOverBackColor = Color.Gainsboro;
-            dataViewerButton.FlatStyle = FlatStyle.Flat;
-            dataViewerButton.Font = new Font("Times New Roman", 12F);
-            dataViewerButton.ForeColor = Color.Black;
             dataViewerButton.Size = new Size(421, 150);
+            dataViewerButton.borderRadius = 50;
             dataViewerButton.Location = new Point(
                (mainPanel.Width / 2) - (dataViewerButton.Width / 2),
                ((mainPanel.Height - mainLabel.Height) / 2) + 125);
@@ -136,8 +119,8 @@
 
         private Panel mainPanel;
         private Label mainLabel;
-        private Button dataUploadButton;
-        private Button dataViewerButton;
+        private roundButton dataUploadButton;
+        private roundButton dataViewerButton;
         private PictureBox helpButton;
     }
 }

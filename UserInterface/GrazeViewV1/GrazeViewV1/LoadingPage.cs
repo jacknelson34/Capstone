@@ -60,6 +60,7 @@ namespace GrazeViewV1
 
             // Initialize Text Box with status updates
             statusUpdates = new TextBox();
+            statusUpdates.BackColor = Color.LightBlue;
             statusUpdates.Text = "Uploading Image...";
             statusUpdates.Font = new Font("Times New Roman", 12, FontStyle.Italic);
             statusUpdates.Size = new Size(250, 20);
@@ -68,7 +69,7 @@ namespace GrazeViewV1
             statusUpdates.TabStop = false;
             statusUpdates.Location = new Point(
                 loadingBar.Location.X,
-                (this.ClientSize.Height / 2) - 20);
+                (this.ClientSize.Height / 2) - 30);
             this.Controls.Add(statusUpdates);
 
 

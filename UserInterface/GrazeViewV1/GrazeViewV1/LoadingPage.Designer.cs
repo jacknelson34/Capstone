@@ -25,7 +25,7 @@
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
-        /// </summary>
+        /// </summary>  
         private void InitializeComponent()
         {
             SuspendLayout();
@@ -33,6 +33,7 @@
             // LoadingPage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
+            BackColor = Color.LightBlue;
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Name = "LoadingPage";

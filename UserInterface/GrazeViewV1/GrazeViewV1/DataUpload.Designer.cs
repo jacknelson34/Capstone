@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             uploadPanel = new Panel();
-            backButton = new Button();
+            backButton = new roundButton();
             helpButton = new PictureBox();
-            uploadButton = new Button();
+            uploadButton = new roundButton();
             fileuploadPictureBox = new PictureBox();
             filenameTextbox = new TextBox();
             filenameLabel = new Label();
@@ -63,21 +63,13 @@
             // 
             // backButton
             // 
-            backButton.BackColor = Color.White;
-            backButton.FlatAppearance.BorderColor = Color.Gray;
-            backButton.FlatAppearance.BorderSize = 2;
-            backButton.FlatAppearance.MouseDownBackColor = Color.Silver;
-            backButton.FlatAppearance.MouseOverBackColor = Color.Gainsboro;
-            backButton.FlatStyle = FlatStyle.Flat;
-            backButton.Font = new Font("Times New Roman", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            backButton.ForeColor = Color.Black;
             backButton.Location = new Point(28, 23);
+            backButton.borderRadius = 20;
             backButton.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             backButton.Name = "backButton";
             backButton.Size = new Size(123, 69);
             backButton.TabIndex = 0;
             backButton.Text = "Back";
-            backButton.UseVisualStyleBackColor = false;
             backButton.Click += backButton_Click;
             backButton.BringToFront();
             // 
@@ -97,15 +89,8 @@
             // 
             // uploadButton
             // 
-            uploadButton.BackColor = Color.White;
-            uploadButton.FlatAppearance.BorderColor = Color.Gray;
-            uploadButton.FlatAppearance.MouseDownBackColor = Color.Silver;
-            uploadButton.FlatAppearance.MouseOverBackColor = Color.Gainsboro;
-            uploadButton.FlatStyle = FlatStyle.Flat;
-            uploadButton.Font = new Font("Times New Roman", 10.125F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            uploadButton.ForeColor = Color.Black;
             uploadButton.Location = new Point(1002, 819);
-            //uploadButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            uploadButton.borderRadius = 50;
             uploadButton.Name = "uploadButton";
             uploadButton.Size = new Size(210, 76);
             uploadButton.TabIndex = 2;
@@ -265,9 +250,9 @@
         #endregion
 
         private Panel uploadPanel;
-        private Button backButton;
+        private roundButton backButton;
         private PictureBox helpButton;
-        private Button uploadButton;
+        private roundButton uploadButton;
         private PictureBox fileuploadPictureBox;
         private TextBox filenameTextbox;
         private Label filenameLabel;

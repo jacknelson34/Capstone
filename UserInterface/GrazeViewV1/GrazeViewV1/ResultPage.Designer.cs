@@ -32,6 +32,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 600);  // Adjusted size
             this.Text = "Result Page";
+            BackColor = Color.LightBlue;
 
             // Create Model Generated Panel
             MLOutputPanel = new Panel();
@@ -62,8 +63,9 @@
             CreateUserProvidedDataControls(UserOutputPanel);
 
             // Add Exit button
-            Button exitButton = new Button();
+            roundButton exitButton = new roundButton();
             exitButton.Text = "Exit";
+            exitButton.borderRadius = 20;
             exitButton.Size = new Size(80, 30);
             exitButton.Location = new Point((this.ClientSize.Width - exitButton.Width) / 2, this.ClientSize.Height - exitButton.Height - 20);
             exitButton.Anchor = AnchorStyles.Bottom;

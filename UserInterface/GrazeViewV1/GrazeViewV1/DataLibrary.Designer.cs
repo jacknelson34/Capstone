@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            backButton = new Button();
-            exportButton = new Button();
+            backButton = new roundButton();
+            exportButton = new roundButton();
             dataGridView1 = new DataGridView();
             buttonPanel = new Panel();
             sortByBox = new ComboBox();
@@ -96,6 +96,7 @@
 
             // Export button to open ExpandedView of data (single or multiple)
             exportButton.Text = "Export";
+            exportButton.borderRadius = 20;
             exportButton.Width = 150;
             exportButton.Height = 50;
             exportButton.Anchor = AnchorStyles.None;
@@ -106,6 +107,7 @@
             backButton.Text = "Exit";
             backButton.Width = 150;
             backButton.Height = 50;
+            backButton.borderRadius = 20;
             backButton.Anchor = AnchorStyles.None;
             buttonPanel.Controls.Add(backButton);
             backButton.Click += backButton_Click;
@@ -138,13 +140,13 @@
 
         #endregion
 
-        private Button backButton;
+        private roundButton backButton;
         private DataGridView dataGridView1;
         private PictureBox helpButton;
         private Panel verticalScroll;
         private Panel buttonPanel;
         private ComboBox sortByBox;
-        private Button exportButton;
+        private roundButton exportButton;
         private Label sortByLabel;
     }
 }
