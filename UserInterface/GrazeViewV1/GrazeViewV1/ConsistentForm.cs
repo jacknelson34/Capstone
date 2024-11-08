@@ -11,6 +11,7 @@ using System.Configuration;
 
 namespace GrazeViewV1
 {
+    // Class to create sizing consistencies
     public class ConsistentForm : Form
     {
         // Static variables to store the size and location of the last form
@@ -49,7 +50,7 @@ namespace GrazeViewV1
         
     }
 
-    // Public Class to create consistent button design
+    // Public Class to create consistent button design with rounded edges
     public class roundButton : Button
     {
         // Design Fields
@@ -144,9 +145,6 @@ namespace GrazeViewV1
 
 
     }
-
-
-    
 
     // Class to store all the information related to an upload, including metadata like dates, sample information, and the uploaded image.
     public class UploadInfo
