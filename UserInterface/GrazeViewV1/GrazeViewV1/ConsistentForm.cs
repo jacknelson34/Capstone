@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Configuration;
+using System.ComponentModel;
+using System.CodeDom;
+using System.Drawing.Design;
 
 namespace GrazeViewV1
 {
+    /*--------------------Page Sizing-------------------------------------*/
+
     // Class to create sizing consistencies
     public class ConsistentForm : Form
     {
@@ -50,7 +54,10 @@ namespace GrazeViewV1
         
     }
 
-    // Public Class to create consistent button design with rounded edges
+
+    /*---------------------Custom Controls--------------------------------*/
+
+    // Public Class to create consistent button design with rounded edges - WORKS
     public class roundButton : Button
     {
         // Design Fields
@@ -145,6 +152,377 @@ namespace GrazeViewV1
 
 
     }
+
+    public class TransparentLabel : Label
+    {
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            // Clear the background
+            e.Graphics.Clear(this.BackColor);
+
+            // Call the base OnPaint to render the text
+            base.OnPaint(e);
+        }
+    }
+
+    // Public Class to create custom comboBox
+    [DefaultEvent("OnSelectedIndexChanged")]
+    class customBox : ComboBox
+    {
+        // Fields
+        private Color backColor = Color.WhiteSmoke;
+        private Color iconColor = Color.LightGreen;
+        private Color listBackColor = Color.LightGreen;
+        private Color listTextColor = Color.Black;
+        private Color borderColor = Color.LightGreen;
+        private int borderSize = 1;
+
+        // Properties
+        // -> Appearance
+        [Category("customBox - Appearance")]
+        public new Color BackColor
+        {
+            get { return backColor; }
+            set
+            {
+                backColor = value;
+                lblText.BackColor = backColor;
+                btnIcon.BackColor = backColor;
+            }
+        }
+
+        [Category("customBox - Appearance")]
+        public Color IconColor
+        {
+            get { return iconColor; }
+            set
+            {
+                iconColor = value;
+                btnIcon.Invalidate(); // Redraw icon
+            }
+        }
+
+        [Category("customBox - Appearance")]
+        public Color ListBackColor
+        {
+            get { return listBackColor; }
+            set
+            {
+                listBackColor = value;
+                cmbList.BackColor = listBackColor;
+            }
+        }
+
+        [Category("customBox - Appearance")]
+        public Color ListTextColor
+        {
+            get { return listTextColor; }
+            set
+            {
+                listTextColor = value;
+                cmbList.ForeColor = listTextColor;
+            }
+        }
+
+        [Category("customBox - Appearance")]
+        public Color BorderColor
+        {
+            get { return borderColor; }
+            set
+            {
+                borderColor = value;
+                base.BackColor = borderColor; // Border Color
+            }
+        }
+
+        [Category("customBox - Appearance")]
+        public int BorderSize
+        {
+            get { return borderSize; }
+            set
+            {
+                borderSize = value;
+                this.Padding = new Padding(borderSize); // Border Size 
+                AdjustComboBoxDimensions();
+            }
+        }
+
+        [Category("customBox - Appearance")]
+        public override Color ForeColor
+        {
+            get { return base.ForeColor; }
+            set
+            {
+                base.ForeColor = value;
+                lblText.ForeColor = value;
+            }
+        }
+
+        [Category("customBox - Appearance")]
+        public override Font Font
+        {
+            get { return base.Font; }
+            set
+            {
+                base.Font = value;
+                lblText.Font = value;
+                cmbList.Font = value; // Optional
+            }
+        }
+
+        [Category("customBox - Appearance")]
+        public string Texts
+        {
+            get { return lblText.Text; }
+            set { lblText.Text = value; }
+        }
+
+        [Category("customBox - Appearance")]
+        public ComboBoxStyle DropDownStyle
+        {
+            get { return cmbList.DropDownStyle; }
+            set
+            {
+                if (cmbList.DropDownStyle != ComboBoxStyle.Simple)
+                    cmbList.DropDownStyle = value;
+            }
+        }
+
+        // Properties
+        // -> Data
+        [Category("customBox - Data")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [Editor("System.Windows.Forms.Design.ListControlStringCollectionEditor, System.Design", typeof(UITypeEditor))]
+        [Localizable(true)]
+        [MergableProperty(false)]
+        public ComboBox.ObjectCollection Items
+        {
+            get { return cmbList.Items; }
+        }
+
+        [Category("customBox - Data")]
+        [AttributeProvider(typeof(IListSource))]
+        [DefaultValue(null)]
+        public object DataSource
+        {
+            get { return cmbList.DataSource; }
+            set { cmbList.DataSource = value; }
+        }
+
+        [Category("customBox - Data")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public AutoCompleteStringCollection AutoCompleteCustomSource
+        {
+            get { return cmbList.AutoCompleteCustomSource; }
+            set { cmbList.AutoCompleteCustomSource = value; }
+        }
+
+        [Category("customBox - Data")]
+        [Browsable(true)]
+        [DefaultValue(AutoCompleteSource.None)]
+        public AutoCompleteSource AutoCompleteSource
+        {
+            get { return cmbList.AutoCompleteSource; }
+            set { cmbList.AutoCompleteSource = value; }
+        }
+
+        [Category("customBox - Data")]
+        [Browsable(true)]
+        [DefaultValue(AutoCompleteMode.None)]
+        public AutoCompleteMode AutoCompleteMode
+        {
+            get { return cmbList.AutoCompleteMode; }
+            set { cmbList.AutoCompleteMode = value; }
+        }
+
+        [Category("customBox - Data")]
+        [Bindable(true)]
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public object SelectedItem
+        {
+            get { return cmbList.SelectedItem; }
+            set { cmbList.SelectedItem = value; }
+        }
+
+        [Category("customBox - Data")]
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public int SelectedIndex
+        {
+            get { return cmbList.SelectedIndex; }
+            set { cmbList.SelectedIndex = value; }
+        }
+
+        [Category("customBox - Data")]
+        [DefaultValue("")]
+        public string DisplayMember
+        {
+            get { return cmbList.DisplayMember; }
+            set { cmbList.DisplayMember = value; }
+        }
+
+        [Category("customBox - Data")]
+        [DefaultValue("")]
+        public string ValueMember
+        {
+            get { return cmbList.ValueMember; }
+            set { cmbList.ValueMember = value; }
+        }
+
+        // Fields for components
+        private ComboBox cmbList;
+        private TransparentLabel lblText;
+        private Button btnIcon;
+
+        // Events
+        public event EventHandler OnSelectedIndexChanged;
+
+        // Constructor
+        public customBox()
+        {
+            this.DoubleBuffered = true;
+
+            cmbList = new ComboBox();
+            lblText = new TransparentLabel();
+            btnIcon = new Button();
+            this.SuspendLayout();
+
+            // ComboBox setup
+            cmbList.BackColor = listBackColor;
+            cmbList.Font = new Font(this.Font.Name, 10F);
+            cmbList.ForeColor = listTextColor;
+            cmbList.SelectedIndexChanged += ComboBox_SelectedIndexChanged;
+            cmbList.TextChanged += ComboBox_TextChanged;
+
+            // Button setup
+            btnIcon.Dock = DockStyle.Right;
+            btnIcon.FlatStyle = FlatStyle.Flat;
+            btnIcon.FlatAppearance.BorderSize = 0;
+            btnIcon.BackColor = backColor;
+            btnIcon.Size = new Size(30, 30);
+            btnIcon.Cursor = Cursors.Hand;
+            btnIcon.Click += Icon_Click;
+            btnIcon.Paint += Icon_Paint;
+
+            // Label setup
+            lblText.Dock = DockStyle.Fill;
+            lblText.AutoSize = false;
+            lblText.BackColor = listBackColor;
+            lblText.TextAlign = ContentAlignment.MiddleLeft;
+            lblText.Padding = new Padding(8, 0, btnIcon.Width + 5, 0);
+            lblText.Font = new Font(this.Font.Name, 10F);
+            lblText.Click += Surface_Click;
+            lblText.MouseEnter += Surface_MouseEnter;
+            lblText.MouseLeave += Surface_MouseLeave;
+
+            // User Control setup
+            this.Controls.Add(lblText);
+            this.Controls.Add(btnIcon);
+            this.Controls.Add(cmbList);
+            this.MinimumSize = new Size(200, 30);
+            this.Size = new Size(200, 30);
+            this.ForeColor = Color.Black;
+            this.Padding = new Padding(borderSize);
+            this.Font = new Font(this.Font.Name, 10F);
+            base.BackColor = borderColor;
+
+            this.ResumeLayout();
+            AdjustComboBoxDimensions();
+        }
+
+        // Method to adjust dimensions
+        private void AdjustComboBoxDimensions()
+        {
+            cmbList.Width = lblText.Width;
+            cmbList.Location = new Point()
+            {
+                X = this.Width - this.Padding.Right - cmbList.Width,
+                Y = lblText.Bottom - cmbList.Height
+            };
+        }
+
+        // Event handlers
+        private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (OnSelectedIndexChanged != null)
+                OnSelectedIndexChanged.Invoke(sender, e);
+
+            // Refresh displayed text
+            lblText.Text = cmbList.Text;
+
+            // Update background color based on selection (optional customization)
+            lblText.BackColor = listBackColor; // Ensure lblText back color matches custom back color
+            btnIcon.BackColor = backColor;
+
+            lblText.Invalidate();
+            this.Invalidate();
+        }
+
+        private void Icon_Click(object sender, EventArgs e)
+        {
+            cmbList.Select();
+            cmbList.DroppedDown = true;
+        }
+
+        private void Surface_Click(object sender, EventArgs e)
+        {
+            this.OnClick(e);
+            cmbList.Select();
+            cmbList.DroppedDown = true;
+
+        }
+
+        private void ComboBox_TextChanged(object sender, EventArgs e)
+        {
+            lblText.Text = cmbList.Text;
+            lblText.BackColor = listBackColor;
+        }
+
+        private void Icon_Paint(object sender, PaintEventArgs e)
+        {
+            int iconWidth = 14;
+            int iconHeight = 6;
+            var rectIcon = new Rectangle((btnIcon.Width - iconWidth) / 2, (btnIcon.Height - iconHeight) / 2, iconWidth, iconHeight);
+            Graphics graph = e.Graphics;
+
+            using (GraphicsPath path = new GraphicsPath())
+            using (Pen pen = new Pen(iconColor, 2))
+            {
+                graph.SmoothingMode = SmoothingMode.AntiAlias;
+                path.AddLine(rectIcon.X, rectIcon.Y, rectIcon.X + (iconWidth / 2), rectIcon.Bottom);
+                path.AddLine(rectIcon.X + (iconWidth / 2), rectIcon.Bottom, rectIcon.Right, rectIcon.Y);
+                graph.DrawPath(pen, path);
+            }
+        }
+
+        private void Surface_MouseLeave(object sender, EventArgs e)
+        {
+            this.OnMouseLeave(e);
+        }
+
+        private void Surface_MouseEnter(object sender, EventArgs e)
+        {
+            this.OnMouseEnter(e);
+        }
+
+        // Override OnPaint to clear any artifacts
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            e.Graphics.Clear(this.BackColor); // Clear any background artifacts
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            AdjustComboBoxDimensions();
+        }
+    }
+
+
+    /*------------------Data Storage---------------------*/
 
     // Class to store all the information related to an upload, including metadata like dates, sample information, and the uploaded image.
     public class UploadInfo

@@ -32,7 +32,7 @@
             exportButton = new roundButton();
             dataGridView1 = new DataGridView();
             buttonPanel = new Panel();
-            sortByBox = new ComboBox();
+            sortByBox = new customBox();
             helpButton = new PictureBox();
             sortByLabel = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -80,10 +80,10 @@
             // Currently can sort by name, upload time, sample time, sheep breed
             sortByBox.Items.AddRange(new string[] { "Upload Name", "Upload Date/Time", "Sample Date/Time", "Sheep Breed", "Nale %", "Erci %", "Qufu %", "Qufu Stem %", "Air Bubble %" });
             sortByBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            sortByBox.SelectedIndex = 0;
-            sortByBox.Width = 250;
-            sortByBox.Anchor = AnchorStyles.None;
-            sortByBox.SelectedIndexChanged += sortByBox_SelectedIndexChanged;
+            //sortByBox.SelectedIndex = 0;
+            sortByBox.Width = 300;
+            //sortByBox.Anchor = AnchorStyles.None;
+            //sortByBox.SelectedIndexChanged += sortByBox_SelectedIndexChanged;
             buttonPanel.Controls.Add(sortByBox);
 
             // SortByLabel Setup -------------------------------------------------------
@@ -145,7 +145,7 @@
         private PictureBox helpButton;
         private Panel verticalScroll;
         private Panel buttonPanel;
-        private ComboBox sortByBox;
+        private customBox sortByBox;
         private roundButton exportButton;
         private Label sortByLabel;
     }

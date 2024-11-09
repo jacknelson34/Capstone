@@ -34,9 +34,11 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1249, 796);
+            ClientSize = new Size(1280, 918);
+            MinimumSize = new Size(1280, 918);
             Name = "DataLibraryExpandedView";
             Text = "DataLibraryExpandedView";
+            BackColor = Color.White;
             ResumeLayout(false);
             //
             // Flow Layout Panel
@@ -53,13 +55,15 @@
             controlPanel = new Panel();
             this.controlPanel.Dock = DockStyle.Bottom;
             this.controlPanel.Height = 60;
+            this.controlPanel.BackColor = Color.LightBlue;
             this.controlPanel.BorderStyle = BorderStyle.FixedSingle;
             this.Controls.Add(this.controlPanel);
             // 
             // exitButton
             // 
-            exitButton = new Button();
+            exitButton = new roundButton();
             this.exitButton.Text = "Exit";
+            this.exitButton.borderRadius = 20;
             this.exitButton.Size = new Size(100, 30);
             this.exitButton.Location = new Point(20, 15); // Adjust the location as needed
             this.exitButton.Click += new EventHandler(this.exitButton_Click);
@@ -68,8 +72,9 @@
             // 
             // printButton
             // 
-            printButton = new Button();
+            printButton = new roundButton();
             this.printButton.Text = "Print";
+            this.printButton.borderRadius = 20;
             this.printButton.Size = new Size(100, 30);
             this.printButton.Location = new Point(this.controlPanel.Width - 120, 15); // Adjust location to be on the right side
             this.printButton.Anchor = AnchorStyles.Right; // Ensure it stays on the right when resizing
@@ -83,8 +88,8 @@
         #endregion
 
         private Panel controlPanel;
-        private Button exitButton;
-        private Button printButton;
+        private roundButton exitButton;
+        private roundButton printButton;
         private FlowLayoutPanel flowLayoutPanel;
     }
 }
