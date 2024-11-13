@@ -15,3 +15,4 @@ UserInterface/GrazeViewV1/GrazeViewV1/obj/Debug/net8.0-windows/GrazeViewV1.asset
 
 *.cache
 *.cache
+*.json

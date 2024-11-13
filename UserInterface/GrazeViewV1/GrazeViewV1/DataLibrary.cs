@@ -29,38 +29,17 @@ namespace GrazeViewV1
             // Handle data errors
             dataGridView1.DataError += dataGridView1_DataError;
 
-            // Adjust positions when the form is fully shown
-            this.Shown += (sender, e) => {
-                AdjustButtonLayout(buttonPanel, sortByBox, exportButton, backButton);
-            };
+            //// Adjust positions when the form is fully shown
+            //this.Shown += (sender, e) => {
+            //    AdjustButtonLayout(buttonPanel, exportButton, backButton);
+            //};
 
-            // Adjust buttonPanel when form is resized
-            this.Resize += (sender, e) =>
-            {
-                AdjustButtonLayout(buttonPanel, sortByBox, exportButton, backButton);
-            };
+            //// Adjust buttonPanel when form is resized
+            //this.Resize += (sender, e) =>
+            //{
+            //    AdjustButtonLayout(buttonPanel exportButton, backButton);
+            //};
 
-        }
-
-        // Method to adjust buttonPanel components' positioning
-        private void AdjustButtonLayout(Panel buttonPanel, ComboBox sortByBox, Button exportButton, Button backButton)
-        {
-            int panelWidth = buttonPanel.ClientSize.Width;
-            // Center ComboBox in the panel, below the SortBy Label
-            sortByBox.Left = (panelWidth - sortByBox.Width) / 2;
-            sortByBox.Top = ((buttonPanel.Height - sortByBox.Height) / 2) + 10;  // 20px below center of buttonPanel
-
-            // Position the SortBy Label
-            sortByLabel.Left = sortByBox.Left - 6;
-            sortByLabel.Top = sortByBox.Top - 20;  // 10px padding from the top of the panel
-
-            // Position Export button to the left of ComboBox with spacing
-            exportButton.Left = sortByBox.Left - exportButton.Width - 20;  // 20px spacing from ComboBox
-            exportButton.Top = sortByBox.Top;
-
-            // Position Return button to the right of ComboBox with spacing
-            backButton.Left = (panelWidth - backButton.Width) - 10;  // 20px spacing from ComboBox
-            backButton.Top = sortByBox.Top;
         }
 
         // when the back button is clicked on
@@ -128,7 +107,7 @@ namespace GrazeViewV1
                 var userUploads = GlobalData.Uploads[i];
 
                 // Check if there is an image to display, if not pass null
-                Image imageToDisplay = userUploads.ThumbNail ?? null;
+                // Image imageToDisplay = userUploads.ThumbNail ?? null;
 
                 // Check if there is a corresponding MLData entry (Prevents error from first upload)
                 var mlData = (i < mlDataCount) ? GlobalData.machineLearningData[i] : null;
@@ -137,7 +116,7 @@ namespace GrazeViewV1
                 dataGridView1.Rows.Add(
                     false,                                             // Checkbox column
                     userUploads.UploadName,                            // Name of upload
-                    imageToDisplay,                                    // Image uploaded
+                    // imageToDisplay,                                    // Image uploaded
                     mlData?.qufuPercentage,                            // Qufu percentage
                     mlData?.qufustemPercentage,                        // Qufu stem percentage
                     mlData?.nalePercentage,                            // Nale percentage
@@ -178,65 +157,6 @@ namespace GrazeViewV1
         {
             MessageBox.Show($"Error in DataGridView: {e.Exception.Message}");
             e.ThrowException = false;  // Prevent the exception from crashing the application
-        }
-
-        // Method for sorting box
-        private void sortByBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // string to hold user selection in sorting box
-            string sortSelection = sortByBox.SelectedItem.ToString();
-
-            // Switch cases for each possible selection
-            switch(sortSelection){
-
-                // Upload name sort
-                case "Upload Name":
-                    dataGridView1.Sort(dataGridView1.Columns[1], ListSortDirection.Ascending);
-                    break;
-
-                // Upload date/time sort
-                case "Upload Date/Time":
-                    dataGridView1.Sort(dataGridView1.Columns[10], ListSortDirection.Ascending);
-                    break;
-
-                // Sample Data/time sort
-                case "Sample Date/Time":
-                    dataGridView1.Sort(dataGridView1.Columns[8], ListSortDirection.Ascending);
-                    break;
-
-                // Sheep breed sort
-                case "Sheep Breed":
-                    dataGridView1.Sort(dataGridView1.Columns[13], ListSortDirection.Ascending);
-                    break;
-
-                // Highest % Nale sort
-                case "Nale %":
-                    dataGridView1.Sort(dataGridView1.Columns[5], ListSortDirection.Ascending);
-                    break;
-
-                // Highest % Erci sort
-                case "Erci %":
-                    dataGridView1.Sort(dataGridView1.Columns[6], ListSortDirection.Ascending);
-                    break;
-
-                // Highest % qufu sort
-                case "Qufu %":
-                    dataGridView1.Sort(dataGridView1.Columns[3], ListSortDirection.Ascending);
-                    break;
-
-                // Highest % qufu stem sort
-                case "Qufu Stem %":
-                    dataGridView1.Sort(dataGridView1.Columns[4], ListSortDirection.Ascending);
-                    break;
-
-                // Highest % Air bubble sort
-                case "Air Bubble %":
-                    dataGridView1.Sort(dataGridView1.Columns[7], ListSortDirection.Ascending);
-                    break;
-
-            }
-
-
         }
 
     }
