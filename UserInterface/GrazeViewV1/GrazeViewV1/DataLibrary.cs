@@ -21,6 +21,12 @@ namespace GrazeViewV1
             InitializeComponent();
             _mainPage = mainpage;
             this.Text = "Data Viewer";
+            this.Location = ConsistentForm.FormLocation;
+            this.Size = ConsistentForm.FormSize;
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
 
             // Help Button Functionality
             helpButton.Click += helpButton_Click; // handles click event
@@ -29,22 +35,29 @@ namespace GrazeViewV1
             // Handle data errors
             dataGridView1.DataError += dataGridView1_DataError;
 
-            //// Adjust positions when the form is fully shown
-            //this.Shown += (sender, e) => {
-            //    AdjustButtonLayout(buttonPanel, exportButton, backButton);
-            //};
+        }
 
-            //// Adjust buttonPanel when form is resized
-            //this.Resize += (sender, e) =>
-            //{
-            //    AdjustButtonLayout(buttonPanel exportButton, backButton);
-            //};
-
+        private void SetFullScreen()     // Class to handle screen maximization
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
         // when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
+            ConsistentForm.FormSize = this.Size;
+            ConsistentForm.FormLocation = this.Location;
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
+
             _mainPage.Show();                                       // Open Main Page
             this.Hide();                                            // Close Data Upload Page
         }
@@ -55,9 +68,20 @@ namespace GrazeViewV1
             UserGuide.ShowHelpGuide();  // Call Method to only allow one instance open at a time
         }
 
-        // Method for when export button is click --- TODO ---
+        // Method for when export button is click 
         private void exportButton_Click(object sender, EventArgs e) 
         {
+            ConsistentForm.FormSize = this.Size;
+            ConsistentForm.FormLocation = this.Location;
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
+
             // List to hold each user selected upload
             // Get selected rows
             var selectedRows = dataGridView1.Rows.Cast<DataGridViewRow>()

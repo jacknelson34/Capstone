@@ -19,12 +19,29 @@ namespace GrazeViewV1
         public DataLibraryExpandedView(MainPage mainPage)
         {
             _mainPage = mainPage;
-            InitializeComponent(); 
+            InitializeComponent();
+            this.Size = ConsistentForm.FormSize;
+            this.Location = ConsistentForm.FormLocation;
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
         }
 
         // Event handler for exitButton
         private void exitButton_Click(object sender, EventArgs e)
         {
+            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
+            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
+
             var dataLibrary = new DataLibrary(_mainPage);
             dataLibrary.Show();
             this.Close(); // Close this view and return to DataLibrary
@@ -51,6 +68,14 @@ namespace GrazeViewV1
 
 
         }
+
+        private void SetFullScreen()     // Class to handle screen maximization
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
+        }
+        
 
         // Method to capture the screen for printing
         private void CaptureScreen()

@@ -23,6 +23,10 @@ namespace GrazeViewV1
             InitializeComponent();
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
 
             // Initialize Form Properties
             this.Text = "Loading Page";
@@ -177,10 +181,26 @@ namespace GrazeViewV1
         {
             ConsistentForm.FormSize = this.Size;
             ConsistentForm.FormLocation = this.Location;
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
+
 
             ResultPage resultsPage = new ResultPage(resultsImage);      // Initialize new page
             resultsPage.Show();                                         // Show new page
             this.Hide();                                                // Hide current page
+        }
+
+        private void SetFullScreen()     // Class to handle screen maximization
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
         private void CenterControls()

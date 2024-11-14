@@ -28,7 +28,18 @@ namespace GrazeViewV1
             _mainPage = mainpage;
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
 
+        }
+
+        private void SetFullScreen()     // Class to handle screen maximization
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
         // when the back button is clicked on
@@ -36,6 +47,14 @@ namespace GrazeViewV1
         {
             ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
             ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             _mainPage.Show();                                       // Open Main Page
             this.Hide();                                            // Close Data Upload Page
@@ -185,6 +204,14 @@ namespace GrazeViewV1
         {
             ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
             ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             // Check if the Sample Location, Sheep Breed, or Comments are empty, and set them to "N/A" if they are
             string sampleLocation = string.IsNullOrWhiteSpace(locationTextbox.Text) ? "N/A" : locationTextbox.Text;

@@ -22,16 +22,36 @@ namespace GrazeViewV1
 
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
+
             MessageBox.Show("Form Size = " + ConsistentForm.FormSize.ToString());
             MessageBox.Show("Current Size = " + this.Size.ToString());
 
             this.Resize += MainPage_Resize;
         }
 
+        private void SetFullScreen()     // Class to handle screen maximization
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
+        }
+
         private void dataUploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
         {
             ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
             ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             DataUpload dataupload = new DataUpload(this);       // Create new dataUpload form
             dataupload.Show();                                  // Show dataUpload
@@ -42,6 +62,14 @@ namespace GrazeViewV1
         {
             ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
             ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             DataLibrary datalibrary = new DataLibrary(this);    // Create new dataLibrary
             datalibrary.Show();                                 // Show dataLibrary

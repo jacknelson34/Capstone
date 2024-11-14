@@ -20,6 +20,10 @@ namespace GrazeViewV1
             InitializeComponent();
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
 
             // Initialize Results Image
             outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
@@ -69,10 +73,25 @@ namespace GrazeViewV1
         {
             ConsistentForm.FormSize = this.Size;
             ConsistentForm.FormLocation = this.Location;
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             MainPage mainPage = new MainPage();  // Initialize new main page
             mainPage.Show();    // Show new main page
             this.Hide();        // Hide current page
+        }
+
+        private void SetFullScreen()     // Class to handle screen maximization
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
     }

@@ -59,6 +59,7 @@ namespace GrazeViewV1
     {
         public static Size FormSize { get; set; } = new Size(1280, 918); // Default of 1280, 918
         public static Point FormLocation { get; set; } = new Point(100, 100); // Default of 100, 100 location
+        public static bool IsFullScreen { get; set; } = false;  // Default bool set to not full screen
 
     }
 
