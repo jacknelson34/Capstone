@@ -10,13 +10,14 @@ using System.Configuration;
 using System.ComponentModel;
 using System.CodeDom;
 using System.Drawing.Design;
+using System.Net.Http.Headers;
 
 namespace GrazeViewV1
 {
     /*--------------------Page Sizing-------------------------------------*/
 
     // Class to create sizing consistencies
-    public class ConsistentForm : Form
+    /*public class ConsistentForm : Form
     {
         // Static variables to store the size and location of the last form
         private static Size? previousFormSize = null;
@@ -52,6 +53,13 @@ namespace GrazeViewV1
         }
 
         
+    }*/
+
+    public static class ConsistentForm // Public class to store form resize for consistency
+    {
+        public static Size FormSize { get; set; } = new Size(1280, 918); // Default of 1280, 918
+        public static Point FormLocation { get; set; } = new Point(100, 100); // Default of 100, 100 location
+
     }
 
 

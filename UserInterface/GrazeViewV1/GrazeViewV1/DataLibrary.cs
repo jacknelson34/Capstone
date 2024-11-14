@@ -73,7 +73,7 @@ namespace GrazeViewV1
             }
 
             // Open DataLibraryExpandedView
-            DataLibraryExpandedView expandedView = new DataLibraryExpandedView();
+            DataLibraryExpandedView expandedView = new DataLibraryExpandedView(_mainPage);
 
             // Loop through each row and add selected rows to a list
             foreach (var row in selectedRows)

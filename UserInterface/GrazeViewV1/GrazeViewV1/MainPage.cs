@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GrazeViewV1
 {
-    public partial class MainPage : ConsistentForm
+    public partial class MainPage : Form
     {
         // Hold reference for datalibrary
         private DataLibrary _datalibrary;
@@ -18,24 +18,34 @@ namespace GrazeViewV1
         public MainPage()
         {
             InitializeComponent();
-            _datalibrary = new DataLibrary(this);
+            _datalibrary = new DataLibrary(this);           // Create dataLibrary with reference to mainpage
 
-            /*CenterControls();  // Center Buttons/Labels when created
-            this.Resize += MainPage_Resize;  // Call Resize Method if form is resized*/
+            this.Size = ConsistentForm.FormSize;
+            this.Location = ConsistentForm.FormLocation;
+            MessageBox.Show("Form Size = " + ConsistentForm.FormSize.ToString());
+            MessageBox.Show("Current Size = " + this.Size.ToString());
+
+            this.Resize += MainPage_Resize;
         }
 
         private void dataUploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
         {
-            DataUpload dataupload = new DataUpload(this);
-            dataupload.Show();
-            this.Hide();
+            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
+            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+
+            DataUpload dataupload = new DataUpload(this);       // Create new dataUpload form
+            dataupload.Show();                                  // Show dataUpload
+            this.Hide();                                        // Hide mainPage
         }
 
         private void dataViewerButton_Click(object? sender, EventArgs e)  // Data Viewer Button Clicked
         {
-            DataLibrary datalibrary = new DataLibrary(this);
-            datalibrary.Show();
-            this.Hide();
+            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
+            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+
+            DataLibrary datalibrary = new DataLibrary(this);    // Create new dataLibrary
+            datalibrary.Show();                                 // Show dataLibrary
+            this.Hide();                                        // Hide mainPage
         }
 
         private void helpButton_Click(object sender, EventArgs e)
@@ -64,6 +74,26 @@ namespace GrazeViewV1
         {
             return _datalibrary; 
         }
+
+        private void ResizePanel()
+        {
+            mainPanel.Width = (int)(this.ClientSize.Width * 0.8);
+            mainPanel.Height = (int)(this.ClientSize.Height * 0.83);
+
+            this.Refresh();
+        }
+
+        private void MainPage_Resize(object sender, EventArgs e)
+        {
+            ConsistentForm.FormLocation = this.Location;
+            ConsistentForm.FormSize = this.Size;
+
+            ResizePanel();
+        }
+
+        
+
+        // -------------------------------- Previous Method for resizing controls : NO LONGER IN USE --------------------- //
 
         /*private void CenterControls()  // Method for centering labels and buttons
         {

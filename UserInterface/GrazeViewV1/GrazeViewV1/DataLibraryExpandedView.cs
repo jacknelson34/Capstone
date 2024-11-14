@@ -16,8 +16,9 @@ namespace GrazeViewV1
         private MainPage _mainPage;                 // Hold reference for mainPage for dataLibrary
         private Bitmap memoryImage;                 // For printing
 
-        public DataLibraryExpandedView()
+        public DataLibraryExpandedView(MainPage mainPage)
         {
+            _mainPage = mainPage;
             InitializeComponent(); 
         }
 

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace GrazeViewV1
 {
-    public partial class LoadingPage: ConsistentForm
+    public partial class LoadingPage: Form
     {
         private PictureBox uploadedSlide;
         private ProgressBar loadingBar;
@@ -21,6 +21,8 @@ namespace GrazeViewV1
         public LoadingPage(Image uploadedImage)
         {
             InitializeComponent();
+            this.Size = ConsistentForm.FormSize;
+            this.Location = ConsistentForm.FormLocation;
 
             // Initialize Form Properties
             this.Text = "Loading Page";
@@ -173,6 +175,9 @@ namespace GrazeViewV1
 
         private void nextPage()                         // Method for going to resultsPage
         {
+            ConsistentForm.FormSize = this.Size;
+            ConsistentForm.FormLocation = this.Location;
+
             ResultPage resultsPage = new ResultPage(resultsImage);      // Initialize new page
             resultsPage.Show();                                         // Show new page
             this.Hide();                                                // Hide current page

@@ -1,7 +1,10 @@
 namespace GrazeViewV1
 {
 
-    public partial class WelcomePage : ConsistentForm
+
+    // --------------------------------- THIS PAGE IS NOT IN USE ------------------------------------------ //
+
+    public partial class WelcomePage : Form
     {
 
         private Label titlelabel = new Label();

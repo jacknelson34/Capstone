@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GrazeViewV1
 {
-    public partial class ResultPage : ConsistentForm
+    public partial class ResultPage : Form
     {
         private Button returnButton;
         private PictureBox outputImage;
@@ -18,6 +18,8 @@ namespace GrazeViewV1
         public ResultPage(Image resultImage)  // Build page with resulting image from ML and previous page's size/location
         {
             InitializeComponent();
+            this.Size = ConsistentForm.FormSize;
+            this.Location = ConsistentForm.FormLocation;
 
             // Initialize Results Image
             outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
@@ -65,6 +67,9 @@ namespace GrazeViewV1
 
         private void returnButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
+            ConsistentForm.FormSize = this.Size;
+            ConsistentForm.FormLocation = this.Location;
+
             MainPage mainPage = new MainPage();  // Initialize new main page
             mainPage.Show();    // Show new main page
             this.Hide();        // Hide current page

@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,12 +26,17 @@ namespace GrazeViewV1
             // Form Properties
             InitializeComponent();
             _mainPage = mainpage;
+            this.Size = ConsistentForm.FormSize;
+            this.Location = ConsistentForm.FormLocation;
 
         }
 
         // when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
+            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
+            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+
             _mainPage.Show();                                       // Open Main Page
             this.Hide();                                            // Close Data Upload Page
         }
@@ -177,6 +183,9 @@ namespace GrazeViewV1
         // when the upload button is clicked on
         private void uploadButton_Click(object? sender, EventArgs e)
         {
+            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
+            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+
             // Check if the Sample Location, Sheep Breed, or Comments are empty, and set them to "N/A" if they are
             string sampleLocation = string.IsNullOrWhiteSpace(locationTextbox.Text) ? "N/A" : locationTextbox.Text;
             string sheepBreed = string.IsNullOrWhiteSpace(breedTextbox.Text) ? "N/A" : breedTextbox.Text;

@@ -47,7 +47,7 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).BeginInit();
             SuspendLayout();
-            ClientSize = new Size(1241, 918);
+            ClientSize = new Size(1280, 918);
             MinimumSize = new Size(1280, 918);
             //
             // uploadPanel
