@@ -27,8 +27,8 @@ namespace GrazeViewV1
                 SetFullScreen();
             }
 
-            MessageBox.Show("Form Size = " + ConsistentForm.FormSize.ToString());
-            MessageBox.Show("Current Size = " + this.Size.ToString());
+            //MessageBox.Show("Form Size = " + ConsistentForm.FormSize.ToString());
+            //MessageBox.Show("Current Size = " + this.Size.ToString());
 
             this.Resize += MainPage_Resize;
         }
