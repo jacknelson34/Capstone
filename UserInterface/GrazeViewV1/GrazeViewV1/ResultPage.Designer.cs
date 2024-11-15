@@ -42,14 +42,14 @@
                 (this.ClientSize.Width - resultsPagePanel.Width) / 2,
                 (this.ClientSize.Height - resultsPagePanel.Height) / 2
                 );
-            resultsPagePanel.BorderStyle = BorderStyle.None; 
+            resultsPagePanel.BorderStyle = BorderStyle.Fixed3D; 
 
 
             // Create Model Generated Panel
             MLOutputPanel = new Panel();
             MLOutputPanel.Size = new Size(350, 200);  // Adjusted size to be smaller
             MLOutputPanel.BorderStyle = BorderStyle.FixedSingle;
-            MLOutputPanel.Location = new Point(425, 400);  // Positioned next to the UserOutputPanel
+            MLOutputPanel.Location = new Point(450, 400);  // Positioned next to the UserOutputPanel
             //MLOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;  // Anchor to bottom-right
             resultsPagePanel.Controls.Add(MLOutputPanel);
 
@@ -61,9 +61,9 @@
 
             // Create User Provided Data Panel
             UserOutputPanel = new Panel();
-            UserOutputPanel.Size = new Size(350, 200);  // Adjusted size to be smaller
+            UserOutputPanel.Size = new Size(450, 200);  // Adjusted size to be smaller
             UserOutputPanel.BorderStyle = BorderStyle.FixedSingle;
-            UserOutputPanel.Location = new Point(25, 400);
+            UserOutputPanel.Location = new Point(0, 400);
            // UserOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;  // Anchor to bottom-left
             resultsPagePanel.Controls.Add(UserOutputPanel);
 
@@ -146,31 +146,31 @@
 
             // Create and add controls for each user data field using seamless textboxes
             uploadNameLabel = CreateLabel("Upload Name:", new Point(10, currentYPosition));
-            uploadNameTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth, currentYPosition), textBoxWidth);
+            uploadNameTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+15, currentYPosition), textBoxWidth);
             panel.Controls.Add(uploadNameLabel);
             panel.Controls.Add(uploadNameTextBox);
 
             currentYPosition += 30;
             dateUploadedLabel = CreateLabel("Date Uploaded:", new Point(10, currentYPosition));
-            dateUploadedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth, currentYPosition), textBoxWidth);
+            dateUploadedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+15, currentYPosition), textBoxWidth);
             panel.Controls.Add(dateUploadedLabel);
             panel.Controls.Add(dateUploadedTextBox);
 
             currentYPosition += 30;
             dateOfSampleLabel = CreateLabel("Date of Sample:", new Point(10, currentYPosition));
-            dateOfSampleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth, currentYPosition), textBoxWidth);
+            dateOfSampleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+15, currentYPosition), textBoxWidth);
             panel.Controls.Add(dateOfSampleLabel);
             panel.Controls.Add(dateOfSampleTextBox);
 
             currentYPosition += 30;
             sampleLocationLabel = CreateLabel("Sample Location:", new Point(10, currentYPosition));
-            sampleLocationTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth, currentYPosition), textBoxWidth);
+            sampleLocationTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+15, currentYPosition), textBoxWidth);
             panel.Controls.Add(sampleLocationLabel);
             panel.Controls.Add(sampleLocationTextBox);
 
             currentYPosition += 30;
             sheepBreedLabel = CreateLabel("Sheep Breed:", new Point(10, currentYPosition));
-            sheepBreedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth, currentYPosition), textBoxWidth);
+            sheepBreedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+15, currentYPosition), textBoxWidth);
             panel.Controls.Add(sheepBreedLabel);
             panel.Controls.Add(sheepBreedTextBox);
         }

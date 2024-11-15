@@ -40,7 +40,9 @@
             // mainPagePanel
             //
             mainPanel = new Panel();
-            mainPanel.Size = new Size(1000, 600);
+            //mainPanel.Size = new Size(1000, 600);
+            mainPanel.Width = (int)(this.ClientSize.Width * 0.8);
+            mainPanel.Height = (int)(this.ClientSize.Height * 0.83);
             mainPanel.BorderStyle = BorderStyle.None;
             mainPanel.Anchor = AnchorStyles.None;
             mainPanel.Location = new Point((this.ClientSize.Width - mainPanel.Width) / 2, 
