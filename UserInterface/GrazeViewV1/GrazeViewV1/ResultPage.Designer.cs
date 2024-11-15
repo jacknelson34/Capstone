@@ -31,16 +31,27 @@
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 600);  // Adjusted size
+            MinimumSize = new Size(1280, 918);
             this.Text = "Result Page";
             BackColor = Color.LightBlue;
 
+            resultsPagePanel = new Panel();
+            resultsPagePanel.Size = new Size(800, 600);
+            resultsPagePanel.Anchor = AnchorStyles.None;
+            resultsPagePanel.Location = new Point(
+                (this.ClientSize.Width - resultsPagePanel.Width) / 2,
+                (this.ClientSize.Height - resultsPagePanel.Height) / 2
+                );
+            resultsPagePanel.BorderStyle = BorderStyle.None; 
+
+
             // Create Model Generated Panel
             MLOutputPanel = new Panel();
-            MLOutputPanel.Size = new Size(250, 200);  // Adjusted size to be smaller
+            MLOutputPanel.Size = new Size(350, 200);  // Adjusted size to be smaller
             MLOutputPanel.BorderStyle = BorderStyle.FixedSingle;
-            MLOutputPanel.Location = new Point((this.ClientSize.Width / 2), this.ClientSize.Height - MLOutputPanel.Height - 100);  // Positioned next to the UserOutputPanel
-            MLOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;  // Anchor to bottom-right
-            this.Controls.Add(MLOutputPanel);
+            MLOutputPanel.Location = new Point(425, 400);  // Positioned next to the UserOutputPanel
+            //MLOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;  // Anchor to bottom-right
+            resultsPagePanel.Controls.Add(MLOutputPanel);
 
             Label modelTitle = CreatePanelTitle("Model Generated Data:");
             MLOutputPanel.Controls.Add(modelTitle);
@@ -50,11 +61,11 @@
 
             // Create User Provided Data Panel
             UserOutputPanel = new Panel();
-            UserOutputPanel.Size = new Size(250, 200);  // Adjusted size to be smaller
+            UserOutputPanel.Size = new Size(350, 200);  // Adjusted size to be smaller
             UserOutputPanel.BorderStyle = BorderStyle.FixedSingle;
-            UserOutputPanel.Location = new Point((this.ClientSize.Width / 2) - 250, this.ClientSize.Height - UserOutputPanel.Height - 100);  // Positioned to the left of MLOutputPanel
-            UserOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;  // Anchor to bottom-left
-            this.Controls.Add(UserOutputPanel);
+            UserOutputPanel.Location = new Point(25, 400);
+           // UserOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;  // Anchor to bottom-left
+            resultsPagePanel.Controls.Add(UserOutputPanel);
 
             Label userTitle = CreatePanelTitle("User Provided Data:");
             UserOutputPanel.Controls.Add(userTitle);
@@ -71,6 +82,8 @@
             exitButton.Anchor = AnchorStyles.Bottom;
             exitButton.Click += returnButton_Click;
             this.Controls.Add(exitButton);
+
+            this.Controls.Add(resultsPagePanel);
         }
 
         // Helper method to create a title label for each panel

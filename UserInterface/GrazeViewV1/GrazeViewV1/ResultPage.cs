@@ -31,9 +31,9 @@ namespace GrazeViewV1
             outputImage.SizeMode = PictureBoxSizeMode.Zoom;                           // Zoom image to fit size
             outputImage.Size = new Size(300, 200);                                    // Size image to 300 x 200
             outputImage.Location = new Point(                                         // Position Image to center top of the page
-                (this.ClientSize.Width / 2) - (outputImage.Width / 2),
+                250,
                 20);
-            this.Controls.Add(outputImage);                                           // Create new picturebox on page
+            resultsPagePanel.Controls.Add(outputImage);                                           // Create new picturebox on page
 
             // Populate user provided data text boxes with data from the last upload
             if (GlobalData.Uploads.Any())
