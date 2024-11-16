@@ -57,7 +57,7 @@
             mainLabel.Location = new Point(
                 (mainPanel.Width / 2) - (mainLabel.Width / 2),
                 (mainPanel.Height / 6));
-            MessageBox.Show("Label location: " + mainLabel.Location.ToString());
+            //MessageBox.Show("Label location: " + mainLabel.Location.ToString());
             mainLabel.Name = "mainLabel";
             mainLabel.TabIndex = 0;
             mainLabel.Text = "GRAZE VIEW";

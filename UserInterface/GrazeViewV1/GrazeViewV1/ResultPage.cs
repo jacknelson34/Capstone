@@ -35,10 +35,10 @@ namespace GrazeViewV1
             outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
             outputImage.Image = resultImage;                                          // Insert image into pictureBox
             outputImage.SizeMode = PictureBoxSizeMode.Zoom;                           // Zoom image to fit size
-            outputImage.Size = new Size(300, 200);                                    // Size image to 300 x 200
+            outputImage.Size = new Size(800, 400);                                    // Size image to 300 x 200
             outputImage.Location = new Point(                                         // Position Image to center top of the page
-                250,
-                20);
+                (resultsPagePanel.Width / 2)-(outputImage.Width / 2),
+                (resultsPagePanel.Height / 2)-(outputImage.Height / 2));
             resultsPagePanel.Controls.Add(outputImage);                                           // Create new picturebox on page
 
             // Populate user provided data text boxes with data from the last upload

@@ -232,7 +232,7 @@ namespace GrazeViewV1
             };
 
             // Debugging: Confirm data is added to the UploadInfo object
-            // MessageBox.Show($"Captured UploadName: {uploadInfo.UploadName}");
+            //MessageBox.Show($"Captured UploadName: {uploadInfo.UploadName}");
 
 
             // Add the new upload info to the GlobalData uploads list
