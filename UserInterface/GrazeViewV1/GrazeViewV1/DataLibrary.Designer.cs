@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             backButton = new roundButton();
+            previewButton = new roundButton();
             exportButton = new roundButton();
             dataGridView1 = new DataGridView();
             buttonPanel = new Panel();
@@ -68,6 +69,21 @@
             backButton.Text = "Exit";
             backButton.UseVisualStyleBackColor = false;
             backButton.Click += backButton_Click;
+            //
+            // previewButton
+            //
+            previewButton.Anchor = AnchorStyles.None;
+            previewButton.BackColor = Color.LightGreen;
+            previewButton.FlatStyle = FlatStyle.Flat;
+            previewButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            previewButton.ForeColor = Color.Black;
+            previewButton.Location = new Point(920, 26);
+            previewButton.Name = "previewButton";
+            previewButton.Size = new Size(150, 50);
+            previewButton.TabIndex = 2;
+            previewButton.Text = "Export";
+            previewButton.UseVisualStyleBackColor = false;
+            previewButton.Click += exportButton_Click;
             // 
             // exportButton
             // 
@@ -250,6 +266,7 @@
         #endregion
 
         private roundButton backButton;
+        private roundButton previewButton;
         private DataGridView dataGridView1;
         private PictureBox helpButton;
         private Panel verticalScroll;

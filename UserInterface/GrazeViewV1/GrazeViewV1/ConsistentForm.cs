@@ -162,7 +162,59 @@ namespace GrazeViewV1
 
     }
 
-    public class TransparentLabel : Label
+
+    // Custom MessageBox to hold images
+    public class CustomMessageBox : Form
+    {
+        private PictureBox pictureBox;
+        private Label messageLabel;
+        private Button okButton;
+
+        public CustomMessageBox(string message, Image image)
+        {
+            // Set form properties
+            this.Text = "Message";
+            this.Size = new Size(400, 300);
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+
+            // Initialize PictureBox
+            pictureBox = new PictureBox
+            {
+                Image = image,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Location = new Point(10, 10),
+                Size = new Size(100, 100)
+            };
+            this.Controls.Add(pictureBox);
+
+            // Initialize Label
+            messageLabel = new Label
+            {
+                Text = message,
+                AutoSize = true,
+                Location = new Point(120, 50),
+                MaximumSize = new Size(250, 0),
+            };
+            this.Controls.Add(messageLabel);
+
+            // Initialize OK Button
+            okButton = new Button
+            {
+                Text = "OK",
+                DialogResult = DialogResult.OK,
+                Location = new Point(150, 200),
+            };
+            this.Controls.Add(okButton);
+
+            // Set the Accept button
+            this.AcceptButton = okButton;
+        }
+    }
+
+        public class TransparentLabel : Label
     {
         protected override void OnPaint(PaintEventArgs e)
         {

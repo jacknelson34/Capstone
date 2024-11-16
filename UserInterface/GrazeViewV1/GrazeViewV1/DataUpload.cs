@@ -228,7 +228,7 @@ namespace GrazeViewV1
                 UploadTime = DateTime.Now,                     // Store the current time of upload
                 SheepBreed = sheepBreed,                       // Store the sheep breed (or N/A)
                 Comments = comments                            // Store user comments (or N/A)
-                // ThumbNail = thumbnail                          // Store thumbnail image
+                // ThumbNail = thumbnail                       // Store thumbnail image
             };
 
             // Debugging: Confirm data is added to the UploadInfo object

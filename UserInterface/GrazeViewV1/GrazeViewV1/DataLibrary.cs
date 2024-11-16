@@ -35,6 +35,7 @@ namespace GrazeViewV1
             // Handle data errors
             dataGridView1.DataError += dataGridView1_DataError;
 
+
         }
 
         private void SetFullScreen()     // Class to handle screen maximization
