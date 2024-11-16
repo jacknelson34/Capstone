@@ -47,8 +47,9 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).BeginInit();
             SuspendLayout();
-            ClientSize = new Size(1280, 918);
-            MinimumSize = new Size(1280, 918);
+            ClientSize = ConsistentForm.FormSize;
+            Location = ConsistentForm.FormLocation;
+            MinimumSize = new Size(1280, 975);
             //
             // uploadPanel
             //
@@ -244,6 +245,7 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).EndInit();
             ResumeLayout(false);
+            Refresh();
             PerformLayout();
         }
 

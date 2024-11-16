@@ -32,7 +32,7 @@ namespace GrazeViewV1
             // Initialize Results Image
             outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
             outputImage.Image = resultImage;                                          // Insert image into pictureBox
-            outputImage.SizeMode = PictureBoxSizeMode.Zoom;                           // Zoom image to fit size
+            outputImage.SizeMode = PictureBoxSizeMode.StretchImage;                          // Zoom image to fit size
             outputImage.Size = new Size(800, 400);                                    // Size image to 300 x 200
             outputImage.Location = new Point(                                         // Position Image to center top of the page
                 (resultsPagePanel.Width / 2)-(outputImage.Width / 2),

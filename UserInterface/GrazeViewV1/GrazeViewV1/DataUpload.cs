@@ -23,15 +23,19 @@ namespace GrazeViewV1
 
         public DataUpload(MainPage mainpage)
         {
+            MessageBox.Show("Data Upload Passed Location: " + ConsistentForm.FormLocation.ToString());
+
             // Form Properties
             InitializeComponent();
             _mainPage = mainpage;
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
-            if (ConsistentForm.IsFullScreen)
+            if (ConsistentForm.IsFullScreen) 
             {
                 SetFullScreen();
             }
+            this.Refresh();
+            MessageBox.Show("Data Upload Initialized Location : " + this.Location.ToString());
 
         }
 

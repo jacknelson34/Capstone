@@ -58,6 +58,7 @@
             // backButton
             // 
             backButton.Anchor = AnchorStyles.None;
+            backButton.borderRadius = 20;
             backButton.BackColor = Color.LightGreen;
             backButton.FlatStyle = FlatStyle.Flat;
             backButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -73,6 +74,7 @@
             // previewButton
             //
             previewButton.Anchor = AnchorStyles.None;
+            previewButton.borderRadius = 20;
             previewButton.BackColor = Color.LightGreen;
             previewButton.FlatStyle = FlatStyle.Flat;
             previewButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -89,6 +91,7 @@
             // 
             exportButton.Anchor = AnchorStyles.None;
             exportButton.BackColor = Color.LightGreen;
+            exportButton.borderRadius = 20;
             exportButton.FlatStyle = FlatStyle.Flat;
             exportButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             exportButton.ForeColor = Color.Black;

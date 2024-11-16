@@ -59,6 +59,8 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;
             }
 
+            MessageBox.Show("Main Page Location : " + this.Location.ToString());
+
             DataUpload dataupload = new DataUpload(this);       // Create new dataUpload form
             dataupload.Show();                                  // Show dataUpload
             this.Hide();                                        // Hide mainPage
@@ -121,6 +123,13 @@ namespace GrazeViewV1
         // Page load event handler - Used for sizing purposes
         private void MainPage_Load(object sender, EventArgs e)
         {
+            this.Size = ConsistentForm.FormSize;
+            this.Location = ConsistentForm.FormLocation;
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
+
             ResizePanel();
             ResizeControls();
         }
