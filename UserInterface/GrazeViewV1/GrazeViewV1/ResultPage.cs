@@ -15,9 +15,15 @@ namespace GrazeViewV1
         private Button returnButton;
         private PictureBox outputImage;
 
-        public ResultPage(Image resultImage)  // Build page with resulting image from ML and previous page's size/location
+        // Hold instances of the opened pages
+        private MainPage _mainPage;
+        private DataUpload _dataUpload;
+
+        public ResultPage(Image resultImage, MainPage mainPage, DataUpload dataUpload)  // Build page with resulting image from ML and previous page's size/location
         {
             InitializeComponent();
+            _mainPage = mainPage;
+            _dataUpload = dataUpload;
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
             if (ConsistentForm.IsFullScreen)
@@ -82,9 +88,25 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;
             }
 
-            MainPage mainPage = new MainPage();  // Initialize new main page
-            mainPage.Show();    // Show new main page
-            this.Hide();        // Hide current page
+            _mainPage.Show();    // Show main page
+            this.Close();         // Hide current page
+        }
+
+        private void returnToUploadButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
+        {
+            ConsistentForm.FormSize = this.Size;
+            ConsistentForm.FormLocation = this.Location;
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
+
+            _dataUpload.Show();    // Show new main page
+            this.Close();        // Hide current page
         }
 
         private void SetFullScreen()     // Class to handle screen maximization
@@ -93,6 +115,5 @@ namespace GrazeViewV1
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.Bounds = Screen.PrimaryScreen.Bounds;
         }
-
     }
 }

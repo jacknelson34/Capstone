@@ -28,62 +28,84 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 600);  // Adjusted size
-            MinimumSize = new Size(1280, 918);
-            this.Text = "Result Page";
-            BackColor = Color.LightBlue;
-
             resultsPagePanel = new Panel();
-            resultsPagePanel.Size = new Size(800, 600);
-            resultsPagePanel.Anchor = AnchorStyles.None;
-            resultsPagePanel.Location = new Point(
-                (this.ClientSize.Width - resultsPagePanel.Width) / 2,
-                (this.ClientSize.Height - resultsPagePanel.Height) / 2
-                );
-            resultsPagePanel.BorderStyle = BorderStyle.Fixed3D; 
-
-
-            // Create Model Generated Panel
             MLOutputPanel = new Panel();
-            MLOutputPanel.Size = new Size(350, 200);  // Adjusted size to be smaller
-            MLOutputPanel.BorderStyle = BorderStyle.FixedSingle;
-            MLOutputPanel.Location = new Point(450, 400);  // Positioned next to the UserOutputPanel
-            //MLOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;  // Anchor to bottom-right
-            resultsPagePanel.Controls.Add(MLOutputPanel);
-
-            Label modelTitle = CreatePanelTitle("Model Generated Data:");
-            MLOutputPanel.Controls.Add(modelTitle);
-
-            // Add ML data controls to Model Generated panel
-            CreateMLDataControls(MLOutputPanel);
-
-            // Create User Provided Data Panel
             UserOutputPanel = new Panel();
-            UserOutputPanel.Size = new Size(450, 200);  // Adjusted size to be smaller
+            exitButton = new roundButton();
+            returnToUploadButton = new roundButton();
+            resultsPagePanel.SuspendLayout();
+            SuspendLayout();
+            // 
+            // resultsPagePanel
+            // 
+            resultsPagePanel.Anchor = AnchorStyles.None;
+            resultsPagePanel.BorderStyle = BorderStyle.Fixed3D;
+            resultsPagePanel.Controls.Add(MLOutputPanel);
+            resultsPagePanel.Controls.Add(UserOutputPanel);
+            resultsPagePanel.Location = new Point(274, 229);
+            resultsPagePanel.Name = "resultsPagePanel";
+            resultsPagePanel.Size = new Size(800, 600);
+            resultsPagePanel.TabIndex = 1;
+            // 
+            // MLOutputPanel
+            // 
+            MLOutputPanel.BorderStyle = BorderStyle.FixedSingle;
+            MLOutputPanel.Location = new Point(450, 400);
+            MLOutputPanel.Name = "MLOutputPanel";
+            MLOutputPanel.Size = new Size(350, 200);
+            MLOutputPanel.TabIndex = 0;
+            // 
+            // UserOutputPanel
+            // 
             UserOutputPanel.BorderStyle = BorderStyle.FixedSingle;
             UserOutputPanel.Location = new Point(0, 400);
-           // UserOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;  // Anchor to bottom-left
-            resultsPagePanel.Controls.Add(UserOutputPanel);
-
-            Label userTitle = CreatePanelTitle("User Provided Data:");
-            UserOutputPanel.Controls.Add(userTitle);
-
-            // Add user data controls to User Provided Data panel
-            CreateUserProvidedDataControls(UserOutputPanel);
-
-            // Add Exit button
-            roundButton exitButton = new roundButton();
-            exitButton.Text = "Exit";
-            exitButton.borderRadius = 20;
-            exitButton.Size = new Size(80, 30);
-            exitButton.Location = new Point((this.ClientSize.Width - exitButton.Width) / 2, this.ClientSize.Height - exitButton.Height - 20);
+            UserOutputPanel.Name = "UserOutputPanel";
+            UserOutputPanel.Size = new Size(450, 200);
+            UserOutputPanel.TabIndex = 1;
+            // 
+            // exitButton
+            // 
             exitButton.Anchor = AnchorStyles.Bottom;
+            exitButton.BackColor = Color.LightGreen;
+            exitButton.FlatStyle = FlatStyle.Flat;
+            exitButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            exitButton.ForeColor = Color.Black;
+            exitButton.Location = new Point(274, 229);
+            exitButton.Name = "exitButton";
+            exitButton.Size = new Size(100, 50);
+            exitButton.TabIndex = 0;
+            exitButton.Text = "Exit";
+            exitButton.UseVisualStyleBackColor = false;
             exitButton.Click += returnButton_Click;
-            this.Controls.Add(exitButton);
-
-            this.Controls.Add(resultsPagePanel);
+            // 
+            // returnToUploadButton
+            // 
+            returnToUploadButton.BackColor = Color.LightGreen;
+            returnToUploadButton.FlatAppearance.BorderSize = 0;
+            returnToUploadButton.FlatStyle = FlatStyle.Flat;
+            returnToUploadButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            returnToUploadButton.ForeColor = Color.Black;
+            returnToUploadButton.Location = new Point(121, 97);
+            returnToUploadButton.Name = "returnToUploadButton";
+            returnToUploadButton.Size = new Size(299, 53);
+            returnToUploadButton.TabIndex = 2;
+            returnToUploadButton.Text = "Upload Again";
+            returnToUploadButton.UseVisualStyleBackColor = false;
+            // 
+            // ResultPage
+            // 
+            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.LightBlue;
+            ClientSize = new Size(1254, 847);
+            Controls.Add(returnToUploadButton);
+            Controls.Add(exitButton);
+            Controls.Add(resultsPagePanel);
+            MinimumSize = new Size(1280, 918);
+            Name = "ResultPage";
+            Text = "Result Page";
+            resultsPagePanel.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         // Helper method to create a title label for each panel
@@ -231,6 +253,8 @@
 
         // Panel 3 - For resizing purposes
         private Panel resultsPagePanel;
+        private roundButton exitButton;
+        private roundButton returnToUploadButton;
 
         // if there is any easier way of initializing these please tell me lol
     }

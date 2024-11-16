@@ -18,6 +18,10 @@ namespace GrazeViewV1
         private Image resultsImage;
         private TextBox statusUpdates;
 
+        // Hold instances of other pages
+        private MainPage _mainPage;
+        private DataUpload _dataUpload;
+
         public LoadingPage(Image uploadedImage)
         {
             InitializeComponent();
@@ -191,9 +195,9 @@ namespace GrazeViewV1
             }
 
 
-            ResultPage resultsPage = new ResultPage(resultsImage);      // Initialize new page
-            resultsPage.Show();                                         // Show new page
-            this.Hide();                                                // Hide current page
+            ResultPage resultsPage = new ResultPage(resultsImage, _mainPage, _dataUpload);      // Initialize new page
+            resultsPage.Show();                                                                 // Show new page
+            this.Close();                                                                       // Hide current page
         }
 
         private void SetFullScreen()     // Class to handle screen maximization
