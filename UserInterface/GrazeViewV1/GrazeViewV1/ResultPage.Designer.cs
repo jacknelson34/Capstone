@@ -32,6 +32,7 @@
             MLOutputPanel = new Panel();
             UserOutputPanel = new Panel();
             exitButton = new roundButton();
+            dataViewButton = new roundButton();
             returnToUploadButton = new roundButton();
             ClientSize = new Size(1254, 847);
             resultsPagePanel.SuspendLayout();
@@ -64,14 +65,15 @@
             // 
             // exitButton
             // 
-            exitButton.Anchor = AnchorStyles.Bottom;
+            exitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             exitButton.BackColor = Color.LightGreen;
+            exitButton.borderRadius = 20;
             exitButton.FlatStyle = FlatStyle.Flat;
             exitButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             exitButton.ForeColor = Color.Black;
-            exitButton.Location = new Point((this.ClientSize.Width / 2) + 100, (this.ClientSize.Height - 100));
+            exitButton.Location = new Point((this.ClientSize.Width - 150), (this.ClientSize.Height - 75));
             exitButton.Name = "exitButton";
-            exitButton.Size = new Size(100, 50);
+            exitButton.Size = new Size(125, 50);
             exitButton.TabIndex = 0;
             exitButton.Text = "Exit";
             exitButton.UseVisualStyleBackColor = false;
@@ -81,16 +83,35 @@
             // 
             returnToUploadButton.BackColor = Color.LightGreen;
             returnToUploadButton.FlatAppearance.BorderSize = 0;
+            returnToUploadButton.borderRadius = 20;
             returnToUploadButton.FlatStyle = FlatStyle.Flat;
             returnToUploadButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             returnToUploadButton.ForeColor = Color.Black;
-            returnToUploadButton.Location = new Point((this.ClientSize.Width / 2) - 100, (this.ClientSize.Height - 100));
+            returnToUploadButton.Location = new Point((this.ClientSize.Width / 2) - (returnToUploadButton.Width / 2) - 275, (this.ClientSize.Height - 100));
             returnToUploadButton.Anchor = AnchorStyles.Bottom;
             returnToUploadButton.Name = "returnToUploadButton";
-            returnToUploadButton.Size = new Size(299, 53);
+            returnToUploadButton.Size = new Size(300, 75);
             returnToUploadButton.TabIndex = 2;
             returnToUploadButton.Text = "Upload Again";
             returnToUploadButton.UseVisualStyleBackColor = false;
+            returnToUploadButton.Click += returnToUploadButton_Click;
+            //
+            // dataViewButton
+            //
+            dataViewButton.BackColor = Color.LightGreen;
+            dataViewButton.FlatAppearance.BorderSize = 0;
+            dataViewButton.borderRadius = 20;
+            dataViewButton.FlatStyle = FlatStyle.Flat;
+            dataViewButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataViewButton.ForeColor = Color.Black;
+            dataViewButton.Location = new Point((this.ClientSize.Width / 2) - (dataViewButton.Width / 2) + 75, (this.ClientSize.Height - 100));
+            dataViewButton.Anchor = AnchorStyles.Bottom;
+            dataViewButton.Name = "dataViewButton";
+            dataViewButton.Size = new Size(300, 75);
+            dataViewButton.TabIndex = 2;
+            dataViewButton.Text = "View in Library";
+            dataViewButton.UseVisualStyleBackColor = false;
+            dataViewButton.Click += dataViewButton_Click;
             // 
             // ResultPage
             // 
@@ -102,6 +123,7 @@
             resultsPagePanel.Controls.Add(UserOutputPanel);
             resultsPagePanel.Controls.Add(MLOutputPanel);
             Controls.Add(returnToUploadButton);
+            Controls.Add(dataViewButton);
             Controls.Add(exitButton);
             Controls.Add(resultsPagePanel);
             MinimumSize = new Size(1280, 918);
@@ -116,7 +138,7 @@
         {
             Label title = new Label();
             title.Text = titleText;
-            title.Font = new Font("Times New Roman", 12, FontStyle.Bold);
+            title.Font = new Font("Times New Roman", 10, FontStyle.Bold);
             title.Location = new Point(10, 10);
             title.AutoSize = true;
             return title;
@@ -129,6 +151,10 @@
             int labelWidth = 120;
             int textBoxWidth = 150;
             Font commonFont = new Font("Times New Roman", 10, FontStyle.Regular);
+
+            // Create panel title
+            Label title = CreatePanelTitle("Model Generated Data:");
+            panel.Controls.Add(title);
 
             // Create and add controls for each ML data field using seamless textboxes
             qufuLabel = CreateLabel("Qufu (%):", new Point(10, currentYPosition));
@@ -168,6 +194,10 @@
             int labelWidth = 120;
             int textBoxWidth = 300;
             Font commonFont = new Font("Times New Roman", 10, FontStyle.Regular);
+
+            // Create panel title
+            Label title = CreatePanelTitle("User Provided Data:");
+            panel.Controls.Add(title);
 
             // Create and add controls for each user data field using seamless textboxes
             uploadNameLabel = CreateLabel("Upload Name:", new Point(10, currentYPosition));
@@ -258,6 +288,7 @@
         private Panel resultsPagePanel;
         private roundButton exitButton;
         private roundButton returnToUploadButton;
+        private roundButton dataViewButton;
 
         // if there is any easier way of initializing these please tell me lol
     }

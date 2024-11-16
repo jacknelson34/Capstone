@@ -17,13 +17,11 @@ namespace GrazeViewV1
 
         // Hold instances of the opened pages
         private MainPage _mainPage;
-        private DataUpload _dataUpload;
 
-        public ResultPage(Image resultImage, MainPage mainPage, DataUpload dataUpload)  // Build page with resulting image from ML and previous page's size/location
+        public ResultPage(Image resultImage, MainPage mainPage)  // Build page with resulting image from ML and previous page's size/location
         {
             InitializeComponent();
             _mainPage = mainPage;
-            _dataUpload = dataUpload;
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
             if (ConsistentForm.IsFullScreen)
@@ -92,6 +90,24 @@ namespace GrazeViewV1
             this.Close();         // Hide current page
         }
 
+        private void dataViewButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
+        {
+            ConsistentForm.FormSize = this.Size;
+            ConsistentForm.FormLocation = this.Location;
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
+
+            DataLibrary datalibrary = new DataLibrary(_mainPage);    // Create new dataLibrary
+            datalibrary.Show();                                 // Show dataLibrary
+            this.Hide();                                        // Hide mainPage
+        }
+
         private void returnToUploadButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
             ConsistentForm.FormSize = this.Size;
@@ -105,8 +121,9 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;
             }
 
-            _dataUpload.Show();    // Show new main page
-            this.Close();        // Hide current page
+            DataUpload dataupload = new DataUpload(_mainPage);       // Create new dataUpload form
+            dataupload.Show();                                  // Show dataUpload
+            this.Close();                                        // Hide mainPage
         }
 
         private void SetFullScreen()     // Class to handle screen maximization

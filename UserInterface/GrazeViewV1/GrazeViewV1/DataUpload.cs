@@ -257,9 +257,9 @@ namespace GrazeViewV1
             if (fileuploadPictureBox.Image != null)
             {
                 // Proceed to the loading page if a valid image is uploaded
-                LoadingPage loadingPage = new LoadingPage(fileuploadPictureBox.Image);
+                LoadingPage loadingPage = new LoadingPage(fileuploadPictureBox.Image, _mainPage);
                 loadingPage.Show();
-                this.Hide();
+                this.Close();
             }
             else
             {

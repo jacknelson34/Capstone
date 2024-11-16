@@ -36,6 +36,8 @@
             BackColor = Color.LightBlue;
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            MaximumSize = new Size(800, 450);
+            MinimumSize = new Size(800, 450);
             Name = "LoadingPage";
             Text = "LoadingPage";
             ResumeLayout(false);
