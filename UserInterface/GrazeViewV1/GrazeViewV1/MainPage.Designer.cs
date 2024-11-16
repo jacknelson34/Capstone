@@ -43,19 +43,21 @@
             //mainPanel.Size = new Size(1000, 600);
             mainPanel.Width = (int)(this.ClientSize.Width * 0.8);
             mainPanel.Height = (int)(this.ClientSize.Height * 0.83);
-            mainPanel.BorderStyle = BorderStyle.FixedSingle;
+            mainPanel.BorderStyle = BorderStyle.None;
             mainPanel.Anchor = AnchorStyles.None;
             mainPanel.Location = new Point((this.ClientSize.Width - mainPanel.Width) / 2, 
                                            (this.ClientSize.Height - mainPanel.Height) / 2);
             // 
             // mainLabel
             // 
+            
+            mainLabel.Font = new Font("Times New Roman", 42, FontStyle.Bold, GraphicsUnit.Point, 0);
+            mainLabel.Size = new Size((this.ClientSize.Width / 2), (this.ClientSize.Height / 7));
             mainLabel.AutoSize = true;
-            mainLabel.Font = new Font("Times New Roman", 28.125F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            mainLabel.Size = new Size(526, 85);
             mainLabel.Location = new Point(
                 (mainPanel.Width / 2) - (mainLabel.Width / 2),
                 (mainPanel.Height / 6));
+            MessageBox.Show("Label location: " + mainLabel.Location.ToString());
             mainLabel.Name = "mainLabel";
             mainLabel.TabIndex = 0;
             mainLabel.Text = "GRAZE VIEW";

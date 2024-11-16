@@ -28,10 +28,12 @@ namespace GrazeViewV1
             }
 
             // Message Boxes to show updating on size and location
-            MessageBox.Show("Form Size = " + ConsistentForm.FormSize.ToString());
-            MessageBox.Show("Current Size = " + this.Size.ToString());
+            //MessageBox.Show("Form Size = " + ConsistentForm.FormSize.ToString());
+            //MessageBox.Show("Current Size = " + this.Size.ToString());
 
             this.Resize += MainPage_Resize;
+            this.Load += MainPage_Load;     // Fix Positioning and Sizes on load
+            
         }
 
         private void SetFullScreen()     // Class to handle screen maximization
@@ -39,6 +41,9 @@ namespace GrazeViewV1
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.Bounds = Screen.PrimaryScreen.Bounds;
+
+            ResizePanel();
+            ResizeControls();
         }
 
         private void dataUploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
@@ -113,10 +118,29 @@ namespace GrazeViewV1
             this.Refresh();
         }
 
+        // Page load event handler - Used for sizing purposes
+        private void MainPage_Load(object sender, EventArgs e)
+        {
+            ResizePanel();
+            ResizeControls();
+        }
+
         private void MainPage_Resize(object sender, EventArgs e)
         {
             ConsistentForm.FormLocation = this.Location;
             ConsistentForm.FormSize = this.Size;
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+                ResizePanel();
+                ResizeControls();
+            }
+
+            if (this.WindowState != FormWindowState.Maximized) 
+            {
+                ResizePanel();
+                ResizeControls();
+            }
 
             ResizePanel();
             ResizeControls();
@@ -132,25 +156,36 @@ namespace GrazeViewV1
             // Adjust label postition dynamically
             mainLabel.Location = new Point(
                 (mainPanel.Width / 2) - (mainLabel.Width / 2),
-                (mainPanel.Height / 6));
+                (mainPanel.Height / 6) - 40);
+
+            // Adjust font size accordingly
+            float fontSize = Math.Max(8, this.ClientSize.Width / 30f);
+            mainLabel.Font = new Font("Times New Roman", fontSize, FontStyle.Bold, GraphicsUnit.Point, 0);
+            //MessageBox.Show("Font size = " + fontSize.ToString());
+
 
             // Adjust DataUpload button size dynamically
             dataUploadButton.Size = new Size(
-                (mainPanel.Width / 3), 150);
+                (mainPanel.Width / 3), 100);
 
             // Adjust dataupload button position on resize
             dataUploadButton.Location = new Point(
                 (mainPanel.Width / 2) - (dataUploadButton.Width / 2),
-                (mainPanel.Height - mainLabel.Height) / 2 - 75);
+                ((mainPanel.Height - mainLabel.Height) / 2 ));
 
             // Adjust DataView button size dynamically
             dataViewerButton.Size = new Size(
-                (mainPanel.Width / 3), 150);
+                (mainPanel.Width / 3), 100);
 
             // adjust dataview button on resize
             dataViewerButton.Location = new Point(
                (mainPanel.Width / 2) - (dataViewerButton.Width / 2),
-               ((mainPanel.Height - mainLabel.Height) / 2) + 125);
+               ((mainPanel.Height - mainLabel.Height) / 2) + 140);
+
+            // Adjust Buttons' font size accordingly
+            float buttonFontSize = Math.Max(8, this.ClientSize.Width / 80f);
+            dataUploadButton.Font = new Font("Times New Roman", buttonFontSize, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataViewerButton.Font = new Font("Times New Roman", buttonFontSize, FontStyle.Regular, GraphicsUnit.Point, 0);
 
             this.Refresh();
         }
