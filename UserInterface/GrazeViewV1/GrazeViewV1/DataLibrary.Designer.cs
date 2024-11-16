@@ -131,6 +131,7 @@
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.Size = new Size(2486, 1159);
             dataGridView1.TabIndex = 0;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             // 
             // buttonPanel
             // 
