@@ -28,8 +28,8 @@ namespace GrazeViewV1
             }
 
             // Message Boxes to show updating on size and location
-            //MessageBox.Show("Form Size = " + ConsistentForm.FormSize.ToString());
-            //MessageBox.Show("Current Size = " + this.Size.ToString());
+            MessageBox.Show("Form Size = " + ConsistentForm.FormSize.ToString());
+            MessageBox.Show("Current Size = " + this.Size.ToString());
 
             this.Resize += MainPage_Resize;
         }
@@ -106,8 +106,9 @@ namespace GrazeViewV1
 
         private void ResizePanel()
         {
-            mainPanel.Width = (int)(this.ClientSize.Width * 0.8);
-            mainPanel.Height = (int)(this.ClientSize.Height * 0.83);
+            mainPanel.Size = new Size((int)(this.ClientSize.Width * 0.8), (int)(this.ClientSize.Height * 0.83));
+            mainPanel.Location = new Point((this.ClientSize.Width - mainPanel.Width) / 2,
+                                           (this.ClientSize.Height - mainPanel.Height) / 2);
 
             this.Refresh();
         }
@@ -118,50 +119,41 @@ namespace GrazeViewV1
             ConsistentForm.FormSize = this.Size;
 
             ResizePanel();
-        }
-
-        
-
-        // -------------------------------- Previous Method for resizing controls : NO LONGER IN USE --------------------- //
-
-        /*private void CenterControls()  // Method for centering labels and buttons
-        {
-            // Center Page Label
-            mainLabel.Location = new Point(
-                (this.ClientSize.Width / 2) - (mainLabel.Width / 2),
-                (this.ClientSize.Height / 6));
-
-            // Center Upload Button (Based on Page Label's Height)
-            dataUploadButton.Location = new Point(
-                (this.ClientSize.Width / 2) - (dataUploadButton.Width / 2),
-                (this.ClientSize.Height - mainLabel.Height) / 3);
-
-            // Position Data Viewer Button to bottom right corner
-            dataViewerButton.Location = new Point(
-                (this.ClientSize.Width / 2) - (dataViewerButton.Width / 2),
-                (this.ClientSize.Height - mainLabel.Height) / 2);
-
-            // Center Help Button to top right corner
-            helpButton.Location = new Point(
-                (this.ClientSize.Width - 60), 10);
+            ResizeControls();
         }
 
         private void ResizeControls()  // Method for centering labels and buttons
         {
-            // Center Upload Button (Based on Page Label's Height)
+            // Adjust label size dynamically
+            mainLabel.Size = new Size(
+                (this.ClientSize.Width / 2), (this.ClientSize.Height / 7));
+            mainLabel.AutoSize = true;
+
+            // Adjust label postition dynamically
+            mainLabel.Location = new Point(
+                (mainPanel.Width / 2) - (mainLabel.Width / 2),
+                (mainPanel.Height / 6));
+
+            // Adjust DataUpload button size dynamically
             dataUploadButton.Size = new Size(
-                (this.ClientSize.Width / 3), (this.ClientSize.Height / 9));
+                (mainPanel.Width / 3), 150);
 
-            // Position Data Viewer Button to bottom right corner
+            // Adjust dataupload button position on resize
+            dataUploadButton.Location = new Point(
+                (mainPanel.Width / 2) - (dataUploadButton.Width / 2),
+                (mainPanel.Height - mainLabel.Height) / 2 - 75);
+
+            // Adjust DataView button size dynamically
             dataViewerButton.Size = new Size(
-                (this.ClientSize.Width / 3), (this.ClientSize.Height / 9));
-        }
+                (mainPanel.Width / 3), 150);
 
-        private void MainPage_Resize(object? sender, EventArgs e)  // Method for aligning page components when resized
-        {
-            CenterControls();  // Call CenterControls when form is resized
-            ResizeControls();  // Call ResizeControls when form is resized
-        }*/
+            // adjust dataview button on resize
+            dataViewerButton.Location = new Point(
+               (mainPanel.Width / 2) - (dataViewerButton.Width / 2),
+               ((mainPanel.Height - mainLabel.Height) / 2) + 125);
+
+            this.Refresh();
+        }
 
         
     }

@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\GrazeViewV1"
+    "\\GrazeViewV1",
+    "\\GrazeViewV1\\bin",
+    "\\GrazeViewV1\\obj",
+    "\\GrazeViewV1\\Properties",
+    "\\GrazeViewV1\\Resources"
   ],
-  "SelectedNode": "\\GrazeViewV1\\MainPage.Designer.cs",
+  "SelectedNode": "\\GrazeViewV1\\ConsistentForm.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -43,7 +43,7 @@
             //mainPanel.Size = new Size(1000, 600);
             mainPanel.Width = (int)(this.ClientSize.Width * 0.8);
             mainPanel.Height = (int)(this.ClientSize.Height * 0.83);
-            mainPanel.BorderStyle = BorderStyle.None;
+            mainPanel.BorderStyle = BorderStyle.FixedSingle;
             mainPanel.Anchor = AnchorStyles.None;
             mainPanel.Location = new Point((this.ClientSize.Width - mainPanel.Width) / 2, 
                                            (this.ClientSize.Height - mainPanel.Height) / 2);
@@ -55,14 +55,14 @@
             mainLabel.Size = new Size(526, 85);
             mainLabel.Location = new Point(
                 (mainPanel.Width / 2) - (mainLabel.Width / 2),
-                (mainPanel.Height / 6) - 50);
+                (mainPanel.Height / 6));
             mainLabel.Name = "mainLabel";
             mainLabel.TabIndex = 0;
             mainLabel.Text = "GRAZE VIEW";
             // 
             // dataUploadButton
             // 
-            dataUploadButton.Size = new Size(421, 150);
+            dataUploadButton.Size = new Size((mainPanel.Width / 3), 150);
             dataUploadButton.borderRadius = 50;
             dataUploadButton.Location = new Point(
                 (mainPanel.Width / 2) - (dataUploadButton.Width / 2),
@@ -74,7 +74,7 @@
             // 
             // dataViewerButton
             // 
-            dataViewerButton.Size = new Size(421, 150);
+            dataViewerButton.Size = new Size((mainPanel.Width / 3), 150);
             dataViewerButton.borderRadius = 50;
             dataViewerButton.Location = new Point(
                (mainPanel.Width / 2) - (dataViewerButton.Width / 2),
