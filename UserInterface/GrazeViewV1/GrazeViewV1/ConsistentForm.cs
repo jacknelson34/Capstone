@@ -173,7 +173,7 @@ namespace GrazeViewV1
         public CustomMessageBox(string message, Image image)
         {
             // Set form properties
-            this.Text = "Message";
+            this.Text = message;
             this.Size = new Size(400, 300);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;

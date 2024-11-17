@@ -96,7 +96,7 @@
             previewButton.TabIndex = 2;
             previewButton.Text = "Preview Image";
             previewButton.UseVisualStyleBackColor = false;
-            previewButton.Click += exportButton_Click;
+            previewButton.Click += previewButton_Click;
             // 
             // exportButton
             // 
