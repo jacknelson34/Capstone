@@ -228,18 +228,25 @@ namespace GrazeViewV1
 
     public class TransparentPanel : Panel
     {
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x00000020; // WS_EX_TRANSPARENT
-                return cp;
-            }
-        }
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            //base.OnPaintBackground(e);
+            // Check if the parent exists
+            if (Parent != null)
+            {
+                // Get the parent's graphics object
+                Graphics parentGraphics = Parent.CreateGraphics();
+
+                // Draw the parent's background onto this control
+                Bitmap bmp = new Bitmap(Width, Height, parentGraphics);
+                Parent.DrawToBitmap(bmp, Bounds);
+
+                // Draw the bitmap as the panel's background
+                e.Graphics.DrawImage(bmp, 0, 0);
+            }
+            else
+            {
+                base.OnPaintBackground(e);
+            }
         }
     }
 
