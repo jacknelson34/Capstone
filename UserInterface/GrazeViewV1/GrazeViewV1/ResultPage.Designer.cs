@@ -43,8 +43,8 @@
             resultsPagePanel.Anchor = AnchorStyles.None;
             resultsPagePanel.BorderStyle = BorderStyle.Fixed3D;
             resultsPagePanel.Name = "resultsPagePanel";
-            resultsPagePanel.Size = new Size(800, 600);
-            resultsPagePanel.Location = new Point((this.ClientSize.Width / 2)-(resultsPagePanel.Width /2), (this.ClientSize.Height / 2)-(resultsPagePanel.Height / 2));
+            resultsPagePanel.Size = new Size((int)(this.ClientSize.Width * 0.637), (int)(this.ClientSize.Height * .708));
+            resultsPagePanel.Location = new Point((this.ClientSize.Width / 2)-(resultsPagePanel.Width /2), (this.ClientSize.Height / 2)-(resultsPagePanel.Height / 2) - 100);
             resultsPagePanel.TabIndex = 1;
             // 
             // MLOutputPanel
@@ -52,15 +52,17 @@
             MLOutputPanel.BorderStyle = BorderStyle.FixedSingle;
             MLOutputPanel.Location = new Point(500, 400);
             MLOutputPanel.Name = "MLOutputPanel";
-            MLOutputPanel.Size = new Size(300, 200);
+            MLOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            MLOutputPanel.Size = new Size((int)(resultsPagePanel.Width * 0.375), 200);
             MLOutputPanel.TabIndex = 0;
             // 
             // UserOutputPanel
             // 
             UserOutputPanel.BorderStyle = BorderStyle.FixedSingle;
             UserOutputPanel.Location = new Point(0, 400);
+            UserOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             UserOutputPanel.Name = "UserOutputPanel";
-            UserOutputPanel.Size = new Size(500, 200);
+            UserOutputPanel.Size = new Size((int)(resultsPagePanel.Width * 0.625), 200);
             UserOutputPanel.TabIndex = 1;
             // 
             // exitButton
@@ -92,7 +94,7 @@
             returnToUploadButton.Name = "returnToUploadButton";
             returnToUploadButton.Size = new Size(300, 75);
             returnToUploadButton.TabIndex = 2;
-            returnToUploadButton.Text = "Upload Again";
+            returnToUploadButton.Text = "Upload Data";
             returnToUploadButton.UseVisualStyleBackColor = false;
             returnToUploadButton.Click += returnToUploadButton_Click;
             //

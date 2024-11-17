@@ -32,7 +32,7 @@ namespace GrazeViewV1
             // Initialize Results Image
             outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
             outputImage.Image = resultImage;                                          // Insert image into pictureBox
-            outputImage.SizeMode = PictureBoxSizeMode.StretchImage;                          // Zoom image to fit size
+            outputImage.SizeMode = PictureBoxSizeMode.Zoom;                          // Zoom image to fit size
             outputImage.Size = new Size(800, 400);                                    // Size image to 300 x 200
             outputImage.Location = new Point(                                         // Position Image to center top of the page
                 (resultsPagePanel.Width / 2)-(outputImage.Width / 2),
@@ -70,6 +70,9 @@ namespace GrazeViewV1
                 // Handle issues with GlobalData passing 
                 MessageBox.Show("Results Error : ML Data is unavailable");
             }
+
+            CenterPanel();
+            this.Resize += ResultsPage_Resize;
 
         }
 
@@ -131,6 +134,29 @@ namespace GrazeViewV1
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.Bounds = Screen.PrimaryScreen.Bounds;
+        }
+
+        private void ResultsPage_Resize(object? sender, EventArgs e)
+        {
+            CenterPanel();
+        }
+
+        private void CenterPanel()
+        {
+            // Center the panel and adjust size with resizing
+            resultsPagePanel.Size = new Size((int)(this.ClientSize.Width * 0.637), (int)(this.ClientSize.Height * .708));
+            resultsPagePanel.Location = new Point((this.ClientSize.Width / 2) - (resultsPagePanel.Width / 2), (this.ClientSize.Height / 2) - (resultsPagePanel.Height / 2));
+            this.Refresh();
+
+            // Center and Adjust sizing of the user input data
+            UserOutputPanel.Size = new Size((int)(resultsPagePanel.Width * 0.625), 200);
+
+            this.Refresh();
+            // Center and adjust sizing of the ML Output
+            MLOutputPanel.Location = new Point(UserOutputPanel.Width, UserOutputPanel.Location.Y);
+            MLOutputPanel.Size = new Size(resultsPagePanel.Width - UserOutputPanel.Width, UserOutputPanel.Height);
+
+
         }
     }
 }

@@ -44,6 +44,8 @@ namespace GrazeViewV1
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.Bounds = Screen.PrimaryScreen.Bounds;
+
+            this.Refresh();
         }
 
         // when the back button is clicked on

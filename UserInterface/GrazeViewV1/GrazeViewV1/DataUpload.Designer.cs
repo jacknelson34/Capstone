@@ -132,6 +132,7 @@
             filenameLabel.Location = new Point(69, 95);
             filenameLabel.Name = "filenameLabel";
             filenameLabel.Size = new Size(166, 32);
+            filenameLabel.Font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Point, 0);
             filenameLabel.TabIndex = 5;
             filenameLabel.Text = "Upload Name:";
             // 
@@ -141,6 +142,7 @@
             locationLabel.Location = new Point(69, 200);
             locationLabel.Name = "locationLabel";
             locationLabel.Size = new Size(195, 32);
+            locationLabel.Font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Point, 0);
             locationLabel.TabIndex = 6;
             locationLabel.Text = "Sample Location:";
             // 
@@ -168,6 +170,7 @@
             datetimeLabel.Location = new Point(69, 327);
             datetimeLabel.Name = "datetimeLabel";
             datetimeLabel.Size = new Size(262, 32);
+            datetimeLabel.Font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Point, 0);
             datetimeLabel.TabIndex = 9;
             datetimeLabel.Text = "Sample Date and Time:";
             // 
@@ -189,6 +192,7 @@
             breedLabel.Location = new Point(69, 449);
             breedLabel.Name = "breedLabel";
             breedLabel.Size = new Size(155, 32);
+            breedLabel.Font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Point, 0);
             breedLabel.TabIndex = 12;
             breedLabel.Text = "Sheep Breed:";
             // 
@@ -206,6 +210,7 @@
             commentsLabel.Location = new Point(69, 565);
             commentsLabel.Name = "commentsLabel";
             commentsLabel.Size = new Size(135, 32);
+            commentsLabel.Font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Point, 0);
             commentsLabel.TabIndex = 14;
             commentsLabel.Text = "Comments:";
             // 
