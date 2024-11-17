@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
             mainLabel = new Label();
+<<<<<<< Updated upstream
             mainPanel = new Panel();
             dataViewerButton = new roundButton();
             dataUploadButton = new roundButton();
@@ -39,6 +40,27 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
+=======
+            dataUploadButton = new roundButton();
+            dataViewerButton = new roundButton();
+            helpButton = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
+            SuspendLayout();
+            ClientSize = ConsistentForm.FormSize;
+            Location = ConsistentForm.FormLocation;
+            MinimumSize = new Size(1280, 918);
+            //
+            // mainPagePanel
+            //
+            mainPanel = new TransparentPanel();
+            //mainPanel.Size = new Size(1000, 600);
+            mainPanel.Width = (int)(this.ClientSize.Width * 0.8);
+            mainPanel.Height = (int)(this.ClientSize.Height * 0.83);
+            mainPanel.BorderStyle = BorderStyle.None;
+            mainPanel.Anchor = AnchorStyles.None;
+            mainPanel.Location = new Point((this.ClientSize.Width - mainPanel.Width) / 2, 
+                                           (this.ClientSize.Height - mainPanel.Height) / 2);
+>>>>>>> Stashed changes
             // 
             // mainLabel
             // 
@@ -138,7 +160,7 @@
 
         #endregion
 
-        private Panel mainPanel;
+        private TransparentPanel mainPanel;
         private Label mainLabel;
         private roundButton dataUploadButton;
         private roundButton dataViewerButton;
