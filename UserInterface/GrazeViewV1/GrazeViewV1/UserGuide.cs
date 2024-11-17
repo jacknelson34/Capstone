@@ -17,7 +17,6 @@ namespace GrazeViewV1
 
         public UserGuide()
         {
-
             // Initialize User Guide Properties
             this.Text = "User Guide";
             this.Size = new Size(800, 600);
@@ -28,26 +27,61 @@ namespace GrazeViewV1
             helpTextBox.Dock = DockStyle.Fill;
             helpTextBox.ReadOnly = true;
             helpTextBox.ScrollBars = RichTextBoxScrollBars.Vertical; // Ensure a vertical scrollbar
-            helpTextBox.Font = new Font("Arial", 12);
-            helpTextBox.Text = LoadHelpContent(); // Load help content here
+            helpTextBox.Font = new Font("Times New Roman", 12);
+
+            // Load and format help content
+            LoadHelpContent(helpTextBox);
 
             this.Controls.Add(helpTextBox);
         }
 
-        private string LoadHelpContent()
+        private void LoadHelpContent(RichTextBox helpTextBox)
         {
-            return @"
-User Guide Will be inserted here";
+            helpTextBox.Clear();
+
+            // Define content for each section
+            AppendSection(helpTextBox, "--- How to Upload Data ---",
+                "1. Select Upload New Data on the Main Page\n" +
+                "2. Fill out Data Fields in the Data Uploader.  None are required.\n" +
+                "3. Select a Microscope Image to upload by either dragging an image into the box or by clicking the image box.\n" +
+                "      - A preview of the image will appear if the upload was successful.\n" +
+                "4. Click 'Upload' to save the data to the system.\n" +
+                "      - Once uploaded, there is an option to return to upload more from the results page.\n\n");
+
+            AppendSection(helpTextBox, "--- How to View Data ---",
+                "1. Select Data Viewer on the Main Page\n" +
+                "      - Once uploads have been saved, there is an option to view data directly from the results page. \n" +
+                "2. Saved Data can be sorted by each field by clicking on the respective column header.\n" +
+                "      - A preview of the image will appear if the upload was successful.\n");
+
+            AppendSection(helpTextBox, "--- How to Export/Print Data ---",
+                "1. Ensure that Data has been uploaded previously(If there is no data uploaded, there is no data to export).\n" +
+                "2. Select Data Viewer from the Main Page. \n" +
+                "3. In the Data Viewer, select up to 5 uploads to export and view.\n" +
+                "      - This may take a moment, depending on the size of the image files.\n" +
+                "4. Once Uploads are loaded, click the print button to print the page.");
+
         }
 
-        public static void ShowHelpGuide()  // Static method to show user guide
+        private void AppendSection(RichTextBox richTextBox, string title, string content)
         {
-            if (instance == null || instance.IsDisposed)
+            // Add the title in bold
+            richTextBox.SelectionFont = new Font(richTextBox.Font, FontStyle.Bold);
+            richTextBox.AppendText(title + "\n");
+
+            // Add the content in regular font
+            richTextBox.SelectionFont = new Font(richTextBox.Font, FontStyle.Regular);
+            richTextBox.AppendText(content + "\n");
+        }
+
+        public static void ShowHelpGuide() // Static method to show user guide
+        {
+            if (instance == null || instance.IsDisposed)  // Check to make sure User guide is created
             {
                 instance = new UserGuide();
             }
 
-            if (!instance.Visible)
+            if (!instance.Visible)      // Show user guide only if instance is created
             {
                 instance.Show();
             }

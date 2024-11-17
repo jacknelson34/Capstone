@@ -113,7 +113,7 @@ namespace GrazeViewV1
             }
 
             expandedView.Show();
-            this.Hide();
+            this.Close();
 
         }
 

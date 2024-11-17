@@ -59,7 +59,7 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;
             }
 
-            MessageBox.Show("Main Page Location : " + this.Location.ToString());
+            //MessageBox.Show("Main Page Location : " + this.Location.ToString());
 
             DataUpload dataupload = new DataUpload(this);       // Create new dataUpload form
             dataupload.Show();                                  // Show dataUpload

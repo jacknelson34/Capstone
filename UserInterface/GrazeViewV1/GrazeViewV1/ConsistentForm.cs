@@ -256,8 +256,6 @@ namespace GrazeViewV1
         // The image file uploaded by the user, typically a sample image or any visual data associated with the sample.
         public Image ImageFile { get; set; }
 
-        // Thumbnail version of the image to be used by data library
-        public Image ThumbNail { get; set; }
     }
 
     // Class to store all the data given from the ML model relating to each image upload

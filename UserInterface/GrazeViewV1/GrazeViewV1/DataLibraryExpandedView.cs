@@ -76,7 +76,6 @@ namespace GrazeViewV1
             this.Bounds = Screen.PrimaryScreen.Bounds;
         }
         
-
         // Method to capture the screen for printing
         private void CaptureScreen()
         {
@@ -186,11 +185,11 @@ namespace GrazeViewV1
             layout.Controls.Add(modelPanel, 1, 0);
 
             // Add thumbnail image below the panels if it exists
-            if (uploadInfo.ThumbNail != null)
+            if (uploadInfo.ImageFile != null)
             {
                 PictureBox uploadImage = new PictureBox
                 {
-                    Image = uploadInfo.ThumbNail,
+                    Image = uploadInfo.ImageFile,
                     SizeMode = PictureBoxSizeMode.Zoom,
                     Width = 250,
                     Height = 250,
@@ -199,6 +198,10 @@ namespace GrazeViewV1
                 };
                 layout.SetColumnSpan(uploadImage, 2);  // Span the image across both columns
                 layout.Controls.Add(uploadImage, 0, 1);
+            }
+            else
+            {
+                MessageBox.Show("Image File is null");
             }
 
             // Add the layout to the main upload panel
