@@ -55,17 +55,28 @@
             verticalScroll.SuspendLayout();
             SuspendLayout();
             // 
+            // buttonPanel
+            // 
+            buttonPanel.Controls.Add(exportButton);
+            buttonPanel.Controls.Add(backButton);
+            buttonPanel.Dock = DockStyle.Bottom;
+            buttonPanel.Location = new Point(0, 1159);
+            buttonPanel.Name = "buttonPanel";
+            buttonPanel.Padding = new Padding(10);
+            buttonPanel.Size = new Size(this.ClientSize.Width, 120);
+            buttonPanel.TabIndex = 2;
+            // 
             // backButton
             // 
-            backButton.Anchor = AnchorStyles.None;
+            backButton.Anchor = AnchorStyles.Left;
             backButton.borderRadius = 20;
             backButton.BackColor = Color.LightGreen;
             backButton.FlatStyle = FlatStyle.Flat;
             backButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             backButton.ForeColor = Color.Black;
-            backButton.Location = new Point(1221, 26);
+            backButton.Location = new Point(50, 15);
             backButton.Name = "backButton";
-            backButton.Size = new Size(150, 50);
+            backButton.Size = new Size(150, 60);
             backButton.TabIndex = 3;
             backButton.Text = "Exit";
             backButton.UseVisualStyleBackColor = false;
@@ -73,35 +84,41 @@
             //
             // previewButton
             //
-            previewButton.Anchor = AnchorStyles.None;
+            previewButton.Anchor = AnchorStyles.Bottom;
             previewButton.borderRadius = 20;
             previewButton.BackColor = Color.LightGreen;
             previewButton.FlatStyle = FlatStyle.Flat;
             previewButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             previewButton.ForeColor = Color.Black;
-            previewButton.Location = new Point(920, 26);
+            previewButton.Location = new Point((this.ClientSize.Width / 2) - 125, 15);
             previewButton.Name = "previewButton";
-            previewButton.Size = new Size(150, 50);
+            previewButton.Size = new Size(250, 60);
             previewButton.TabIndex = 2;
-            previewButton.Text = "Export";
+            previewButton.Text = "Preview Image";
             previewButton.UseVisualStyleBackColor = false;
-            previewButton.Click += exportButton_Click;
+            previewButton.Click += previewButton_Click;
             // 
             // exportButton
             // 
-            exportButton.Anchor = AnchorStyles.None;
+            exportButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             exportButton.BackColor = Color.LightGreen;
             exportButton.borderRadius = 20;
             exportButton.FlatStyle = FlatStyle.Flat;
             exportButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             exportButton.ForeColor = Color.Black;
-            exportButton.Location = new Point(920, 26);
+            exportButton.Location = new Point(this.ClientSize.Width - 200, 15);
             exportButton.Name = "exportButton";
-            exportButton.Size = new Size(150, 50);
+            exportButton.Size = new Size(150, 60);
             exportButton.TabIndex = 2;
             exportButton.Text = "Export";
             exportButton.UseVisualStyleBackColor = false;
             exportButton.Click += exportButton_Click;
+            // 
+            // ADD buttonPanel buttons
+            //
+            buttonPanel.Controls.Add(exportButton);
+            buttonPanel.Controls.Add(backButton);
+            buttonPanel.Controls.Add(previewButton);
             // 
             // dataGridView1
             // 
@@ -136,17 +153,6 @@
             dataGridView1.TabIndex = 0;
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dataGridView1.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            // 
-            // buttonPanel
-            // 
-            buttonPanel.Controls.Add(exportButton);
-            buttonPanel.Controls.Add(backButton);
-            buttonPanel.Dock = DockStyle.Bottom;
-            buttonPanel.Location = new Point(0, 1159);
-            buttonPanel.Name = "buttonPanel";
-            buttonPanel.Padding = new Padding(10);
-            buttonPanel.Size = new Size(2486, 120);
-            buttonPanel.TabIndex = 2;
             // 
             // helpButton
             // 
@@ -255,7 +261,8 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(2486, 1279);
+            //ClientSize = new Size(2486, 1279);
+            MinimumSize = new Size(1280, 918);
             Controls.Add(helpButton);
             Controls.Add(verticalScroll);
             Controls.Add(buttonPanel);

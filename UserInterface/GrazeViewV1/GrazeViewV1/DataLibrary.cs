@@ -45,6 +45,63 @@ namespace GrazeViewV1
             this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
+        // Method for previewing an uploaded image
+        private void previewButton_Click(object sender, EventArgs e)
+        {
+            // Determine which rows are selected
+            var selectedRows = dataGridView1.Rows.Cast<DataGridViewRow>()
+                                                 .Where(row => Convert.ToBoolean(row.Cells[0].Value))  // Assuming checkbox is at index 0
+                                                 .ToList();
+
+            // Only allow one upload at a time for the preview button
+            if(selectedRows.Count != 1)
+            {
+                // Output message
+                MessageBox.Show("Only select 1 upload to preview.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                // Get the selected row
+                var selectedRow = selectedRows.First();
+                int rowIndex = selectedRow.Index;
+
+                // Ensure the selected index is valid
+                if (rowIndex < GlobalData.Uploads.Count)
+                {
+                    var uploadInfo = GlobalData.Uploads[rowIndex];
+
+                    // Check if image exists in uploadInfo
+                    if (uploadInfo.ImageFile == null)
+                    {
+                        MessageBox.Show("No image available for the selected upload.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Display the image in a new form
+                    Form imagePreviewForm = new Form
+                    {
+                        Text = "Image Preview",
+                        Size = new Size(800, 600) // Adjust size as needed
+                    };
+
+                    PictureBox pictureBox = new PictureBox
+                    {
+                        Image = uploadInfo.ImageFile,
+                        SizeMode = PictureBoxSizeMode.Zoom,
+                        Dock = DockStyle.Fill
+                    };
+
+                    imagePreviewForm.Controls.Add(pictureBox);
+                    imagePreviewForm.ShowDialog(); // Show as a dialog to keep the context
+                }
+                else
+                {
+                    MessageBox.Show("Invalid selection. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
         // when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
@@ -93,7 +150,7 @@ namespace GrazeViewV1
             // Output message if 0
             if (selectedRows.Count == 0)
             {
-                MessageBox.Show("Must select at least one upload", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Must select at least one upload", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -113,7 +170,7 @@ namespace GrazeViewV1
             }
 
             expandedView.Show();
-            this.Hide();
+            this.Close();
 
         }
 

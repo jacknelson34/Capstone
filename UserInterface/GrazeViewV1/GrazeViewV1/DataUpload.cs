@@ -16,14 +16,14 @@ namespace GrazeViewV1
     {
         // hold reference to Main Page form
         private MainPage _mainPage;
-        Image thumbnail;
+        Image uploadImage;
 
         // variable that tracks if a file has or has not been uploaded
         private bool imageUploaded = false;
 
         public DataUpload(MainPage mainpage)
         {
-            MessageBox.Show("Data Upload Passed Location: " + ConsistentForm.FormLocation.ToString());
+            //MessageBox.Show("Data Upload Passed Location: " + ConsistentForm.FormLocation.ToString());
 
             // Form Properties
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace GrazeViewV1
                 SetFullScreen();
             }
             this.Refresh();
-            MessageBox.Show("Data Upload Initialized Location : " + this.Location.ToString());
+            //MessageBox.Show("Data Upload Initialized Location : " + this.Location.ToString());
 
         }
 
@@ -49,8 +49,8 @@ namespace GrazeViewV1
         // when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
-            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
-            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+            ConsistentForm.FormSize = this.ClientSize;                // Adjust consistent form parameters if form was resized
+            ConsistentForm.FormLocation = this.DesktopLocation;        // Adjust consistent form parameters if form was relocated
             if (this.WindowState == FormWindowState.Maximized)
             {
                 ConsistentForm.IsFullScreen = true;
@@ -112,13 +112,10 @@ namespace GrazeViewV1
                         // Load the selected image into the PictureBox
                         fileuploadPictureBox.Image = Image.FromFile(openFileDialog.FileName);
                         fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                        Image originalImage = fileuploadPictureBox.Image; // Store for thumbnail method
-
-                        // Generate the thumbnail image
-                        thumbnail = CreateThumbnail(originalImage, 100, 100);  // 100x100 size, adjust as needed
 
                         // Delete Text in the Picture Box
                         imageUploaded = true;
+                        uploadImage = fileuploadPictureBox.Image;
 
                         // If the textbox is empty, populate it with the upload time/date
                         if (string.IsNullOrWhiteSpace(filenameTextbox.Text))
@@ -153,6 +150,7 @@ namespace GrazeViewV1
                 if (files.Length > 0 && IsPngFile(files[0]))
                 {
                     e.Effect = DragDropEffects.Copy;  // Show that we can copy the file
+                    uploadImage = fileuploadPictureBox.Image;
                 }
                 else
                 {
@@ -180,6 +178,7 @@ namespace GrazeViewV1
 
                         // Delete Text in the Picture Box
                         imageUploaded = true;
+                        uploadImage = fileuploadPictureBox.Image;
 
                         // If the textbox is empty, populate it with the file name
                         if (string.IsNullOrWhiteSpace(filenameTextbox.Text))
@@ -231,8 +230,8 @@ namespace GrazeViewV1
                 SampleTime = DateTime.Parse(timePicker.Text),  // Assuming sampleTime.Text is a valid date/time string
                 UploadTime = DateTime.Now,                     // Store the current time of upload
                 SheepBreed = sheepBreed,                       // Store the sheep breed (or N/A)
-                Comments = comments                            // Store user comments (or N/A)
-                // ThumbNail = thumbnail                       // Store thumbnail image
+                Comments = comments,                           // Store user comments (or N/A)
+                ImageFile = uploadImage                        // Store image
             };
 
             // Debugging: Confirm data is added to the UploadInfo object
@@ -272,10 +271,5 @@ namespace GrazeViewV1
             }
         }
 
-        // helper method to create a thumbnail version of the uploaded image
-        private Image CreateThumbnail(Image originalImage, int width, int height)
-        {
-            return originalImage.GetThumbnailImage(width, height, () => false, IntPtr.Zero);
-        }
     }
 }
