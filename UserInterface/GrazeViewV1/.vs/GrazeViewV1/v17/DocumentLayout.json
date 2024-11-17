@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\datalibraryexpandedview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibraryexpandedview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\mainpage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\mainpage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\dataupload.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\dataupload.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\dataupload.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\dataupload.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -78,7 +82,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -89,12 +93,24 @@
               "Name": "ST:0:0:{26341fe2-71dd-46fd-bb1b-2e51a92a0d64}"
             },
             {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DataLibraryExpandedView.cs [Design]",
+              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibraryExpandedView.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\DataLibraryExpandedView.cs",
+              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibraryExpandedView.cs [Design]",
+              "RelativeToolTip": "GrazeViewV1\\DataLibraryExpandedView.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T05:21:55.912Z",
+              "EditorCaption": " [Design]"
+            },
+            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MainPage.cs [Design]",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\MainPage.cs",
@@ -106,7 +122,45 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainPage.cs",
+              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\MainPage.cs",
+              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.cs",
+              "RelativeToolTip": "GrazeViewV1\\MainPage.cs",
+              "ViewState": "AgIAAI8AAAAAAAAAAAAUwMoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T18:55:49.794Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "MainPage.Designer.cs",
+              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.Designer.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\MainPage.Designer.cs",
+              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.Designer.cs",
+              "RelativeToolTip": "GrazeViewV1\\MainPage.Designer.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAMwCAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-15T19:56:19.758Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DataLibrary.cs [Design]",
+              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\DataLibrary.cs",
+              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.cs [Design]",
+              "RelativeToolTip": "GrazeViewV1\\DataLibrary.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T19:36:09.054Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "DataUpload.cs",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataUpload.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\DataUpload.cs",
@@ -119,54 +173,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainPage.cs",
-              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\MainPage.cs",
-              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.cs",
-              "RelativeToolTip": "GrazeViewV1\\MainPage.cs",
-              "ViewState": "AgIAAI8AAAAAAAAAAAAUwMoAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T18:55:49.794Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainPage.Designer.cs",
-              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.Designer.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\MainPage.Designer.cs",
-              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.Designer.cs",
-              "RelativeToolTip": "GrazeViewV1\\MainPage.Designer.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAYwHkAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-15T19:56:19.758Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DataLibrary.cs [Design]",
-              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\DataLibrary.cs",
-              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.cs [Design]",
-              "RelativeToolTip": "GrazeViewV1\\DataLibrary.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T19:36:09.054Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "LoadingPage.cs [Design]",
-              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\LoadingPage.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\LoadingPage.cs",
-              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\LoadingPage.cs [Design]",
-              "RelativeToolTip": "GrazeViewV1\\LoadingPage.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T18:12:04.329Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "DataLibrary.Designer.cs",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.Designer.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\DataLibrary.Designer.cs",
@@ -174,11 +181,12 @@
               "RelativeToolTip": "GrazeViewV1\\DataLibrary.Designer.cs",
               "ViewState": "AgIAAAwBAAAAAAAAAAAYwJoAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T19:37:12.354Z"
+              "WhenOpened": "2024-11-16T19:37:12.354Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "DataLibrary.cs",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\DataLibrary.cs",
@@ -190,7 +198,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ResultPage.cs",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\ResultPage.cs",
@@ -203,18 +211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ConsistentForm.cs [Design]",
-              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ConsistentForm.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\ConsistentForm.cs",
-              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ConsistentForm.cs [Design]",
-              "RelativeToolTip": "GrazeViewV1\\ConsistentForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T18:50:04.768Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "ResultPage.Designer.cs",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.Designer.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\ResultPage.Designer.cs",
@@ -226,18 +223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "DataUpload.cs [Design]",
-              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataUpload.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\DataUpload.cs",
-              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataUpload.cs [Design]",
-              "RelativeToolTip": "GrazeViewV1\\DataUpload.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T18:07:18.397Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "LoadingPage.cs",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\LoadingPage.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\LoadingPage.cs",
@@ -249,18 +235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ResultPage.cs [Design]",
-              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\ResultPage.cs",
-              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.cs [Design]",
-              "RelativeToolTip": "GrazeViewV1\\ResultPage.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T17:57:43.654Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "UserGuide.cs",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\UserGuide.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\UserGuide.cs",
@@ -272,7 +247,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "DataUpload.Designer.cs",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataUpload.Designer.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\DataUpload.Designer.cs",
@@ -284,7 +259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "ConsistentForm.cs",
               "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ConsistentForm.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\ConsistentForm.cs",
@@ -293,6 +268,50 @@
               "ViewState": "AgIAAB8AAAAAAAAAAAAowDsAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-16T17:26:30.679Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "LoadingPage.cs [Design]",
+              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\LoadingPage.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\LoadingPage.cs",
+              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\LoadingPage.cs [Design]",
+              "RelativeToolTip": "GrazeViewV1\\LoadingPage.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T18:12:04.329Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ConsistentForm.cs [Design]",
+              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ConsistentForm.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\ConsistentForm.cs",
+              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ConsistentForm.cs [Design]",
+              "RelativeToolTip": "GrazeViewV1\\ConsistentForm.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T18:50:04.768Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "DataUpload.cs [Design]",
+              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataUpload.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\DataUpload.cs",
+              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataUpload.cs [Design]",
+              "RelativeToolTip": "GrazeViewV1\\DataUpload.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T18:07:18.397Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ResultPage.cs [Design]",
+              "DocumentMoniker": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\ResultPage.cs",
+              "ToolTip": "C:\\TAMU\\Fall24\\ECEN_403\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.cs [Design]",
+              "RelativeToolTip": "GrazeViewV1\\ResultPage.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T17:57:43.654Z"
             }
           ]
         }
