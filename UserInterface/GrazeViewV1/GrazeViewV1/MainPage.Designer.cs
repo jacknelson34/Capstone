@@ -34,7 +34,8 @@
             helpButton = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
-            ClientSize = new Size(1280, 720);
+            ClientSize = ConsistentForm.FormSize;
+            Location = ConsistentForm.FormLocation;
             MinimumSize = new Size(1280, 918);
             //
             // mainPagePanel

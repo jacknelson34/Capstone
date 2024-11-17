@@ -49,8 +49,8 @@ namespace GrazeViewV1
         // when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
-            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
-            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
+            ConsistentForm.FormSize = this.ClientSize;                // Adjust consistent form parameters if form was resized
+            ConsistentForm.FormLocation = this.DesktopLocation;        // Adjust consistent form parameters if form was relocated
             if (this.WindowState == FormWindowState.Maximized)
             {
                 ConsistentForm.IsFullScreen = true;
