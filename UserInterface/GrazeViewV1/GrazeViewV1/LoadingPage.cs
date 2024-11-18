@@ -29,7 +29,7 @@ namespace GrazeViewV1
             InitializeComponent();
 
             // Initialize Form Properties
-            this.Text = "Loading Page";
+            this.Text = "GrazeView";
             //this.Size = previousPageSize;    // Create page at same size as previous page
             // this.Location = previousPageLocation;
 

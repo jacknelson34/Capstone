@@ -19,6 +19,7 @@ namespace GrazeViewV1
         {
             this.ClientSize = ConsistentForm.FormSize;
             InitializeComponent();
+            this.Text = "GrazeView";
             _datalibrary = new DataLibrary(this);           // Create dataLibrary with reference to mainpage
 
             this.Size = ConsistentForm.FormSize;

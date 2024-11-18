@@ -31,6 +31,7 @@ namespace GrazeViewV1
             // Form Properties
             InitializeComponent();
             _mainPage = mainpage;
+            this.Text = "GrazeView";
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
             if (ConsistentForm.IsFullScreen) 

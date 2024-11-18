@@ -24,6 +24,7 @@ namespace GrazeViewV1
             IsNavigating = false;
 
             InitializeComponent();
+            this.Text = "GrazeView";
             _mainPage = mainPage;
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
