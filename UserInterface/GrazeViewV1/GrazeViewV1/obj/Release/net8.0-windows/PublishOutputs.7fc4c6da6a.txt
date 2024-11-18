@@ -1,0 +1,5 @@
+C:\Users\jackn\Desktop\GrazeViewV1.exe
+C:\Users\jackn\Desktop\GrazeViewV1.dll
+C:\Users\jackn\Desktop\GrazeViewV1.deps.json
+C:\Users\jackn\Desktop\GrazeViewV1.runtimeconfig.json
+C:\Users\jackn\Desktop\GrazeViewV1.pdb

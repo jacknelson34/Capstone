@@ -152,6 +152,7 @@
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(0, 0);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.Font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             dataGridView1.RowHeadersWidth = 82;
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.Size = new Size(2486, 1159);
@@ -261,6 +262,23 @@
             dataGridViewTextBoxColumn13.MinimumWidth = 10;
             dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             dataGridViewTextBoxColumn13.Width = 200;
+            //
+            // Temporary clear button
+            //
+            clearDataButton = new roundButton();
+            clearDataButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            clearDataButton.BackColor = Color.LightGreen;
+            clearDataButton.FlatStyle = FlatStyle.Flat;
+            clearDataButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            clearDataButton.ForeColor = Color.Black;
+            clearDataButton.TabIndex = 3;
+            clearDataButton.UseVisualStyleBackColor = false;
+            clearDataButton.Text = "Clear all Data";
+            clearDataButton.borderRadius = 20;
+            clearDataButton.Size = new Size(300, 60);
+            clearDataButton.Location = new Point(exportButton.Location.X + 350, 15);
+            clearDataButton.Click += clearDataButton_Click;
+            buttonPanel.Controls.Add(clearDataButton);
             // 
             // DataLibrary
             // 
@@ -303,5 +321,8 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+
+        // Temp button
+        private roundButton clearDataButton;
     }
 }

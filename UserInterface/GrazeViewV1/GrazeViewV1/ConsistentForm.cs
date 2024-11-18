@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.CodeDom;
 using System.Drawing.Design;
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization;
 
 namespace GrazeViewV1
 {
@@ -277,8 +278,38 @@ namespace GrazeViewV1
         public string Comments { get; set; }
 
         // The image file uploaded by the user, typically a sample image or any visual data associated with the sample.
+        // Exclude ImageFile from serialization
+        [JsonIgnore]
         public Image ImageFile { get; set; }
 
+        // Serialize Image as Base64
+        public string ImageBase64
+        {
+            get
+            {
+                if (ImageFile == null) return null;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    ImageFile.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    return Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    ImageFile = null;
+                }
+                else
+                {
+                    byte[] bytes = Convert.FromBase64String(value);
+                    using (MemoryStream ms = new MemoryStream(bytes))
+                    {
+                        ImageFile = Image.FromStream(ms);
+                    }
+                }
+            }
+        }
     }
 
     // Class to store all the data given from the ML model relating to each image upload
@@ -312,4 +343,5 @@ namespace GrazeViewV1
         // A static list that stores all ML generated data.  Each upload will have its own data not provided by the user and will be stored here.
         public static List<MLData> machineLearningData { get; } = new List<MLData>();
     }
+
 }

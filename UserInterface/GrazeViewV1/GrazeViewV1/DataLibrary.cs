@@ -275,5 +275,12 @@ namespace GrazeViewV1
                 dataGridView1.AutoResizeRow(e.RowIndex, DataGridViewAutoSizeRowMode.AllCells);
             }
         }
+
+        // Temporary Method for clearing Data
+        private void clearDataButton_Click(object sender, EventArgs e)
+        {
+            Program.ClearAllData();
+            dataGridView1.Rows.Clear();
+        }
     }
 }
