@@ -20,6 +20,7 @@ namespace GrazeViewV1
 
         // Hold instances of other pages
         private MainPage _mainPage;
+        private bool IsNavigating;
 
         public LoadingPage(Image uploadedImage, MainPage mainPage)
         {
@@ -174,11 +175,46 @@ namespace GrazeViewV1
             // ----------------------- DEMO ONLY -----------------------
 
 
+            // Event handler for Form Close
+            this.FormClosing += LoadingPage_Xout;
+
+        }
+
+        // Event handler to confirm close
+        private void LoadingPage_Xout(object sender, FormClosingEventArgs e)
+        {
+            if (IsNavigating)
+            {
+                return;
+            }
+
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+
+                // Confirm close by user
+                DialogResult confirmClose = MessageBox.Show(
+                    "Are you sure you want to close while data is loading?",
+                    "Confirm Close.",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (confirmClose == DialogResult.Yes)
+                {
+                    // Close if user says yes
+                    _mainPage.Close();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+
+            }
+
         }
 
         private void nextPage()                         // Method for going to resultsPage
         {
-
+            IsNavigating = true;
             ResultPage resultsPage = new ResultPage(resultsImage, _mainPage);      // Initialize new page
             resultsPage.Show();                                                                 // Show new page
             this.Close();                                                                       // Hide current page

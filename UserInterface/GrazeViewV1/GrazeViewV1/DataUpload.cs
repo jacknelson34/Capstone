@@ -17,6 +17,7 @@ namespace GrazeViewV1
         // hold reference to Main Page form
         private MainPage _mainPage;
         Image uploadImage;
+        private bool IsNavigating;
 
         // variable that tracks if a file has or has not been uploaded
         private bool imageUploaded = false;
@@ -24,6 +25,8 @@ namespace GrazeViewV1
         public DataUpload(MainPage mainpage)
         {
             //MessageBox.Show("Data Upload Passed Location: " + ConsistentForm.FormLocation.ToString());
+
+            IsNavigating = false;
 
             // Form Properties
             InitializeComponent();
@@ -36,6 +39,23 @@ namespace GrazeViewV1
             }
             this.Refresh();
             //MessageBox.Show("Data Upload Initialized Location : " + this.Location.ToString());
+
+            // Event Handler for form close
+            this.FormClosing += DataUpload_XOut;
+
+        }
+
+        private void DataUpload_XOut(object sender, FormClosingEventArgs e)
+        {
+            if (IsNavigating)
+            {
+                return;
+            }
+
+            if (e.CloseReason == CloseReason.UserClosing) 
+            {
+                _mainPage.Close();
+            }
 
         }
 
@@ -51,6 +71,8 @@ namespace GrazeViewV1
         // when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
+            IsNavigating = true;
+
             ConsistentForm.FormSize = this.ClientSize;                // Adjust consistent form parameters if form was resized
             ConsistentForm.FormLocation = this.DesktopLocation;        // Adjust consistent form parameters if form was relocated
             if (this.WindowState == FormWindowState.Maximized)
@@ -207,6 +229,8 @@ namespace GrazeViewV1
         // when the upload button is clicked on
         private void uploadButton_Click(object? sender, EventArgs e)
         {
+            IsNavigating = true;
+
             ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
             ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
             if (this.WindowState == FormWindowState.Maximized)

@@ -42,6 +42,7 @@
             // 
             resultsPagePanel.Anchor = AnchorStyles.None;
             resultsPagePanel.BorderStyle = BorderStyle.Fixed3D;
+            resultsPagePanel.BackColor = Color.Transparent;
             resultsPagePanel.Name = "resultsPagePanel";
             resultsPagePanel.Size = new Size((int)(this.ClientSize.Width * 0.637), (int)(this.ClientSize.Height * .708));
             resultsPagePanel.Location = new Point((this.ClientSize.Width / 2)-(resultsPagePanel.Width /2), (this.ClientSize.Height / 2)-(resultsPagePanel.Height / 2) - 100);
@@ -49,16 +50,18 @@
             // 
             // MLOutputPanel
             // 
-            MLOutputPanel.BorderStyle = BorderStyle.FixedSingle;
+            MLOutputPanel.BorderStyle = BorderStyle.None;
+            MLOutputPanel.BackColor = Color.Transparent;
             MLOutputPanel.Location = new Point(500, 400);
             MLOutputPanel.Name = "MLOutputPanel";
-            MLOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            MLOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             MLOutputPanel.Size = new Size((int)(resultsPagePanel.Width * 0.375), 200);
             MLOutputPanel.TabIndex = 0;
             // 
             // UserOutputPanel
             // 
-            UserOutputPanel.BorderStyle = BorderStyle.FixedSingle;
+            UserOutputPanel.BorderStyle = BorderStyle.None;
+            UserOutputPanel.BackColor = Color.Transparent;
             UserOutputPanel.Location = new Point(0, 400);
             UserOutputPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             UserOutputPanel.Name = "UserOutputPanel";
@@ -142,6 +145,7 @@
             title.Text = titleText;
             title.Font = new Font("Times New Roman", 10, FontStyle.Bold);
             title.Location = new Point(10, 10);
+            title.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             title.AutoSize = true;
             return title;
         }
@@ -160,31 +164,31 @@
 
             // Create and add controls for each ML data field using seamless textboxes
             qufuLabel = CreateLabel("Qufu (%):", new Point(10, currentYPosition));
-            qufuTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+10, currentYPosition), textBoxWidth);
+            qufuTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+80, currentYPosition), textBoxWidth);
             panel.Controls.Add(qufuLabel);
             panel.Controls.Add(qufuTextBox);
 
             currentYPosition += 30;
             erciLabel = CreateLabel("Erci (%):", new Point(10, currentYPosition));
-            erciTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 10, currentYPosition), textBoxWidth);
+            erciTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth);
             panel.Controls.Add(erciLabel);
             panel.Controls.Add(erciTextBox);
 
             currentYPosition += 30;
             naleLabel = CreateLabel("Nale (%):", new Point(10, currentYPosition));
-            naleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 10, currentYPosition), textBoxWidth);
+            naleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth);
             panel.Controls.Add(naleLabel);
             panel.Controls.Add(naleTextBox);
 
             currentYPosition += 30;
             bubbleLabel = CreateLabel("Bubbles (%):", new Point(10, currentYPosition));
-            bubbleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+ 40, currentYPosition), textBoxWidth);
+            bubbleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+ 80, currentYPosition), textBoxWidth);
             panel.Controls.Add(bubbleLabel);
             panel.Controls.Add(bubbleTextBox);
 
             currentYPosition += 30;
             stemLabel = CreateLabel("Stem (%):", new Point(10, currentYPosition));
-            stemTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+10, currentYPosition), textBoxWidth);
+            stemTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+80, currentYPosition), textBoxWidth);
             panel.Controls.Add(stemLabel);
             panel.Controls.Add(stemTextBox);
         }
@@ -203,19 +207,19 @@
 
             // Create and add controls for each user data field using seamless textboxes
             uploadNameLabel = CreateLabel("Upload Name:", new Point(10, currentYPosition));
-            uploadNameTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+60, currentYPosition), textBoxWidth);
+            uploadNameTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+100, currentYPosition), textBoxWidth);
             panel.Controls.Add(uploadNameLabel);
             panel.Controls.Add(uploadNameTextBox);
 
             currentYPosition += 30;
             dateUploadedLabel = CreateLabel("Date Uploaded:", new Point(10, currentYPosition));
-            dateUploadedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+80, currentYPosition), textBoxWidth);
+            dateUploadedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+100, currentYPosition), textBoxWidth);
             panel.Controls.Add(dateUploadedLabel);
             panel.Controls.Add(dateUploadedTextBox);
 
             currentYPosition += 30;
             dateOfSampleLabel = CreateLabel("Date of Sample:", new Point(10, currentYPosition));
-            dateOfSampleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+80, currentYPosition), textBoxWidth);
+            dateOfSampleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+100, currentYPosition), textBoxWidth);
             panel.Controls.Add(dateOfSampleLabel);
             panel.Controls.Add(dateOfSampleTextBox);
 
@@ -227,7 +231,7 @@
 
             currentYPosition += 30;
             sheepBreedLabel = CreateLabel("Sheep Breed:", new Point(10, currentYPosition));
-            sheepBreedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+50, currentYPosition), textBoxWidth);
+            sheepBreedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+100, currentYPosition), textBoxWidth);
             panel.Controls.Add(sheepBreedLabel);
             panel.Controls.Add(sheepBreedTextBox);
         }

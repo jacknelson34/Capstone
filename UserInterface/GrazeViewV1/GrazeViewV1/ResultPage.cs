@@ -14,12 +14,15 @@ namespace GrazeViewV1
     {
         private Button returnButton;
         private PictureBox outputImage;
+        private bool IsNavigating;
 
         // Hold instances of the opened pages
         private MainPage _mainPage;
 
         public ResultPage(Image resultImage, MainPage mainPage)  // Build page with resulting image from ML and previous page's size/location
         {
+            IsNavigating = false;
+
             InitializeComponent();
             _mainPage = mainPage;
             this.Size = ConsistentForm.FormSize;
@@ -48,6 +51,13 @@ namespace GrazeViewV1
                 dateOfSampleTextBox.Text = lastUpload.SampleTime.ToString();  // Date of Sample
                 sampleLocationTextBox.Text = lastUpload.SampleLocation;       // Location of Sample
                 sheepBreedTextBox.Text = lastUpload.SheepBreed;               // Sheep Breed
+
+                // Apply Standard font to all textboxes
+                sheepBreedTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                uploadNameTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                dateUploadedTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                dateOfSampleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                sampleLocationTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
             }
             else
             {
@@ -64,6 +74,12 @@ namespace GrazeViewV1
                 stemTextBox.Text = lastMLProcess.qufustemPercentage;                // Access qufu stem percentage
                 bubbleTextBox.Text = lastMLProcess.bubblePercentage;                // Access air bubble percentage
                 naleTextBox.Text = lastMLProcess.nalePercentage;                    // Access nale percentage
+
+                qufuTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                erciTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                stemTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                bubbleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                naleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
             }
             else
             {
@@ -72,12 +88,29 @@ namespace GrazeViewV1
             }
 
             CenterPanel();
-            this.Resize += ResultsPage_Resize;
 
+            // Event Handlers
+            this.Resize += ResultsPage_Resize;
+            this.FormClosing += ResultsPage_XOut;
+
+        }
+
+        private void ResultsPage_XOut(object sender, FormClosingEventArgs e)
+        {
+            if (IsNavigating)
+            {
+                return;
+            }
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                _mainPage.Close();
+            }
         }
 
         private void returnButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
+            IsNavigating = true;
+
             ConsistentForm.FormSize = this.Size;
             ConsistentForm.FormLocation = this.Location;
             if (this.WindowState == FormWindowState.Maximized)
@@ -95,6 +128,8 @@ namespace GrazeViewV1
 
         private void dataViewButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
+            IsNavigating = true;
+
             ConsistentForm.FormSize = this.Size;
             ConsistentForm.FormLocation = this.Location;
             if (this.WindowState == FormWindowState.Maximized)
@@ -113,6 +148,8 @@ namespace GrazeViewV1
 
         private void returnToUploadButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
+            IsNavigating = true;
+
             ConsistentForm.FormSize = this.Size;
             ConsistentForm.FormLocation = this.Location;
             if (this.WindowState == FormWindowState.Maximized)
@@ -143,20 +180,26 @@ namespace GrazeViewV1
 
         private void CenterPanel()
         {
-            // Center the panel and adjust size with resizing
-            resultsPagePanel.Size = new Size((int)(this.ClientSize.Width * 0.637), (int)(this.ClientSize.Height * .708));
-            resultsPagePanel.Location = new Point((this.ClientSize.Width / 2) - (resultsPagePanel.Width / 2), (this.ClientSize.Height / 2) - (resultsPagePanel.Height / 2));
-            this.Refresh();
+            // Update the size and location of resultsPagePanel
+            resultsPagePanel.Size = new Size((int)(this.ClientSize.Width * 0.66), (int)(this.ClientSize.Height * 0.708));
+            resultsPagePanel.Location = new Point(
+                (this.ClientSize.Width / 2) - (resultsPagePanel.Width / 2),
+                (this.ClientSize.Height / 2) - (resultsPagePanel.Height / 2) - 50
+            );
 
-            // Center and Adjust sizing of the user input data
-            UserOutputPanel.Size = new Size((int)(resultsPagePanel.Width * 0.625), 200);
+            // Adjust UserOutputPanel
+            UserOutputPanel.Size = new Size((int)(resultsPagePanel.Width * 0.63), 125); // 63% width
+            UserOutputPanel.Location = new Point(0, resultsPagePanel.Height - UserOutputPanel.Height); // Align bottom left
 
-            this.Refresh();
-            // Center and adjust sizing of the ML Output
-            MLOutputPanel.Location = new Point(UserOutputPanel.Width, UserOutputPanel.Location.Y);
-            MLOutputPanel.Size = new Size(resultsPagePanel.Width - UserOutputPanel.Width, UserOutputPanel.Height);
+            // Adjust MLOutputPanel
+            MLOutputPanel.Size = new Size((int)(resultsPagePanel.Width * 0.37), 125); // 37% width
+            MLOutputPanel.Location = new Point(UserOutputPanel.Width, resultsPagePanel.Height - MLOutputPanel.Height); // Align to the right of UserOutputPanel
 
+            // Adjust PictureBox to fill the remaining space
+            outputImage.Size = new Size(resultsPagePanel.Width, resultsPagePanel.Height - UserOutputPanel.Height);
+            outputImage.Location = new Point(0, 0); // Align top left of resultsPagePanel
 
+            this.Refresh(); // Refresh to apply changes
         }
     }
 }

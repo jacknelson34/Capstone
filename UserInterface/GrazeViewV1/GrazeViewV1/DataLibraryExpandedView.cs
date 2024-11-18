@@ -15,9 +15,12 @@ namespace GrazeViewV1
     {
         private MainPage _mainPage;                 // Hold reference for mainPage for dataLibrary
         private Bitmap memoryImage;                 // For printing
+        private bool IsNavigating;
 
         public DataLibraryExpandedView(MainPage mainPage)
         {
+            IsNavigating = false;
+
             _mainPage = mainPage;
             InitializeComponent();
             this.Size = ConsistentForm.FormSize;
@@ -27,11 +30,30 @@ namespace GrazeViewV1
                 SetFullScreen();
             }
             this.Refresh();
+
+            // Event handler for close
+            this.FormClosing += DLExpanded_XOut;
+
+        }
+
+        // Event handler for X out
+        private void DLExpanded_XOut(object sender, FormClosingEventArgs e)
+        {
+            if (IsNavigating)
+            {
+                return;
+            }
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                _mainPage.Close();
+            }
         }
 
         // Event handler for exitButton
         private void exitButton_Click(object sender, EventArgs e)
         {
+            IsNavigating = true;
+
             ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
             ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
             if (this.WindowState == FormWindowState.Maximized)

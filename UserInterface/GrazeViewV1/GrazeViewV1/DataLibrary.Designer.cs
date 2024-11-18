@@ -152,7 +152,7 @@
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(0, 0);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Font = new Font("Times New Roman", 12, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+            dataGridView1.Font = new Font("Times New Roman", 15, FontStyle.Regular, GraphicsUnit.Pixel, 0);
             dataGridView1.RowHeadersWidth = 82;
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.Size = new Size(2486, 1159);
@@ -276,7 +276,7 @@
             clearDataButton.Text = "Clear all Data";
             clearDataButton.borderRadius = 20;
             clearDataButton.Size = new Size(300, 60);
-            clearDataButton.Location = new Point(exportButton.Location.X + 350, 15);
+            clearDataButton.Location = new Point(exportButton.Location.X + 150, 15);
             clearDataButton.Click += clearDataButton_Click;
             buttonPanel.Controls.Add(clearDataButton);
             // 
@@ -285,7 +285,7 @@
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             //ClientSize = new Size(2486, 1279);
-            MinimumSize = new Size(1280, 918);
+            MinimumSize = new Size(1400, 918);
             Controls.Add(helpButton);
             Controls.Add(verticalScroll);
             Controls.Add(buttonPanel);

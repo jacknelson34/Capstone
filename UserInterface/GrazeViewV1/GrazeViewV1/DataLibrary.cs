@@ -10,13 +10,18 @@ using System.Windows.Forms;
 
 namespace GrazeViewV1
 {
+
     public partial class DataLibrary : Form
     {
         // hold reference to Main Page form
         private MainPage _mainPage;
 
+        private bool IsNavigating;
+
         public DataLibrary(MainPage mainpage)
         {
+            IsNavigating = false;
+
             // Form Properties
             InitializeComponent();
             _mainPage = mainpage;
@@ -36,6 +41,22 @@ namespace GrazeViewV1
             dataGridView1.DataError += dataGridView1_DataError;
             dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
 
+            // Close MainPage on close
+            this.FormClosing += DataLibrary_XOut;
+
+        }
+
+        // Event handler for page X out
+        private void DataLibrary_XOut(object sender, FormClosingEventArgs e)
+        {
+            if (IsNavigating)
+            {
+                return;
+            }
+            if(e.CloseReason == CloseReason.UserClosing)
+            {
+                _mainPage.Close();
+            }
         }
 
         private void SetFullScreen()     // Class to handle screen maximization
@@ -48,6 +69,7 @@ namespace GrazeViewV1
         // Method for previewing an uploaded image
         private void previewButton_Click(object sender, EventArgs e)
         {
+
             // Determine which rows are selected
             var selectedRows = dataGridView1.Rows.Cast<DataGridViewRow>()
                                                  .Where(row => Convert.ToBoolean(row.Cells[0].Value))  // Assuming checkbox is at index 0
@@ -105,6 +127,8 @@ namespace GrazeViewV1
         // when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
+            IsNavigating = true;
+
             ConsistentForm.FormSize = this.Size;
             ConsistentForm.FormLocation = this.Location;
             if (this.WindowState == FormWindowState.Maximized)
@@ -129,6 +153,8 @@ namespace GrazeViewV1
         // Method for when export button is click 
         private void exportButton_Click(object sender, EventArgs e)
         {
+            IsNavigating = true;
+
             ConsistentForm.FormSize = this.Size;
             ConsistentForm.FormLocation = this.Location;
             if (this.WindowState == FormWindowState.Maximized)
@@ -195,7 +221,7 @@ namespace GrazeViewV1
                 var mlData = (i < mlDataCount) ? GlobalData.machineLearningData[i] : null;
 
                 // Add information from both UploadInfo and MLData
-                dataGridView1.Rows.Add(
+                int rowIndex = dataGridView1.Rows.Add(
                     false,                                             // Checkbox column
                     userUploads.UploadName,                            // Name of upload
                                                                        // imageToDisplay,                                    // Image uploaded
@@ -212,6 +238,10 @@ namespace GrazeViewV1
                     userUploads.SheepBreed,                            // Sheep Breed
                     userUploads.Comments                               // Comments
                 );
+
+                // Apply a standardized font to all uploads
+                var row = dataGridView1.Rows[rowIndex];
+                row.DefaultCellStyle.Font = new Font("Times New Roman", 15, FontStyle.Regular, GraphicsUnit.Pixel, 0);
 
             }
 
@@ -279,8 +309,20 @@ namespace GrazeViewV1
         // Temporary Method for clearing Data
         private void clearDataButton_Click(object sender, EventArgs e)
         {
-            Program.ClearAllData();
-            dataGridView1.Rows.Clear();
+
+            DialogResult clearDataCheck = MessageBox.Show(
+                "Are you sure you want to clear all data?",         // Message
+                "Confirm Action",                                   // Title
+                MessageBoxButtons.YesNo,                            // Buttons
+                MessageBoxIcon.Question                             // Icon
+                );
+
+            if (clearDataCheck == DialogResult.Yes)
+            { 
+                Program.ClearAllData();
+                dataGridView1.Rows.Clear();
+            }
+
         }
     }
 }
