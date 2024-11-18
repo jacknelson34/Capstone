@@ -34,7 +34,7 @@ namespace GrazeViewV1
 
             // Handle data errors
             dataGridView1.DataError += dataGridView1_DataError;
-
+            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
 
         }
 
@@ -54,7 +54,7 @@ namespace GrazeViewV1
                                                  .ToList();
 
             // Only allow one upload at a time for the preview button
-            if(selectedRows.Count != 1)
+            if (selectedRows.Count != 1)
             {
                 // Output message
                 MessageBox.Show("Only select 1 upload to preview.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -127,7 +127,7 @@ namespace GrazeViewV1
         }
 
         // Method for when export button is click 
-        private void exportButton_Click(object sender, EventArgs e) 
+        private void exportButton_Click(object sender, EventArgs e)
         {
             ConsistentForm.FormSize = this.Size;
             ConsistentForm.FormLocation = this.Location;
@@ -198,7 +198,7 @@ namespace GrazeViewV1
                 dataGridView1.Rows.Add(
                     false,                                             // Checkbox column
                     userUploads.UploadName,                            // Name of upload
-                    // imageToDisplay,                                    // Image uploaded
+                                                                       // imageToDisplay,                                    // Image uploaded
                     mlData?.qufuPercentage,                            // Qufu percentage
                     mlData?.qufustemPercentage,                        // Qufu stem percentage
                     mlData?.nalePercentage,                            // Nale percentage
@@ -215,6 +215,9 @@ namespace GrazeViewV1
 
             }
 
+            // Adjust comments column
+            AdjustCommentsColumnHeight();
+
             // Refresh the grid to ensure the new data is visible
             dataGridView1.Refresh();
         }
@@ -222,7 +225,7 @@ namespace GrazeViewV1
         // Test
         private void LoadUploads()
         {
-            foreach(var upload in GlobalData.Uploads)
+            foreach (var upload in GlobalData.Uploads)
             {
                 LoadUploadsFromGlobalData();
             }
@@ -241,5 +244,36 @@ namespace GrazeViewV1
             e.ThrowException = false;  // Prevent the exception from crashing the application
         }
 
+        // Method for adjust comments column height based on length
+        private void AdjustCommentsColumnHeight()
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells["CommentsCol"].Value != null)
+                {
+                    // string to hold the comment in each row
+                    string comment = row.Cells["CommentsCol"].Value.ToString();
+                    using (Graphics g = dataGridView1.CreateGraphics())
+                    {
+                        SizeF size = g.MeasureString(comment, dataGridView1.DefaultCellStyle.Font, 500); // Measure with max width
+                        int requiredHeight = (int)Math.Ceiling(size.Height) + 10; // Add padding
+                        row.Height = Math.Max(requiredHeight, dataGridView1.RowTemplate.Height); // Ensure height is not less than default
+                    }
+                }
+            }
+
+            
+
+        }
+
+        // Method for adjusting row height if comments exceed 500 pixels
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dataGridView1.Columns["CommentsCol"].Index)
+            {
+                // Adjust the height of the row for the changed cell
+                dataGridView1.AutoResizeRow(e.RowIndex, DataGridViewAutoSizeRowMode.AllCells);
+            }
+        }
     }
 }
