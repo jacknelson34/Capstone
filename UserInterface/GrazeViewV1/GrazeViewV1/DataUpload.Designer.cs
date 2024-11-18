@@ -246,7 +246,9 @@
             backButton.BringToFront();
             Name = "DataUpload";
             Text = "DataUpload";
-            BackColor = Color.LightBlue;
+            //BackColor = Color.LightBlue;
+            BackgroundImage = Properties.Resources.GrassBlue;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).EndInit();
             ResumeLayout(false);

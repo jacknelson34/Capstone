@@ -76,7 +76,6 @@
             mainPanel.Anchor = AnchorStyles.None;
             mainPanel.Location = new Point((this.ClientSize.Width - mainPanel.Width) / 2,
                                            (this.ClientSize.Height - mainPanel.Height) / 2);
-            //mainPanel.Parent = pictureBox1;
             mainPanel.BackColor = Color.Transparent;
             mainPanel.Controls.Add(dataViewerButton);
             mainPanel.Controls.Add(dataUploadButton);
@@ -131,7 +130,8 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            //BackgroundImage = Properties.Resources.MainPageBackground;
+            BackgroundImage = Properties.Resources.MainPageBackground;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1280, 847);
             Controls.Add(mainPanel);
             Controls.Add(helpButton);
