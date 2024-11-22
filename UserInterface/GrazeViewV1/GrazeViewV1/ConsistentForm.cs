@@ -17,49 +17,15 @@ namespace GrazeViewV1
 {
     /*--------------------Page Sizing-------------------------------------*/
 
-    // Class to create sizing consistencies
-    /*public class ConsistentForm : Form
-    {
-        // Static variables to store the size and location of the last form
-        private static Size? previousFormSize = null;
-        private static Point? previousFormLocation = null;
 
-        public ConsistentForm()
-        {
-            // If a previous form size is stored, apply it
-            if (previousFormSize != null)
-            {
-                this.Size = previousFormSize.Value;
-            }
-
-            // If a previous form location is stored, apply it
-            if (previousFormLocation != null)
-            {
-                this.StartPosition = FormStartPosition.Manual;  // Use manual start position
-                this.Location = previousFormLocation.Value;     // Apply the previous location
-            }
-            else
-            {
-                // Only for the very first form, center the screen
-                this.StartPosition = FormStartPosition.CenterScreen;
-            }
-
-            // Attach an event to store the form size and location when the form is closing
-            this.FormClosing += (s, e) =>
-            {
-                // Store the size and location of the current form before closing it
-                previousFormSize = this.Size;
-                previousFormLocation = this.Location;
-            };
-        }
-
-        
-    }*/
-
+    // NOTE : This class is now only used for the transition from DataUpload -> LoadingPage -> ResultsPage
+    //        as LoadingPage does not follow the consistency of all other pages, the global variable is
+    //        necessary.
     public static class ConsistentForm // Public class to store form resize for consistency
     {
         public static Size FormSize { get; set; } = new Size(1280, 720); // Default of 1280, 918
-        public static Point FormLocation { get; set; } = new Point(100, 100); // Default of 100, 100 location
+        public static Point FormLocation { get; set; } = new Point(Screen.PrimaryScreen.WorkingArea.Width / 4, 
+                                                                   Screen.PrimaryScreen.WorkingArea.Height / 6); // Default of center screen-ish
         public static bool IsFullScreen { get; set; } = false;  // Default bool set to not full screen
 
     }
@@ -215,7 +181,7 @@ namespace GrazeViewV1
         }
     }
 
-        public class TransparentLabel : Label
+    public class TransparentLabel : Label
     {
         protected override void OnPaint(PaintEventArgs e)
         {

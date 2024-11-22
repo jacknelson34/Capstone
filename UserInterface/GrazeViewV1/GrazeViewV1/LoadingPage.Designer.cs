@@ -32,6 +32,7 @@
             // 
             // LoadingPage
             // 
+            StartPosition = FormStartPosition.CenterScreen;
             AutoScaleDimensions = new SizeF(7F, 15F);
             BackColor = Color.LightBlue;
             AutoScaleMode = AutoScaleMode.Font;

@@ -24,13 +24,6 @@ namespace GrazeViewV1
             _mainPage = mainPage;
             InitializeComponent();
             this.Text = "GrazeView";
-            this.Size = ConsistentForm.FormSize;
-            this.Location = ConsistentForm.FormLocation;
-            if (ConsistentForm.IsFullScreen)
-            {
-                SetFullScreen();
-            }
-            this.Refresh();
 
             // Event handler for close
             this.FormClosing += DLExpanded_XOut;
@@ -55,18 +48,9 @@ namespace GrazeViewV1
         {
             IsNavigating = true;
 
-            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
-            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
-
             var dataLibrary = new DataLibrary(_mainPage);
+            dataLibrary.Size = this.Size;
+            dataLibrary.Location = this.Location;
             dataLibrary.Show();
             this.Close(); // Close this view and return to DataLibrary
         }
@@ -91,13 +75,6 @@ namespace GrazeViewV1
             }
 
 
-        }
-
-        private void SetFullScreen()     // Class to handle screen maximization
-        {
-            this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
         
         // Method to capture the screen for printing

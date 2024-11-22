@@ -26,12 +26,6 @@ namespace GrazeViewV1
             InitializeComponent();
             _mainPage = mainpage;
             this.Text = "GrazeView";
-            this.Location = ConsistentForm.FormLocation;
-            this.Size = ConsistentForm.FormSize;
-            if (ConsistentForm.IsFullScreen)
-            {
-                SetFullScreen();
-            }
 
             // Help Button Functionality
             helpButton.Click += helpButton_Click; // handles click event
@@ -57,13 +51,6 @@ namespace GrazeViewV1
             {
                 _mainPage.Close();
             }
-        }
-
-        private void SetFullScreen()     // Class to handle screen maximization
-        {
-            this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
         // Method for previewing an uploaded image
@@ -129,8 +116,6 @@ namespace GrazeViewV1
         {
             IsNavigating = true;
 
-            ConsistentForm.FormSize = this.Size;
-            ConsistentForm.FormLocation = this.Location;
             if (this.WindowState == FormWindowState.Maximized)
             {
                 ConsistentForm.IsFullScreen = true;
@@ -138,6 +123,12 @@ namespace GrazeViewV1
             else
             {
                 ConsistentForm.IsFullScreen = false;
+            }
+
+            if (_mainPage != null) 
+            {
+                _mainPage.Size = this.Size;
+                _mainPage.Location = this.Location;
             }
 
             _mainPage.Show();                                       // Open Main Page
@@ -154,17 +145,6 @@ namespace GrazeViewV1
         private void exportButton_Click(object sender, EventArgs e)
         {
             IsNavigating = true;
-
-            ConsistentForm.FormSize = this.Size;
-            ConsistentForm.FormLocation = this.Location;
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
 
             // List to hold each user selected upload
             // Get selected rows
@@ -194,6 +174,9 @@ namespace GrazeViewV1
                     expandedView.AddUploadPanel(uploadInfo, mlData);
                 }
             }
+
+            expandedView.Size = this.Size;
+            expandedView.Location = this.Location;
 
             expandedView.Show();
             this.Close();

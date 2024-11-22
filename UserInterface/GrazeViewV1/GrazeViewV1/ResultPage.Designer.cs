@@ -34,7 +34,6 @@
             exitButton = new roundButton();
             dataViewButton = new roundButton();
             returnToUploadButton = new roundButton();
-            ClientSize = new Size(1254, 847);
             resultsPagePanel.SuspendLayout();
             SuspendLayout();
             // 
@@ -122,6 +121,7 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
+            StartPosition = FormStartPosition.Manual;
             BackColor = Color.LightBlue;
             CreateUserProvidedDataControls(UserOutputPanel);
             CreateMLDataControls(MLOutputPanel);

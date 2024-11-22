@@ -34,6 +34,7 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
+            StartPosition = FormStartPosition.Manual;
             MinimumSize = new Size(1280, 918);
             Name = "DataLibraryExpandedView";
             Text = "DataLibraryExpandedView";

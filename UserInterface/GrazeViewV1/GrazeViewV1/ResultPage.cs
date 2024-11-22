@@ -28,10 +28,6 @@ namespace GrazeViewV1
             _mainPage = mainPage;
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
-            if (ConsistentForm.IsFullScreen)
-            {
-                SetFullScreen();
-            }
 
             // Initialize Results Image
             outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
@@ -112,17 +108,8 @@ namespace GrazeViewV1
         {
             IsNavigating = true;
 
-            ConsistentForm.FormSize = this.Size;
-            ConsistentForm.FormLocation = this.Location;
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
-
+            _mainPage.Size = this.Size;
+            _mainPage.Location = this.Location;
             _mainPage.Show();    // Show main page
             this.Close();         // Hide current page
         }
@@ -131,18 +118,9 @@ namespace GrazeViewV1
         {
             IsNavigating = true;
 
-            ConsistentForm.FormSize = this.Size;
-            ConsistentForm.FormLocation = this.Location;
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
-
             DataLibrary datalibrary = new DataLibrary(_mainPage);    // Create new dataLibrary
+            datalibrary.Size = this.Size;
+            datalibrary.Location = this.Location;
             datalibrary.Show();                                 // Show dataLibrary
             this.Hide();                                        // Hide mainPage
         }
@@ -151,27 +129,12 @@ namespace GrazeViewV1
         {
             IsNavigating = true;
 
-            ConsistentForm.FormSize = this.Size;
-            ConsistentForm.FormLocation = this.Location;
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
 
             DataUpload dataupload = new DataUpload(_mainPage);       // Create new dataUpload form
+            dataupload.Size = this.Size;
+            dataupload.Location = this.Location;
             dataupload.Show();                                  // Show dataUpload
             this.Close();                                        // Hide mainPage
-        }
-
-        private void SetFullScreen()     // Class to handle screen maximization
-        {
-            this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
         private void ResultsPage_Resize(object? sender, EventArgs e)

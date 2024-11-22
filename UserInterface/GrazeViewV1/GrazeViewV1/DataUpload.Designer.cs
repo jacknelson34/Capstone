@@ -47,8 +47,6 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).BeginInit();
             SuspendLayout();
-            ClientSize = ConsistentForm.FormSize;
-            Location = ConsistentForm.FormLocation;
             MinimumSize = new Size(1280, 975);
             //
             // uploadPanel
@@ -247,6 +245,7 @@
             Name = "DataUpload";
             Text = "DataUpload";
             BackColor = Color.LightBlue;
+            StartPosition = FormStartPosition.Manual;
             BackgroundImage = Properties.Resources.GrassBlue;
             BackgroundImageLayout = ImageLayout.Stretch;
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();

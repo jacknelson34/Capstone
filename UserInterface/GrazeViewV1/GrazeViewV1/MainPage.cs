@@ -22,13 +22,6 @@ namespace GrazeViewV1
             this.Text = "GrazeView";
             _datalibrary = new DataLibrary(this);           // Create dataLibrary with reference to mainpage
 
-            this.Size = ConsistentForm.FormSize;
-            this.Location = ConsistentForm.FormLocation;
-            if (ConsistentForm.IsFullScreen)
-            {
-                SetFullScreen();
-            }
-
             // Message Boxes to show updating on size and location
             //MessageBox.Show("Form Size = " + ConsistentForm.FormSize.ToString());
             //MessageBox.Show("Current Size = " + this.Size.ToString());
@@ -38,50 +31,22 @@ namespace GrazeViewV1
             
         }
 
-        private void SetFullScreen()     // Class to handle screen maximization
-        {
-            this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.Bounds = Screen.PrimaryScreen.Bounds;
-
-            ResizePanel();
-            ResizeControls();
-        }
-
         private void dataUploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
         {
-            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
-            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
-
-            //MessageBox.Show("Main Page Location : " + this.Location.ToString());
 
             DataUpload dataupload = new DataUpload(this);       // Create new dataUpload form
+            dataupload.Size = this.Size; 
+            dataupload.Location = this.Location;
             dataupload.Show();                                  // Show dataUpload
             this.Hide();                                        // Hide mainPage
         }
 
         private void dataViewerButton_Click(object? sender, EventArgs e)  // Data Viewer Button Clicked
         {
-            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
-            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
 
             DataLibrary datalibrary = new DataLibrary(this);    // Create new dataLibrary
+            datalibrary.Size = this.Size;
+            datalibrary.Location = this.Location;
             datalibrary.Show();                                 // Show dataLibrary
             this.Hide();                                        // Hide mainPage
         }
@@ -125,15 +90,9 @@ namespace GrazeViewV1
         // Page load event handler - Used for sizing purposes
         private void MainPage_Load(object sender, EventArgs e)
         {
-            this.Size = ConsistentForm.FormSize;
-            this.Location = ConsistentForm.FormLocation;
-            if (ConsistentForm.IsFullScreen)
-            {
-                SetFullScreen();
-            }
-
             ResizePanel();
             ResizeControls();
+            Refresh();
         }
 
         private void MainPage_Resize(object sender, EventArgs e)

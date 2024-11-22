@@ -24,22 +24,13 @@ namespace GrazeViewV1
 
         public DataUpload(MainPage mainpage)
         {
-            //MessageBox.Show("Data Upload Passed Location: " + ConsistentForm.FormLocation.ToString());
-
             IsNavigating = false;
 
             // Form Properties
             InitializeComponent();
             _mainPage = mainpage;
             this.Text = "GrazeView";
-            this.Size = ConsistentForm.FormSize;
-            this.Location = ConsistentForm.FormLocation;
-            if (ConsistentForm.IsFullScreen) 
-            {
-                SetFullScreen();
-            }
             this.Refresh();
-            //MessageBox.Show("Data Upload Initialized Location : " + this.Location.ToString());
 
             // Event Handler for form close
             this.FormClosing += DataUpload_XOut;
@@ -60,29 +51,16 @@ namespace GrazeViewV1
 
         }
 
-        private void SetFullScreen()     // Class to handle screen maximization
-        {
-            this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.Bounds = Screen.PrimaryScreen.Bounds;
-
-            this.Refresh();
-        }
 
         // when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
             IsNavigating = true;
 
-            ConsistentForm.FormSize = this.ClientSize;                // Adjust consistent form parameters if form was resized
-            ConsistentForm.FormLocation = this.DesktopLocation;        // Adjust consistent form parameters if form was relocated
-            if (this.WindowState == FormWindowState.Maximized)
+            if (_mainPage != null) 
             {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
+                _mainPage.Size = this.Size;
+                _mainPage.Location = this.Location;
             }
 
             _mainPage.Show();                                       // Open Main Page
@@ -232,17 +210,6 @@ namespace GrazeViewV1
         {
             IsNavigating = true;
 
-            ConsistentForm.FormSize = this.Size;                // Adjust consistent form parameters if form was resized
-            ConsistentForm.FormLocation = this.Location;        // Adjust consistent form parameters if form was relocated
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
-
             // Check if the Sample Location, Sheep Breed, or Comments are empty, and set them to "N/A" if they are
             string sampleLocation = string.IsNullOrWhiteSpace(locationTextbox.Text) ? "N/A" : locationTextbox.Text;
             string sheepBreed = string.IsNullOrWhiteSpace(breedTextbox.Text) ? "N/A" : breedTextbox.Text;
@@ -285,9 +252,11 @@ namespace GrazeViewV1
 
             // checks to see if a file was uploaded to the picturebox
             if (fileuploadPictureBox.Image != null)
-            {
+            { 
                 // Proceed to the loading page if a valid image is uploaded
                 LoadingPage loadingPage = new LoadingPage(fileuploadPictureBox.Image, _mainPage);
+                ConsistentForm.FormLocation = this.Location;
+                ConsistentForm.FormSize = this.Size;
                 loadingPage.Show();
                 this.Close();
             }

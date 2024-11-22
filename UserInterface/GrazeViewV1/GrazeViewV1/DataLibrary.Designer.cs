@@ -282,6 +282,7 @@
             // 
             // DataLibrary
             // 
+            StartPosition = FormStartPosition.Manual;
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             //ClientSize = new Size(2486, 1279);
