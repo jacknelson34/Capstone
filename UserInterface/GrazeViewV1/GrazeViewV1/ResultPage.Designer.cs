@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             resultsPagePanel = new Panel();
+            buttonPanel = new Panel();
             MLOutputPanel = new Panel();
             UserOutputPanel = new Panel();
             exitButton = new roundButton();
@@ -36,6 +37,16 @@
             returnToUploadButton = new roundButton();
             resultsPagePanel.SuspendLayout();
             SuspendLayout();
+            //
+            // buttonPanel
+            //
+            buttonPanel.Dock = DockStyle.Bottom;
+            buttonPanel.Location = new Point(0, 1159);
+            buttonPanel.Padding = new Padding(5);
+            buttonPanel.Size = new Size(this.ClientSize.Width, 120);
+            buttonPanel.BackColor = Color.LightBlue;
+            buttonPanel.BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(buttonPanel);
             // 
             // resultsPagePanel
             // 
@@ -69,15 +80,16 @@
             // 
             // exitButton
             // 
+            buttonPanel.Controls.Add(exitButton);
             exitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             exitButton.BackColor = Color.LightGreen;
             exitButton.borderRadius = 20;
             exitButton.FlatStyle = FlatStyle.Flat;
             exitButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             exitButton.ForeColor = Color.Black;
-            exitButton.Location = new Point((this.ClientSize.Width - 150), (this.ClientSize.Height - 75));
             exitButton.Name = "exitButton";
             exitButton.Size = new Size(125, 50);
+            exitButton.Location = new Point(buttonPanel.Width, 30);
             exitButton.TabIndex = 0;
             exitButton.Text = "Exit";
             exitButton.UseVisualStyleBackColor = false;
@@ -85,16 +97,17 @@
             // 
             // returnToUploadButton
             // 
+            buttonPanel.Controls.Add(returnToUploadButton);
             returnToUploadButton.BackColor = Color.LightGreen;
             returnToUploadButton.FlatAppearance.BorderSize = 0;
             returnToUploadButton.borderRadius = 20;
             returnToUploadButton.FlatStyle = FlatStyle.Flat;
             returnToUploadButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             returnToUploadButton.ForeColor = Color.Black;
-            returnToUploadButton.Location = new Point((this.ClientSize.Width / 2) - (returnToUploadButton.Width / 2) - 275, (this.ClientSize.Height - 100));
             returnToUploadButton.Anchor = AnchorStyles.Bottom;
             returnToUploadButton.Name = "returnToUploadButton";
             returnToUploadButton.Size = new Size(300, 75);
+            returnToUploadButton.Location = new Point((buttonPanel.Width/2) - 400, 0);
             returnToUploadButton.TabIndex = 2;
             returnToUploadButton.Text = "Upload Data";
             returnToUploadButton.UseVisualStyleBackColor = false;
@@ -102,16 +115,17 @@
             //
             // dataViewButton
             //
+            buttonPanel.Controls.Add(dataViewButton);
             dataViewButton.BackColor = Color.LightGreen;
             dataViewButton.FlatAppearance.BorderSize = 0;
             dataViewButton.borderRadius = 20;
             dataViewButton.FlatStyle = FlatStyle.Flat;
             dataViewButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataViewButton.ForeColor = Color.Black;
-            dataViewButton.Location = new Point((this.ClientSize.Width / 2) - (dataViewButton.Width / 2) + 75, (this.ClientSize.Height - 100));
             dataViewButton.Anchor = AnchorStyles.Bottom;
             dataViewButton.Name = "dataViewButton";
             dataViewButton.Size = new Size(300, 75);
+            dataViewButton.Location = new Point((buttonPanel.Width / 2) + 100, buttonPanel.Height /2);
             dataViewButton.TabIndex = 2;
             dataViewButton.Text = "View in Library";
             dataViewButton.UseVisualStyleBackColor = false;
@@ -127,9 +141,6 @@
             CreateMLDataControls(MLOutputPanel);
             resultsPagePanel.Controls.Add(UserOutputPanel);
             resultsPagePanel.Controls.Add(MLOutputPanel);
-            Controls.Add(returnToUploadButton);
-            Controls.Add(dataViewButton);
-            Controls.Add(exitButton);
             Controls.Add(resultsPagePanel);
             MinimumSize = new Size(1280, 918);
             Name = "ResultPage";
@@ -292,6 +303,7 @@
 
         // Panel 3 - For resizing purposes
         private Panel resultsPagePanel;
+        private Panel buttonPanel;
         private roundButton exitButton;
         private roundButton returnToUploadButton;
         private roundButton dataViewButton;

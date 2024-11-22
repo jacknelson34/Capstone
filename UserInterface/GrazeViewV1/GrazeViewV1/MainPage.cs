@@ -19,6 +19,7 @@ namespace GrazeViewV1
         {
             this.ClientSize = ConsistentForm.FormSize;
             InitializeComponent();
+            ResizeControls();
             this.Text = "GrazeView";
             _datalibrary = new DataLibrary(this);           // Create dataLibrary with reference to mainpage
 
@@ -141,7 +142,7 @@ namespace GrazeViewV1
             // Adjust dataupload button position on resize
             dataUploadButton.Location = new Point(
                 (mainPanel.Width / 2) - (dataUploadButton.Width / 2),
-                ((mainPanel.Height - mainLabel.Height) / 2 ));
+                ((mainPanel.Height - mainLabel.Height) / 2 ) - 30);
 
             // Adjust DataView button size dynamically
             dataViewerButton.Size = new Size(
@@ -150,10 +151,10 @@ namespace GrazeViewV1
             // adjust dataview button on resize
             dataViewerButton.Location = new Point(
                (mainPanel.Width / 2) - (dataViewerButton.Width / 2),
-               ((mainPanel.Height - mainLabel.Height) / 2) + 140);
+               ((mainPanel.Height - mainLabel.Height) / 2) + 110);
 
             // Adjust Buttons' font size accordingly
-            float buttonFontSize = Math.Max(8, this.ClientSize.Width / 80f);
+            float buttonFontSize = Math.Max(8, dataViewerButton.Width / 20f);
             dataUploadButton.Font = new Font("Times New Roman", buttonFontSize, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataViewerButton.Font = new Font("Times New Roman", buttonFontSize, FontStyle.Regular, GraphicsUnit.Point, 0);
 

@@ -29,6 +29,8 @@ namespace GrazeViewV1
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
 
+            MessageBox.Show("Center of button panel position: " + (buttonPanel.Width / 2).ToString());
+
             // Initialize Results Image
             outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
             outputImage.Image = resultImage;                                          // Insert image into pictureBox
