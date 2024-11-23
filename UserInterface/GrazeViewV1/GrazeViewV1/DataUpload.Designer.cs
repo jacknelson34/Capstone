@@ -156,6 +156,8 @@
             // 
             datePicker.CustomFormat = "MM/dd/yyyy";
             datePicker.Format = DateTimePickerFormat.Custom;
+            datePicker.MinDate = new DateTime(2000, 1, 1); // Minimum of Jan 1st, 2000
+            datePicker.MaxDate = DateTime.Today;            // Max date of current date
             datePicker.ImeMode = ImeMode.NoControl;
             datePicker.Location = new Point(74, 362);
             datePicker.Name = "datePicker";

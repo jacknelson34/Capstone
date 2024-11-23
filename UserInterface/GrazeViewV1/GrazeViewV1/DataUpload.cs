@@ -240,6 +240,37 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;
             }
 
+            // Date/Time Input Validation
+            // Make sure date if after Jan 1st, 2000 and before current date
+            if (DateTime.Parse(datePicker.Text) < new DateTime(2000, 1, 1) || DateTime.Parse(datePicker.Text) > DateTime.Today)
+            {
+                MessageBox.Show("Please Enter a Date between January 1st, 2000 and today.",
+                    "Invalid Date Entered");
+                return;
+            }
+            // Handle format errors from user/validate input
+            try
+            {
+                // Make sure that the time is valid format
+                DateTime minTime = DateTime.Today.AddHours(0);
+                DateTime maxTime = DateTime.Today.AddHours(24);
+                if (DateTime.Parse(timePicker.Text) < minTime || DateTime.Parse(timePicker.Text) > maxTime)
+                {
+                    MessageBox.Show("Please enter a valid time.",
+                        "Invalid Time");
+                    timePicker.Text = "0800AM";
+                    return;
+                }
+            }
+            catch(FormatException ex)
+            {
+                MessageBox.Show($"Invalid Time Entered: {timePicker.Text}.  Please provide a valid time.",
+                                "Invalid Time",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                return;
+            }
+
             // Check if the Sample Location, Sheep Breed, or Comments are empty, and set them to "N/A" if they are
             string sampleLocation = string.IsNullOrWhiteSpace(locationTextbox.Text) ? "N/A" : locationTextbox.Text;
             string sheepBreed = string.IsNullOrWhiteSpace(breedTextbox.Text) ? "N/A" : breedTextbox.Text;
