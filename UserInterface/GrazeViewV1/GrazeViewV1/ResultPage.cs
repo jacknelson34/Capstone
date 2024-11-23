@@ -27,6 +27,11 @@ namespace GrazeViewV1
             this.Text = "GrazeView";
             _mainPage = mainPage;
 
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
+
             MessageBox.Show("ClientSize.Width = " + this.ClientSize.Width.ToString());
 
             // Initialize Results Image
@@ -92,6 +97,13 @@ namespace GrazeViewV1
 
         }
 
+        private void SetFullScreen()
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
+        }
+
         private void ResultsPage_XOut(object sender, FormClosingEventArgs e)
         {
             if (IsNavigating)
@@ -108,6 +120,15 @@ namespace GrazeViewV1
         {
             IsNavigating = true;
 
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
+
             _mainPage.Size = this.Size;
             _mainPage.Location = this.Location;
             _mainPage.Show();    // Show main page
@@ -117,6 +138,15 @@ namespace GrazeViewV1
         private void dataViewButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
             IsNavigating = true;
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             DataLibrary datalibrary = new DataLibrary(_mainPage);    // Create new dataLibrary
             datalibrary.Size = this.Size;
@@ -128,6 +158,15 @@ namespace GrazeViewV1
         private void returnToUploadButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
             IsNavigating = true;
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
 
             DataUpload dataupload = new DataUpload(_mainPage);       // Create new dataUpload form

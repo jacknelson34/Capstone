@@ -135,7 +135,7 @@
             ClientSize = new Size(1280, 847);
             Controls.Add(mainPanel);
             Controls.Add(helpButton);
-            //Controls.Add(pictureBox1);
+            BackColor = Color.LightBlue;
             DoubleBuffered = true;
             MinimumSize = new Size(1280, 918);
             Name = "MainPage";

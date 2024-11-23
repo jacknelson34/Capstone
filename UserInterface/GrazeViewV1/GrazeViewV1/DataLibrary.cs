@@ -27,6 +27,11 @@ namespace GrazeViewV1
             _mainPage = mainpage;
             this.Text = "GrazeView";
 
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
+
             // Help Button Functionality
             helpButton.Click += helpButton_Click; // handles click event
             this.Controls.Add(helpButton);
@@ -38,6 +43,12 @@ namespace GrazeViewV1
             // Close MainPage on close
             this.FormClosing += DataLibrary_XOut;
 
+        }
+        private void SetFullScreen()
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
         // Event handler for page X out
@@ -125,6 +136,15 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;
             }
 
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
+
             if (_mainPage != null) 
             {
                 _mainPage.Size = this.Size;
@@ -145,6 +165,15 @@ namespace GrazeViewV1
         private void exportButton_Click(object sender, EventArgs e)
         {
             IsNavigating = true;
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             // List to hold each user selected upload
             // Get selected rows

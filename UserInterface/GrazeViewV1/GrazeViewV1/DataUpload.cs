@@ -35,6 +35,18 @@ namespace GrazeViewV1
             // Event Handler for form close
             this.FormClosing += DataUpload_XOut;
 
+            if (ConsistentForm.IsFullScreen) 
+            {
+                SetFullScreen();
+            }
+
+        }
+
+        private void SetFullScreen()
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
         private void DataUpload_XOut(object sender, FormClosingEventArgs e)
@@ -56,6 +68,15 @@ namespace GrazeViewV1
         private void backButton_Click(object? sender, EventArgs e)
         {
             IsNavigating = true;
+
+            if (this.WindowState == FormWindowState.Maximized) 
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             if (_mainPage != null) 
             {
@@ -209,6 +230,15 @@ namespace GrazeViewV1
         private void uploadButton_Click(object? sender, EventArgs e)
         {
             IsNavigating = true;
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             // Check if the Sample Location, Sheep Breed, or Comments are empty, and set them to "N/A" if they are
             string sampleLocation = string.IsNullOrWhiteSpace(locationTextbox.Text) ? "N/A" : locationTextbox.Text;

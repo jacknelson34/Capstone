@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Jack\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jack\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\resultpage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\resultpage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jack\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\datalibraryexpandedview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibraryexpandedview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jack\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\resultpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\resultpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jack\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,28 +26,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ResultPage.cs",
-              "DocumentMoniker": "C:\\Users\\Jack\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\ResultPage.cs",
-              "ToolTip": "C:\\Users\\Jack\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.cs",
-              "RelativeToolTip": "GrazeViewV1\\ResultPage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAwwB0AAABWAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "DataLibraryExpandedView.cs",
+              "DocumentMoniker": "C:\\Users\\Jack\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibraryExpandedView.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\DataLibraryExpandedView.cs",
+              "ToolTip": "C:\\Users\\Jack\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibraryExpandedView.cs",
+              "RelativeToolTip": "GrazeViewV1\\DataLibraryExpandedView.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwEQAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-22T23:19:28.844Z",
+              "WhenOpened": "2024-11-23T16:32:30.18Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ResultPage.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\Jack\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.Designer.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\ResultPage.Designer.cs",
-              "ToolTip": "C:\\Users\\Jack\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.Designer.cs",
-              "RelativeToolTip": "GrazeViewV1\\ResultPage.Designer.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAAAFkAAAArAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "DataLibrary.cs",
+              "DocumentMoniker": "C:\\Users\\Jack\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.cs",
+              "RelativeDocumentMoniker": "GrazeViewV1\\DataLibrary.cs",
+              "ToolTip": "C:\\Users\\Jack\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.cs",
+              "RelativeToolTip": "GrazeViewV1\\DataLibrary.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAowKQAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-22T23:19:25.751Z",
+              "WhenOpened": "2024-11-23T16:31:49.808Z",
               "EditorCaption": ""
             }
           ]

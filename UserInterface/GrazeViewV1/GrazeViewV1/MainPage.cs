@@ -29,11 +29,31 @@ namespace GrazeViewV1
 
             this.Resize += MainPage_Resize;
             this.Load += MainPage_Load;     // Fix Positioning and Sizes on load
+
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
             
+        }
+
+        private void SetFullScreen()
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
         private void dataUploadButton_Click(object? sender, EventArgs e)  // Upload Button Clicked
         {
+            if (this.WindowState == FormWindowState.Maximized) 
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;    
+            }
 
             DataUpload dataupload = new DataUpload(this);       // Create new dataUpload form
             dataupload.Size = this.Size; 
@@ -44,6 +64,15 @@ namespace GrazeViewV1
 
         private void dataViewerButton_Click(object? sender, EventArgs e)  // Data Viewer Button Clicked
         {
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             DataLibrary datalibrary = new DataLibrary(this);    // Create new dataLibrary
             datalibrary.Size = this.Size;

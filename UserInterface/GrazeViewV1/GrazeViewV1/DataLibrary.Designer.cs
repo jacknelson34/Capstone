@@ -61,6 +61,8 @@
             buttonPanel.Controls.Add(backButton);
             buttonPanel.Dock = DockStyle.Bottom;
             buttonPanel.Location = new Point(0, 1159);
+            buttonPanel.BorderStyle = BorderStyle.None;
+            buttonPanel.BackColor = Color.LightGray;
             buttonPanel.Name = "buttonPanel";
             buttonPanel.Padding = new Padding(10);
             buttonPanel.Size = new Size(this.ClientSize.Width, 120);
@@ -123,6 +125,7 @@
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.BorderStyle = BorderStyle.None;       
             dataGridView1.BackgroundColor = Color.LightBlue;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 

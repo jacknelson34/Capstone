@@ -25,9 +25,20 @@ namespace GrazeViewV1
             InitializeComponent();
             this.Text = "GrazeView";
 
+            if (ConsistentForm.IsFullScreen)
+            {
+                SetFullScreen();
+            }
+
             // Event handler for close
             this.FormClosing += DLExpanded_XOut;
 
+        }
+        private void SetFullScreen()
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
         // Event handler for X out
@@ -47,6 +58,15 @@ namespace GrazeViewV1
         private void exitButton_Click(object sender, EventArgs e)
         {
             IsNavigating = true;
+
+            if (this.WindowState == FormWindowState.Maximized)
+            {
+                ConsistentForm.IsFullScreen = true;
+            }
+            else
+            {
+                ConsistentForm.IsFullScreen = false;
+            }
 
             var dataLibrary = new DataLibrary(_mainPage);
             dataLibrary.Size = this.Size;
