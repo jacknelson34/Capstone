@@ -12,7 +12,6 @@ namespace GrazeViewV1
 {
     public partial class ResultPage : Form
     {
-        private Button returnButton;
         private PictureBox outputImage;
         private bool IsNavigating;
 
@@ -21,15 +20,14 @@ namespace GrazeViewV1
 
         public ResultPage(Image resultImage, MainPage mainPage)  // Build page with resulting image from ML and previous page's size/location
         {
-            IsNavigating = false;
-
+            IsNavigating = false; 
             InitializeComponent();
-            this.Text = "GrazeView";
-            _mainPage = mainPage;
             this.Size = ConsistentForm.FormSize;
             this.Location = ConsistentForm.FormLocation;
+            this.Text = "GrazeView";
+            _mainPage = mainPage;
 
-            MessageBox.Show("Center of button panel position: " + (buttonPanel.Width / 2).ToString());
+            MessageBox.Show("ClientSize.Width = " + this.ClientSize.Width.ToString());
 
             // Initialize Results Image
             outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
