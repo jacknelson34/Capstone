@@ -22,17 +22,15 @@ namespace GrazeViewV1
         {
             IsNavigating = false; 
             InitializeComponent();
-            this.Size = ConsistentForm.FormSize;
-            this.Location = ConsistentForm.FormLocation;
-            this.Text = "GrazeView";
-            _mainPage = mainPage;
+            this.Size = ConsistentForm.FormSize;                // Set form size to the same as the previous page
+            this.Location = ConsistentForm.FormLocation;        // Set form location to the same as previous page
+            this.Text = "GrazeView";                            // Add GrazeView header
+            _mainPage = mainPage;                               // Hold reference for mainpage
 
-            if (ConsistentForm.IsFullScreen)
-            {
-                SetFullScreen();
+            if (ConsistentForm.IsFullScreen)                    // Check if the previous page was set to fullscreen
+            {   
+                SetFullScreen();    // Set this form to fullscreen if true
             }
-
-            MessageBox.Show("ClientSize.Width = " + this.ClientSize.Width.ToString());
 
             // Initialize Results Image
             outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
@@ -55,11 +53,11 @@ namespace GrazeViewV1
                 sheepBreedTextBox.Text = lastUpload.SheepBreed;               // Sheep Breed
 
                 // Apply Standard font to all textboxes
-                sheepBreedTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
-                uploadNameTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
-                dateUploadedTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
-                dateOfSampleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
-                sampleLocationTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                sheepBreedTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);        // Set font for sheepbreed text box
+                uploadNameTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);        // Set font for upload name text box
+                dateUploadedTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set font for upload date text box
+                dateOfSampleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set font for sample date text box
+                sampleLocationTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);    // Set font for sample location text box
             }
             else
             {
@@ -77,11 +75,11 @@ namespace GrazeViewV1
                 bubbleTextBox.Text = lastMLProcess.bubblePercentage;                // Access air bubble percentage
                 naleTextBox.Text = lastMLProcess.nalePercentage;                    // Access nale percentage
 
-                qufuTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
-                erciTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
-                stemTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
-                bubbleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
-                naleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+                qufuTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set Font for Qufu TextBox
+                erciTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set Font for Erci TextBox
+                stemTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set Font for Qufu Stem TextBox
+                bubbleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);    // Set Font for Bubble TextBox
+                naleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set Font for Nale TextBox
             }
             else
             {
@@ -92,41 +90,46 @@ namespace GrazeViewV1
             CenterPanel();
 
             // Event Handlers
-            this.Resize += ResultsPage_Resize;
-            this.FormClosing += ResultsPage_XOut;
+            this.Resize += ResultsPage_Resize;      // Handle form resize
+            this.FormClosing += ResultsPage_XOut;   // handle form being closed
 
         }
 
-        private void SetFullScreen()
+        // Method to set full screen
+        private void SetFullScreen()    
         {
-            this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.Sizable;
-            this.Bounds = Screen.PrimaryScreen.Bounds;
+            this.WindowState = FormWindowState.Maximized;       // Maximize the form
+            this.FormBorderStyle = FormBorderStyle.Sizable;     // Set the border style for fullscreen
+            this.Bounds = Screen.PrimaryScreen.Bounds;          // Set the bounds of the form to be fullscreen
         }
 
+        // Handler for user x-ing out of the page   
         private void ResultsPage_XOut(object sender, FormClosingEventArgs e)
         {
+            // Check that the user intentionally is closing the page
             if (IsNavigating)
             {
                 return;
             }
+            // If user intentionally closes, close all app processes
             if (e.CloseReason == CloseReason.UserClosing)
             {
-                _mainPage.Close();
+                _mainPage.Close();      // Close reference to mainpage
             }
         }
 
         private void returnButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
-            IsNavigating = true;
+            IsNavigating = true;    // Check to make sure the user is not closing the application
 
+            // Check if current form is fullscreen
             if (this.WindowState == FormWindowState.Maximized)
             {
-                ConsistentForm.IsFullScreen = true;
+                ConsistentForm.IsFullScreen = true;     // If true, set next page to fullscreen
             }
             else
             {
-                ConsistentForm.IsFullScreen = false;
+                ConsistentForm.IsFullScreen = false;    // If false, do not set next screen to fullscreen
             }
 
             _mainPage.Size = this.Size;
@@ -137,50 +140,54 @@ namespace GrazeViewV1
 
         private void dataViewButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
-            IsNavigating = true;
+            IsNavigating = true;    // Check to make sure the user is not closing the application
 
+            // Check if current form is fullscreen
             if (this.WindowState == FormWindowState.Maximized)
             {
-                ConsistentForm.IsFullScreen = true;
+                ConsistentForm.IsFullScreen = true;     // If true, set next page to fullscreen
             }
             else
             {
-                ConsistentForm.IsFullScreen = false;
+                ConsistentForm.IsFullScreen = false;    // If false, do not set next screen to fullscreen
             }
 
             DataLibrary datalibrary = new DataLibrary(_mainPage);    // Create new dataLibrary
-            datalibrary.Size = this.Size;
-            datalibrary.Location = this.Location;
+            datalibrary.Size = this.Size;                       // Set next page to the same size as this page
+            datalibrary.Location = this.Location;               // Set next page to the same location as this page
             datalibrary.Show();                                 // Show dataLibrary
             this.Hide();                                        // Hide mainPage
         }
 
         private void returnToUploadButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
-            IsNavigating = true;
+            IsNavigating = true;    // Check to make sure the user is not closing the application
 
+            // Check if current form is fullscreen
             if (this.WindowState == FormWindowState.Maximized)
             {
-                ConsistentForm.IsFullScreen = true;
+                ConsistentForm.IsFullScreen = true;     // If true, set next page to fullscreen
             }
             else
             {
-                ConsistentForm.IsFullScreen = false;
+                ConsistentForm.IsFullScreen = false;    // If false, do not set next screen to fullscreen
             }
 
 
             DataUpload dataupload = new DataUpload(_mainPage);       // Create new dataUpload form
-            dataupload.Size = this.Size;
-            dataupload.Location = this.Location;
+            dataupload.Size = this.Size;                        // Set next page to the same size as this page
+            dataupload.Location = this.Location;                // Set next page to the same location as this page
             dataupload.Show();                                  // Show dataUpload
             this.Close();                                        // Hide mainPage
         }
 
+        // Event handler used to call resizing methods
         private void ResultsPage_Resize(object? sender, EventArgs e)
         {
-            CenterPanel();
+            CenterPanel();  // Call CenterPanel
         }
 
+        // Method to handle resizing - keeps the results panel in the center and handles element repositioning
         private void CenterPanel()
         {
             // Update the size and location of resultsPagePanel
