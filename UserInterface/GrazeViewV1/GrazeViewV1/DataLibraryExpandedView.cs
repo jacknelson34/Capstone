@@ -15,7 +15,7 @@ namespace GrazeViewV1
     {
         private MainPage _mainPage;                 // Hold reference for mainPage for dataLibrary
         private Bitmap memoryImage;                 // For printing
-        private bool IsNavigating;
+        private bool IsNavigating;                  // Boolean to determine if the user is navigating the application
 
         public DataLibraryExpandedView(MainPage mainPage)
         {
@@ -255,7 +255,6 @@ namespace GrazeViewV1
                 Anchor = AnchorStyles.Top
             };
         }
-
 
     }
 }
