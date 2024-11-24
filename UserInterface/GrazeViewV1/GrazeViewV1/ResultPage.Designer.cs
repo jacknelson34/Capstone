@@ -141,6 +141,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             StartPosition = FormStartPosition.Manual;
             BackColor = Color.LightBlue;
+            BackgroundImage = Properties.Resources.MainPageBackground;
+            BackgroundImageLayout = ImageLayout.Stretch;
             CreateUserProvidedDataControls(UserOutputPanel);
             CreateMLDataControls(MLOutputPanel);
             resultsPagePanel.Controls.Add(UserOutputPanel);

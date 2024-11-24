@@ -248,7 +248,7 @@
             Text = "DataUpload";
             BackColor = Color.LightBlue;
             StartPosition = FormStartPosition.Manual;
-            BackgroundImage = Properties.Resources.GrassBlue;
+            BackgroundImage = Properties.Resources.MainPageBackground;
             BackgroundImageLayout = ImageLayout.Stretch;
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).EndInit();

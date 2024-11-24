@@ -10,7 +10,14 @@
 
   <ItemGroup>
     <None Remove="Resources\Grass.jpg" />
+    <None Remove="Resources\MainPageBackground.jpg" />
     <None Remove="Resources\Waluigi.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\MainPageBackground.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
