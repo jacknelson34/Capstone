@@ -157,7 +157,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Font = new Font("Times New Roman", 14, FontStyle.Bold, GraphicsUnit.Pixel, 0);
             //dataGridView1.RowHeadersWidth = 82;
-            dataGridView1.ReadOnly = true;
+            //dataGridView1.ReadOnly = true;
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.Size = new Size(2486, 1159);
             dataGridView1.TabIndex = 0;
@@ -188,6 +188,7 @@
             dataGridViewCheckBoxColumn1.MinimumWidth = 10;
             dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
             dataGridViewCheckBoxColumn1.Width = 250;
+            dataGridViewCheckBoxColumn1.ReadOnly = false;
             // 
             // dataGridViewTextBoxColumn1
             // 
