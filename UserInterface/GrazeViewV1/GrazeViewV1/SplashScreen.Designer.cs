@@ -42,9 +42,9 @@
             label1.Anchor = AnchorStyles.Top;
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(261, 155);
+            label1.Location = new Point(235, 154);
             label1.Name = "label1";
-            label1.Size = new Size(237, 40);
+            label1.Size = new Size(299, 51);
             label1.TabIndex = 0;
             label1.Text = "GRAZEVIEW";
             label1.TextAlign = ContentAlignment.TopCenter;
@@ -77,14 +77,13 @@
             label2.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.Location = new Point(354, 205);
             label2.Name = "label2";
-            label2.Size = new Size(60, 15);
+            label2.Size = new Size(76, 19);
             label2.TabIndex = 2;
             label2.Text = "Loading...";
             // 
             // SplashScreen
             // 
             AutoScaleMode = AutoScaleMode.None;
-            StartPosition = FormStartPosition.CenterScreen;
             BackColor = Color.FromArgb(116, 231, 247);
             ClientSize = new Size(800, 450);
             Controls.Add(label2);
@@ -92,6 +91,7 @@
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "SplashScreen";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "SplashScreen";
             panel1.ResumeLayout(false);
             ResumeLayout(false);

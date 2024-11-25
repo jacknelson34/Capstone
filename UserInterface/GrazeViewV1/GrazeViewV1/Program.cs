@@ -26,6 +26,7 @@ namespace GrazeViewV1
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             Application.EnableVisualStyles();
+            Application.SetHighDpiMode(HighDpiMode.SystemAware); 
             ApplicationConfiguration.Initialize();
             Application.Run(new MainPage());
         }
@@ -74,9 +75,10 @@ namespace GrazeViewV1
                 var mlDataJson = JsonSerializer.Serialize(GlobalData.machineLearningData, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(mlDataFile, mlDataJson);
             }
-            catch (Exception ex)
+            catch (Exception ex)        // Catch exceptions thrown when attempting to save data
             {
-                MessageBox.Show($"Error saving data: {ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Output error message - Currently throwing errors due to JSON temporary storage
+                MessageBox.Show($"GrazeView currently has limited external storage support:\n {ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -88,10 +90,13 @@ namespace GrazeViewV1
                 // Load Uploads and restore formatting for Comments
                 if (File.Exists(uploadDataFile))
                 {
+                    // Variable to hold externally stored data
                     var uploadJson = File.ReadAllText(uploadDataFile);
+                    // Deserialize external data and import into UploadInfo list
                     var uploads = JsonSerializer.Deserialize<List<UploadInfo>>(uploadJson);
-                    if (uploads != null)
+                    if (uploads != null)        // Check for null value
                     {
+                        // for loop to fix formatting differences between application and JSON storage
                         foreach (var upload in uploads)
                         {
                             upload.Comments = RestoreTextFormatting(upload.Comments); // Restore formatting
@@ -101,18 +106,21 @@ namespace GrazeViewV1
                 }
 
                 // Load Machine Learning Data
-                if (File.Exists(mlDataFile))
+                if (File.Exists(mlDataFile))       
                 {
+                    // Pull all externally stored data into mlDataJson
                     var mlDataJson = File.ReadAllText(mlDataFile);
+                    // Deserialize mlDataJson into mlData, and add to the global list MLData
                     var mlData = JsonSerializer.Deserialize<List<MLData>>(mlDataJson);
                     if (mlData != null)
                     {
-                        GlobalData.machineLearningData.AddRange(mlData);
+                        GlobalData.machineLearningData.AddRange(mlData);    // Add each previous upload's data
                     }
                 }
             }
             catch (Exception ex)
             {
+                // Catch exception and output message if an error occured when loading the data in JSON
                 MessageBox.Show($"Error loading data: {ex.Message}", "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -142,6 +150,7 @@ namespace GrazeViewV1
                     File.Delete(uploadDataFile);
                 }
 
+                // Delete all MLData
                 if (File.Exists(mlDataFile))
                 {
                     File.Delete(mlDataFile);
@@ -150,8 +159,9 @@ namespace GrazeViewV1
                 // Optionally, show a confirmation message
                 MessageBox.Show("All data has been cleared successfully.", "Data Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            catch (Exception ex)    // Catch exception if clearing data fails
             {
+                // Output message with error thrown
                 MessageBox.Show($"Error clearing data: {ex.Message}", "Clear Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
