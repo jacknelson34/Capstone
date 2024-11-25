@@ -157,5 +157,25 @@ namespace GrazeViewV1
 
             this.Refresh(); // Refresh the form to apply changes
         }
+
+        // Method to return form size to the initial size when fullscreen is exited
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_SYSCOMMAND = 0x0112;  // Windows message for system commands
+            const int SC_MINIMIZE = 0xF020;   // System command for minimize
+
+            // Check if the message is for minimizing the form
+            if (m.Msg == WM_SYSCOMMAND && (m.WParam.ToInt32() & 0xFFF0) == SC_MINIMIZE)
+            {
+                // Set the form size to MinimumSize when minimizing
+                this.Size = this.MinimumSize;
+
+                // Optionally reset location to keep the minimized window consistent
+                this.Location = new Point((Screen.PrimaryScreen.Bounds.Width - this.MinimumSize.Width) / 2,
+                                           (Screen.PrimaryScreen.Bounds.Height - this.MinimumSize.Height) / 2);
+            }
+
+            base.WndProc(ref m); // Call the base method to ensure the default behavior
+        }
     }
 }
