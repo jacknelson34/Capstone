@@ -44,24 +44,38 @@ namespace GrazeViewV1
 
         }
 
+        // Override the Windows procedure to intercept window messages
         protected override void WndProc(ref Message m)
         {
+            // Store the original window state before processing the message
             FormWindowState org = this.WindowState;
+
+            // Call the base class implementation to process the window message
             base.WndProc(ref m);
+
+            // Check if the window state has changed after processing the message
             if (this.WindowState != org)
+                // Trigger the custom event handler for window state changes
                 this.OnFormWindowStateChanged(EventArgs.Empty);
         }
 
+        // Define a virtual method to handle the form's window state changes
         protected virtual void OnFormWindowStateChanged(EventArgs e)
         {
+            // Check if the window is in the normal state (restored from minimized or maximized)
             if (this.WindowState == FormWindowState.Normal)
             {
+                // Set the form's size to its minimum size in normal state
                 this.Size = MinimumSize;
             }
-            else if(this.WindowState == FormWindowState.Maximized)
+            // Check if the window is in the maximized state
+            else if (this.WindowState == FormWindowState.Maximized)
             {
+                // Set the form's size to its maximum size in maximized state
                 this.Size = MaximumSize;
             }
+
+            // Force the form to refresh its appearance after the size change
             Refresh();
         }
 
