@@ -118,6 +118,7 @@
             helpButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             helpButton.Cursor = Cursors.Hand;
             helpButton.Image = Properties.Resources.Help_Icon;
+            helpButton.BackColor = Color.Transparent;
             helpButton.Location = new Point(1218, 12);
             helpButton.Name = "helpButton";
             helpButton.Size = new Size(50, 50);

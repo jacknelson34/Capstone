@@ -80,6 +80,7 @@
             helpButton.Location = new Point(1156, 12);
             helpButton.Anchor = AnchorStyles.Top | AnchorStyles.Right; 
             helpButton.Name = "helpButton";
+            helpButton.BackColor = Color.Transparent;
             helpButton.SizeMode = PictureBoxSizeMode.StretchImage;
             helpButton.TabIndex = 1;
             helpButton.TabStop = false;

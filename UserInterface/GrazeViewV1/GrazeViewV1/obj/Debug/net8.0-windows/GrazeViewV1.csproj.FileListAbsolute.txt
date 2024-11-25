@@ -121,3 +121,4 @@ C:\TAMU\Fall24\ECEN_403\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug
 C:\TAMU\Fall24\ECEN_403\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.pdb
 C:\TAMU\Fall24\ECEN_403\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.genruntimeconfig.cache
 C:\TAMU\Fall24\ECEN_403\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\ref\GrazeViewV1.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\Resources\MainPageBackground.jpg
