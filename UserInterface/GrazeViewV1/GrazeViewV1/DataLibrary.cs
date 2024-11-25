@@ -13,20 +13,19 @@ namespace GrazeViewV1
 
     public partial class DataLibrary : Form
     {
-        // hold reference to Main Page form
-        private MainPage _mainPage;
-
-        private bool IsNavigating;
+        private MainPage _mainPage;    // hold reference to Main Page form
+        private bool IsNavigating;     // boolean variable that checks if the user is still using the app
 
         public DataLibrary(MainPage mainpage)
         {
-            IsNavigating = false;
+            IsNavigating = false;      // user is no longer using (default setting)
 
             // Form Properties
             InitializeComponent();
             _mainPage = mainpage;
             this.Text = "GrazeView";
 
+            // Maintains window size
             if (ConsistentForm.IsFullScreen)
             {
                 SetFullScreen();
@@ -44,6 +43,8 @@ namespace GrazeViewV1
             this.FormClosing += DataLibrary_XOut;
 
         }
+
+        // Helper method to maintain full screen
         private void SetFullScreen()
         {
             this.WindowState = FormWindowState.Maximized;
@@ -51,7 +52,7 @@ namespace GrazeViewV1
             this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
-        // Event handler for page X out
+        // Helper method to close down the app if the top right exit button is pressed
         private void DataLibrary_XOut(object sender, FormClosingEventArgs e)
         {
             if (IsNavigating)
@@ -89,6 +90,7 @@ namespace GrazeViewV1
                 // Ensure the selected index is valid
                 if (rowIndex < GlobalData.Uploads.Count)
                 {
+                    // Variable to hold the image of the selected row index
                     var uploadInfo = GlobalData.Uploads[rowIndex];
 
                     // Check if image exists in uploadInfo
@@ -105,6 +107,7 @@ namespace GrazeViewV1
                         Size = new Size(800, 600) // Adjust size as needed
                     };
 
+                    // Picture Box to hold the image in the Preview form
                     PictureBox pictureBox = new PictureBox
                     {
                         Image = uploadInfo.ImageFile,
@@ -112,6 +115,7 @@ namespace GrazeViewV1
                         Dock = DockStyle.Fill
                     };
 
+                    // Adds picture box to controls
                     imagePreviewForm.Controls.Add(pictureBox);
                     imagePreviewForm.ShowDialog(); // Show as a dialog to keep the context
                 }
@@ -122,11 +126,12 @@ namespace GrazeViewV1
             }
         }
 
-        // when the back button is clicked on
+        // Event handler for when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
-            IsNavigating = true;
+            IsNavigating = true;    // User is still using the app
 
+            // Maintain consistent form sizing
             if (this.WindowState == FormWindowState.Maximized)
             {
                 ConsistentForm.IsFullScreen = true;
@@ -136,36 +141,29 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;
             }
 
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
-
+            // Checks to make sure MainPage form is not null
             if (_mainPage != null) 
             {
-                _mainPage.Size = this.Size;
-                _mainPage.Location = this.Location;
+                _mainPage.Size = this.Size;           // update MainPage form size to current size
+                _mainPage.Location = this.Location;   // update MainPage form location to current location
             }
 
             _mainPage.Show();                                       // Open Main Page
             this.Hide();                                            // Close Data Upload Page
         }
 
-        // when the help icon is clicked on
+        // Event handler for when the help icon is clicked on
         private void helpButton_Click(object sender, EventArgs e)
         {
             UserGuide.ShowHelpGuide();  // Call Method to only allow one instance open at a time
         }
 
-        // Method for when export button is click 
+        // Event handler for when export button is click 
         private void exportButton_Click(object sender, EventArgs e)
         {
-            IsNavigating = true;
+            IsNavigating = true;   // User is still using the app
 
+            // Maintain consistent form sizing
             if (this.WindowState == FormWindowState.Maximized)
             {
                 ConsistentForm.IsFullScreen = true;
@@ -236,7 +234,6 @@ namespace GrazeViewV1
                 int rowIndex = dataGridView1.Rows.Add(
                     false,                                             // Checkbox column
                     userUploads.UploadName,                            // Name of upload
-                                                                       // imageToDisplay,                                    // Image uploaded
                     mlData?.qufuPercentage,                            // Qufu percentage
                     mlData?.qufustemPercentage,                        // Qufu stem percentage
                     mlData?.nalePercentage,                            // Nale percentage
@@ -265,15 +262,7 @@ namespace GrazeViewV1
             dataGridView1.Refresh();
         }
 
-        // Test
-        private void LoadUploads()
-        {
-            foreach (var upload in GlobalData.Uploads)
-            {
-                LoadUploadsFromGlobalData();
-            }
-        }
-
+        // Uploads all data to the data viewer
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
