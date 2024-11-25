@@ -17,8 +17,6 @@ namespace GrazeViewV1
         // Constructor for initializing MainPage
         public MainPage()
         {
-
-            this.ClientSize = ConsistentForm.FormSize; // Set the initial size of the form from ConsistentForm
             InitializeComponent(); // Initialize form components
             StartPosition = FormStartPosition.CenterScreen;
             ResizeControls(); // Adjust and position controls dynamically
@@ -28,36 +26,35 @@ namespace GrazeViewV1
 
             this.Resize += MainPage_Resize; // Attach the resize event handler
             this.Load += MainPage_Load; // Attach the load event handler for initial adjustments
-
-            if (ConsistentForm.IsFullScreen) // Check if fullscreen mode is enabled
-            {
-                SetFullScreen(); // Set the form to fullscreen mode
-            }
         }
 
-        // Method to enable fullscreen mode
-        public void SetFullScreen()
+        protected override void WndProc(ref Message m)
         {
-            this.WindowState = FormWindowState.Maximized; // Maximize the window
-            this.FormBorderStyle = FormBorderStyle.Sizable; // Allow resizing of the form
-            this.Bounds = Screen.PrimaryScreen.Bounds; // Set the form bounds to cover the entire screen
+            FormWindowState org = this.WindowState;
+            base.WndProc(ref m);
+            if (this.WindowState != org)
+                this.OnFormWindowStateChanged(EventArgs.Empty);
+        }
+
+        protected virtual void OnFormWindowStateChanged(EventArgs e)
+        {
+            if(this.WindowState == FormWindowState.Normal)
+            {
+                this.Size = MinimumSize;
+            }
+            else
+            {
+                this.Size = MaximumSize;
+            }
         }
 
         // Event handler for the Data Upload button click
         private void dataUploadButton_Click(object? sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Maximized) // Check if the form is maximized
-            {
-                ConsistentForm.IsFullScreen = true; // Update the fullscreen flag in ConsistentForm
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false; // Update the fullscreen flag
-            }
-
             DataUpload dataupload = new DataUpload(this); // Create a new instance of DataUpload form
             dataupload.Size = this.Size; // Set the size of the new form to match MainPage
             dataupload.Location = this.Location; // Set the location of the new form to match MainPage
+            dataupload.WindowState = this.WindowState;
             dataupload.Show(); // Show the DataUpload form
             this.Hide(); // Hide the MainPage form
         }
@@ -65,18 +62,10 @@ namespace GrazeViewV1
         // Event handler for the Data Viewer button click
         private void dataViewerButton_Click(object? sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Maximized) // Check if the form is maximized
-            {
-                ConsistentForm.IsFullScreen = true; // Update the fullscreen flag
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false; // Update the fullscreen flag
-            }
-
             DataLibrary datalibrary = new DataLibrary(this); // Create a new instance of DataLibrary form
             datalibrary.Size = this.Size; // Set the size of the new form to match MainPage
             datalibrary.Location = this.Location; // Set the location of the new form to match MainPage
+            datalibrary.WindowState = this.WindowState;
             datalibrary.Show(); // Show the DataLibrary form
             this.Hide(); // Hide the MainPage form
         }
@@ -117,17 +106,14 @@ namespace GrazeViewV1
         // Event handler for the form's resize event
         private void MainPage_Resize(object sender, EventArgs e)
         {
-            ConsistentForm.FormLocation = this.Location; // Save the current form location in ConsistentForm
-            ConsistentForm.FormSize = this.Size; // Save the current form size in ConsistentForm
 
             if (this.WindowState == FormWindowState.Maximized) // Check if the form is maximized
             {
-                ConsistentForm.IsFullScreen = true; // Update fullscreen flag
                 ResizePanel(); // Adjust the panel size and position
                 ResizeControls(); // Adjust the controls
             }
 
-            if (this.WindowState != FormWindowState.Maximized) // Check if the form is not maximized
+            if (this.WindowState == FormWindowState.Normal) // Check if the form is not maximized
             {
                 ResizePanel(); // Adjust the panel size and position
                 ResizeControls(); // Adjust the controls

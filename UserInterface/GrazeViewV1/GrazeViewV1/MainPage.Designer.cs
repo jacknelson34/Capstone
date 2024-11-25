@@ -39,8 +39,7 @@
             SuspendLayout();
             mainPanel.Visible = false;
             this.DoubleBuffered = true;
-            ClientSize = ConsistentForm.FormSize;
-            Location = ConsistentForm.FormLocation;
+            ClientSize = new Size(1280, 918);
             MinimumSize = new Size(1280, 918);
             // 
             // mainLabel

@@ -44,6 +44,27 @@ namespace GrazeViewV1
 
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            FormWindowState org = this.WindowState;
+            base.WndProc(ref m);
+            if (this.WindowState != org)
+                this.OnFormWindowStateChanged(EventArgs.Empty);
+        }
+
+        protected virtual void OnFormWindowStateChanged(EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.Size = MinimumSize;
+            }
+            else if(this.WindowState == FormWindowState.Maximized)
+            {
+                this.Size = MaximumSize;
+            }
+            Refresh();
+        }
+
         // Helper method to maintain full screen
         private void SetFullScreen()
         {
@@ -129,33 +150,20 @@ namespace GrazeViewV1
         // Event handler for when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
+            this.Refresh();
             IsNavigating = true;    // User is still using the app
-
-            // Maintain consistent form sizing
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
 
             // Checks to make sure MainPage form is not null
             if (_mainPage != null) 
             {
+                _mainPage.WindowState = this.WindowState;
                 _mainPage.Size = this.Size;           // update MainPage form size to current size
                 _mainPage.Location = this.Location;   // update MainPage form location to current location
-            }
-
-            // Check if this page is full screen
-            if (ConsistentForm.IsFullScreen)
-            {
-                _mainPage.SetFullScreen();              // Set mainpage to fullscreen if true
+                _mainPage.Refresh();
             }
 
             _mainPage.Show();                                       // Open Main Page
-            this.Hide();                                            // Close Data Upload Page
+            this.Close();                                            // Close Data Upload Page
         }
 
         // Event handler for when the help icon is clicked on
