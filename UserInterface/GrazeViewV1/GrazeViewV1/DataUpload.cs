@@ -14,17 +14,16 @@ namespace GrazeViewV1
 {
     public partial class DataUpload : Form
     {
-        // hold reference to Main Page form
-        private MainPage _mainPage;
-        Image uploadImage;
-        private bool IsNavigating;
+        private MainPage _mainPage;  // hold reference to Main Page form
+        Image uploadImage;           // variable to hold user-uploaded image
+        private bool IsNavigating;   // boolean variable that checks if the user is still using the app
 
         // variable that tracks if a file has or has not been uploaded
         private bool imageUploaded = false;
 
         public DataUpload(MainPage mainpage)
         {
-            IsNavigating = false;
+            IsNavigating = false;   // user is no longer using (default setting)
 
             // Form Properties
             InitializeComponent();
@@ -35,6 +34,7 @@ namespace GrazeViewV1
             // Event Handler for form close
             this.FormClosing += DataUpload_XOut;
 
+            // Maintains window size
             if (ConsistentForm.IsFullScreen) 
             {
                 SetFullScreen();
@@ -42,6 +42,7 @@ namespace GrazeViewV1
 
         }
 
+        // Helper method to maintain full screen
         private void SetFullScreen()
         {
             this.WindowState = FormWindowState.Maximized;
@@ -49,6 +50,7 @@ namespace GrazeViewV1
             this.Bounds = Screen.PrimaryScreen.Bounds;
         }
 
+        // Helper method to close down the app if the top right exit button is pressed
         private void DataUpload_XOut(object sender, FormClosingEventArgs e)
         {
             if (IsNavigating)
@@ -64,11 +66,12 @@ namespace GrazeViewV1
         }
 
 
-        // when the back button is clicked on
+        // Event handler for when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
-            IsNavigating = true;
+            IsNavigating = true;   // User is still using the app
 
+            // Maintain consistent form sizing
             if (this.WindowState == FormWindowState.Maximized) 
             {
                 ConsistentForm.IsFullScreen = true;
@@ -77,18 +80,19 @@ namespace GrazeViewV1
             {
                 ConsistentForm.IsFullScreen = false;
             }
-
+            
+            // Checks to make sure MainPage form is not null
             if (_mainPage != null) 
             {
-                _mainPage.Size = this.Size;
-                _mainPage.Location = this.Location;
+                _mainPage.Size = this.Size;             // update MainPage form size to current size
+                _mainPage.Location = this.Location;     // update MainPage form location to current location
             }
 
             _mainPage.Show();                                       // Open Main Page
             this.Hide();                                            // Close Data Upload Page
         }
 
-        // when the help icon is clicked on
+        // Event handler for when the help icon is clicked on
         private void helpButton_Click(object sender, EventArgs e)
         {
             UserGuide.ShowHelpGuide();  // Call Method to only allow one instance open at a time
@@ -229,8 +233,9 @@ namespace GrazeViewV1
         // when the upload button is clicked on
         private void uploadButton_Click(object? sender, EventArgs e)
         {
-            IsNavigating = true;
+            IsNavigating = true;  // User is still using the app
 
+            // Maintain consistent form sizing
             if (this.WindowState == FormWindowState.Maximized)
             {
                 ConsistentForm.IsFullScreen = true;
@@ -241,7 +246,7 @@ namespace GrazeViewV1
             }
 
             // Date/Time Input Validation
-            // Make sure date if after Jan 1st, 2000 and before current date
+            // Make sure date is after Jan 1st, 2000 and before current date
             if (DateTime.Parse(datePicker.Text) < new DateTime(2000, 1, 1) || DateTime.Parse(datePicker.Text) > DateTime.Today)
             {
                 MessageBox.Show("Please Enter a Date between January 1st, 2000 and today.",
