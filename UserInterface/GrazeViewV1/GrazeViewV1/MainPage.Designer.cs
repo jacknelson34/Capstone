@@ -28,6 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            byte[] imageData = Properties.Resources.BackgroundImage50;
+            Image image;
+
+            using(MemoryStream ms = new MemoryStream(imageData))
+            {
+                image = Image.FromStream(ms);
+            }
+
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
             mainLabel = new Label();
             mainPanel = new Panel();
@@ -38,7 +46,7 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
             mainPanel.Visible = false;
-            this.DoubleBuffered = true;
+            DoubleBuffered = true;
             ClientSize = new Size(1280, 918);
             MinimumSize = new Size(1280, 918);
             // 
@@ -116,14 +124,12 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.BackgroundImage25;
+            BackgroundImage = image;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1280, 847);
             Controls.Add(mainPanel);
             Controls.Add(helpButton);
             BackColor = Color.FromArgb(116, 231, 247);
             DoubleBuffered = true;
-            MinimumSize = new Size(1280, 918);
             Name = "MainPage";
             Text = "MainPage";
             mainPanel.ResumeLayout(false);

@@ -96,14 +96,15 @@ namespace GrazeViewV1
             if (_mainPage != null) 
             {
                 this.Refresh();
+                _mainPage.SuspendLayout();
                 _mainPage.WindowState = this.WindowState; // Ensure state is applied first
-                if (_mainPage.WindowState == FormWindowState.Normal)
+                if (this.WindowState == FormWindowState.Normal)
                 {
-                    _mainPage.Size = this.Size;
-                    _mainPage.Location = this.Location;
+                    // Safeguard to prevent unnecessary size/location changes
+                    _mainPage.ExternalResize(this.Size, this.Location);
                 }
+                _mainPage.ResumeLayout();
             }
-
             _mainPage.Show();                                       // Open Main Page
             this.Close();                                            // Close Data Upload Page
         }
@@ -283,7 +284,7 @@ namespace GrazeViewV1
                     return;
                 }
             }
-            catch(FormatException ex)
+            catch (FormatException)
             {
                 MessageBox.Show($"Invalid Time Entered: {timePicker.Text}.  Please provide a valid time.",
                                 "Invalid Time",

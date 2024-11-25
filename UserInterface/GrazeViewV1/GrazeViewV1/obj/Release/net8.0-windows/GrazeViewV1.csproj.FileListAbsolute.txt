@@ -24,3 +24,7 @@ C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\Graz
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Release\net8.0-windows\GrazeViewV1.pdb
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Release\net8.0-windows\GrazeViewV1.genruntimeconfig.cache
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Release\net8.0-windows\ref\GrazeViewV1.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\Resources\MainPageBackground.jpg
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\Resources\BackgroundImage25.jpg
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\GrazeViewV1.dll.config
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Release\net8.0-windows\GrazeViewV1.SplashScreen.resources
