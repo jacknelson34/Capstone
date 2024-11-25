@@ -148,6 +148,12 @@ namespace GrazeViewV1
                 _mainPage.Location = this.Location;   // update MainPage form location to current location
             }
 
+            // Check if this page is full screen
+            if (ConsistentForm.IsFullScreen)
+            {
+                _mainPage.SetFullScreen();              // Set mainpage to fullscreen if true
+            }
+
             _mainPage.Show();                                       // Open Main Page
             this.Hide();                                            // Close Data Upload Page
         }

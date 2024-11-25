@@ -84,8 +84,15 @@ namespace GrazeViewV1
             // Checks to make sure MainPage form is not null
             if (_mainPage != null) 
             {
+                this.Refresh();
                 _mainPage.Size = this.Size;             // update MainPage form size to current size
                 _mainPage.Location = this.Location;     // update MainPage form location to current location
+            }
+
+            // Check if this page is full screen
+            if (ConsistentForm.IsFullScreen) 
+            {
+                _mainPage.SetFullScreen();              // Set mainpage to fullscreen if true
             }
 
             _mainPage.Show();                                       // Open Main Page

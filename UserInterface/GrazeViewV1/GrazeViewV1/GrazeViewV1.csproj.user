@@ -25,6 +25,9 @@
     <Compile Update="ResultPage.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="SplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="UserGuide.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -17,9 +17,12 @@ namespace GrazeViewV1
         // Constructor for initializing MainPage
         public MainPage()
         {
+
             this.ClientSize = ConsistentForm.FormSize; // Set the initial size of the form from ConsistentForm
             InitializeComponent(); // Initialize form components
+            StartPosition = FormStartPosition.CenterScreen;
             ResizeControls(); // Adjust and position controls dynamically
+
             this.Text = "GrazeView"; // Set the title of the MainPage form
             _datalibrary = new DataLibrary(this); // Instantiate DataLibrary with a reference to MainPage
 
@@ -33,7 +36,7 @@ namespace GrazeViewV1
         }
 
         // Method to enable fullscreen mode
-        private void SetFullScreen()
+        public void SetFullScreen()
         {
             this.WindowState = FormWindowState.Maximized; // Maximize the window
             this.FormBorderStyle = FormBorderStyle.Sizable; // Allow resizing of the form
