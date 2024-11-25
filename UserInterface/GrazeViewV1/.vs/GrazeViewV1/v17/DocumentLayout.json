@@ -23,8 +23,8 @@
       "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\loadingpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\loadingpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\loadingpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\resultpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\resultpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\tamu\\fall24\\ecen_403\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -68,10 +68,6 @@
           "DockedWidth": 200,
           "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{26341fe2-71dd-46fd-bb1b-2e51a92a0d64}"
