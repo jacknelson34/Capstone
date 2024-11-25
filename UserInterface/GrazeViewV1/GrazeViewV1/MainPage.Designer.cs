@@ -37,6 +37,7 @@
             mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
+            mainPanel.Visible = false;
             this.DoubleBuffered = true;
             ClientSize = ConsistentForm.FormSize;
             Location = ConsistentForm.FormLocation;
@@ -116,7 +117,7 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackgroundImage = Properties.Resources.MainPageBackground;
+            BackgroundImage = Properties.Resources.BackgroundImage25;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1280, 847);
             Controls.Add(mainPanel);
@@ -129,6 +130,7 @@
             mainPanel.ResumeLayout(false);
             mainPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
+            mainPanel.Visible = true;
             ResumeLayout(false);
         }
 

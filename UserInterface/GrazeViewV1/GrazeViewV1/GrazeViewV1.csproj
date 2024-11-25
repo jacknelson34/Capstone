@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\BackgroundImage25.jpg" />
     <None Remove="Resources\Grass.jpg" />
     <None Remove="Resources\MainPageBackground.jpg" />
     <None Remove="Resources\Waluigi.png" />
@@ -16,6 +17,12 @@
 
   <ItemGroup>
     <Content Include="Resources\MainPageBackground.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\BackgroundImage25.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -41,6 +48,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Properties\Resources\BackgroundImage25.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

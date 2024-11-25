@@ -47,6 +47,7 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).BeginInit();
             SuspendLayout();
+            uploadPanel.Visible = false;
             MinimumSize = new Size(1280, 975);
             //
             // uploadPanel
@@ -249,10 +250,11 @@
             Text = "DataUpload";
             BackColor = Color.LightGreen;
             StartPosition = FormStartPosition.Manual;
-            BackgroundImage = Properties.Resources.MainPageBackground;
+            BackgroundImage = Properties.Resources.BackgroundImage25;
             BackgroundImageLayout = ImageLayout.Stretch;
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).EndInit();
+            uploadPanel.Visible = true;
             ResumeLayout(false);
             Refresh();
             PerformLayout();

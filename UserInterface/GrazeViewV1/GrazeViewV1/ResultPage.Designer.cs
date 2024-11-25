@@ -37,6 +37,7 @@
             returnToUploadButton = new roundButton();
             resultsPagePanel.SuspendLayout();
             SuspendLayout();
+            resultsPagePanel.Visible = false;
             ClientSize = new Size(1280, 918);
             //
             // buttonPanel
@@ -133,7 +134,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             StartPosition = FormStartPosition.Manual;
             BackColor = Color.Gray;
-            BackgroundImage = Properties.Resources.MainPageBackground;
+            BackgroundImage = Properties.Resources.BackgroundImage25;
             BackgroundImageLayout = ImageLayout.Stretch;
             CreateUserProvidedDataControls(UserOutputPanel);
             CreateMLDataControls(MLOutputPanel);
@@ -144,6 +145,7 @@
             Name = "ResultPage";
             Text = "Result Page";
             resultsPagePanel.ResumeLayout(false);
+            resultsPagePanel.Visible = true;
             ResumeLayout(false);
         }
 

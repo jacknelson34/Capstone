@@ -93,11 +93,14 @@ namespace GrazeViewV1
         // Method to resize and reposition the main panel
         private void ResizePanel()
         {
+            mainPanel.Visible = false;
+
             mainPanel.Size = new Size((int)(this.ClientSize.Width * 0.8), (int)(this.ClientSize.Height * 0.83)); // Adjust the size of the panel
             mainPanel.Location = new Point((this.ClientSize.Width - mainPanel.Width) / 2, // Center the panel horizontally
                                            (this.ClientSize.Height - mainPanel.Height) / 2); // Center the panel vertically
 
             this.Refresh(); // Refresh the form to apply the changes
+            mainPanel.Visible = true;
         }
 
         // Event handler for the form's load event

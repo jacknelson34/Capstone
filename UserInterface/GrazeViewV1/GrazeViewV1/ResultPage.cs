@@ -190,6 +190,8 @@ namespace GrazeViewV1
         // Method to handle resizing - keeps the results panel in the center and handles element repositioning
         private void CenterPanel()
         {
+            resultsPagePanel.Visible = false;
+
             // Update the size and location of resultsPagePanel
             resultsPagePanel.Size = new Size((int)(this.ClientSize.Width * 0.66), (int)(this.ClientSize.Height * 0.708));
             resultsPagePanel.Location = new Point(
@@ -210,6 +212,7 @@ namespace GrazeViewV1
             outputImage.Location = new Point(0, 0); // Align top left of resultsPagePanel
 
             this.Refresh(); // Refresh to apply changes
+            resultsPagePanel.Visible = true;
         }
     }
 }
