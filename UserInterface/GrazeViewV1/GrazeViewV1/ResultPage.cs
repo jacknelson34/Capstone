@@ -100,7 +100,7 @@ namespace GrazeViewV1
         {
             this.WindowState = FormWindowState.Maximized;       // Maximize the form
             this.FormBorderStyle = FormBorderStyle.Sizable;     // Set the border style for fullscreen
-            this.Bounds = Screen.PrimaryScreen.Bounds;          // Set the bounds of the form to be fullscreen
+            Bounds = Screen.PrimaryScreen.Bounds;          // Set the bounds of the form to be fullscreen
         }
 
         // Handler for user x-ing out of the page   

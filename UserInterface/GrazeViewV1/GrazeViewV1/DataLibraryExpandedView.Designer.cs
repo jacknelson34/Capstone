@@ -55,7 +55,7 @@
             controlPanel = new Panel();
             this.controlPanel.Dock = DockStyle.Bottom;
             this.controlPanel.Height = 60;
-            this.controlPanel.BackColor = Color.LightBlue;
+            this.controlPanel.BackColor = Color.FromArgb(116, 231, 247);
             this.controlPanel.BorderStyle = BorderStyle.FixedSingle;
             this.Controls.Add(this.controlPanel);
             // 

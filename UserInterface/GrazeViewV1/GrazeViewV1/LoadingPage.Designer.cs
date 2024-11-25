@@ -34,7 +34,7 @@
             // 
             StartPosition = FormStartPosition.CenterScreen;
             AutoScaleDimensions = new SizeF(7F, 15F);
-            BackColor = Color.LightBlue;
+            BackColor = Color.FromArgb(116, 231, 247);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             MaximumSize = new Size(800, 450);

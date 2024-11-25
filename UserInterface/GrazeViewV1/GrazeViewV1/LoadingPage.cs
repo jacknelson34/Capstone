@@ -64,7 +64,7 @@ namespace GrazeViewV1
 
             // Initialize Text Box with status updates
             statusUpdates = new TextBox();                                          // Initialize a new TextBox instance to display status updates
-            statusUpdates.BackColor = Color.LightBlue;                              // Set the background color of the TextBox to light blue
+            statusUpdates.BackColor = Color.FromArgb(116, 231, 247);                              // Set the background color of the TextBox to light blue
             statusUpdates.Text = "Uploading Image...";                              // Set the initial text to indicate an image upload is in progress
             statusUpdates.Font = new Font("Times New Roman", 12, FontStyle.Italic); // Set the font to Times New Roman, size 12, italic style
             statusUpdates.Size = new Size(250, 20);                                 // Set the size of the TextBox to 250x20 pixels
