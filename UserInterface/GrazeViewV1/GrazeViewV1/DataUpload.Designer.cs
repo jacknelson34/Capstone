@@ -250,8 +250,8 @@
             Text = "DataUpload";
             BackColor = Color.FromArgb(116, 231, 247);
             StartPosition = FormStartPosition.Manual;
-            BackgroundImage = Properties.Resources.BackgroundImage25;
-            BackgroundImageLayout = ImageLayout.Stretch;
+            //BackgroundImage = Properties.Resources.BackgroundImage25;
+            //BackgroundImageLayout = ImageLayout.Stretch;
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).EndInit();
             uploadPanel.Visible = true;
