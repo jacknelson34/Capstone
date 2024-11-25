@@ -122,7 +122,7 @@
             ClientSize = new Size(1280, 847);
             Controls.Add(mainPanel);
             Controls.Add(helpButton);
-            BackColor = Color.LightGreen;
+            BackColor = Color.FromArgb(116, 231, 247);
             DoubleBuffered = true;
             MinimumSize = new Size(1280, 918);
             Name = "MainPage";
