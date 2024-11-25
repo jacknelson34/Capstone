@@ -84,22 +84,6 @@ namespace GrazeViewV1
             UserGuide.ShowHelpGuide(); // Open the user guide, ensuring only one instance is active
         }
 
-        // Method to open the DataLibrary form
-        private void OpenDataLibrary()
-        {
-            if (_datalibrary != null) // Check if DataLibrary instance exists
-            {
-                _datalibrary.LoadUploadsFromGlobalData(); // Load data into the existing instance
-            }
-            else
-            {
-                _datalibrary = new DataLibrary(this); // Create a new instance of DataLibrary
-            }
-
-            _datalibrary.Show(); // Show the DataLibrary form
-            this.Hide(); // Hide the MainPage form
-        }
-
         // Method to return the current DataLibrary instance
         public DataLibrary GetDataLibrary()
         {

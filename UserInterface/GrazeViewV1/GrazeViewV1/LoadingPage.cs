@@ -133,26 +133,31 @@ namespace GrazeViewV1
                 if(loadingBar.Value == 10)
                 {
                     statusUpdates.Text = "Splicing Image...";
+                    statusUpdates.Font = new Font("Times New Roman", 12, FontStyle.Italic);
                     statusUpdates.Refresh();
                 }
                 else if (loadingBar.Value == 20)
                 {
                     statusUpdates.Text = "Analyzing Image Segments...";
+                    statusUpdates.Font = new Font("Times New Roman", 12, FontStyle.Italic);
                     statusUpdates.Refresh();
                 }
                 else if (loadingBar.Value == 30)
                 {
                     statusUpdates.Text = "Comparing to known data...";
+                    statusUpdates.Font = new Font("Times New Roman", 12, FontStyle.Italic);
                     statusUpdates.Refresh();
                 }
                 else if (loadingBar.Value == 40)
                 {
                     statusUpdates.Text = "Recombining Image Segments...";
+                    statusUpdates.Font = new Font("Times New Roman", 12, FontStyle.Italic);
                     statusUpdates.Refresh();
                 }
                 else if (loadingBar.Value == 50)
                 {
                     statusUpdates.Text = "Generating Output...";
+                    statusUpdates.Font = new Font("Times New Roman", 12, FontStyle.Italic);
                     statusUpdates.Refresh();
                 }
 

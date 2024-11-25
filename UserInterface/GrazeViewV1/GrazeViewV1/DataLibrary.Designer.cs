@@ -144,7 +144,7 @@
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "UploadTimeCol", HeaderText = "Upload Time" });            // 11
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleLocationCol", HeaderText = "Sample Location" });    // 12
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SheepBreedCol", HeaderText = "Sheep Breed" });            // 13
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "CommentsCol", HeaderText = "Comments", Width = 500, AutoSizeMode = DataGridViewAutoSizeColumnMode.None });                 // 14
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "CommentsCol", HeaderText = "Comments", Width = 300, AutoSizeMode = DataGridViewAutoSizeColumnMode.None });                 // 14
 
             // Set text wrapping for comments
             dataGridView1.Columns["CommentsCol"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
@@ -155,8 +155,8 @@
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(0, 0);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Font = new Font("Times New Roman", 15, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-            dataGridView1.RowHeadersWidth = 82;
+            dataGridView1.Font = new Font("Times New Roman", 14, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            //dataGridView1.RowHeadersWidth = 82;
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.Size = new Size(2486, 1159);
             dataGridView1.TabIndex = 0;
@@ -186,31 +186,31 @@
             // 
             dataGridViewCheckBoxColumn1.MinimumWidth = 10;
             dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
-            dataGridViewCheckBoxColumn1.Width = 200;
+            dataGridViewCheckBoxColumn1.Width = 250;
             // 
             // dataGridViewTextBoxColumn1
             // 
             dataGridViewTextBoxColumn1.MinimumWidth = 10;
             dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.Width = 200;
+            dataGridViewTextBoxColumn1.Width = 180;
             // 
             // dataGridViewTextBoxColumn2
             // 
             dataGridViewTextBoxColumn2.MinimumWidth = 10;
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.Width = 200;
+            dataGridViewTextBoxColumn2.Width = 150;
             // 
             // dataGridViewTextBoxColumn3
             // 
             dataGridViewTextBoxColumn3.MinimumWidth = 10;
             dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.Width = 200;
+            dataGridViewTextBoxColumn3.Width = 250;
             // 
             // dataGridViewTextBoxColumn4
             // 
             dataGridViewTextBoxColumn4.MinimumWidth = 10;
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.Width = 200;
+            dataGridViewTextBoxColumn4.Width = 150;
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -265,6 +265,23 @@
             dataGridViewTextBoxColumn13.MinimumWidth = 10;
             dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
             dataGridViewTextBoxColumn13.Width = 200;
+            //
+            // Setting widths per title length
+            //
+            dataGridView1.Columns["SelectCol"].Width = 120;          // "Select Uploads"
+            dataGridView1.Columns["NameCol"].Width = 160;            // "Upload Name"
+            dataGridView1.Columns["QufuCol"].Width = 80;            // "Qufu(%):"
+            dataGridView1.Columns["QufuStemCol"].Width = 150;        // "Qufu Stem(%):"
+            dataGridView1.Columns["NaleCol"].Width = 80;            // "Nale(%):"
+            dataGridView1.Columns["ErciCol"].Width = 80;            // "Erci(%):"
+            dataGridView1.Columns["AirBubbleCol"].Width = 150;       // "Air Bubble(%):"
+            dataGridView1.Columns["SampleDateCol"].Width = 180;      // "Date Sample Taken"
+            dataGridView1.Columns["SampleTimeCol"].Width = 180;      // "Time Sample Taken"
+            dataGridView1.Columns["UploadDateCol"].Width = 150;      // "Upload Date"
+            dataGridView1.Columns["UploadTimeCol"].Width = 150;      // "Upload Time"
+            dataGridView1.Columns["SampleLocationCol"].Width = 200;  // "Sample Location"
+            dataGridView1.Columns["SheepBreedCol"].Width = 150;      // "Sheep Breed"
+            dataGridView1.Columns["CommentsCol"].Width = 300;
             //
             // Temporary clear button
             //

@@ -253,7 +253,8 @@ namespace GrazeViewV1
 
                 // Apply a standardized font to all uploads
                 var row = dataGridView1.Rows[rowIndex];
-                row.DefaultCellStyle.Font = new Font("Times New Roman", 15, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+                row.DefaultCellStyle.Font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+                dataGridView1.Font = new Font("Times New Roman", 14, FontStyle.Bold, GraphicsUnit.Pixel, 0);
 
             }
 
@@ -297,7 +298,7 @@ namespace GrazeViewV1
                     string comment = row.Cells["CommentsCol"].Value.ToString();
                     using (Graphics g = dataGridView1.CreateGraphics())
                     {
-                        SizeF size = g.MeasureString(comment, dataGridView1.DefaultCellStyle.Font, 500); // Measure with max width
+                        SizeF size = g.MeasureString(comment, dataGridView1.DefaultCellStyle.Font, 300); // Measure with max width
                         int requiredHeight = (int)Math.Ceiling(size.Height) + 10; // Add padding
                         row.Height = Math.Max(requiredHeight, dataGridView1.RowTemplate.Height); // Ensure height is not less than default
                     }

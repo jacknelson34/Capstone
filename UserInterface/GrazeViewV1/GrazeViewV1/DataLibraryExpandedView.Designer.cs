@@ -77,11 +77,12 @@
             this.printButton.Text = "Print";
             this.printButton.borderRadius = 20;
             this.printButton.Size = new Size(110, 40);
-            this.printButton.Location = new Point(controlPanel.Width + 350, 7); // Adjust location to be on the right side
+            this.printButton.Location = new Point(controlPanel.Width + 130, 7); // Adjust location to be on the right side
             this.printButton.Anchor = AnchorStyles.Left; // Ensure it stays on the right when resizing
-            this.printButton.Click += new EventHandler(this.printButton_Click); // Placeholder, currently no function
+            this.printButton.Click += new EventHandler(this.printButton_Click); 
             this.controlPanel.Controls.Add(this.printButton);
 
+            MinimumSize = new Size(1050, 550);
 
 
         }

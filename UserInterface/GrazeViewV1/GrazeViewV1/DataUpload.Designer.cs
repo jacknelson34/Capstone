@@ -247,7 +247,7 @@
             backButton.BringToFront();
             Name = "DataUpload";
             Text = "DataUpload";
-            BackColor = Color.LightBlue;
+            BackColor = Color.LightGreen;
             StartPosition = FormStartPosition.Manual;
             BackgroundImage = Properties.Resources.MainPageBackground;
             BackgroundImageLayout = ImageLayout.Stretch;

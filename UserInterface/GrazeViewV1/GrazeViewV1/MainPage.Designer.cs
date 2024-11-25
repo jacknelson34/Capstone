@@ -34,38 +34,23 @@
             dataViewerButton = new roundButton();
             dataUploadButton = new roundButton();
             helpButton = new PictureBox();
-            //pictureBox1 = new PictureBox();
             mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
-            //((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             this.DoubleBuffered = true;
             ClientSize = ConsistentForm.FormSize;
             Location = ConsistentForm.FormLocation;
             MinimumSize = new Size(1280, 918);
             // 
-            // pictureBox1
-            // 
-            /*pictureBox1.BackgroundImageLayout = ImageLayout.None;
-            pictureBox1.Dock = DockStyle.Bottom;
-            pictureBox1.ForeColor = Color.Transparent;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(0, 351);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1280, 496);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 4;
-            pictureBox1.TabStop = false;*/
-            // 
             // mainLabel
             // 
             mainLabel.AutoSize = true;
-            mainLabel.Font = new Font("Times New Roman", 42F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            mainLabel.Text = "GRAZE VIEW";
+            mainLabel.Font = new Font("Times New Roman", 42F, FontStyle.Bold);
             mainLabel.Location = new Point(274, 229);
             mainLabel.Name = "mainLabel";
             mainLabel.Size = new Size(787, 128);
             mainLabel.TabIndex = 0;
-            mainLabel.Text = "GRAZE VIEW";
             // 
             // mainPanel
             // 
@@ -136,7 +121,7 @@
             ClientSize = new Size(1280, 847);
             Controls.Add(mainPanel);
             Controls.Add(helpButton);
-            BackColor = Color.LightBlue;
+            BackColor = Color.LightGreen;
             DoubleBuffered = true;
             MinimumSize = new Size(1280, 918);
             Name = "MainPage";
@@ -144,7 +129,6 @@
             mainPanel.ResumeLayout(false);
             mainPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
-            //((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -155,6 +139,5 @@
         private roundButton dataUploadButton;
         private roundButton dataViewerButton;
         private PictureBox helpButton;
-        //private PictureBox pictureBox1;
     }
 }

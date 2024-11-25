@@ -30,6 +30,7 @@ namespace GrazeViewV1
             Application.Run(new MainPage());
         }
 
+        /*-------------------------------------Temporary Storage Functions for Uploaded Data----------------------------------------------*/
 
         // Method handler for application close
         private static void OnApplicationExit(object sender, EventArgs e)
@@ -59,11 +60,17 @@ namespace GrazeViewV1
         {
             try
             {
-                // Serialize Uploads
-                var uploadJson = JsonSerializer.Serialize(GlobalData.Uploads, new JsonSerializerOptions { WriteIndented = true });
+                // Serialize Uploads with formatting adjustments for Comments
+                var normalizedUploads = GlobalData.Uploads.Select(upload =>
+                {
+                    upload.Comments = NormalizeTextForSave(upload.Comments); // Apply normalization
+                    return upload;
+                }).ToList();
+
+                var uploadJson = JsonSerializer.Serialize(normalizedUploads, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(uploadDataFile, uploadJson);
 
-                // Serialize Machine Learning Data
+                // Serialize Machine Learning Data (MLData does not need text normalization as it contains no special text fields)
                 var mlDataJson = JsonSerializer.Serialize(GlobalData.machineLearningData, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(mlDataFile, mlDataJson);
             }
@@ -78,13 +85,19 @@ namespace GrazeViewV1
         {
             try
             {
-                // Load Uploads
+                // Load Uploads and restore formatting for Comments
                 if (File.Exists(uploadDataFile))
                 {
                     var uploadJson = File.ReadAllText(uploadDataFile);
                     var uploads = JsonSerializer.Deserialize<List<UploadInfo>>(uploadJson);
                     if (uploads != null)
+                    {
+                        foreach (var upload in uploads)
+                        {
+                            upload.Comments = RestoreTextFormatting(upload.Comments); // Restore formatting
+                        }
                         GlobalData.Uploads.AddRange(uploads);
+                    }
                 }
 
                 // Load Machine Learning Data
@@ -93,13 +106,25 @@ namespace GrazeViewV1
                     var mlDataJson = File.ReadAllText(mlDataFile);
                     var mlData = JsonSerializer.Deserialize<List<MLData>>(mlDataJson);
                     if (mlData != null)
+                    {
                         GlobalData.machineLearningData.AddRange(mlData);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading data: {ex.Message}", "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private static string NormalizeTextForSave(string input)
+        {
+            return input?.Replace("\n", "\\n").Replace("\r", "\\r"); // Escape newlines and carriage returns
+        }
+
+        private static string RestoreTextFormatting(string input)
+        {
+            return input?.Replace("\\n", "\n").Replace("\\r", "\r"); // Restore newlines and carriage returns
         }
 
         /*---------------------------------------Temporary Clear Function for Data Stored------------------------------------------------*/

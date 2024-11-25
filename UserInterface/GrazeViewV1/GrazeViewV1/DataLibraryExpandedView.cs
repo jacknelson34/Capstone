@@ -96,25 +96,47 @@ namespace GrazeViewV1
 
 
         }
-        
+
         // Method to capture the screen for printing
         private void CaptureScreen()
         {
-            // Calculate the area to capture by excluding the header and controlPanel
-            int headerHeight = this.PointToScreen(new Point(0, 0)).Y - this.Top;
-            int captureHeight = this.Height - headerHeight - controlPanel.Height;
+            // Ensure the flowLayoutPanel exists and has content
+            if (flowLayoutPanel == null || flowLayoutPanel.Controls.Count == 0)
+            {
+                MessageBox.Show("Nothing to capture for printing.");
+                return;
+            }
 
-            // Initialize memoryImage with the adjusted size
-            memoryImage = new Bitmap(this.Width, captureHeight);
+            // Get the full size of the flowLayoutPanel's content (not just visible area)
+            int totalWidth = flowLayoutPanel.DisplayRectangle.Width;
+            int totalHeight = flowLayoutPanel.DisplayRectangle.Height;
 
-            // Capture the screen within the specified bounds
+            // Create a bitmap to hold the entire content
+            memoryImage = new Bitmap(totalWidth, totalHeight);
+
             using (Graphics memoryGraphics = Graphics.FromImage(memoryImage))
             {
-                // Adjust the starting Y coordinate to skip the header
-                int startY = this.Location.Y + headerHeight;
+                // Optional: Fill with a background color (e.g., white)
+                memoryGraphics.Clear(Color.White);
 
-                // Capture the screen excluding the header and controlPanel
-                memoryGraphics.CopyFromScreen(this.Location.X, startY, 0, 0, new Size(this.Width, captureHeight));
+                // Save the original flowLayoutPanel scroll position
+                Point originalScrollPosition = flowLayoutPanel.AutoScrollPosition;
+
+                // Temporarily set the scroll position to the top-left
+                flowLayoutPanel.AutoScrollPosition = new Point(0, 0);
+
+                // Render each control manually onto the bitmap
+                foreach (Control control in flowLayoutPanel.Controls)
+                {
+                    // Get the bounds of the control relative to the FlowLayoutPanel
+                    Rectangle controlBounds = control.Bounds;
+
+                    // Render the control onto the bitmap
+                    control.DrawToBitmap(memoryImage, controlBounds);
+                }
+
+                // Restore the original scroll position
+                flowLayoutPanel.AutoScrollPosition = originalScrollPosition;
             }
         }
 
@@ -133,7 +155,7 @@ namespace GrazeViewV1
                 BorderStyle = BorderStyle.Fixed3D,
                 Padding = new Padding(10),
                 Margin = new Padding(10),
-                Width = 1200,
+                Width = 1000,
                 Height = 400,
                 Anchor = AnchorStyles.Top
             };
