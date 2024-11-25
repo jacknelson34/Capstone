@@ -27,6 +27,8 @@ namespace GrazeViewV1
             RichTextBox helpTextBox = new RichTextBox();             // Text box to hold entire user guide text
             helpTextBox.Dock = DockStyle.Fill;                       // Set helpTextBox to fill the page
             helpTextBox.ReadOnly = true;                             // Enable read only for the user guide
+            helpTextBox.TabStop = false;                             // Don't allow user to type or highlight
+
             helpTextBox.ScrollBars = RichTextBoxScrollBars.Vertical; // Ensure a vertical scrollbar
             helpTextBox.Font = new Font("Oswald", 12);      // Set font for user guide
 
@@ -49,7 +51,7 @@ namespace GrazeViewV1
                 "3. Select a Microscope Image to upload by either dragging an image into the box or by clicking the image box.\n" +
                 "      - A preview of the image will appear if the upload was successful.\n" +
                 "4. Click 'Upload' to save the data to the system.\n" +
-                "      - Once uploaded, there is an option to return to upload more from the results page.\n\n");
+                "      - Once uploaded, there is an option to return to upload more from the results page.\n");
 
             // Section 2 - How to View Data
             AppendSection(helpTextBox, "--- How to View Data ---",
@@ -64,7 +66,15 @@ namespace GrazeViewV1
                 "2. Select Data Viewer from the Main Page. \n" +
                 "3. In the Data Viewer, select up to 5 uploads to export and view.\n" +
                 "      - This may take a moment, depending on the size of the image files.\n" +
-                "4. Once Uploads are loaded, click the print button to print the page.");
+                "4. Once Uploads are loaded, click the print button to print the page.\n");
+
+            // Section 4 - Clearing Data
+            AppendSection(helpTextBox, "--- How to Clear all Data ---",
+                "1. Once data has been uploaded, there is the option to clear it using 'Clear All Data' in the control panel.\n" +
+                "2. If clicked, the application will prompt the user to confirm.\n" +
+                "3. Click confirm in order to clear all data.\n" +
+                "      - NOTE : Once data is cleared, there is no way to recover it.\n" +
+                "      - NOTE : Clearing data occasionally will improve application performace.\n");
 
         }
         

@@ -133,9 +133,9 @@
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             StartPosition = FormStartPosition.Manual;
-            BackColor = Color.Gray;
-            BackgroundImage = Properties.Resources.BackgroundImage25;
-            BackgroundImageLayout = ImageLayout.Stretch;
+            BackColor = Color.FromArgb(116, 231, 247);
+            //BackgroundImage = Properties.Resources.BackgroundImage25;
+            //BackgroundImageLayout = ImageLayout.Stretch;
             CreateUserProvidedDataControls(UserOutputPanel);
             CreateMLDataControls(MLOutputPanel);
             resultsPagePanel.Controls.Add(UserOutputPanel);
@@ -152,125 +152,125 @@
         // Helper method to create a title label for each panel
         private Label CreatePanelTitle(string titleText)
         {
-            Label title = new Label();
-            title.Text = titleText;
-            title.Font = new Font("Times New Roman", 10, FontStyle.Bold);
-            title.Location = new Point(10, 10);
-            title.Anchor = AnchorStyles.Top | AnchorStyles.Left;
-            title.AutoSize = true;
-            return title;
+            Label title = new Label(); // Create a new label instance
+            title.Text = titleText; // Set the text of the label to the provided title
+            title.Font = new Font("Times New Roman", 10, FontStyle.Bold); // Set the font style and size for the label
+            title.Location = new Point(10, 10); // Position the label at coordinates (10, 10)
+            title.Anchor = AnchorStyles.Top | AnchorStyles.Left; // Anchor the label to the top-left of its container
+            title.AutoSize = true; // Automatically adjust the size of the label to fit the text
+            return title; // Return the configured label
         }
 
         // Helper method to create ML Data controls using seamless textboxes
         private void CreateMLDataControls(Panel panel)
         {
-            int currentYPosition = 40;  // Starting below the title
-            int labelWidth = 120;
-            int textBoxWidth = 150;
-            Font commonFont = new Font("Times New Roman", 10, FontStyle.Regular);
+            int currentYPosition = 40;  // Define the starting vertical position for controls
+            int labelWidth = 120; // Define the width for labels
+            int textBoxWidth = 150; // Define the width for textboxes
+            Font commonFont = new Font("Times New Roman", 10, FontStyle.Regular); // Define the common font for labels and textboxes
 
             // Create panel title
-            Label title = CreatePanelTitle("Model Generated Data:");
-            panel.Controls.Add(title);
+            Label title = CreatePanelTitle("Model Generated Data:"); // Create a title label for the panel
+            panel.Controls.Add(title); // Add the title label to the panel
 
             // Create and add controls for each ML data field using seamless textboxes
-            qufuLabel = CreateLabel(commonFont, "Qufu (%):", new Point(10, currentYPosition));
-            qufuTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+80, currentYPosition), textBoxWidth);
-            panel.Controls.Add(qufuLabel);
-            panel.Controls.Add(qufuTextBox);
+            qufuLabel = CreateLabel(commonFont, "Qufu (%):", new Point(10, currentYPosition)); // Create a label for "Qufu"
+            qufuTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Qufu"
+            panel.Controls.Add(qufuLabel); // Add the label to the panel
+            panel.Controls.Add(qufuTextBox); // Add the textbox to the panel
 
-            currentYPosition += 30;
-            erciLabel = CreateLabel(commonFont, "Erci (%):", new Point(10, currentYPosition));
-            erciTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth);
-            panel.Controls.Add(erciLabel);
-            panel.Controls.Add(erciTextBox);
+            currentYPosition += 30; // Increment vertical position for the next control
+            erciLabel = CreateLabel(commonFont, "Erci (%):", new Point(10, currentYPosition)); // Create a label for "Erci"
+            erciTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Erci"
+            panel.Controls.Add(erciLabel); // Add the label to the panel
+            panel.Controls.Add(erciTextBox); // Add the textbox to the panel
 
-            currentYPosition += 30;
-            naleLabel = CreateLabel(commonFont, "Nale (%):", new Point(10, currentYPosition));
-            naleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth);
-            panel.Controls.Add(naleLabel);
-            panel.Controls.Add(naleTextBox);
+            currentYPosition += 30; // Increment vertical position for the next control
+            naleLabel = CreateLabel(commonFont, "Nale (%):", new Point(10, currentYPosition)); // Create a label for "Nale"
+            naleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Nale"
+            panel.Controls.Add(naleLabel); // Add the label to the panel
+            panel.Controls.Add(naleTextBox); // Add the textbox to the panel
 
-            currentYPosition += 30;
-            bubbleLabel = CreateLabel(commonFont, "Bubbles (%):", new Point(10, currentYPosition));
-            bubbleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+ 80, currentYPosition), textBoxWidth);
-            panel.Controls.Add(bubbleLabel);
-            panel.Controls.Add(bubbleTextBox);
+            currentYPosition += 30; // Increment vertical position for the next control
+            bubbleLabel = CreateLabel(commonFont, "Bubbles (%):", new Point(10, currentYPosition)); // Create a label for "Bubbles"
+            bubbleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Bubbles"
+            panel.Controls.Add(bubbleLabel); // Add the label to the panel
+            panel.Controls.Add(bubbleTextBox); // Add the textbox to the panel
 
-            currentYPosition += 30;
-            stemLabel = CreateLabel(commonFont, "Stem (%):", new Point(10, currentYPosition));
-            stemTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+80, currentYPosition), textBoxWidth);
-            panel.Controls.Add(stemLabel);
-            panel.Controls.Add(stemTextBox);
+            currentYPosition += 30; // Increment vertical position for the next control
+            stemLabel = CreateLabel(commonFont, "Stem (%):", new Point(10, currentYPosition)); // Create a label for "Stem"
+            stemTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Stem"
+            panel.Controls.Add(stemLabel); // Add the label to the panel
+            panel.Controls.Add(stemTextBox); // Add the textbox to the panel
         }
 
         // Helper method to create User Provided Data controls using seamless textboxes
         private void CreateUserProvidedDataControls(Panel panel)
         {
-            int currentYPosition = 40;  // Starting below the title
-            int labelWidth = 120;
-            int textBoxWidth = 300;
-            Font commonFont = new Font("Times New Roman", 10, FontStyle.Regular);
+            int currentYPosition = 40;  // Define the starting vertical position for controls
+            int labelWidth = 120; // Define the width for labels
+            int textBoxWidth = 300; // Define the width for textboxes
+            Font commonFont = new Font("Times New Roman", 10, FontStyle.Regular); // Define the common font for labels and textboxes
 
             // Create panel title
-            Label title = CreatePanelTitle("User Provided Data:");
-            panel.Controls.Add(title);
+            Label title = CreatePanelTitle("User Provided Data:"); // Create a title label for the panel
+            panel.Controls.Add(title); // Add the title label to the panel
 
             // Create and add controls for each user data field using seamless textboxes
-            uploadNameLabel = CreateLabel(commonFont, "Upload Name:", new Point(10, currentYPosition));
-            uploadNameTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+100, currentYPosition), textBoxWidth);
-            panel.Controls.Add(uploadNameLabel);
-            panel.Controls.Add(uploadNameTextBox);
+            uploadNameLabel = CreateLabel(commonFont, "Upload Name:", new Point(10, currentYPosition)); // Create a label for "Upload Name"
+            uploadNameTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 100, currentYPosition), textBoxWidth); // Create a seamless textbox for "Upload Name"
+            panel.Controls.Add(uploadNameLabel); // Add the label to the panel
+            panel.Controls.Add(uploadNameTextBox); // Add the textbox to the panel
 
-            currentYPosition += 30;
-            dateUploadedLabel = CreateLabel(commonFont, "Date Uploaded:", new Point(10, currentYPosition));
-            dateUploadedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+100, currentYPosition), textBoxWidth);
-            panel.Controls.Add(dateUploadedLabel);
-            panel.Controls.Add(dateUploadedTextBox);
+            currentYPosition += 30; // Increment vertical position for the next control
+            dateUploadedLabel = CreateLabel(commonFont, "Date Uploaded:", new Point(10, currentYPosition)); // Create a label for "Date Uploaded"
+            dateUploadedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 100, currentYPosition), textBoxWidth); // Create a seamless textbox for "Date Uploaded"
+            panel.Controls.Add(dateUploadedLabel); // Add the label to the panel
+            panel.Controls.Add(dateUploadedTextBox); // Add the textbox to the panel
 
-            currentYPosition += 30;
-            dateOfSampleLabel = CreateLabel(commonFont, "Date of Sample:", new Point(10, currentYPosition));
-            dateOfSampleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+100, currentYPosition), textBoxWidth);
-            panel.Controls.Add(dateOfSampleLabel);
-            panel.Controls.Add(dateOfSampleTextBox);
+            currentYPosition += 30; // Increment vertical position for the next control
+            dateOfSampleLabel = CreateLabel(commonFont, "Date of Sample:", new Point(10, currentYPosition)); // Create a label for "Date of Sample"
+            dateOfSampleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 100, currentYPosition), textBoxWidth); // Create a seamless textbox for "Date of Sample"
+            panel.Controls.Add(dateOfSampleLabel); // Add the label to the panel
+            panel.Controls.Add(dateOfSampleTextBox); // Add the textbox to the panel
 
-            currentYPosition += 30;
-            sampleLocationLabel = CreateLabel(commonFont, "Sample Location:", new Point(10, currentYPosition));
-            sampleLocationTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+100, currentYPosition), textBoxWidth);
-            panel.Controls.Add(sampleLocationLabel);
-            panel.Controls.Add(sampleLocationTextBox);
+            currentYPosition += 30; // Increment vertical position for the next control
+            sampleLocationLabel = CreateLabel(commonFont, "Sample Location:", new Point(10, currentYPosition)); // Create a label for "Sample Location"
+            sampleLocationTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 100, currentYPosition), textBoxWidth); // Create a seamless textbox for "Sample Location"
+            panel.Controls.Add(sampleLocationLabel); // Add the label to the panel
+            panel.Controls.Add(sampleLocationTextBox); // Add the textbox to the panel
 
-            currentYPosition += 30;
-            sheepBreedLabel = CreateLabel(commonFont, "Sheep Breed:", new Point(10, currentYPosition));
-            sheepBreedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth+100, currentYPosition), textBoxWidth);
-            panel.Controls.Add(sheepBreedLabel);
-            panel.Controls.Add(sheepBreedTextBox);
+            currentYPosition += 30; // Increment vertical position for the next control
+            sheepBreedLabel = CreateLabel(commonFont, "Sheep Breed:", new Point(10, currentYPosition)); // Create a label for "Sheep Breed"
+            sheepBreedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 100, currentYPosition), textBoxWidth); // Create a seamless textbox for "Sheep Breed"
+            panel.Controls.Add(sheepBreedLabel); // Add the label to the panel
+            panel.Controls.Add(sheepBreedTextBox); // Add the textbox to the panel
         }
 
         // Helper method to create seamless textboxes
         private TextBox CreateSeamlessTextBox(Font font, Point location, int width)
         {
-            TextBox textBox = new TextBox();
-            textBox.Location = location;
-            textBox.TabStop = false;
-            textBox.Cursor = Cursors.Default;
-            textBox.Size = new Size(width, 20);
-            textBox.ReadOnly = true;  // Make the textboxes read-only
+            TextBox textBox = new TextBox(); // Create a new textbox instance
+            textBox.Location = location; // Set the location of the textbox
+            textBox.TabStop = false; // Disable tab stop for the textbox
+            textBox.Cursor = Cursors.Default; // Set the default cursor for the textbox
+            textBox.Size = new Size(width, 20); // Set the size of the textbox
+            textBox.ReadOnly = true;  // Make the textbox read-only
             textBox.BorderStyle = BorderStyle.None;  // Remove the border for a seamless look
-            textBox.BackColor = Color.White;  // Match the background color for a seamless effect
-            textBox.Font = font;  // Set the common font
-            return textBox;
+            textBox.BackColor = Color.White;  // Set the background color to white for consistency
+            textBox.Font = font;  // Apply the specified font to the textbox
+            return textBox; // Return the configured textbox
         }
 
         // Helper method to create labels
         private Label CreateLabel(Font font, string labelText, Point location)
         {
-            Label label = new Label();
-            label.Font = font;
-            label.Text = labelText;
-            label.Location = location;
-            label.AutoSize = true;
-            return label;
+            Label label = new Label(); // Create a new label instance
+            label.Font = font; // Apply the specified font to the label
+            label.Text = labelText; // Set the text of the label
+            label.Location = location; // Set the location of the label
+            label.AutoSize = true; // Automatically adjust the size of the label to fit the text
+            return label; // Return the configured label
         }
 
 
