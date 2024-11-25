@@ -37,9 +37,9 @@ namespace GrazeViewV1
     public class roundButton : Button
     {
         // Design Fields
-        private int borderSize = 0;
-        public int borderRadius = 0;
-        private Color borderColor = Color.Black;
+        private int borderSize = 1;
+        public int borderRadius = 20;
+        private Color borderColor = Color.Gray;
 
         // Constructors
         public roundButton()
@@ -47,6 +47,7 @@ namespace GrazeViewV1
             this.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
+            this.FlatAppearance.BorderColor = Color.Gray;
             this.Size = new Size(150, 40);
             this.BackColor = Color.LightGreen;
             this.ForeColor = Color.Black;
@@ -72,14 +73,20 @@ namespace GrazeViewV1
             base.OnPaint(pevent);
             pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
+            // Define the button's surface and border rectangles
             RectangleF rectSurface = new RectangleF(0, 0, this.Width, this.Height);
-            RectangleF rectBorder = new RectangleF(1, 1, this.Width - 0.8F, this.Height - 1);
+            RectangleF rectBorder = new RectangleF(
+                borderSize / 2f,
+                borderSize / 2f,
+                this.Width - borderSize,
+                this.Height - borderSize
+            );
 
             if (borderRadius > 2) // Rounded Button
             {
                 using (GraphicsPath pathSurface = GetfigurePath(rectSurface, borderRadius))
-                using (GraphicsPath pathBorder = GetfigurePath(rectBorder, borderRadius - 1F))
-                using (Pen penSurface = new Pen(this.Parent.BackColor, 2))
+                using (GraphicsPath pathBorder = GetfigurePath(rectBorder, borderRadius - borderSize / 2f))
+                using (Pen penSurface = new Pen(this.Parent.BackColor, borderSize))
                 using (Pen penBorder = new Pen(borderColor, borderSize))
                 {
                     penBorder.Alignment = PenAlignment.Inset;

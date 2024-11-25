@@ -132,7 +132,7 @@
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             StartPosition = FormStartPosition.Manual;
-            BackColor = Color.LightGreen;
+            BackColor = Color.Gray;
             BackgroundImage = Properties.Resources.MainPageBackground;
             BackgroundImageLayout = ImageLayout.Stretch;
             CreateUserProvidedDataControls(UserOutputPanel);

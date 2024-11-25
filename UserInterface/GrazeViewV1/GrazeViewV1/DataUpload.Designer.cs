@@ -90,7 +90,7 @@
             // uploadButton
             // 
             uploadButton.Location = new Point(1002, 819);
-            uploadButton.borderRadius = 50;
+            uploadButton.borderRadius = 20;
             uploadButton.Name = "uploadButton";
             uploadButton.Size = new Size(210, 76);
             uploadButton.TabIndex = 2;
