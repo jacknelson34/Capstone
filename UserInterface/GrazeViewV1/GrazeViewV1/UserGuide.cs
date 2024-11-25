@@ -40,7 +40,7 @@ namespace GrazeViewV1
             helpTextBox.Clear();
 
             // Define content for each section
-            AppendSection(helpTextBox, "--- How to Upload Data ---",
+            AppendSection(helpTextBox, "Welcome to GRAZEVIEW\n\n--- How to Upload Data ---",
                 "1. Select Upload New Data on the Main Page\n" +
                 "2. Fill out Data Fields in the Data Uploader.  None are required.\n" +
                 "3. Select a Microscope Image to upload by either dragging an image into the box or by clicking the image box.\n" +
