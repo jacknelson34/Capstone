@@ -18,28 +18,31 @@ namespace GrazeViewV1
         public UserGuide()
         {
             // Initialize User Guide Properties
-            this.Text = "User Guide";
-            this.Size = new Size(800, 600);
-            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "User Guide";                   // Header title for User Guide
+            this.Size = new Size(800, 600);             // Page Size for userguide
+            this.MinimumSize = new Size(800, 600);      // Set minimum size for the user guide window
+            this.StartPosition = FormStartPosition.CenterScreen;    // Set user guide to open in the center of the screen
 
             // Initialize RichTextBox for the Help Guide
-            RichTextBox helpTextBox = new RichTextBox();
-            helpTextBox.Dock = DockStyle.Fill;
-            helpTextBox.ReadOnly = true;
+            RichTextBox helpTextBox = new RichTextBox();             // Text box to hold entire user guide text
+            helpTextBox.Dock = DockStyle.Fill;                       // Set helpTextBox to fill the page
+            helpTextBox.ReadOnly = true;                             // Enable read only for the user guide
             helpTextBox.ScrollBars = RichTextBoxScrollBars.Vertical; // Ensure a vertical scrollbar
-            helpTextBox.Font = new Font("Times New Roman", 12);
+            helpTextBox.Font = new Font("Oswald", 12);      // Set font for user guide
 
             // Load and format help content
-            LoadHelpContent(helpTextBox);
+            LoadHelpContent(helpTextBox);                   // Build the user guide text with LoadHelpContent
 
-            this.Controls.Add(helpTextBox);
+            this.Controls.Add(helpTextBox);                 // add this control to be seen
         }
 
+        // Helper Method to create the text within the user guide
         private void LoadHelpContent(RichTextBox helpTextBox)
         {
             helpTextBox.Clear();
 
             // Define content for each section
+            // Section 1 - Header and How to Upload Data
             AppendSection(helpTextBox, "Welcome to GRAZEVIEW\n\n--- How to Upload Data ---",
                 "1. Select Upload New Data on the Main Page\n" +
                 "2. Fill out Data Fields in the Data Uploader.  None are required.\n" +
@@ -48,12 +51,14 @@ namespace GrazeViewV1
                 "4. Click 'Upload' to save the data to the system.\n" +
                 "      - Once uploaded, there is an option to return to upload more from the results page.\n\n");
 
+            // Section 2 - How to View Data
             AppendSection(helpTextBox, "--- How to View Data ---",
                 "1. Select Data Viewer on the Main Page\n" +
                 "      - Once uploads have been saved, there is an option to view data directly from the results page. \n" +
                 "2. Saved Data can be sorted by each field by clicking on the respective column header.\n" +
                 "      - A preview of the image will appear if the upload was successful.\n");
 
+            // Section 3 - How to Export and Print data
             AppendSection(helpTextBox, "--- How to Export/Print Data ---",
                 "1. Ensure that Data has been uploaded previously(If there is no data uploaded, there is no data to export).\n" +
                 "2. Select Data Viewer from the Main Page. \n" +
@@ -62,7 +67,8 @@ namespace GrazeViewV1
                 "4. Once Uploads are loaded, click the print button to print the page.");
 
         }
-
+        
+        // Helper method to add sections into the user guide
         private void AppendSection(RichTextBox richTextBox, string title, string content)
         {
             // Add the title in bold
