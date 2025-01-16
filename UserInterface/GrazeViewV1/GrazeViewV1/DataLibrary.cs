@@ -263,7 +263,7 @@ namespace GrazeViewV1
                     false,                                             // Checkbox column
                     userUploads.UploadName,                            // Name of upload
                     mlData?.qufuPercentage,                            // Qufu percentage
-                    mlData?.qufustemPercentage,                        // Qufu stem percentage
+                    //mlData?.qufustemPercentage,                        // Qufu stem percentage
                     mlData?.nalePercentage,                            // Nale percentage
                     mlData?.erciPercentage,                            // Erci Percentage
                     mlData?.bubblePercentage,                          // Air bubble percentage

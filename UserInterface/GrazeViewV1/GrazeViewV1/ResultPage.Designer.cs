@@ -197,11 +197,11 @@
             panel.Controls.Add(bubbleLabel); // Add the label to the panel
             panel.Controls.Add(bubbleTextBox); // Add the textbox to the panel
 
-            currentYPosition += 30; // Increment vertical position for the next control
+            /*currentYPosition += 30; // Increment vertical position for the next control
             stemLabel = CreateLabel(commonFont, "Stem (%):", new Point(10, currentYPosition)); // Create a label for "Stem"
             stemTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Stem"
             panel.Controls.Add(stemLabel); // Add the label to the panel
-            panel.Controls.Add(stemTextBox); // Add the textbox to the panel
+            panel.Controls.Add(stemTextBox); // Add the textbox to the panel*/
         }
 
         // Helper method to create User Provided Data controls using seamless textboxes
@@ -286,8 +286,8 @@
         private TextBox bubbleTextBox;
         private Label naleLabel;
         private TextBox naleTextBox;
-        private Label stemLabel;
-        private TextBox stemTextBox;
+        //private Label stemLabel;
+        //private TextBox stemTextBox;
 
         // Panel 2 - User provided Data
         private Panel UserOutputPanel;

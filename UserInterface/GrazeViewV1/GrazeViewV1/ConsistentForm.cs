@@ -301,7 +301,8 @@ namespace GrazeViewV1
         public string bubblePercentage { get; set; }
 
         // Public string to store the percentage of qufu stems in an image
-        public string qufustemPercentage { get; set; }
+        //public string qufustemPercentage { get; set; }
+        // No longer using
         
     }
 

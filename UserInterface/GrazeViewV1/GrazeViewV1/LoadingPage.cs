@@ -118,7 +118,7 @@ namespace GrazeViewV1
                 qufuPercentage = percentages[1].ToString("0.00") + "%",
                 erciPercentage = percentages[2].ToString("0.00") + "%",
                 bubblePercentage = percentages[3].ToString("0.00") + "%",
-                qufustemPercentage = percentages[4].ToString("0.00") + "%"
+                // qufustemPercentage = percentages[4].ToString("0.00") + "%"
             };
 
             // Add random percentages to the global list

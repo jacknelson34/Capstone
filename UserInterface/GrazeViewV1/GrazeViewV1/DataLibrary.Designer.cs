@@ -39,7 +39,7 @@
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            //dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
@@ -134,7 +134,7 @@
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "NameCol", HeaderText = "Upload Name", Width = 150 });     // 1
             //dataGridView1.Columns.Add(new DataGridViewImageColumn { Name = "ImageCol", HeaderText = "Sample Image Preview" });          // 2
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "QufuCol", HeaderText = "Qufu(%):" });                     // 3
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "QufuStemCol", HeaderText = "Qufu Stem(%):" });            // 4
+            //dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "QufuStemCol", HeaderText = "Qufu Stem(%):" });            // 4
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "NaleCol", HeaderText = "Nale(%):" });                     // 5
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "ErciCol", HeaderText = "Erci(%):" });                     // 6
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "AirBubbleCol", HeaderText = "Air Bubble(%):" });          // 7
@@ -210,9 +210,9 @@
             // 
             // dataGridViewTextBoxColumn4
             // 
-            dataGridViewTextBoxColumn4.MinimumWidth = 10;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.Width = 150;
+            //dataGridViewTextBoxColumn4.MinimumWidth = 10;
+            //dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            //dataGridViewTextBoxColumn4.Width = 150;
             // 
             // dataGridViewTextBoxColumn5
             // 
@@ -273,7 +273,7 @@
             dataGridView1.Columns["SelectCol"].Width = 120;          // "Select Uploads"
             dataGridView1.Columns["NameCol"].Width = 160;            // "Upload Name"
             dataGridView1.Columns["QufuCol"].Width = 80;            // "Qufu(%):"
-            dataGridView1.Columns["QufuStemCol"].Width = 150;        // "Qufu Stem(%):"
+            //dataGridView1.Columns["QufuStemCol"].Width = 150;        // "Qufu Stem(%):"
             dataGridView1.Columns["NaleCol"].Width = 80;            // "Nale(%):"
             dataGridView1.Columns["ErciCol"].Width = 80;            // "Erci(%):"
             dataGridView1.Columns["AirBubbleCol"].Width = 150;       // "Air Bubble(%):"
@@ -334,7 +334,7 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        //private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;

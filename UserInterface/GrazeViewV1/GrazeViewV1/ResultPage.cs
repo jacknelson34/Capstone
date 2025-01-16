@@ -71,13 +71,13 @@ namespace GrazeViewV1
                 MLData lastMLProcess = GlobalData.machineLearningData.Last();       // Access most recent ML Data Provided
                 qufuTextBox.Text = lastMLProcess.qufuPercentage;                    // Access qufu percentage
                 erciTextBox.Text = lastMLProcess.erciPercentage;                    // Access erci percentage
-                stemTextBox.Text = lastMLProcess.qufustemPercentage;                // Access qufu stem percentage
+                //stemTextBox.Text = lastMLProcess.qufustemPercentage;                // Access qufu stem percentage
                 bubbleTextBox.Text = lastMLProcess.bubblePercentage;                // Access air bubble percentage
                 naleTextBox.Text = lastMLProcess.nalePercentage;                    // Access nale percentage
 
                 qufuTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set Font for Qufu TextBox
                 erciTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set Font for Erci TextBox
-                stemTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set Font for Qufu Stem TextBox
+                //stemTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set Font for Qufu Stem TextBox
                 bubbleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);    // Set Font for Bubble TextBox
                 naleTextBox.Font = new Font("Times New Roman", 10, FontStyle.Regular);      // Set Font for Nale TextBox
             }

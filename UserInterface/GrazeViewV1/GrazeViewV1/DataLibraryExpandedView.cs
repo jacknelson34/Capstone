@@ -262,7 +262,7 @@ namespace GrazeViewV1
             modelFlowLayout.Controls.Add(CreateInfoLabel("Qufu (%):", mlData.qufuPercentage));       // Add label for "Qufu"
             modelFlowLayout.Controls.Add(CreateInfoLabel("Erci (%):", mlData.erciPercentage));       // Add label for "Erci"
             modelFlowLayout.Controls.Add(CreateInfoLabel("Bubbles (%):", mlData.bubblePercentage));  // Add label for "Bubbles"
-            modelFlowLayout.Controls.Add(CreateInfoLabel("Qufu Stem (%):", mlData.qufustemPercentage)); // Add label for "Qufu Stem"
+            //modelFlowLayout.Controls.Add(CreateInfoLabel("Qufu Stem (%):", mlData.qufustemPercentage)); // Add label for "Qufu Stem"
             modelPanel.Controls.Add(modelFlowLayout);              // Add the flow layout to the model panel
 
             // Add user and model panels to the data layout
