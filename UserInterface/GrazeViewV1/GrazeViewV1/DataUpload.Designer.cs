@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             uploadPanel = new Panel();
+            inputPanel = new Panel();
             backButton = new roundButton();
             helpButton = new PictureBox();
             uploadButton = new roundButton();
@@ -53,13 +54,22 @@
             // uploadPanel
             //
             uploadPanel.Size = new Size(1280, 918);
-            uploadPanel.BorderStyle = BorderStyle.FixedSingle;
+            uploadPanel.BorderStyle = BorderStyle.None;
             uploadPanel.Anchor = AnchorStyles.None;
             uploadPanel.Location = new Point((this.ClientSize.Width - uploadPanel.Width) / 2,
                                            (this.ClientSize.Height - uploadPanel.Height) / 2);
             uploadPanel.BackColor = Color.Transparent;
             Controls.Add(uploadPanel);
             uploadPanel.SendToBack();
+            //
+            // inputPanel
+            //
+            inputPanel.Size = new Size(483, 700);
+            inputPanel.BorderStyle = BorderStyle.None;
+            inputPanel.Location = new Point(74, 130);
+            inputPanel.BackColor = Color.Transparent;
+            uploadPanel.Controls.Add(inputPanel);
+
             // 
             // backButton
             // 
@@ -112,6 +122,7 @@
             fileuploadPictureBox.TabStop = false;
             fileuploadPictureBox.Tag = "";
             fileuploadPictureBox.BackColor = Color.White;
+            fileuploadPictureBox.BringToFront();
             // File Upload Picture Box Functionality
             fileuploadPictureBox.Click += fileuploadPictureBox_Click;           // handles click-to-upload event
             fileuploadPictureBox.DragEnter += fileuploadPictureBox_DragEnter;   // handles drag enter event
@@ -229,17 +240,17 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            uploadPanel.Controls.Add(commentsTextbox);
-            uploadPanel.Controls.Add(commentsLabel);
-            uploadPanel.Controls.Add(breedTextbox);
-            uploadPanel.Controls.Add(breedLabel);
-            uploadPanel.Controls.Add(timePicker);
-            uploadPanel.Controls.Add(datetimeLabel);
-            uploadPanel.Controls.Add(datePicker);
-            uploadPanel.Controls.Add(locationTextbox);
-            uploadPanel.Controls.Add(locationLabel);
-            uploadPanel.Controls.Add(filenameLabel);
-            uploadPanel.Controls.Add(filenameTextbox);
+            inputPanel.Controls.Add(commentsTextbox);
+            inputPanel.Controls.Add(commentsLabel);
+            inputPanel.Controls.Add(breedTextbox);
+            inputPanel.Controls.Add(breedLabel);
+            inputPanel.Controls.Add(timePicker);
+            inputPanel.Controls.Add(datetimeLabel);
+            inputPanel.Controls.Add(datePicker);
+            inputPanel.Controls.Add(locationTextbox);
+            inputPanel.Controls.Add(locationLabel);
+            inputPanel.Controls.Add(filenameLabel);
+            inputPanel.Controls.Add(filenameTextbox);
             uploadPanel.Controls.Add(fileuploadPictureBox);
             uploadPanel.Controls.Add(uploadButton);
             Controls.Add(helpButton);
@@ -263,6 +274,7 @@
         #endregion
 
         private Panel uploadPanel;
+        private Panel inputPanel;
         private roundButton backButton;
         private PictureBox helpButton;
         private roundButton uploadButton;

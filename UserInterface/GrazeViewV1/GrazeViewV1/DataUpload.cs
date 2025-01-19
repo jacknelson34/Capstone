@@ -36,8 +36,8 @@ namespace GrazeViewV1
             this.Resize += DataUpload_Resize;
 
             // Debugging to see form initial size
-            MessageBox.Show("Panel Size: " + uploadPanel.Width.ToString() + " x " + uploadPanel.Height.ToString());
-            MessageBox.Show("Timepicker: " + timePicker.Location.ToString());
+            //MessageBox.Show("Panel Size: " + uploadPanel.Width.ToString() + " x " + uploadPanel.Height.ToString());
+            //MessageBox.Show("Label Size: " + filenameLabel.Size.ToString());
         }
 
         // Override the Windows procedure to intercept window messages
@@ -361,38 +361,48 @@ namespace GrazeViewV1
             uploadPanel.Location = new Point(0, 0);
 
             // Update PictureBox Location
-            fileuploadPictureBox.Location = new Point((int)((uploadPanel.Width / 2) + 25), 69);
+            fileuploadPictureBox.Location = new Point((int)((uploadPanel.Width / 2) -5 ), (int)(uploadPanel.Height * 0.12));
 
             // Update PictureBox Size
-            fileuploadPictureBox.Size = new Size((int)(uploadPanel.Width * 0.42), (int)(uploadPanel.Height * 0.744));
+            fileuploadPictureBox.Size = new Size((int)(uploadPanel.Width * 0.45), (int)(uploadPanel.Height * 0.75));
+
+            // Update inputPanel size/location
+            inputPanel.Location = new Point(40, (int)(uploadPanel.Height * 0.12));
+            inputPanel.Size = new Size((int)(uploadPanel.Width * 0.45), (int)(uploadPanel.Height * 0.75));
 
             // Update Upload Button Location
             uploadButton.Location = new Point((int)(uploadPanel.Width - 140), (int)(uploadPanel.Height - 62));
 
+            // Update Filename Textbox size
+            Size textboxSize = new Size((int)(inputPanel.Width * 0.8), 39);
+            filenameTextbox.Size = textboxSize;
+            locationTextbox.Size = textboxSize;
+            breedTextbox.Size = textboxSize;
+            commentsTextbox.Size = new Size((int)(inputPanel.Width * 0.8), (int)(inputPanel.Height * 0.25));
+
+
             // Update File Name Label/TextBox location
-            filenameLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.12));
-            filenameTextbox.Location = new Point(45, (int)(uploadPanel.Height * 0.16));
+            filenameTextbox.Location = new Point((int)((inputPanel.Width / 2) - (filenameTextbox.Width / 2)), (int)(inputPanel.Height * 0.16));
+            filenameLabel.Location = new Point(filenameTextbox.Left - 4, filenameTextbox.Top - 25);
 
             // Update Location Textbox/Label Location
-            locationLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.23));
-            locationTextbox.Location = new Point(45, (int)(uploadPanel.Height * 0.27));
+            locationTextbox.Location = new Point((int)((inputPanel.Width / 2) - (locationTextbox.Width / 2)), (int)(inputPanel.Height * 0.28));
+            locationLabel.Location = new Point(locationTextbox.Left - 4, locationTextbox.Top - 25);
 
             // Update Date Time Label/Boxes Location
-            datetimeLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.35));
-            datePicker.Location = new Point(45, (int)(uploadPanel.Height * 0.39));
-            timePicker.Location = new Point((int)(uploadPanel.Width * 0.262), (int)(uploadPanel.Height * 0.39));
+            datetimeLabel.Location = new Point((int)((inputPanel.Width / 2) - (datetimeLabel.Width / 2)), (int)(inputPanel.Height * 0.36));
+            datePicker.Location = new Point((int)((inputPanel.Width / 2) - (datePicker.Width / 2) - 75), (int)(inputPanel.Height * 0.41));
+            timePicker.Location = new Point((int)((inputPanel.Width / 2) - (timePicker.Width / 2) + 75), (int)(inputPanel.Height * 0.41));
 
             // Update Breed Label/Textbox Locations
-            breedLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.47));
-            breedTextbox.Location = new Point(45, (int)(uploadPanel.Height * 0.51));
+            breedTextbox.Location = new Point((int)((inputPanel.Width / 2) - (breedTextbox.Width / 2)), (int)(inputPanel.Height * 0.54));
+            breedLabel.Location = new Point(breedTextbox.Left - 4, breedTextbox.Top -25);
 
             // Update Comments Location Location
-            commentsLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.6));
-            commentsTextbox.Location = new Point(42, (int)(uploadPanel.Height * 0.64));
+            commentsTextbox.Location = new Point((int)((inputPanel.Width / 2) - (commentsTextbox.Width / 2)), (int)(inputPanel.Height * 0.67));
+            commentsLabel.Location = new Point(commentsTextbox.Left - 4, commentsTextbox.Top - 25);
 
-
-
-        }
+            }
 
     }
 }
