@@ -37,7 +37,7 @@ namespace GrazeViewV1
 
             // Debugging to see form initial size
             MessageBox.Show("Panel Size: " + uploadPanel.Width.ToString() + " x " + uploadPanel.Height.ToString());
-            MessageBox.Show("PictureBox Size: " + fileuploadPictureBox.Size.ToString());
+            MessageBox.Show("Timepicker: " + timePicker.Location.ToString());
         }
 
         // Override the Windows procedure to intercept window messages
@@ -368,6 +368,30 @@ namespace GrazeViewV1
 
             // Update Upload Button Location
             uploadButton.Location = new Point((int)(uploadPanel.Width - 140), (int)(uploadPanel.Height - 62));
+
+            // Update File Name Label/TextBox location
+            filenameLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.12));
+            filenameTextbox.Location = new Point(45, (int)(uploadPanel.Height * 0.16));
+
+            // Update Location Textbox/Label Location
+            locationLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.23));
+            locationTextbox.Location = new Point(45, (int)(uploadPanel.Height * 0.27));
+
+            // Update Date Time Label/Boxes Location
+            datetimeLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.35));
+            datePicker.Location = new Point(45, (int)(uploadPanel.Height * 0.39));
+            timePicker.Location = new Point((int)(uploadPanel.Width * 0.262), (int)(uploadPanel.Height * 0.39));
+
+            // Update Breed Label/Textbox Locations
+            breedLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.47));
+            breedTextbox.Location = new Point(45, (int)(uploadPanel.Height * 0.51));
+
+            // Update Comments Location Location
+            commentsLabel.Location = new Point(42, (int)(uploadPanel.Height * 0.6));
+            commentsTextbox.Location = new Point(42, (int)(uploadPanel.Height * 0.64));
+
+
+
         }
 
     }

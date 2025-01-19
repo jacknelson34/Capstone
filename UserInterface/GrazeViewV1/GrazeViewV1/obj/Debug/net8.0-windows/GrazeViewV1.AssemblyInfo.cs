@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GrazeViewV1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+529fbb5117ac045c5b2cd93617c9c39cc1a27377")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6be4b9f04229632943f4b9c2a17fd3b601c5aa2")]
 [assembly: System.Reflection.AssemblyProductAttribute("GrazeViewV1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GrazeViewV1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
