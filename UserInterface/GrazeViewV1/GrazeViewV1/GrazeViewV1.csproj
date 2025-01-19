@@ -9,22 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\BackgroundImage25.jpg" />
-    <None Remove="Resources\Grass.jpg" />
-    <None Remove="Resources\MainPageBackground.jpg" />
-    <None Remove="Resources\Waluigi.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Resources\MainPageBackground.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Resources\BackgroundImage25.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Compile Remove="Resources\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <None Remove="Resources\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,7 +33,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

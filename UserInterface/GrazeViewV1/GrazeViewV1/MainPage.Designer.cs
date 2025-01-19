@@ -28,13 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            byte[] imageData = Properties.Resources.BackgroundImage50;
-            Image image;
-
-            using(MemoryStream ms = new MemoryStream(imageData))
-            {
-                image = Image.FromStream(ms);
-            }
+            Image image = Properties.Resources.BackgroundImage12;
 
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
             mainLabel = new Label();
