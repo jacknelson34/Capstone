@@ -48,12 +48,12 @@
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).BeginInit();
             SuspendLayout();
             uploadPanel.Visible = false;
-            MinimumSize = new Size(1280, 975);
+            MinimumSize = new Size(1280, 1000);
             //
             // uploadPanel
             //
             uploadPanel.Size = new Size(1280, 918);
-            uploadPanel.BorderStyle = BorderStyle.None;
+            uploadPanel.BorderStyle = BorderStyle.FixedSingle;
             uploadPanel.Anchor = AnchorStyles.None;
             uploadPanel.Location = new Point((this.ClientSize.Width - uploadPanel.Width) / 2,
                                            (this.ClientSize.Height - uploadPanel.Height) / 2);

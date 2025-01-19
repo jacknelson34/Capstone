@@ -33,7 +33,11 @@ namespace GrazeViewV1
 
             // Event Handler for form close
             this.FormClosing += DataUpload_XOut;
+            this.Resize += DataUpload_Resize;
 
+            // Debugging to see form initial size
+            MessageBox.Show("Panel Size: " + uploadPanel.Width.ToString() + " x " + uploadPanel.Height.ToString());
+            MessageBox.Show("PictureBox Size: " + fileuploadPictureBox.Size.ToString());
         }
 
         // Override the Windows procedure to intercept window messages
@@ -348,6 +352,22 @@ namespace GrazeViewV1
                 // Show error message if no valid image was uploaded
                 MessageBox.Show("Please upload a valid image file.", "Invalid Upload", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void DataUpload_Resize(object sender, EventArgs e)
+        {
+            // Update panel size according to form size
+            uploadPanel.Size = new Size(this.ClientSize.Width, (int)(this.ClientSize.Height));
+            uploadPanel.Location = new Point(0, 0);
+
+            // Update PictureBox Location
+            fileuploadPictureBox.Location = new Point((int)((uploadPanel.Width / 2) + 25), 69);
+
+            // Update PictureBox Size
+            fileuploadPictureBox.Size = new Size((int)(uploadPanel.Width * 0.42), (int)(uploadPanel.Height * 0.744));
+
+            // Update Upload Button Location
+            uploadButton.Location = new Point((int)(uploadPanel.Width - 140), (int)(uploadPanel.Height - 62));
         }
 
     }
