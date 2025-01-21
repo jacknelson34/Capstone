@@ -36,8 +36,8 @@ namespace GrazeViewV1
             this.Resize += DataUpload_Resize;
 
             // Debugging to see form initial size
-            //MessageBox.Show("Panel Size: " + uploadPanel.Width.ToString() + " x " + uploadPanel.Height.ToString());
-            //MessageBox.Show("Label Size: " + filenameLabel.Size.ToString());
+            MessageBox.Show("Panel Size: " + uploadPanel.Width.ToString() + " x " + uploadPanel.Height.ToString());
+            MessageBox.Show("Font Size: " + filenameLabel.Font.ToString());
         }
 
         // Override the Windows procedure to intercept window messages
@@ -380,6 +380,14 @@ namespace GrazeViewV1
             breedTextbox.Size = textboxSize;
             commentsTextbox.Size = new Size((int)(inputPanel.Width * 0.8), (int)(inputPanel.Height * 0.25));
 
+            // Update label font sizes
+            int fontSize = Math.Max(12, (int)(uploadPanel.Height * 0.014));
+            Font updatedFont = new Font("Times New Roman", fontSize, FontStyle.Regular, GraphicsUnit.Point, 0);
+            filenameLabel.Font = updatedFont;
+            locationLabel.Font = updatedFont;
+            datetimeLabel.Font = updatedFont;
+            breedLabel.Font = updatedFont;
+            commentsLabel.Font = updatedFont;
 
             // Update File Name Label/TextBox location
             filenameTextbox.Location = new Point((int)((inputPanel.Width / 2) - (filenameTextbox.Width / 2)), (int)(inputPanel.Height * 0.16));
