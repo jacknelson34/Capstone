@@ -35,9 +35,6 @@ namespace GrazeViewV1
             this.FormClosing += DataUpload_XOut;
             this.Resize += DataUpload_Resize;
 
-            // Debugging to see form initial size
-            MessageBox.Show("Panel Size: " + uploadPanel.Width.ToString() + " x " + uploadPanel.Height.ToString());
-            MessageBox.Show("Font Size: " + filenameLabel.Font.ToString());
         }
 
         // Override the Windows procedure to intercept window messages
@@ -411,6 +408,9 @@ namespace GrazeViewV1
             commentsLabel.Location = new Point(commentsTextbox.Left - 4, commentsTextbox.Top - 25);
 
             }
+
+
+        // Method for generating thumbnail for loading page and data upload
 
     }
 }

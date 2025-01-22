@@ -113,7 +113,7 @@ namespace GrazeViewV1
             if (selectedRows.Count != 1)
             {
                 // Output message
-                MessageBox.Show("Only select 1 upload to preview.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Only 1 Upload can be previewed at a time", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             else

@@ -74,13 +74,13 @@
             backButton.borderRadius = 20;
             backButton.BackColor = Color.LightGreen;
             backButton.FlatStyle = FlatStyle.Flat;
-            backButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            backButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             backButton.ForeColor = Color.Black;
-            backButton.Location = new Point(50, 15);
+            backButton.Location = new Point(50, 25);
             backButton.Name = "backButton";
-            backButton.Size = new Size(150, 60);
+            backButton.Size = new Size(225, 60);
             backButton.TabIndex = 3;
-            backButton.Text = "Exit";
+            backButton.Text = "Return to Home";
             backButton.UseVisualStyleBackColor = false;
             backButton.Click += backButton_Click;
             //
@@ -90,13 +90,13 @@
             previewButton.borderRadius = 20;
             previewButton.BackColor = Color.LightGreen;
             previewButton.FlatStyle = FlatStyle.Flat;
-            previewButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            previewButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             previewButton.ForeColor = Color.Black;
-            previewButton.Location = new Point((this.ClientSize.Width / 2) - 125, 15);
+            previewButton.Location = new Point((this.ClientSize.Width / 2) - 125, 25);
             previewButton.Name = "previewButton";
-            previewButton.Size = new Size(250, 60);
+            previewButton.Size = new Size(350, 60);
             previewButton.TabIndex = 2;
-            previewButton.Text = "Preview Image";
+            previewButton.Text = "Preview Uploaded Image";
             previewButton.UseVisualStyleBackColor = false;
             previewButton.Click += previewButton_Click;
             // 
@@ -106,13 +106,13 @@
             exportButton.BackColor = Color.LightGreen;
             exportButton.borderRadius = 20;
             exportButton.FlatStyle = FlatStyle.Flat;
-            exportButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            exportButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             exportButton.ForeColor = Color.Black;
-            exportButton.Location = new Point(this.ClientSize.Width - 200, 15);
+            exportButton.Location = new Point(this.ClientSize.Width - 200, 25);
             exportButton.Name = "exportButton";
-            exportButton.Size = new Size(150, 60);
+            exportButton.Size = new Size(300, 60);
             exportButton.TabIndex = 2;
-            exportButton.Text = "Export";
+            exportButton.Text = "Export to Printview";
             exportButton.UseVisualStyleBackColor = false;
             exportButton.Click += exportButton_Click;
             // 
@@ -291,14 +291,14 @@
             clearDataButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             clearDataButton.BackColor = Color.LightGreen;
             clearDataButton.FlatStyle = FlatStyle.Flat;
-            clearDataButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            clearDataButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             clearDataButton.ForeColor = Color.Black;
             clearDataButton.TabIndex = 3;
             clearDataButton.UseVisualStyleBackColor = false;
             clearDataButton.Text = "Clear all Data";
             clearDataButton.borderRadius = 20;
-            clearDataButton.Size = new Size(300, 60);
-            clearDataButton.Location = new Point(exportButton.Location.X + 150, 15);
+            clearDataButton.Size = new Size(225, 60);
+            clearDataButton.Location = new Point(exportButton.Location.X + 225, 25);
             clearDataButton.Click += clearDataButton_Click;
             buttonPanel.Controls.Add(clearDataButton);
             // 

@@ -249,5 +249,11 @@ namespace GrazeViewV1
             this.Refresh(); // Refresh to apply changes
             resultsPagePanel.Visible = true;
         }
+
+        // Event handler for the Help button click
+        private void helpButton_Click(object sender, EventArgs e)
+        {
+            UserGuide.ShowHelpGuide(); // Open the user guide, ensuring only one instance is active
+        }
     }
 }

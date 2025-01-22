@@ -81,7 +81,7 @@
             dataViewerButton.Name = "dataViewerButton";
             dataViewerButton.Size = new Size(274, 150);
             dataViewerButton.TabIndex = 2;
-            dataViewerButton.Text = "Data Viewer";
+            dataViewerButton.Text = "View all Uploads";
             dataViewerButton.UseVisualStyleBackColor = false;
             dataViewerButton.Click += dataViewerButton_Click;
             // 

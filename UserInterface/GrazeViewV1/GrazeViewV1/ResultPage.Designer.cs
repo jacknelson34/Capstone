@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            helpButton = new PictureBox();
             resultsPagePanel = new Panel();
             //buttonPanel = new Panel();
             MLOutputPanel = new Panel();
@@ -85,12 +86,12 @@
             exitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             exitButton.borderRadius = 20;
             exitButton.FlatStyle = FlatStyle.Flat;
-            exitButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            exitButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             exitButton.Name = "exitButton";
-            exitButton.Size = new Size(125, 50);
-            exitButton.Location = new Point(this.ClientSize.Width - 150, this.ClientSize.Height - 85);
+            exitButton.Size = new Size(225, 60);
+            exitButton.Location = new Point(this.ClientSize.Width - 250, this.ClientSize.Height - 95);
             exitButton.TabIndex = 0;
-            exitButton.Text = "Exit";
+            exitButton.Text = "Return to Home";
             exitButton.UseVisualStyleBackColor = false;
             exitButton.Click += returnButton_Click;
             Controls.Add(exitButton);
@@ -100,13 +101,13 @@
             returnToUploadButton.FlatAppearance.BorderSize = 0;
             returnToUploadButton.borderRadius = 20;
             returnToUploadButton.FlatStyle = FlatStyle.Flat;
-            returnToUploadButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            returnToUploadButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             returnToUploadButton.Anchor = AnchorStyles.Bottom;
             returnToUploadButton.Name = "returnToUploadButton";
             returnToUploadButton.Size = new Size(300, 75);
-            returnToUploadButton.Location = new Point((this.ClientSize.Width / 2) - 375, this.ClientSize.Height - 100);
+            returnToUploadButton.Location = new Point((this.ClientSize.Width / 2) - 340, this.ClientSize.Height - 100);
             returnToUploadButton.TabIndex = 2;
-            returnToUploadButton.Text = "Upload Data";
+            returnToUploadButton.Text = "Upload New Data";
             returnToUploadButton.UseVisualStyleBackColor = false;
             returnToUploadButton.Click += returnToUploadButton_Click;
             Controls.Add(returnToUploadButton);
@@ -117,16 +118,31 @@
             dataViewButton.FlatAppearance.BorderSize = 0;
             dataViewButton.borderRadius = 20;
             dataViewButton.FlatStyle = FlatStyle.Flat;
-            dataViewButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataViewButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataViewButton.Anchor = AnchorStyles.Bottom;
             dataViewButton.Name = "dataViewButton";
             dataViewButton.Size = new Size(300, 75);
-            dataViewButton.Location = new Point((this.ClientSize.Width / 2) + 75, this.ClientSize.Height - 100);
+            dataViewButton.Location = new Point((this.ClientSize.Width / 2) + 40, this.ClientSize.Height - 100);
             dataViewButton.TabIndex = 2;
             dataViewButton.Text = "View in Library";
             dataViewButton.UseVisualStyleBackColor = false;
             dataViewButton.Click += dataViewButton_Click;
             Controls.Add(dataViewButton);
+            // 
+            // helpButton
+            // 
+            helpButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            helpButton.Cursor = Cursors.Hand;
+            helpButton.Image = Properties.Resources.Help_Icon;
+            helpButton.BackColor = Color.Transparent;
+            helpButton.Location = new Point(1218, 12);
+            helpButton.Name = "helpButton";
+            helpButton.Size = new Size(50, 50);
+            helpButton.SizeMode = PictureBoxSizeMode.StretchImage;
+            helpButton.TabIndex = 3;
+            helpButton.TabStop = false;
+            helpButton.Click += helpButton_Click;
+            Controls.Add(helpButton);
             // 
             // ResultPage
             // 
@@ -308,6 +324,7 @@
         private roundButton exitButton;
         private roundButton returnToUploadButton;
         private roundButton dataViewButton;
+        private PictureBox helpButton;
 
         // if there is any easier way of initializing these please tell me lol
     }

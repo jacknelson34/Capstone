@@ -77,9 +77,10 @@
             backButton.borderRadius = 20;
             backButton.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             backButton.Name = "backButton";
-            backButton.Size = new Size(123, 69);
+            backButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            backButton.Size = new Size(225, 60);
             backButton.TabIndex = 0;
-            backButton.Text = "Back";
+            backButton.Text = "Return to Home";
             backButton.Click += backButton_Click;
             backButton.BringToFront();
             // 
@@ -87,8 +88,8 @@
             // 
             helpButton.Cursor = Cursors.Hand;
             helpButton.Image = Properties.Resources.Help_Icon;
-            helpButton.Size = new Size(73, 68);
-            helpButton.Location = new Point(1156, 12);
+            helpButton.Size = new Size(50, 50);
+            helpButton.Location = new Point(1200, 12);
             helpButton.Anchor = AnchorStyles.Top | AnchorStyles.Right; 
             helpButton.Name = "helpButton";
             helpButton.BackColor = Color.Transparent;
@@ -102,8 +103,9 @@
             // 
             uploadButton.Location = new Point(1002, 819);
             uploadButton.borderRadius = 20;
+            uploadButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             uploadButton.Name = "uploadButton";
-            uploadButton.Size = new Size(210, 76);
+            uploadButton.Size = new Size(210, 60);
             uploadButton.TabIndex = 2;
             uploadButton.Text = "Upload";
             uploadButton.UseVisualStyleBackColor = false;
