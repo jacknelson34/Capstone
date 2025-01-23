@@ -54,7 +54,7 @@
             panel1.Anchor = AnchorStyles.Top;
             panel1.BackColor = Color.FromArgb(0, 192, 192);
             panel1.Controls.Add(panelSlide);
-            panel1.Location = new Point(193, 223);
+            panel1.Location = new Point(193, 231);
             panel1.Name = "panel1";
             panel1.Size = new Size(385, 13);
             panel1.TabIndex = 1;

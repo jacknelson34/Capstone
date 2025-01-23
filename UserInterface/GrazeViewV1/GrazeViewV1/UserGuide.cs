@@ -28,6 +28,7 @@ namespace GrazeViewV1
             helpTextBox.Dock = DockStyle.Fill;                       // Set helpTextBox to fill the page
             helpTextBox.ReadOnly = true;                             // Enable read only for the user guide
             helpTextBox.TabStop = false;                             // Don't allow user to type or highlight
+            helpTextBox.BackColor = Color.LightBlue;
 
             helpTextBox.ScrollBars = RichTextBoxScrollBars.Vertical; // Ensure a vertical scrollbar
             helpTextBox.Font = new Font("Oswald", 12);      // Set font for user guide
