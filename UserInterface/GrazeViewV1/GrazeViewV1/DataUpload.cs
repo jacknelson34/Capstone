@@ -416,7 +416,6 @@ namespace GrazeViewV1
             commentsLabel.Location = new Point(commentsTextbox.Left - 4, commentsTextbox.Top - 25);
         }
 
-
         private Image CreateThumbnail(string imagePath, int thumbWidth, int thumbHeight)
         {
             // Load the original image
