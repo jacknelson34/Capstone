@@ -303,6 +303,8 @@ namespace GrazeViewV1
             string sheepBreed = string.IsNullOrWhiteSpace(breedTextbox.Text) ? "N/A" : breedTextbox.Text;
             string comments = string.IsNullOrWhiteSpace(commentsTextbox.Text) ? "N/A" : commentsTextbox.Text;
 
+            /// ---------------------------------------------- INTEGRATION POINT --------------------------------------------------///
+
             // Create a new instance of UploadInfo
             UploadInfo uploadInfo = new UploadInfo
             {
@@ -316,15 +318,8 @@ namespace GrazeViewV1
                 ImageFile = uploadImage                        // Store image
             };
 
-            // Debugging: Confirm data is added to the UploadInfo object
-            //MessageBox.Show($"Captured UploadName: {uploadInfo.UploadName}");
-
-
             // Add the new upload info to the GlobalData uploads list
             GlobalData.Uploads.Add(uploadInfo);
-
-            // Debugging: Check the contents of GlobalData.Uploads
-            // MessageBox.Show($"Total uploads in GlobalData: {GlobalData.Uploads.Count}");
 
             // Add user inputs and image to data library
             var dataLibrary = _mainPage.GetDataLibrary();
@@ -353,6 +348,8 @@ namespace GrazeViewV1
                 // Show error message if no valid image was uploaded
                 MessageBox.Show("Please upload a valid image file.", "Invalid Upload", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
+            /// ---------------------------------------------------- INTEGRATION POINT -----------------------------------------------------///
         }
 
         private void DataUpload_Resize(object sender, EventArgs e)

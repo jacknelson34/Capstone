@@ -241,6 +241,8 @@ namespace GrazeViewV1
         // Method to add data from DataUpload to the Library
         public void LoadUploadsFromGlobalData()
         {
+            /// -------------------------------------------------------- INTEGRATION POINT ------------------------------------------------------ ///
+
             // Clear the grid to avoid duplicating rows
             dataGridView1.Rows.Clear();
 
@@ -288,6 +290,8 @@ namespace GrazeViewV1
 
             // Refresh the grid to ensure the new data is visible
             dataGridView1.Refresh();
+
+            /// ----------------------------------------------------------------------------- INTEGRATION POINT ------------------------------------------------------------------------///
         }
 
         // Uploads all data to the data viewer
