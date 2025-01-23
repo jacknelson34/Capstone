@@ -80,7 +80,7 @@ namespace GrazeViewV1
                 return;
             }
 
-            if (e.CloseReason == CloseReason.UserClosing) 
+            if (e.CloseReason == CloseReason.UserClosing)
             {
                 _mainPage.Close();
             }
@@ -94,7 +94,7 @@ namespace GrazeViewV1
             IsNavigating = true;   // User is still using the app
 
             // Checks to make sure MainPage form is not null
-            if (_mainPage != null) 
+            if (_mainPage != null)
             {
                 this.Refresh();
                 _mainPage.SuspendLayout();
@@ -155,13 +155,16 @@ namespace GrazeViewV1
                 {
                     try
                     {
+                        // Generate Thumbnail for display
+                        Image thumbnail = CreateThumbnail(openFileDialog.FileName, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
+
                         // Load the selected image into the PictureBox
-                        fileuploadPictureBox.Image = Image.FromFile(openFileDialog.FileName);
+                        fileuploadPictureBox.Image = thumbnail;
                         fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
                         // Delete Text in the Picture Box
                         imageUploaded = true;
-                        uploadImage = fileuploadPictureBox.Image;
+                        uploadImage = Image.FromFile(openFileDialog.FileName);
 
                         // If the textbox is empty, populate it with the upload time/date
                         if (string.IsNullOrWhiteSpace(filenameTextbox.Text))
@@ -196,6 +199,7 @@ namespace GrazeViewV1
                 if (files.Length > 0 && IsPngFile(files[0]))
                 {
                     e.Effect = DragDropEffects.Copy;  // Show that we can copy the file
+
                     uploadImage = fileuploadPictureBox.Image;
                 }
                 else
@@ -336,7 +340,7 @@ namespace GrazeViewV1
 
             // checks to see if a file was uploaded to the picturebox
             if (fileuploadPictureBox.Image != null)
-            { 
+            {
                 // Proceed to the loading page if a valid image is uploaded
                 LoadingPage loadingPage = new LoadingPage(fileuploadPictureBox.Image, _mainPage);
                 ConsistentForm.FormLocation = this.Location;
@@ -358,7 +362,7 @@ namespace GrazeViewV1
             uploadPanel.Location = new Point(0, 0);
 
             // Update PictureBox Location
-            fileuploadPictureBox.Location = new Point((int)((uploadPanel.Width / 2) -5 ), (int)(uploadPanel.Height * 0.12));
+            fileuploadPictureBox.Location = new Point((int)((uploadPanel.Width / 2) - 5), (int)(uploadPanel.Height * 0.12));
 
             // Update PictureBox Size
             fileuploadPictureBox.Size = new Size((int)(uploadPanel.Width * 0.45), (int)(uploadPanel.Height * 0.75));
@@ -401,16 +405,45 @@ namespace GrazeViewV1
 
             // Update Breed Label/Textbox Locations
             breedTextbox.Location = new Point((int)((inputPanel.Width / 2) - (breedTextbox.Width / 2)), (int)(inputPanel.Height * 0.54));
-            breedLabel.Location = new Point(breedTextbox.Left - 4, breedTextbox.Top -25);
+            breedLabel.Location = new Point(breedTextbox.Left - 4, breedTextbox.Top - 25);
 
             // Update Comments Location Location
             commentsTextbox.Location = new Point((int)((inputPanel.Width / 2) - (commentsTextbox.Width / 2)), (int)(inputPanel.Height * 0.67));
             commentsLabel.Location = new Point(commentsTextbox.Left - 4, commentsTextbox.Top - 25);
 
+        }
+
+
+        private Image CreateThumbnail(string imagePath, int thumbWidth, int thumbHeight)
+        {
+            // Load the original image
+            using (Image originalImage = Image.FromFile(imagePath))
+            {
+                // Calculate aspect ratio
+                float aspectRatio = (float)originalImage.Width / originalImage.Height;
+                if (thumbWidth / (float)thumbHeight > aspectRatio)
+                {
+                    thumbWidth = (int)(thumbHeight * aspectRatio);
+                }
+                else
+                {
+                    thumbHeight = (int)(thumbWidth / aspectRatio);
+                }
+
+                // Create the thumbnail
+                Bitmap thumbnail = new Bitmap(thumbWidth, thumbHeight);
+                using (Graphics graphics = Graphics.FromImage(thumbnail))
+                {
+                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+                    // Draw the resized image onto the thumbnail
+                    graphics.DrawImage(originalImage, 0, 0, thumbWidth, thumbHeight);
+                }
+
+                return thumbnail;
             }
-
-
-        // Method for generating thumbnail for loading page and data upload
-
+        }
     }
 }
