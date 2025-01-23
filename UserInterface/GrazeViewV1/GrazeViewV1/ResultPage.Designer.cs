@@ -150,8 +150,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             StartPosition = FormStartPosition.Manual;
             BackColor = Color.FromArgb(116, 231, 247);
-            //BackgroundImage = Properties.Resources.BackgroundImage25;
-            //BackgroundImageLayout = ImageLayout.Stretch;
+            BackgroundImage = Properties.Resources.BackgroundImage12;
+            BackgroundImageLayout = ImageLayout.Stretch;
             CreateUserProvidedDataControls(UserOutputPanel);
             CreateMLDataControls(MLOutputPanel);
             resultsPagePanel.Controls.Add(UserOutputPanel);

@@ -24,6 +24,11 @@ namespace GrazeViewV1
         public DataUpload(MainPage mainpage)
         {
             IsNavigating = false;   // user is no longer using (default setting)
+            // Enable double buffering
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.UpdateStyles();
 
             // Form Properties
             InitializeComponent();
@@ -354,6 +359,8 @@ namespace GrazeViewV1
 
         private void DataUpload_Resize(object sender, EventArgs e)
         {
+            
+
             // Update panel size according to form size
             uploadPanel.Size = new Size(this.ClientSize.Width, (int)(this.ClientSize.Height));
             uploadPanel.Location = new Point(0, 0);
@@ -407,7 +414,6 @@ namespace GrazeViewV1
             // Update Comments Location Location
             commentsTextbox.Location = new Point((int)((inputPanel.Width / 2) - (commentsTextbox.Width / 2)), (int)(inputPanel.Height * 0.67));
             commentsLabel.Location = new Point(commentsTextbox.Left - 4, commentsTextbox.Top - 25);
-
         }
 
 

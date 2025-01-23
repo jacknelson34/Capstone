@@ -32,14 +32,11 @@
 
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
             mainLabel = new Label();
-            mainPanel = new Panel();
             dataViewerButton = new roundButton();
             dataUploadButton = new roundButton();
             helpButton = new PictureBox();
-            mainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
-            mainPanel.Visible = false;
             DoubleBuffered = true;
             ClientSize = new Size(1280, 918);
             MinimumSize = new Size(1280, 918);
@@ -48,27 +45,11 @@
             // 
             mainLabel.AutoSize = true;
             mainLabel.Text = "GRAZE VIEW";
-            mainLabel.Font = new Font("Times New Roman", 42F, FontStyle.Bold);
+            mainLabel.Font = new Font("Times New Roman", 30F, FontStyle.Bold);
             mainLabel.Location = new Point(274, 229);
             mainLabel.Name = "mainLabel";
             mainLabel.Size = new Size(787, 128);
             mainLabel.TabIndex = 0;
-            // 
-            // mainPanel
-            // 
-            //mainPanel.Size = new Size(1000, 600);
-            mainPanel.Width = (int)(this.ClientSize.Width * 0.8);
-            mainPanel.Height = (int)(this.ClientSize.Height * 0.83);
-            mainPanel.BorderStyle = BorderStyle.None;
-            mainPanel.Anchor = AnchorStyles.None;
-            mainPanel.Location = new Point((this.ClientSize.Width - mainPanel.Width) / 2,
-                                           (this.ClientSize.Height - mainPanel.Height) / 2);
-            mainPanel.BackColor = Color.Transparent;
-            mainPanel.Controls.Add(dataViewerButton);
-            mainPanel.Controls.Add(dataUploadButton);
-            mainPanel.Controls.Add(mainLabel);
-            mainPanel.Name = "mainPanel";
-            mainPanel.TabIndex = 0;
             // 
             // dataViewerButton
             // 
@@ -116,26 +97,24 @@
             // 
             // MainPage
             // 
+            Controls.Add(dataViewerButton);
+            Controls.Add(dataUploadButton);
+            Controls.Add(mainLabel);
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = image;
             BackgroundImageLayout = ImageLayout.Stretch;
-            Controls.Add(mainPanel);
             Controls.Add(helpButton);
             BackColor = Color.FromArgb(116, 231, 247);
             DoubleBuffered = true;
             Name = "MainPage";
             Text = "MainPage";
-            mainPanel.ResumeLayout(false);
-            mainPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
-            mainPanel.Visible = true;
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel mainPanel;
         private Label mainLabel;
         private roundButton dataUploadButton;
         private roundButton dataViewerButton;

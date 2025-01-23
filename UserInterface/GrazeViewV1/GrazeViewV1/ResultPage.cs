@@ -26,6 +26,11 @@ namespace GrazeViewV1
             this.Location = ConsistentForm.FormLocation;        // Set form location to the same as previous page
             this.Text = "GrazeView";                            // Add GrazeView header
             _mainPage = mainPage;                               // Hold reference for mainpage
+            // Enable double buffering
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.UpdateStyles();
 
             if (ConsistentForm.IsFullScreen)                    // Check if the previous page was set to fullscreen
             {   

@@ -103,20 +103,9 @@ namespace GrazeViewV1
             return _datalibrary; // Return the reference to the DataLibrary instance
         }
 
-        // Method to resize and reposition the main panel
-        private void ResizePanel()
-        {
-            mainPanel.Size = new Size((int)(this.ClientSize.Width * 0.8), (int)(this.ClientSize.Height * 0.83)); // Adjust the size of the panel
-            mainPanel.Location = new Point((this.ClientSize.Width - mainPanel.Width) / 2, // Center the panel horizontally
-                                           (this.ClientSize.Height - mainPanel.Height) / 2); // Center the panel vertically
-
-            this.Refresh(); // Refresh the form to apply the changes
-        }
-
         // Event handler for the form's load event
         private void MainPage_Load(object sender, EventArgs e)
         {
-            ResizePanel(); // Resize and reposition the main panel
             ResizeControls(); // Resize and adjust the controls
             Refresh(); // Refresh the form to apply all changes
         }
@@ -124,44 +113,27 @@ namespace GrazeViewV1
         // Event handler for the form's resize event
         private void MainPage_Resize(object sender, EventArgs e)
         {
-            this.SuspendLayout();
+            float fontSize = Math.Max(8, this.ClientSize.Width / 30f); // Calculate font size based on form width
+            mainLabel.Font = new Font("Times New Roman", fontSize, FontStyle.Bold, GraphicsUnit.Point, 0); // Set label font
+            mainLabel.Size = new Size((this.ClientSize.Width / 2), (this.ClientSize.Height / 7)); // Adjust label size
+            ResizeControls(); // Adjust the controls
 
-            if (this.WindowState == FormWindowState.Maximized) // Check if the form is maximized
-            {
-                ResizePanel(); // Adjust the panel size and position
-                ResizeControls(); // Adjust the controls
-            }
-
-            if (this.WindowState == FormWindowState.Normal) // Check if the form is not maximized
-            {
-                ResizePanel(); // Adjust the panel size and position
-                ResizeControls(); // Adjust the controls
-            }
-
-            ResizePanel(); // Ensure the panel is resized properly
-            ResizeControls(); // Ensure the controls are adjusted properly
-            this.ResumeLayout();
         }
 
         // Method to dynamically resize and position controls
         private void ResizeControls()
         {
-            mainLabel.Size = new Size((this.ClientSize.Width / 2), (this.ClientSize.Height / 7)); // Adjust label size
-            mainLabel.AutoSize = true; // Enable automatic size adjustment
 
-            mainLabel.Location = new Point((mainPanel.Width / 2) - (mainLabel.Width / 2), // Center the label horizontally
-                                           (mainPanel.Height / 6) - 40); // Position the label vertically
+            mainLabel.Location = new Point((this.ClientSize.Width / 2) - (mainLabel.Width / 2), // Center the label horizontally
+                                           (this.ClientSize.Height / 6) - 40); // Position the label vertically
 
-            float fontSize = Math.Max(8, this.ClientSize.Width / 30f); // Calculate font size based on form width
-            mainLabel.Font = new Font("Times New Roman", fontSize, FontStyle.Bold, GraphicsUnit.Point, 0); // Set label font
+            dataUploadButton.Size = new Size((this.ClientSize.Width / 3), 100); // Set size of the DataUpload button
+            dataUploadButton.Location = new Point((this.ClientSize.Width / 2) - (dataUploadButton.Width / 2), // Center the button horizontally
+                                                  ((this.ClientSize.Height - mainLabel.Height) / 2) - 30); // Position the button vertically
 
-            dataUploadButton.Size = new Size((mainPanel.Width / 3), 100); // Set size of the DataUpload button
-            dataUploadButton.Location = new Point((mainPanel.Width / 2) - (dataUploadButton.Width / 2), // Center the button horizontally
-                                                  ((mainPanel.Height - mainLabel.Height) / 2) - 30); // Position the button vertically
-
-            dataViewerButton.Size = new Size((mainPanel.Width / 3), 100); // Set size of the DataViewer button
-            dataViewerButton.Location = new Point((mainPanel.Width / 2) - (dataViewerButton.Width / 2), // Center the button horizontally
-                                                  ((mainPanel.Height - mainLabel.Height) / 2) + 110); // Position the button vertically
+            dataViewerButton.Size = new Size((this.ClientSize.Width / 3), 100); // Set size of the DataViewer button
+            dataViewerButton.Location = new Point((this.ClientSize.Width / 2) - (dataViewerButton.Width / 2), // Center the button horizontally
+                                                  ((this.ClientSize.Height - mainLabel.Height) / 2) + 110); // Position the button vertically
 
             float buttonFontSize = Math.Max(8, dataViewerButton.Width / 20f); // Calculate button font size based on button width
             dataUploadButton.Font = new Font("Times New Roman", buttonFontSize, FontStyle.Regular, GraphicsUnit.Point, 0); // Set font for DataUpload button
