@@ -1,0 +1,18 @@
+ Arnav
+Things to Do:
+- Store compressed images in SQL DB
+- Push features and images(consolidated percentage breakdown) DB to SQL
+- Build pipeline to Data Library
+- Build Pipeline to ML
+
+Godson
+- Test yolov8, inception transfer learning methods
+- Improve Nale reliability
+- Refine Model integration plan with C#
+
+Jack/Nate
+- Remove Qufu Stem Data Fields
+- Reduce Lag on main page
+- Reduce Lag during upload operations
+- Reword buttons for increased usability
+- Add resizing events for Data Upload
