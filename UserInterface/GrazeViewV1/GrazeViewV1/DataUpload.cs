@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +21,7 @@ namespace GrazeViewV1
 
         // variable that tracks if a file has or has not been uploaded
         private bool imageUploaded = false;
+        private System.Windows.Forms.Timer resizeTimer;
 
         public DataUpload(MainPage mainpage)
         {
@@ -35,6 +37,14 @@ namespace GrazeViewV1
             _mainPage = mainpage;
             this.Text = "GrazeView";
             this.Refresh();
+
+            // Add timer to reduce resizing lag
+            resizeTimer = new System.Windows.Forms.Timer { Interval = 1 };
+            resizeTimer.Tick += (s, e) =>
+            {
+                resizeTimer.Stop();
+                controlsResize();
+            };
 
             // Event Handler for form close
             this.FormClosing += DataUpload_XOut;
@@ -55,6 +65,8 @@ namespace GrazeViewV1
             if (this.WindowState != org)
                 // Trigger the custom event handler for window state changes
                 this.OnFormWindowStateChanged(EventArgs.Empty);
+
+
         }
 
         // Define a virtual method to handle the form's window state changes
@@ -357,9 +369,17 @@ namespace GrazeViewV1
             /// ---------------------------------------------------- INTEGRATION POINT -----------------------------------------------------///
         }
 
+
         private void DataUpload_Resize(object sender, EventArgs e)
         {
-            
+            resizeTimer.Stop();
+            resizeTimer.Start();
+        }
+
+        private void controlsResize()
+        {
+            this.SuspendLayout();
+            inputPanel.Visible = false;
 
             // Update panel size according to form size
             uploadPanel.Size = new Size(this.ClientSize.Width, (int)(this.ClientSize.Height));
@@ -414,6 +434,9 @@ namespace GrazeViewV1
             // Update Comments Location Location
             commentsTextbox.Location = new Point((int)((inputPanel.Width / 2) - (commentsTextbox.Width / 2)), (int)(inputPanel.Height * 0.67));
             commentsLabel.Location = new Point(commentsTextbox.Left - 4, commentsTextbox.Top - 25);
+
+            inputPanel.Visible = true;
+            this.ResumeLayout();
         }
 
         private Image CreateThumbnail(string imagePath, int thumbWidth, int thumbHeight)
