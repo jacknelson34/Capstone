@@ -36,10 +36,10 @@ namespace GrazeViewV1
             InitializeComponent();
             _mainPage = mainpage;
             this.Text = "GrazeView";
-            this.Refresh();
+
 
             // Add timer to reduce resizing lag
-            resizeTimer = new System.Windows.Forms.Timer { Interval = 1 };
+            resizeTimer = new System.Windows.Forms.Timer { Interval = 250 };
             resizeTimer.Tick += (s, e) =>
             {
                 resizeTimer.Stop();
@@ -380,6 +380,7 @@ namespace GrazeViewV1
         {
             this.SuspendLayout();
             inputPanel.Visible = false;
+            fileuploadPictureBox.Visible = false;
 
             // Update panel size according to form size
             uploadPanel.Size = new Size(this.ClientSize.Width, (int)(this.ClientSize.Height));
@@ -436,6 +437,7 @@ namespace GrazeViewV1
             commentsLabel.Location = new Point(commentsTextbox.Left - 4, commentsTextbox.Top - 25);
 
             inputPanel.Visible = true;
+            fileuploadPictureBox.Visible = true;
             this.ResumeLayout();
         }
 
