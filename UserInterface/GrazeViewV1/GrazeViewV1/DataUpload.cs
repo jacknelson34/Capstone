@@ -36,6 +36,7 @@ namespace GrazeViewV1
             InitializeComponent();
             _mainPage = mainpage;
             this.Text = "GrazeView";
+            this.Refresh();
 
 
             // Add timer to reduce resizing lag
@@ -436,6 +437,7 @@ namespace GrazeViewV1
             commentsTextbox.Location = new Point((int)((inputPanel.Width / 2) - (commentsTextbox.Width / 2)), (int)(inputPanel.Height * 0.67));
             commentsLabel.Location = new Point(commentsTextbox.Left - 4, commentsTextbox.Top - 25);
 
+            this.Refresh();
             inputPanel.Visible = true;
             fileuploadPictureBox.Visible = true;
             this.ResumeLayout();

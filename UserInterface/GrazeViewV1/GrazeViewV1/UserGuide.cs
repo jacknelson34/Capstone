@@ -77,6 +77,9 @@ namespace GrazeViewV1
                 "      - NOTE : Once data is cleared, there is no way to recover it.\n" +
                 "      - NOTE : Clearing data occasionally will improve application performace.\n");
 
+            AppendSection(helpTextBox, "", 
+                "Created by Jack Nelson, Nate Scott, Arnav Gokhale, and Godson Edewor");
+
         }
         
         // Helper method to add sections into the user guide

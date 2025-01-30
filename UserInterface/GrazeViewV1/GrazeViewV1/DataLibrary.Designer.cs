@@ -126,7 +126,7 @@
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.BorderStyle = BorderStyle.None;       
-            dataGridView1.BackgroundColor = Color.FromArgb(116, 231, 247);
+            dataGridView1.BackgroundColor = Color.LightBlue;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 
             // Add columns (these should match the data you're adding in AddUploadToGrid)
@@ -285,7 +285,7 @@
             dataGridView1.Columns["SheepBreedCol"].Width = 150;      // "Sheep Breed"
             dataGridView1.Columns["CommentsCol"].Width = 300;
             //
-            // Temporary clear button
+            // permanent clear button
             //
             clearDataButton = new roundButton();
             clearDataButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
