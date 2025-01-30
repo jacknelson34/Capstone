@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "GrazeViewV1/1.0.0": {
+        "runtime": {
+          "GrazeViewV1.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GrazeViewV1/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
