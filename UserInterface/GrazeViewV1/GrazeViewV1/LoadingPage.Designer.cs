@@ -35,7 +35,9 @@
             StartPosition = FormStartPosition.CenterScreen;
             BackgroundImage = Properties.Resources.BackgroundImage12;
             BackgroundImageLayout = ImageLayout.Stretch;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(200F, 200F);
+            FormBorderStyle = FormBorderStyle.Sizable;
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(116, 231, 247);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);

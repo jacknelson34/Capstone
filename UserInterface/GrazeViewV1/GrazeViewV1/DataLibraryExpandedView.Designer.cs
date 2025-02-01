@@ -32,8 +32,9 @@
             // 
             // DataLibraryExpandedView
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(200F, 200F);
+            FormBorderStyle = FormBorderStyle.Sizable;
+            AutoScaleMode = AutoScaleMode.Dpi;
             StartPosition = FormStartPosition.Manual;
             MinimumSize = new Size(1280, 918);
             Name = "DataLibraryExpandedView";

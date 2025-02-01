@@ -305,8 +305,9 @@
             // DataLibrary
             // 
             StartPosition = FormStartPosition.Manual;
-            AutoScaleDimensions = new SizeF(13F, 32F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(200F, 200F);
+            FormBorderStyle = FormBorderStyle.Sizable;
+            AutoScaleMode = AutoScaleMode.Dpi;
             //ClientSize = new Size(2486, 1279);
             MinimumSize = new Size(1400, 918);
             Controls.Add(helpButton);

@@ -146,8 +146,9 @@
             // 
             // ResultPage
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(200F, 200F);
+            FormBorderStyle = FormBorderStyle.Sizable;
+            AutoScaleMode = AutoScaleMode.Dpi;
             StartPosition = FormStartPosition.Manual;
             BackColor = Color.FromArgb(116, 231, 247);
             BackgroundImage = Properties.Resources.BackgroundImage12;

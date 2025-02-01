@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(200F, 200F);
+            FormBorderStyle = FormBorderStyle.Sizable;
+            AutoScaleMode = AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(800, 450);
             MinimumSize = new Size(800, 450);
             this.Text = "UserGuide";
