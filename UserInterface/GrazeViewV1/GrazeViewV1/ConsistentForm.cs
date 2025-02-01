@@ -44,11 +44,12 @@ namespace GrazeViewV1
         // Constructors
         public roundButton()
         {
-            this.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             this.FlatStyle = FlatStyle.Flat;
             this.FlatAppearance.BorderSize = 0;
             this.FlatAppearance.BorderColor = Color.Gray;
-            this.Size = new Size(150, 40);
+            float dpiScale = this.DeviceDpi / 96f; // Normalize DPI scale (default is 96 DPI)
+            this.Size = new Size((int)(150 * dpiScale), (int)(40 * dpiScale));
+            this.Font = new Font("Times New Roman", 12F * dpiScale);
             this.BackColor = Color.LightGreen;
             this.ForeColor = Color.Black;
         }
