@@ -1,7 +1,8 @@
 ﻿using System; 
 using System.Collections.Generic; 
 using System.ComponentModel; 
-using System.Data; 
+using System.Data;
+using System.Diagnostics;
 using System.Drawing; 
 using System.Linq; 
 using System.Text; 
@@ -13,6 +14,12 @@ namespace GrazeViewV1
     public partial class MainPage : Form 
     {
         private DataLibrary _datalibrary; // Reference to the DataLibrary form instance
+
+        // Resolution Settings
+        int originalFormWidth;
+        int originalFormHeight;
+        float scaleFactorX;
+        float scaleFactorY;   
 
         // Constructor for initializing MainPage
         public MainPage()
@@ -106,8 +113,53 @@ namespace GrazeViewV1
         // Event handler for the form's load event
         private void MainPage_Load(object sender, EventArgs e)
         {
+            originalFormWidth = this.Width;
+            originalFormHeight = this.Height;
+
+            // Get user's screen resolution
+            int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+            int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+
+            // Calculate scaling facors
+            scaleFactorX = screenWidth / originalFormWidth;
+            scaleFactorY = screenHeight / originalFormHeight;
+
+            // Apply Scaling
+            ScaleControls(this, scaleFactorX, scaleFactorY);
+
+
             ResizeControls(); // Resize and adjust the controls
             Refresh(); // Refresh the form to apply all changes
+        }
+
+        private void ScaleControls(Control parent, float scaleX, float scaleY)
+        {
+
+            foreach (Control ctrl in parent.Controls) 
+            {
+                // Scale control size
+                ctrl.Width = (int)(ctrl.Width * scaleX);
+                ctrl.Height = (int)(ctrl.Height * scaleY);
+
+                // Scale control position
+                ctrl.Left = (int)(ctrl.Left * scaleX);
+                ctrl.Top = (int)(ctrl.Top * scaleY);
+
+                // Scale Font Size
+                if (ctrl is Label || ctrl is Button || ctrl is TextBox)
+                {
+                    ctrl.Font = new Font(ctrl.Font.FontFamily, ctrl.Font.Size * Math.Min(scaleX, scaleY), ctrl.Font.Style);
+                }
+
+                // Recursively scale child controls(if any)
+                if (ctrl.Controls.Count > 0) 
+                {
+                    ScaleControls(ctrl, scaleX, scaleY);
+                }
+
+
+            }
+
         }
 
         // Event handler for the form's resize event
