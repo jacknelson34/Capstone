@@ -33,6 +33,8 @@
             // LoadingPage
             // 
             StartPosition = FormStartPosition.CenterScreen;
+            BackgroundImage = Properties.Resources.BackgroundImage12;
+            BackgroundImageLayout = ImageLayout.Stretch;
             AutoScaleDimensions = new SizeF(7F, 15F);
             BackColor = Color.FromArgb(116, 231, 247);
             AutoScaleMode = AutoScaleMode.Font;

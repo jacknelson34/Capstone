@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            uploadPanel = new Panel();
-            inputPanel = new Panel();
             backButton = new roundButton();
             helpButton = new PictureBox();
             uploadButton = new roundButton();
@@ -48,28 +46,7 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).BeginInit();
             SuspendLayout();
-            uploadPanel.Visible = false;
             MinimumSize = new Size(1280, 1000);
-            //
-            // uploadPanel
-            //
-            uploadPanel.Size = new Size(1280, 918);
-            uploadPanel.BorderStyle = BorderStyle.None;
-            uploadPanel.Anchor = AnchorStyles.None;
-            uploadPanel.Location = new Point((this.ClientSize.Width - uploadPanel.Width) / 2,
-                                           (this.ClientSize.Height - uploadPanel.Height) / 2);
-            uploadPanel.BackColor = Color.Transparent;
-            Controls.Add(uploadPanel);
-            uploadPanel.SendToBack();
-            //
-            // inputPanel
-            //
-            inputPanel.Size = new Size(483, 700);
-            inputPanel.BorderStyle = BorderStyle.None;
-            inputPanel.Location = new Point(74, 130);
-            inputPanel.BackColor = Color.Transparent;
-            uploadPanel.Controls.Add(inputPanel);
-
             // 
             // backButton
             // 
@@ -101,7 +78,7 @@
             // 
             // uploadButton
             // 
-            uploadButton.Location = new Point(1002, 819);
+            uploadButton.Location = new Point(1025, 860);
             uploadButton.borderRadius = 20;
             uploadButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             uploadButton.Name = "uploadButton";
@@ -242,19 +219,19 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            inputPanel.Controls.Add(commentsTextbox);
-            inputPanel.Controls.Add(commentsLabel);
-            inputPanel.Controls.Add(breedTextbox);
-            inputPanel.Controls.Add(breedLabel);
-            inputPanel.Controls.Add(timePicker);
-            inputPanel.Controls.Add(datetimeLabel);
-            inputPanel.Controls.Add(datePicker);
-            inputPanel.Controls.Add(locationTextbox);
-            inputPanel.Controls.Add(locationLabel);
-            inputPanel.Controls.Add(filenameLabel);
-            inputPanel.Controls.Add(filenameTextbox);
-            uploadPanel.Controls.Add(fileuploadPictureBox);
-            uploadPanel.Controls.Add(uploadButton);
+            Controls.Add(commentsTextbox);
+            Controls.Add(commentsLabel);
+            Controls.Add(breedTextbox);
+            Controls.Add(breedLabel);
+            Controls.Add(timePicker);
+            Controls.Add(datetimeLabel);
+            Controls.Add(datePicker);
+            Controls.Add(locationTextbox);
+            Controls.Add(locationLabel);
+            Controls.Add(filenameLabel);
+            Controls.Add(filenameTextbox);
+            Controls.Add(fileuploadPictureBox);
+            Controls.Add(uploadButton);
             Controls.Add(helpButton);
             helpButton.BringToFront();
             Controls.Add(backButton);
@@ -267,7 +244,6 @@
             BackgroundImageLayout = ImageLayout.Stretch;
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).EndInit();
-            uploadPanel.Visible = true;
             ResumeLayout(false);
             Refresh();
             PerformLayout();
@@ -275,8 +251,6 @@
 
         #endregion
 
-        private Panel uploadPanel;
-        private Panel inputPanel;
         private roundButton backButton;
         private PictureBox helpButton;
         private roundButton uploadButton;
