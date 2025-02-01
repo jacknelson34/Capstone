@@ -40,9 +40,11 @@ namespace GrazeViewV1
 
             // Event Handler for form close
             this.FormClosing += DataUpload_XOut;
+            this.Load += DataUpload_Resize;
             this.Resize += DataUpload_Resize;
 
         }
+
 
         // Override the Windows procedure to intercept window messages
         protected override void WndProc(ref Message m)

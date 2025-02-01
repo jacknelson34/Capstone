@@ -100,7 +100,7 @@
             Controls.Add(dataViewerButton);
             Controls.Add(dataUploadButton);
             Controls.Add(mainLabel);
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(200F, 200F);
             FormBorderStyle = FormBorderStyle.Sizable;
             AutoScaleMode = AutoScaleMode.Dpi;
             BackgroundImage = image;

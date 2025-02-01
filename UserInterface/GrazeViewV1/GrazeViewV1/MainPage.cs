@@ -20,15 +20,8 @@ namespace GrazeViewV1
         public MainPage()
         {
             InitializeComponent(); // Initialize form components
-            this.AutoScaleMode = AutoScaleMode.Dpi;
             StartPosition = FormStartPosition.CenterScreen;
             ResizeControls(); // Adjust and position controls dynamically
-
-            // Enable double buffering
-            this.SetStyle(ControlStyles.ResizeRedraw, true);
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            this.UpdateStyles();
 
             this.Text = "GrazeView"; // Set the title of the MainPage form
             _datalibrary = new DataLibrary(this); // Instantiate DataLibrary with a reference to MainPage

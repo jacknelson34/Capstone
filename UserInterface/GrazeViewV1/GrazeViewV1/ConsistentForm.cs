@@ -72,6 +72,11 @@ namespace GrazeViewV1
         {
             base.OnPaint(pevent);
             pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            pevent.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            pevent.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+            float dpiScale = this.DeviceDpi / 96f; // Normalize DPI
+            float scaledBorderRadius = borderRadius * dpiScale;
 
             // Define the button's surface and border rectangles
             RectangleF rectSurface = new RectangleF(0, 0, this.Width, this.Height);
@@ -84,8 +89,8 @@ namespace GrazeViewV1
 
             if (borderRadius > 2) // Rounded Button
             {
-                using (GraphicsPath pathSurface = GetfigurePath(rectSurface, borderRadius))
-                using (GraphicsPath pathBorder = GetfigurePath(rectBorder, borderRadius - borderSize / 2f))
+                using (GraphicsPath pathSurface = GetfigurePath(rectSurface, scaledBorderRadius))
+                using (GraphicsPath pathBorder = GetfigurePath(rectBorder, scaledBorderRadius - borderSize / 2f))
                 using (Pen penSurface = new Pen(this.Parent.BackColor, borderSize))
                 using (Pen penBorder = new Pen(borderColor, borderSize))
                 {
