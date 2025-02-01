@@ -217,8 +217,9 @@
             // 
             // DataUpload
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            FormBorderStyle = FormBorderStyle.Sizable;
+            AutoScaleMode = AutoScaleMode.Dpi;
             Controls.Add(commentsTextbox);
             Controls.Add(commentsLabel);
             Controls.Add(breedTextbox);

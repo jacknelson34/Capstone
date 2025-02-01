@@ -100,8 +100,9 @@
             Controls.Add(dataViewerButton);
             Controls.Add(dataUploadButton);
             Controls.Add(mainLabel);
-            AutoScaleDimensions = new SizeF(13F, 32F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            FormBorderStyle = FormBorderStyle.Sizable;
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackgroundImage = image;
             BackgroundImageLayout = ImageLayout.Stretch;
             Controls.Add(helpButton);
