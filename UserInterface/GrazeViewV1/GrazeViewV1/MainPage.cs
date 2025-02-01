@@ -143,6 +143,8 @@ namespace GrazeViewV1
             dataUploadButton.Font = new Font("Times New Roman", buttonFontSize, FontStyle.Regular, GraphicsUnit.Point, 0); // Set font for DataUpload button
             dataViewerButton.Font = new Font("Times New Roman", buttonFontSize, FontStyle.Regular, GraphicsUnit.Point, 0); // Set font for DataViewer button
 
+            MessageBox.Show("Form Size : " + this.ClientSize.ToString() + "\nButton Size : " + dataUploadButton.Size.ToString() + "\nButton Font Size : " + buttonFontSize.ToString());
+
             this.Refresh(); // Refresh the form to apply changes
         }
 
