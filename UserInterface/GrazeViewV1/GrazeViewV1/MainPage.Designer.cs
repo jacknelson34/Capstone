@@ -38,8 +38,21 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
             DoubleBuffered = true;
-            ClientSize = new Size(1280, 918);
-            MinimumSize = new Size(1280, 918);
+
+            // DPI Aware Setting
+            //MinimumSize = new Size((int)((this.DeviceDpi / 96F ) * 1280), (int)((this.DeviceDpi / 96F) * 918));
+            //WindowState = FormWindowState.Maximized;
+
+            // DPI UnAware Setting
+            ClientSize = new Size(600, 500);
+            MinimumSize = new Size(600, 500);
+            WindowState = FormWindowState.Maximized;
+
+            // Original
+            // ClientSize = new Size(1280, 918);
+            // MinimumSize = new Size(1280, 918);
+
+
             // 
             // mainLabel
             // 
@@ -88,9 +101,9 @@
             helpButton.Cursor = Cursors.Hand;
             helpButton.Image = Properties.Resources.Help_Icon;
             helpButton.BackColor = Color.Transparent;
-            helpButton.Location = new Point(1218, 12);
+            helpButton.Location = new Point(560, 12);
             helpButton.Name = "helpButton";
-            helpButton.Size = new Size(50, 50);
+            helpButton.Size = new Size(25, 25);
             helpButton.SizeMode = PictureBoxSizeMode.StretchImage;
             helpButton.TabIndex = 3;
             helpButton.TabStop = false;
@@ -101,9 +114,18 @@
             Controls.Add(dataViewerButton);
             Controls.Add(dataUploadButton);
             Controls.Add(mainLabel);
-            AutoScaleDimensions = new SizeF(200F, 200F);
+
+            //AutoScaleDimensions = new SizeF((float)((this.DeviceDpi / 96F) * 200F), (float)((this.DeviceDpi / 96F) * 200F));
+
+            AutoScaleDimensions = new SizeF(13F, 32F);
             FormBorderStyle = FormBorderStyle.Sizable;
-            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoScaleMode = AutoScaleMode.None;
+
+            // Original
+            //AutoScaleDimensions = new SizeF(200F, 200F);
+            //FormBorderStyle = FormBorderStyle.Sizable;
+            //AutoScaleMode = AutoScaleMode.Dpi;
+
             BackgroundImage = image;
             BackgroundImageLayout = ImageLayout.Stretch;
             Controls.Add(helpButton);

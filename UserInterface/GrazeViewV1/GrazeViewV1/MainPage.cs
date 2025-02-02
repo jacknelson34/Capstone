@@ -121,6 +121,8 @@ namespace GrazeViewV1
         private void ResizeControls()
         {
 
+            //float dpiScale = (float)(this.DeviceDpi / 96F);
+
             mainLabel.Location = new Point((this.ClientSize.Width / 2) - (mainLabel.Width / 2), // Center the label horizontally
                                            (this.ClientSize.Height / 6) - 40); // Position the label vertically
 
