@@ -46,7 +46,6 @@
             // DPI UnAware Setting
             ClientSize = new Size(600, 500);
             MinimumSize = new Size(600, 500);
-            WindowState = FormWindowState.Maximized;
 
             // Original
             // ClientSize = new Size(1280, 918);

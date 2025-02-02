@@ -108,7 +108,7 @@
             exportButton.FlatStyle = FlatStyle.Flat;
             exportButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             exportButton.ForeColor = Color.Black;
-            exportButton.Location = new Point(this.ClientSize.Width - 200, 25);
+            exportButton.Location = new Point(this.ClientSize.Width - 325, 25);
             exportButton.Name = "exportButton";
             exportButton.Size = new Size(300, 60);
             exportButton.TabIndex = 2;
@@ -298,7 +298,7 @@
             clearDataButton.Text = "Clear all Data";
             clearDataButton.borderRadius = 20;
             clearDataButton.Size = new Size(225, 60);
-            clearDataButton.Location = new Point(exportButton.Location.X + 225, 25);
+            clearDataButton.Location = new Point(backButton.Location.X + 250, 25);
             clearDataButton.Click += clearDataButton_Click;
             buttonPanel.Controls.Add(clearDataButton);
             // 

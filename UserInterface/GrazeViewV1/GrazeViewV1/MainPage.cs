@@ -23,6 +23,13 @@ namespace GrazeViewV1
             StartPosition = FormStartPosition.CenterScreen;
             ResizeControls(); // Adjust and position controls dynamically
 
+            bool isFirstLoad = true;          // Boolean to determine if the app is opened or returing to main
+            if (isFirstLoad)
+            {
+                this.WindowState = FormWindowState.Maximized;
+                isFirstLoad = false;
+            }
+
             this.Text = "GrazeView"; // Set the title of the MainPage form
             _datalibrary = new DataLibrary(this); // Instantiate DataLibrary with a reference to MainPage
 
@@ -73,7 +80,7 @@ namespace GrazeViewV1
             dataupload.Location = this.Location; // Set the location of the new form to match MainPage
             dataupload.WindowState = this.WindowState;
             dataupload.Show(); // Show the DataUpload form
-            this.Hide(); // Hide the MainPage form
+            this.Visible = false; // Hide the MainPage form
         }
 
         // Event handler for the Data Viewer button click
@@ -102,7 +109,6 @@ namespace GrazeViewV1
         // Event handler for the form's load event
         private void MainPage_Load(object sender, EventArgs e)
         {
-
             ResizeControls(); // Resize and adjust the controls
             Refresh(); // Refresh the form to apply all changes
         }
@@ -110,7 +116,8 @@ namespace GrazeViewV1
         // Event handler for the form's resize event
         private void MainPage_Resize(object sender, EventArgs e)
         {
-            float fontSize = Math.Max(8, this.ClientSize.Width / 30f); // Calculate font size based on form width
+            float fontSize = Math.Min(65, this.ClientSize.Width / 25f); // Calculate font size based on form width
+            //MessageBox.Show("Main Page Width : " + this.ClientSize.Width.ToString() + "\nFont Size : " + fontSize.ToString());
             mainLabel.Font = new Font("Times New Roman", fontSize, FontStyle.Bold, GraphicsUnit.Point, 0); // Set label font
             mainLabel.Size = new Size((this.ClientSize.Width / 2), (this.ClientSize.Height / 7)); // Adjust label size
             ResizeControls(); // Adjust the controls
@@ -121,18 +128,16 @@ namespace GrazeViewV1
         private void ResizeControls()
         {
 
-            //float dpiScale = (float)(this.DeviceDpi / 96F);
-
             mainLabel.Location = new Point((this.ClientSize.Width / 2) - (mainLabel.Width / 2), // Center the label horizontally
                                            (this.ClientSize.Height / 6) - 40); // Position the label vertically
 
             dataUploadButton.Size = new Size((this.ClientSize.Width / 3), 100); // Set size of the DataUpload button
             dataUploadButton.Location = new Point((this.ClientSize.Width / 2) - (dataUploadButton.Width / 2), // Center the button horizontally
-                                                  ((this.ClientSize.Height - mainLabel.Height) / 2) - 30); // Position the button vertically
+                                                  ((this.ClientSize.Height - mainLabel.Height) / 2) - 50); // Position the button vertically
 
             dataViewerButton.Size = new Size((this.ClientSize.Width / 3), 100); // Set size of the DataViewer button
             dataViewerButton.Location = new Point((this.ClientSize.Width / 2) - (dataViewerButton.Width / 2), // Center the button horizontally
-                                                  ((this.ClientSize.Height - mainLabel.Height) / 2) + 110); // Position the button vertically
+                                                  ((this.ClientSize.Height - mainLabel.Height) / 2) + 90); // Position the button vertically
 
             float buttonFontSize = Math.Max(8, dataViewerButton.Width / 20f); // Calculate button font size based on button width
             dataUploadButton.Font = new Font("Times New Roman", buttonFontSize, FontStyle.Regular, GraphicsUnit.Point, 0); // Set font for DataUpload button
@@ -147,8 +152,13 @@ namespace GrazeViewV1
         // Helper method to resize main from other forms
         public void ExternalResize(Size s, Point p)
         {
-            this.Size = s;
-            this.Location = p;
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.Size = s;
+                this.Location = p;
+                this.WindowState = FormWindowState.Normal;
+            }
+
         }
     }
 }

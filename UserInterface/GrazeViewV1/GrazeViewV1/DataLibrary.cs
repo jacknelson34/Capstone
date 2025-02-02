@@ -164,20 +164,36 @@ namespace GrazeViewV1
         // Event handler for when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
-            this.Refresh();
-            IsNavigating = true;    // User is still using the app
+            IsNavigating = true;   // User is still using the app
 
             // Checks to make sure MainPage form is not null
-            if (_mainPage != null) 
+            if (_mainPage != null)
             {
-                _mainPage.WindowState = this.WindowState;
-                _mainPage.Size = this.Size;           // update MainPage form size to current size
-                _mainPage.Location = this.Location;   // update MainPage form location to current location
-                _mainPage.Refresh();
+                //MessageBox.Show("Data Upload State : " + this.WindowState.ToString() + "\nData Upload Size : " + this.ClientSize.ToString());
+
+                _mainPage.WindowState = this.WindowState; // Ensure state is applied first
+                this.Invalidate();
+
+                if (_mainPage.WindowState == FormWindowState.Normal)
+                {
+                    //MessageBox.Show("Main Page State 2 : " + _mainPage.WindowState.ToString());
+
+                    // Safeguard to prevent unnecessary size/location changes
+                    _mainPage.WindowState = FormWindowState.Normal;
+
+                    //MessageBox.Show("Main Page State 3 : " + _mainPage.WindowState.ToString());
+
+                    _mainPage.ExternalResize(this.Size, this.Location);
+                }
+                //MessageBox.Show("Main Page State 4 : " + _mainPage.WindowState.ToString());
+                _mainPage.Visible = true;                 // open main page
+                _mainPage.WindowState = this.WindowState; // Force this window state onto main page
+                //MessageBox.Show("Main Page State 5 : " + _mainPage.WindowState.ToString());
+
             }
 
-            _mainPage.Show();                                       // Open Main Page
-            this.Close();                                            // Close Data Upload Page
+            //MessageBox.Show("Main Page State Final: " + _mainPage.WindowState.ToString() + "\nMain Page Size : " + _mainPage.ClientSize.ToString());
+            this.Close();// Close Data Library Page
         }
 
         // Event handler for when the help icon is clicked on
