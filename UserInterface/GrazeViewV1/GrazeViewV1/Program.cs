@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace GrazeViewV1
@@ -15,6 +16,12 @@ namespace GrazeViewV1
         [STAThread]
         static void Main()
         {
+
+            if (Environment.OSVersion.Version.Major >= 6)
+            {
+                SetProcessDpiAwareness(PROCESS_DPI_AWARENESS.Process_Per_Monitor_DPI_Aware);
+            }
+
             // Ensure globalData is stored
             Application.ApplicationExit += OnApplicationExit;
 
@@ -26,9 +33,18 @@ namespace GrazeViewV1
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             Application.EnableVisualStyles();
-            Application.SetHighDpiMode(HighDpiMode.PerMonitorV2); 
-            ApplicationConfiguration.Initialize();
+            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainPage());
+        }
+
+        [DllImport("Shcore.dll")]
+        private static extern int SetProcessDpiAwareness(PROCESS_DPI_AWARENESS awareness);
+
+        private enum PROCESS_DPI_AWARENESS
+        {
+            Process_DPI_Unaware = 0,
+            Process_System_DPI_Aware = 1,
+            Process_Per_Monitor_DPI_Aware = 2
         }
 
         /*-------------------------------------Temporary Storage Functions for Uploaded Data----------------------------------------------*/

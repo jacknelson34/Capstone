@@ -46,6 +46,7 @@
             mainLabel.AutoSize = true;
             mainLabel.Text = "GRAZE VIEW";
             mainLabel.Font = new Font("Times New Roman", 30F, FontStyle.Bold);
+            mainLabel.TextAlign = ContentAlignment.MiddleCenter;
             mainLabel.Location = new Point(274, 229);
             mainLabel.Name = "mainLabel";
             mainLabel.Size = new Size(787, 128);
