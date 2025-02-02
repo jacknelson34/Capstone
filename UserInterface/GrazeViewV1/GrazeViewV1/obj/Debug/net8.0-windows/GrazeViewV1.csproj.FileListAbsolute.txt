@@ -146,7 +146,6 @@ C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\Graze
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.csproj.AssemblyReference.cache
 C:\Users\Jack\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeVie.FD6A3540.Up2Date
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.exe
-C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.dll.config
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.deps.json
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.runtimeconfig.json
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\GrazeViewV1.dll

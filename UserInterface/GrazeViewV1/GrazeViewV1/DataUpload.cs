@@ -107,27 +107,12 @@ namespace GrazeViewV1
             // Checks to make sure MainPage form is not null
             if (_mainPage != null)
             {
-
-                _mainPage.SuspendLayout();
-
-                //MessageBox.Show("Data Upload State : " + this.WindowState.ToString() + "\nData Upload Size : " + this.ClientSize.ToString());
-
-                _mainPage.WindowState = this.WindowState; // Ensure state is applied first
                 this.Invalidate();
 
-                if (_mainPage.WindowState == FormWindowState.Normal)
-                {
-                    //MessageBox.Show("Main Page State 2 : " + _mainPage.WindowState.ToString());
-                    // Safeguard to prevent unnecessary size/location changes
-                    _mainPage.WindowState = FormWindowState.Normal;
-                    //MessageBox.Show("Main Page State 3 : " + _mainPage.WindowState.ToString());
-                    _mainPage.ExternalResize(this.Size, this.Location);
-                }
-                //MessageBox.Show("Main Page State 4 : " + _mainPage.WindowState.ToString());
+                //MessageBox.Show("Main Page Size 5 : " + _mainPage.ClientSize.ToString());
                 _mainPage.Visible = true;                 // open main page
                 _mainPage.WindowState = this.WindowState; // Force this window state onto main page
-                _mainPage.ResumeLayout();
-                //MessageBox.Show("Main Page State 5 : " + _mainPage.WindowState.ToString());
+                _mainPage.ExternalResize(this.Size, this.Location);
 
             }
                 
@@ -378,9 +363,10 @@ namespace GrazeViewV1
         }
 
 
-        private void DataUpload_Resize(object sender, EventArgs e)
+        private async void DataUpload_Resize(object sender, EventArgs e)
         {
             this.SuspendLayout();
+            this.Visible = false;
 
             // Update Filename Textbox size
             Size textboxSize = new Size((int)(this.ClientSize.Width * 0.4), 39);
@@ -440,6 +426,7 @@ namespace GrazeViewV1
 
             //MessageBox.Show("Page size : " + this.ClientSize.ToString() + "\nUpload Button Size: " + uploadButton.Size.ToString());
 
+            this.Visible = true;
             this.ResumeLayout();
 
         }

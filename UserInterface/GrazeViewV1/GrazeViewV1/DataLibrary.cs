@@ -169,31 +169,17 @@ namespace GrazeViewV1
             // Checks to make sure MainPage form is not null
             if (_mainPage != null)
             {
-                //MessageBox.Show("Data Upload State : " + this.WindowState.ToString() + "\nData Upload Size : " + this.ClientSize.ToString());
-
-                _mainPage.WindowState = this.WindowState; // Ensure state is applied first
                 this.Invalidate();
 
-                if (_mainPage.WindowState == FormWindowState.Normal)
-                {
-                    //MessageBox.Show("Main Page State 2 : " + _mainPage.WindowState.ToString());
-
-                    // Safeguard to prevent unnecessary size/location changes
-                    _mainPage.WindowState = FormWindowState.Normal;
-
-                    //MessageBox.Show("Main Page State 3 : " + _mainPage.WindowState.ToString());
-
-                    _mainPage.ExternalResize(this.Size, this.Location);
-                }
-                //MessageBox.Show("Main Page State 4 : " + _mainPage.WindowState.ToString());
+                //MessageBox.Show("Main Page Size 5 : " + _mainPage.ClientSize.ToString());
                 _mainPage.Visible = true;                 // open main page
                 _mainPage.WindowState = this.WindowState; // Force this window state onto main page
-                //MessageBox.Show("Main Page State 5 : " + _mainPage.WindowState.ToString());
+                _mainPage.ExternalResize(this.Size, this.Location);
 
             }
 
             //MessageBox.Show("Main Page State Final: " + _mainPage.WindowState.ToString() + "\nMain Page Size : " + _mainPage.ClientSize.ToString());
-            this.Close();// Close Data Library Page
+            this.Close();// Close Data Upload Page
         }
 
         // Event handler for when the help icon is clicked on

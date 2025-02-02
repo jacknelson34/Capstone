@@ -37,41 +37,6 @@ namespace GrazeViewV1
             this.Load += MainPage_Load; // Attach the load event handler for initial adjustments
         }
 
-        // Override the Windows procedure to intercept window messages
-        protected override void WndProc(ref Message m)
-        {
-            // Store the original window state before processing the message
-            FormWindowState org = this.WindowState;
-
-            // Call the base class implementation to process the window message
-            base.WndProc(ref m);
-
-            // Check if the window state has changed after processing the message
-            if (this.WindowState != org)
-                // Trigger the custom event handler for window state changes
-                this.OnFormWindowStateChanged(EventArgs.Empty);
-        }
-
-        // Define a virtual method to handle the form's window state changes
-        protected virtual void OnFormWindowStateChanged(EventArgs e)
-        {
-            // Check if the window is in the normal state (restored from minimized or maximized)
-            if (this.WindowState == FormWindowState.Normal)
-            {
-                // Set the form's size to its minimum size in normal state
-                this.Size = MinimumSize;
-            }
-            // Check if the window is in the maximized state
-            else if (this.WindowState == FormWindowState.Maximized)
-            {
-                // Set the form's size to its maximum size in maximized state
-                this.Size = MaximumSize;
-            }
-
-            // Force the form to refresh its appearance after the size change
-            Refresh();
-        }
-
         // Event handler for the Data Upload button click
         private void dataUploadButton_Click(object? sender, EventArgs e)
         {
@@ -114,13 +79,17 @@ namespace GrazeViewV1
         }
 
         // Event handler for the form's resize event
-        private void MainPage_Resize(object sender, EventArgs e)
+        private async void MainPage_Resize(object sender, EventArgs e)
         {
+            this.Visible = false;
+
             float fontSize = Math.Min(65, this.ClientSize.Width / 25f); // Calculate font size based on form width
             //MessageBox.Show("Main Page Width : " + this.ClientSize.Width.ToString() + "\nFont Size : " + fontSize.ToString());
             mainLabel.Font = new Font("Times New Roman", fontSize, FontStyle.Bold, GraphicsUnit.Point, 0); // Set label font
             mainLabel.Size = new Size((this.ClientSize.Width / 2), (this.ClientSize.Height / 7)); // Adjust label size
             ResizeControls(); // Adjust the controls
+
+            this.Visible = true;
 
         }
 
@@ -154,9 +123,9 @@ namespace GrazeViewV1
         {
             if (this.WindowState == FormWindowState.Normal)
             {
+                this.WindowState = FormWindowState.Normal;
                 this.Size = s;
                 this.Location = p;
-                this.WindowState = FormWindowState.Normal;
             }
 
         }
