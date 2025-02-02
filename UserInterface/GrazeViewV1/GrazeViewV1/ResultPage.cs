@@ -160,22 +160,37 @@ namespace GrazeViewV1
 
         private void returnButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
-            IsNavigating = true;    // Check to make sure the user is not closing the application
+            IsNavigating = true;   // User is still using the app
 
-            // Check if current form is fullscreen
-            if (this.WindowState == FormWindowState.Maximized)
+            // Checks to make sure MainPage form is not null
+            if (_mainPage != null)
             {
-                ConsistentForm.IsFullScreen = true;     // If true, set next page to fullscreen
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;    // If false, do not set next screen to fullscreen
+
+                _mainPage.SuspendLayout();
+
+                //MessageBox.Show("Data Upload State : " + this.WindowState.ToString() + "\nData Upload Size : " + this.ClientSize.ToString());
+
+                _mainPage.WindowState = this.WindowState; // Ensure state is applied first
+                this.Invalidate();
+
+                if (_mainPage.WindowState == FormWindowState.Normal)
+                {
+                    //MessageBox.Show("Main Page State 2 : " + _mainPage.WindowState.ToString());
+                    // Safeguard to prevent unnecessary size/location changes
+                    _mainPage.WindowState = FormWindowState.Normal;
+                    //MessageBox.Show("Main Page State 3 : " + _mainPage.WindowState.ToString());
+                    _mainPage.ExternalResize(this.Size, this.Location);
+                }
+                //MessageBox.Show("Main Page State 4 : " + _mainPage.WindowState.ToString());
+                _mainPage.Visible = true;                 // open main page
+                _mainPage.WindowState = this.WindowState; // Force this window state onto main page
+                _mainPage.ResumeLayout();
+                //MessageBox.Show("Main Page State 5 : " + _mainPage.WindowState.ToString());
+
             }
 
-            _mainPage.Size = this.Size;
-            _mainPage.Location = this.Location;
-            _mainPage.Show();    // Show main page
-            this.Close();         // Hide current page
+            //MessageBox.Show("Main Page State Final: " + _mainPage.WindowState.ToString() + "\nMain Page Size : " + _mainPage.ClientSize.ToString());
+            this.Close();// Close Data Upload Page
         }
 
         private void dataViewButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage

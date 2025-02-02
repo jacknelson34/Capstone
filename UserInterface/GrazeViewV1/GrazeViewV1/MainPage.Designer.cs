@@ -39,18 +39,9 @@
             SuspendLayout();
             DoubleBuffered = true;
 
-            // DPI Aware Setting
-            //MinimumSize = new Size((int)((this.DeviceDpi / 96F ) * 1280), (int)((this.DeviceDpi / 96F) * 918));
-            //WindowState = FormWindowState.Maximized;
-
             // DPI UnAware Setting
             ClientSize = new Size(600, 500);
             MinimumSize = new Size(600, 500);
-
-            // Original
-            // ClientSize = new Size(1280, 918);
-            // MinimumSize = new Size(1280, 918);
-
 
             // 
             // mainLabel

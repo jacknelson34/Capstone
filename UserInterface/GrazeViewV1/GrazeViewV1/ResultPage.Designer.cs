@@ -253,7 +253,7 @@
 
             currentYPosition += 30; // Increment vertical position for the next control
             sampleLocationLabel = CreateLabel(commonFont, "Sample Location:", new Point(10, currentYPosition)); // Create a label for "Sample Location"
-            sampleLocationTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 100, currentYPosition), textBoxWidth); // Create a seamless textbox for "Sample Location"
+            sampleLocationTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 110, currentYPosition), textBoxWidth); // Create a seamless textbox for "Sample Location"
             panel.Controls.Add(sampleLocationLabel); // Add the label to the panel
             panel.Controls.Add(sampleLocationTextBox); // Add the textbox to the panel
 
