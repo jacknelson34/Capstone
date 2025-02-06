@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\iruoe\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj": {}
+    "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\iruoe\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj": {
+    "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\iruoe\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj",
+        "projectUniqueName": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj",
         "projectName": "GrazeViewV1",
-        "projectPath": "C:\\Users\\iruoe\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj",
-        "packagesPath": "C:\\Users\\iruoe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\iruoe\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\obj\\",
+        "projectPath": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj",
+        "packagesPath": "C:\\Users\\jackn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\iruoe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jackn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,8 +44,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -53,18 +53,6 @@
             "Microsoft.ML": {
               "target": "Package",
               "version": "[4.0.1, )"
-            },
-            "Microsoft.ML.OnnxRuntime": {
-              "target": "Package",
-              "version": "[1.20.1, )"
-            },
-            "OpenCvSharp4": {
-              "target": "Package",
-              "version": "[4.10.0.20241108, )"
-            },
-            "OpenCvSharp4.runtime.win": {
-              "target": "Package",
-              "version": "[4.10.0.20241108, )"
             }
           },
           "imports": [
@@ -86,7 +74,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

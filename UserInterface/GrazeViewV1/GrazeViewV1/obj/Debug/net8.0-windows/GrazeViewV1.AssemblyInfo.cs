@@ -14,22 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GrazeViewV1")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f08d0439b40fe3b03038224ec564069ecb07958a")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82f31e4ee35609ccd6e26c9d01a4a98567d0c55d")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6723fb5d485a9112b551be7e7cd36e54f38122cf")]
-=======
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82f31e4ee35609ccd6e26c9d01a4a98567d0c55d")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6723fb5d485a9112b551be7e7cd36e54f38122cf")]
->>>>>>> Stashed changes
-=======
->>>>>>> 084aa550f59a0fd73b41c269c21a122b6b554722
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f08d0439b40fe3b03038224ec564069ecb07958a")]
->>>>>>> parent of 350da88 (Bug Fix)
 [assembly: System.Reflection.AssemblyProductAttribute("GrazeViewV1")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GrazeViewV1")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
