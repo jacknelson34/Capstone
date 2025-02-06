@@ -366,7 +366,6 @@ namespace GrazeViewV1
         private async void DataUpload_Resize(object sender, EventArgs e)
         {
             this.SuspendLayout();
-            this.Visible = false;
 
             // Update Filename Textbox size
             Size textboxSize = new Size((int)(this.ClientSize.Width * 0.4), 39);
@@ -425,8 +424,6 @@ namespace GrazeViewV1
             uploadButton.Location = new Point((int)(this.ClientSize.Width - uploadButton.Width - 20), (int)(this.ClientSize.Height - uploadButton.Height - 20));
 
             //MessageBox.Show("Page size : " + this.ClientSize.ToString() + "\nUpload Button Size: " + uploadButton.Size.ToString());
-
-            this.Visible = true;
             this.ResumeLayout();
 
         }
