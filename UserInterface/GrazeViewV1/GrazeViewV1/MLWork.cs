@@ -86,9 +86,9 @@ namespace GrazeViewV1
                             for (int x = 0; x < targetWidth; x++)
                             {
                                 Vec3b pixel = tile.At<Vec3b>(y, x);
-                                tileData[y * targetWidth * 3 + x * 3 + 0] = pixel.Item1 / 255.0f / 255.0F; // Blue (BGR)
-                                tileData[y * targetWidth * 3 + x * 3 + 1] = pixel.Item2 / 255.0f / 255.0F; // Green
-                                tileData[y * targetWidth * 3 + x * 3 + 2] = pixel.Item0 / 255.0f / 255.0F; // Red
+                                tileData[y * targetWidth * 3 + x * 3 + 0] = pixel.Item1 / 255.0f ; // Blue (BGR)
+                                tileData[y * targetWidth * 3 + x * 3 + 1] = pixel.Item2 / 255.0f ; // Green
+                                tileData[y * targetWidth * 3 + x * 3 + 2] = pixel.Item0 / 255.0f ; // Red
                             }
                         }
 
@@ -163,8 +163,8 @@ namespace GrazeViewV1
                     MLData mlData = new MLData
                     {
                         nalePercentage = (((averageProbabilities[0] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
-                        erciPercentage = (((averageProbabilities[1] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
-                        qufuPercentage = (((averageProbabilities[2] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
+                        erciPercentage = (((averageProbabilities[2] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
+                        qufuPercentage = (((averageProbabilities[1] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
                         bubblePercentage = (((averageProbabilities[3] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%")
                     };
 
