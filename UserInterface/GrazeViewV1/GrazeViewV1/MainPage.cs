@@ -20,6 +20,11 @@ namespace GrazeViewV1
         public MainPage()
         {
             InitializeComponent(); // Initialize form components
+            // Enable double buffering
+            this.SetStyle(ControlStyles.ResizeRedraw, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.UpdateStyles();
             StartPosition = FormStartPosition.CenterScreen;
             ResizeControls(); // Adjust and position controls dynamically
 
@@ -81,15 +86,12 @@ namespace GrazeViewV1
         // Event handler for the form's resize event
         private async void MainPage_Resize(object sender, EventArgs e)
         {
-            this.Visible = false;
 
             float fontSize = Math.Min(65, this.ClientSize.Width / 25f); // Calculate font size based on form width
             //MessageBox.Show("Main Page Width : " + this.ClientSize.Width.ToString() + "\nFont Size : " + fontSize.ToString());
             mainLabel.Font = new Font("Times New Roman", fontSize, FontStyle.Bold, GraphicsUnit.Point, 0); // Set label font
             mainLabel.Size = new Size((this.ClientSize.Width / 2), (this.ClientSize.Height / 7)); // Adjust label size
             ResizeControls(); // Adjust the controls
-
-            this.Visible = true;
 
         }
 

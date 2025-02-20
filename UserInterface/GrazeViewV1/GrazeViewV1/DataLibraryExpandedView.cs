@@ -238,7 +238,7 @@ namespace GrazeViewV1
             titleLabel.Dock = DockStyle.Top;                            // Dock the title at the top
             userFlowLayout.Controls.Add(titleLabel);                   // Add the title to the flow layout
             userFlowLayout.Controls.Add(CreateInfoLabel("Upload Name:", uploadInfo.UploadName));       // Add label for upload name
-            userFlowLayout.Controls.Add(CreateInfoLabel("Date of Sample:", uploadInfo.SampleDate.ToString("MM/dd/yyyy"))); // Add label for sample date
+            userFlowLayout.Controls.Add(CreateInfoLabel("Date of Sample:", uploadInfo.SampleDate)); // Add label for sample date
             userFlowLayout.Controls.Add(CreateInfoLabel("Sample Location:", uploadInfo.SampleLocation)); // Add label for sample location
             userFlowLayout.Controls.Add(CreateInfoLabel("Sheep Breed:", uploadInfo.SheepBreed));        // Add label for sheep breed
             userFlowLayout.Controls.Add(CreateInfoLabel("Comments:", uploadInfo.Comments));            // Add label for comments

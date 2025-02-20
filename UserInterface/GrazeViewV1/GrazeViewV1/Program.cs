@@ -10,6 +10,9 @@ namespace GrazeViewV1
         private static readonly string uploadDataFile = Path.Combine(appDataFolder, "Uploads.json");
         private static readonly string mlDataFile = Path.Combine(appDataFolder, "MLData.json");
 
+        // Integrated ML Path
+        public static readonly string onnxModelFile = Path.Combine(appDataFolder, "GrazeView.onnx");
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -65,10 +68,18 @@ namespace GrazeViewV1
                 {
                     Directory.CreateDirectory(appDataFolder);
                 }
+
+                // Copy the default ONNX model if missing
+                string defaultModelPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DefaultFiles", "GrazeView.onnx");
+                if (!File.Exists(onnxModelFile) && File.Exists(defaultModelPath))
+                {
+                    File.Copy(defaultModelPath, onnxModelFile, true);
+                }
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error creating ApplicationGlobalData folder: {ex.Message}", "Folder Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error setting up application files: {ex.Message}", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -133,6 +144,13 @@ namespace GrazeViewV1
                         GlobalData.machineLearningData.AddRange(mlData);    // Add each previous upload's data
                     }
                 }
+
+                // Check if ONNX model and image exist
+                if (!File.Exists(onnxModelFile))
+                {
+                    MessageBox.Show("ONNX model file is missing!", "Model Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
             catch (Exception ex)
             {

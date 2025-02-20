@@ -1,0 +1,5 @@
+GrazeView.onxx filter=lfs diff=lfs merge=lfs -text
+*.onnx filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.dll filter=lfs diff=lfs merge=lfs -text
+ApplicationGlobalData filter=lfs diff=lfs merge=lfs -text

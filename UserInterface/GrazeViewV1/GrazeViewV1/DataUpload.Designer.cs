@@ -46,7 +46,7 @@
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             ((System.ComponentModel.ISupportInitialize)fileuploadPictureBox).BeginInit();
             SuspendLayout();
-            MinimumSize = new Size(1280, 1000);
+            MinimumSize = new Size(1280, 1280);
             // 
             // backButton
             // 

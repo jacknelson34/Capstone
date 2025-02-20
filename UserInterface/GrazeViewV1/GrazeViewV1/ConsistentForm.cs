@@ -239,10 +239,10 @@ namespace GrazeViewV1
         public string UploadName { get; set; }
 
         // The date when the sample was taken, which represents when the data (e.g., a sample from the field) was collected.
-        public DateTime SampleDate { get; set; }
+        public string SampleDate { get; set; }
 
         // The exact time when the sample was taken. It helps track the time of day the data was collected.
-        public DateTime SampleTime { get; set; }
+        public string SampleTime { get; set; }
 
         // The date and time when the file was uploaded into the system, automatically set during the upload process.
         public DateTime UploadTime { get; set; }

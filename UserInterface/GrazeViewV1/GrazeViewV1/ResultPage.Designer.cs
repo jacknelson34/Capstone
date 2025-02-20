@@ -40,6 +40,7 @@
             SuspendLayout();
             resultsPagePanel.Visible = false;
             ClientSize = new Size(1280, 918);
+            MinimumSize = new Size(1280, 918);
             //
             // buttonPanel
             //
@@ -89,7 +90,7 @@
             exitButton.Font = new Font("Times New Roman", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             exitButton.Name = "exitButton";
             exitButton.Size = new Size(225, 60);
-            exitButton.Location = new Point(this.ClientSize.Width - 250, this.ClientSize.Height - 95);
+            exitButton.Location = new Point(ClientSize.Width - 250, ClientSize.Height - 190);
             exitButton.TabIndex = 0;
             exitButton.Text = "Return to Home";
             exitButton.UseVisualStyleBackColor = false;
@@ -105,7 +106,7 @@
             returnToUploadButton.Anchor = AnchorStyles.Bottom;
             returnToUploadButton.Name = "returnToUploadButton";
             returnToUploadButton.Size = new Size(300, 75);
-            returnToUploadButton.Location = new Point((this.ClientSize.Width / 2) - 340, this.ClientSize.Height - 100);
+            returnToUploadButton.Location = new Point((this.ClientSize.Width / 2) - 340, this.ClientSize.Height - 200);
             returnToUploadButton.TabIndex = 2;
             returnToUploadButton.Text = "Upload New Data";
             returnToUploadButton.UseVisualStyleBackColor = false;
@@ -122,7 +123,7 @@
             dataViewButton.Anchor = AnchorStyles.Bottom;
             dataViewButton.Name = "dataViewButton";
             dataViewButton.Size = new Size(300, 75);
-            dataViewButton.Location = new Point((this.ClientSize.Width / 2) + 40, this.ClientSize.Height - 100);
+            dataViewButton.Location = new Point((this.ClientSize.Width / 2) + 40, this.ClientSize.Height - 200);
             dataViewButton.TabIndex = 2;
             dataViewButton.Text = "View in Library";
             dataViewButton.UseVisualStyleBackColor = false;

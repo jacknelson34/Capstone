@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,6 +18,7 @@ namespace GrazeViewV1
         private ProgressBar loadingBar;         // Initialize the loading bar
         private Image resultsImage;             // Initialize variable for the output image
         private TextBox statusUpdates;          // Initialize the textbox used to hold status updates from ML
+        private TextBox percentageLoading;
 
         // Hold instances of other pages
         private MainPage _mainPage;             // Initialize held instance of mainPage
@@ -27,6 +29,8 @@ namespace GrazeViewV1
             _mainPage = mainPage;       // Hold instance of mainpage in _mainPage
 
             InitializeComponent();      // Build the page
+
+            resultsImage = uploadedImage;
 
             // Initialize Form Properties
             this.Text = "GrazeView";
@@ -54,7 +58,7 @@ namespace GrazeViewV1
             // For now, will work on a timer,
             // Once connected to ML, will provide accurate updates
             loadingBar = new ProgressBar();  
-            loadingBar.Maximum = 60;                                                // Give loadingBar a max of 30 ticks
+            //loadingBar.Maximum = 60;                                                // Give loadingBar a max of 30 ticks
             loadingBar.Step = 1;                                                    // 1 tick per step
             loadingBar.Size = new Size(600, 20);                                    // Size of loadingBar
             loadingBar.Location = new Point(
@@ -62,10 +66,11 @@ namespace GrazeViewV1
                 (this.ClientSize.Height / 2));                                      // Location for loadingBar
             this.Controls.Add(loadingBar);                                          // Add loadingBar control to page
 
+
             // Initialize Text Box with status updates
             statusUpdates = new TextBox();                                          // Initialize a new TextBox instance to display status updates
             statusUpdates.BackColor = Color.FromArgb(116, 231, 247);                              // Set the background color of the TextBox to light blue
-            statusUpdates.Text = "Uploading Image...";                              // Set the initial text to indicate an image upload is in progress
+            statusUpdates.Text = "Uploading Image to ML...";                              // Set the initial text to indicate an image upload is in progress
             statusUpdates.Font = new Font("Times New Roman", 12, FontStyle.Italic); // Set the font to Times New Roman, size 12, italic style
             statusUpdates.Size = new Size(250, 20);                                 // Set the size of the TextBox to 250x20 pixels
             statusUpdates.BorderStyle = BorderStyle.None;                           // Remove the border to give the TextBox a clean appearance
@@ -73,23 +78,29 @@ namespace GrazeViewV1
             statusUpdates.TabStop = false;                                          // Exclude the TextBox from the tab order
             statusUpdates.Location = new Point(
                 loadingBar.Location.X,                                              // Horizontally align with the loading bar
-                (this.ClientSize.Height / 2) - 30);                                 // Position 30 pixels above the vertical center of the form
+                (this.ClientSize.Height / 2) - 20);                                 // Position 30 pixels above the vertical center of the form
             this.Controls.Add(statusUpdates);                                       // Add the TextBox to the form's controls to make it visible
 
-
-            // --------------------------- Connection to ML ---------------------------------//
-
-
-
-
-
-            // ----------------------- DEMO ONLY -----------------------
-
-            /*--------------------------------------DEMO FOR CREATING SAMPLE ML DATA---------------------------------------*/
-
+            // Initialize Text Box with percentage updates
+            percentageLoading = new TextBox();
+            percentageLoading.BackColor = Color.FromArgb(116, 231, 247);                              // Set the background color of the TextBox to light blue
+            percentageLoading.Font = new Font("Times New Roman", 12, FontStyle.Italic); // Set the font to Times New Roman, size 12, italic style
+            percentageLoading.Size = new Size(250, 20);
+            percentageLoading.TextAlign = HorizontalAlignment.Right;
+            percentageLoading.Text = ("0%");
+            percentageLoading.BorderStyle = BorderStyle.None;
+            percentageLoading.ReadOnly = true;
+            percentageLoading.TabStop = false;
+            percentageLoading.Location = new Point(
+                loadingBar.Location.X + 350,                                              // Horizontally align with the loading bar
+                (this.ClientSize.Height / 2) - 20);
+            this.Controls.Add(percentageLoading);
+            
+            /*--------------------------------------DEMO ONLY : NOT IN USE---------------------------------------*/
+            /*(
             // Demo for randomized grass percentages
             // Initialize random number generator
-            Random random = new Random();
+            /*Random random = new Random();
 
             // Create array to store the 5 numbers (one for each grass type + air bubble)
             double[] randomNumbers = new double[5];
@@ -128,11 +139,6 @@ namespace GrazeViewV1
 
             // Add random percentages to the global list
             GlobalData.machineLearningData.Add(mlData);
-
-            /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-            /*--------------------------------------DEMO FOR CREATING SAMPLE ML DATA---------------------------------------*/
-
-            /*--------------------------------------DEMO FOR lOADING BAR TIMER---------------------------------------*/
 
             // Simulation for progress (will be replaced once connected to ML)
             // Timer for demo file
@@ -185,14 +191,71 @@ namespace GrazeViewV1
                 }
             };
             timer.Start();                                                 // Start timer, with all information above
+            
 
-            /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-            /*--------------------------------------DEMO FOR lOADING BAR TIMER---------------------------------------*/
-
+            ) */
 
             // Event handler for Form Close
             this.FormClosing += LoadingPage_Xout;
 
+        }
+
+        // Method to set progress bar max
+        public void SetProgressBarMax(int maxTiles)
+        {
+            if (loadingBar.InvokeRequired)
+            {
+                loadingBar.Invoke(new Action(() => loadingBar.Maximum = maxTiles));
+            }
+            else
+            {
+                loadingBar.Maximum = maxTiles;
+            }
+        }
+
+        // Method to update the progress bar while processing tiles
+        public void UpdateProgress(int progress, string status, string percentage)
+        {
+            if (loadingBar.InvokeRequired)
+            {
+                loadingBar.Invoke(new Action(() =>
+                {
+                    loadingBar.Value = progress;
+                    statusUpdates.Text = status;
+                    percentageLoading.Text = percentage;
+                    statusUpdates.Refresh();
+                }));
+            }
+            else
+            {
+                loadingBar.Value = progress;
+                statusUpdates.Text = status;
+                percentageLoading.Text = percentage;
+                statusUpdates.Refresh();
+            }
+
+        }
+
+        // Method to indicate completion
+        public void CompleteProgress(string message)
+        {
+            if (loadingBar.InvokeRequired)
+            {
+                loadingBar.Invoke(new Action(() =>
+                {
+                    loadingBar.Value = loadingBar.Maximum;
+                    statusUpdates.Text = message;
+                    //MessageBox.Show("ML Processing Complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    nextPage();
+                }));
+            }
+            else
+            {
+                loadingBar.Value = loadingBar.Maximum;
+                statusUpdates.Text = message;
+                //MessageBox.Show("ML Processing Complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                nextPage();
+            }
         }
 
         // Event handler to confirm close

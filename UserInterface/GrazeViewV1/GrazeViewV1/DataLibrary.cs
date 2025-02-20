@@ -271,8 +271,8 @@ namespace GrazeViewV1
                     mlData?.nalePercentage,                            // Nale percentage
                     mlData?.erciPercentage,                            // Erci Percentage
                     mlData?.bubblePercentage,                          // Air bubble percentage
-                    userUploads.SampleDate.ToString("MM/dd/yyyy"),     // Date Sample Taken
-                    userUploads.SampleTime.ToString("hh:mm tt"),       // Time Sample Taken
+                    FormatDate(userUploads.SampleDate),                             // Date Sample Taken
+                    FormatTime(userUploads.SampleTime),                             // Time Sample Taken
                     userUploads.UploadTime.ToString("MM/dd/yyyy"),     // Upload Date
                     userUploads.UploadTime.ToString("hh:mm tt"),       // Upload Time
                     userUploads.SampleLocation,                        // Sample Location
@@ -294,6 +294,24 @@ namespace GrazeViewV1
             dataGridView1.Refresh();
 
             /// ----------------------------------------------------------------------------- INTEGRATION POINT ------------------------------------------------------------------------///
+        }
+
+        private string FormatDate(string dateInput)
+        {
+            if (DateTime.TryParse(dateInput, out DateTime parsedDate))
+            {
+                return parsedDate.ToString("MM/dd/yyyy"); // ✅ Returns only date
+            }
+            return dateInput; // Return original if parsing fails
+        }
+
+        private string FormatTime(string timeInput)
+        {
+            if (DateTime.TryParse(timeInput, out DateTime parsedTime))
+            {
+                return parsedTime.ToString("hh:mm tt"); // ✅ Returns only time in 12-hour format (e.g., 08:00 AM)
+            }
+            return timeInput; // Return original if parsing fails
         }
 
         // Uploads all data to the data viewer
