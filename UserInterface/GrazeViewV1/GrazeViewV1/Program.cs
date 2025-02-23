@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace GrazeViewV1
@@ -7,8 +7,6 @@ namespace GrazeViewV1
     {
         // Temporary Storage for GlobalData for Demo(ECEN 403)
         private static readonly string appDataFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ApplicationGlobalData");
-        private static readonly string uploadDataFile = Path.Combine(appDataFolder, "Uploads.json");
-        private static readonly string mlDataFile = Path.Combine(appDataFolder, "MLData.json");
 
         // Integrated ML Path
         public static readonly string onnxModelFile = Path.Combine(appDataFolder, "GrazeView_accur87.onnx");
@@ -25,19 +23,43 @@ namespace GrazeViewV1
                 SetProcessDpiAwareness(PROCESS_DPI_AWARENESS.Process_Per_Monitor_DPI_Aware);
             }
 
-            // Ensure globalData is stored
-            Application.ApplicationExit += OnApplicationExit;
+            // Initialize db variables
+            DBQueries dbQueries;
+            DBConnections dbConnections;
+
+            // Show SplashScreen while database is connecting
+            using (SplashScreen splashScreen = new SplashScreen())
+            {
+                splashScreen.Show();
+                Application.DoEvents(); // Allow UI to refresh while loading
+
+                // Connect to database
+                dbConnections = new DBConnections(new DBSettings("your-server", "your-database", "your-username", "your-password"));
+                dbQueries = new DBQueries(dbConnections.ConnectionString);
+
+                bool isConnected = dbConnections.TestConnectionAsync().GetAwaiter().GetResult(); // Blocking call for sync context
+
+                if (!isConnected)
+                {
+                    MessageBox.Show("Failed to connect to the database. Exiting application.", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                splashScreen.Close();
+            }
+
+            // Ensure proper storage handling
+            Application.ApplicationExit += async (sender, e) => await SaveGlobalDataAsync(dbQueries);
 
             EnsureAppDataFolderExists();
 
-            // Load Data on run
-            LoadGlobalData();
+            // Load data from database
+            LoadGlobalDataAsync(dbQueries);
 
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            // Start application
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainPage());
+            Application.Run(new MainPage(dbQueries));
         }
 
         [DllImport("Shcore.dll")]
@@ -50,13 +72,14 @@ namespace GrazeViewV1
             Process_Per_Monitor_DPI_Aware = 2
         }
 
-        /*-------------------------------------Temporary Storage Functions for Uploaded Data----------------------------------------------*/
-
         // Method handler for application close
         private static void OnApplicationExit(object sender, EventArgs e)
         {
+            var dbConnections = new DBConnections(new DBSettings("your-server", "your-database", "your-username", "your-password"));
+            var dbQueries = new DBQueries(dbConnections.ConnectionString); // Define dbQueries before use
+
             // Save data to files
-            SaveGlobalData();
+            SaveGlobalDataAsync(dbQueries);
         }
 
         // Check for valid folder storage
@@ -84,80 +107,52 @@ namespace GrazeViewV1
         }
 
         // Save data
-        private static void SaveGlobalData()
+        private static async Task SaveGlobalDataAsync(DBQueries dbQueries)
         {
             try
             {
-                // Serialize Uploads with formatting adjustments for Comments
-                var normalizedUploads = GlobalData.Uploads.Select(upload =>
+                foreach (var upload in GlobalData.Uploads)
                 {
-                    upload.Comments = NormalizeTextForSave(upload.Comments); // Apply normalization
-                    return upload;
-                }).ToList();
+                    var mlData = GlobalData.machineLearningData
+                        .FirstOrDefault(m => m != null && m.nalePercentage == upload.UploadName);
 
-                var uploadJson = JsonSerializer.Serialize(normalizedUploads, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(uploadDataFile, uploadJson);
-
-                // Serialize Machine Learning Data (MLData does not need text normalization as it contains no special text fields)
-                var mlDataJson = JsonSerializer.Serialize(GlobalData.machineLearningData, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(mlDataFile, mlDataJson);
-            }
-            catch (Exception ex)        // Catch exceptions thrown when attempting to save data
-            {
-                // Output error message - Currently throwing errors due to JSON temporary storage
-                MessageBox.Show($"GrazeView currently has limited external storage support:\n {ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        // Load data from previous runs
-        private static void LoadGlobalData()
-        {
-            try
-            {
-                // Load Uploads and restore formatting for Comments
-                if (File.Exists(uploadDataFile))
-                {
-                    // Variable to hold externally stored data
-                    var uploadJson = File.ReadAllText(uploadDataFile);
-                    // Deserialize external data and import into UploadInfo list
-                    var uploads = JsonSerializer.Deserialize<List<UploadInfo>>(uploadJson);
-                    if (uploads != null)        // Check for null value
-                    {
-                        // for loop to fix formatting differences between application and JSON storage
-                        foreach (var upload in uploads)
-                        {
-                            upload.Comments = RestoreTextFormatting(upload.Comments); // Restore formatting
-                        }
-                        GlobalData.Uploads.AddRange(uploads);
-                    }
+                    await dbQueries.InsertUploadAsync(upload, mlData ?? new MLData());
                 }
 
-                // Load Machine Learning Data
-                if (File.Exists(mlDataFile))       
-                {
-                    // Pull all externally stored data into mlDataJson
-                    var mlDataJson = File.ReadAllText(mlDataFile);
-                    // Deserialize mlDataJson into mlData, and add to the global list MLData
-                    var mlData = JsonSerializer.Deserialize<List<MLData>>(mlDataJson);
-                    if (mlData != null)
-                    {
-                        GlobalData.machineLearningData.AddRange(mlData);    // Add each previous upload's data
-                    }
-                }
-
-                // Check if ONNX model and image exist
-                if (!File.Exists(onnxModelFile))
-                {
-                    MessageBox.Show("ONNX model file is missing!", "Model Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
+                Console.WriteLine("All data saved to SQL successfully.");
             }
             catch (Exception ex)
             {
-                // Catch exception and output message if an error occured when loading the data in JSON
-                MessageBox.Show($"Error loading data: {ex.Message}", "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error saving data to database: {ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+        // Load data from previous runs
+        private static async Task LoadGlobalDataAsync(DBQueries dbQueries)
+        {
+            try
+            {
+                var uploadsWithML = await dbQueries.GetUploadsAsync();
+
+                // Clear existing data before loading new data
+                GlobalData.Uploads.Clear();
+                GlobalData.machineLearningData.Clear();
+
+                foreach (var (upload, mlData) in uploadsWithML)
+                {
+                    GlobalData.Uploads.Add(upload);
+                    GlobalData.machineLearningData.Add(mlData);
+                }
+
+                Console.WriteLine("All data loaded from SQL successfully.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading data from database: {ex.Message}", "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private static string NormalizeTextForSave(string input)
         {
@@ -169,35 +164,21 @@ namespace GrazeViewV1
             return input?.Replace("\\n", "\n").Replace("\\r", "\r"); // Restore newlines and carriage returns
         }
 
-        /*---------------------------------------Temporary Clear Function for Data Stored------------------------------------------------*/
-        public static void ClearAllData()
+        public static async Task ClearAllData(DBQueries dbQueries)
         {
             try
             {
-                // Clear the in-memory data
+                await dbQueries.ClearAllUploadsAsync();
                 GlobalData.Uploads.Clear();
                 GlobalData.machineLearningData.Clear();
 
-                // Delete the data files if they exist
-                if (File.Exists(uploadDataFile))
-                {
-                    File.Delete(uploadDataFile);
-                }
-
-                // Delete all MLData
-                if (File.Exists(mlDataFile))
-                {
-                    File.Delete(mlDataFile);
-                }
-
-                // Optionally, show a confirmation message
                 MessageBox.Show("All data has been cleared successfully.", "Data Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)    // Catch exception if clearing data fails
+            catch (Exception ex)
             {
-                // Output message with error thrown
-                MessageBox.Show($"Error clearing data: {ex.Message}", "Clear Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error clearing database: {ex.Message}", "Clear Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }

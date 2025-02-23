@@ -32,7 +32,6 @@
             label1 = new Label();
             panel1 = new Panel();
             panelSlide = new Panel();
-            timer1 = new System.Windows.Forms.Timer(components);
             label2 = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -42,19 +41,20 @@
             label1.Anchor = AnchorStyles.Top;
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(235, 154);
+            label1.Location = new Point(258, 150);
             label1.Name = "label1";
-            label1.Size = new Size(299, 51);
+            label1.BackColor = Color.Transparent;
+            label1.Size = new Size(237, 40);
             label1.TabIndex = 0;
             label1.Text = "GRAZEVIEW";
-            label1.TextAlign = ContentAlignment.TopCenter;
+            label1.TextAlign = ContentAlignment.TopRight;
             // 
             // panel1
             // 
             panel1.Anchor = AnchorStyles.Top;
             panel1.BackColor = Color.FromArgb(0, 192, 192);
             panel1.Controls.Add(panelSlide);
-            panel1.Location = new Point(193, 231);
+            panel1.Location = new Point(207, 250);
             panel1.Name = "panel1";
             panel1.Size = new Size(385, 13);
             panel1.TabIndex = 1;
@@ -67,24 +67,23 @@
             panelSlide.Size = new Size(98, 13);
             panelSlide.TabIndex = 2;
             // 
-            // timer1
-            // 
-            timer1.Tick += timer1_Tick;
-            // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(354, 205);
+            label2.Location = new Point(325, 225);
             label2.Name = "label2";
-            label2.Size = new Size(76, 19);
+            label2.BackColor = Color.Transparent;
+            label2.Size = new Size(136, 15);
             label2.TabIndex = 2;
-            label2.Text = "Loading...";
+            label2.Text = "Initializing Application...";
             // 
             // SplashScreen
             // 
             AutoScaleMode = AutoScaleMode.None;
-            BackColor = Color.FromArgb(116, 231, 247);
+            //BackColor = Color.FromArgb(116, 231, 247);
+            BackgroundImage = Properties.Resources.BackgroundImage12;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(800, 450);
             Controls.Add(label2);
             Controls.Add(panel1);
@@ -103,7 +102,6 @@
         private Label label1;
         private Panel panel1;
         private Panel panelSlide;
-        private System.Windows.Forms.Timer timer1;
         private Label label2;
     }
 }

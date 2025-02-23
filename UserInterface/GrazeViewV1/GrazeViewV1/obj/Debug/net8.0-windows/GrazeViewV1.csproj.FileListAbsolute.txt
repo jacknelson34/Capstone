@@ -155,7 +155,6 @@ C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\Graz
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.ResultPage.resources
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.SplashScreen.resources
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.UserGuide.resources
-C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.WelcomePage.resources
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.csproj.GenerateResource.cache
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Debug\net8.0-windows\GrazeViewV1.AssemblyInfoInputs.cache
@@ -268,3 +267,9 @@ C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\Graz
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\System.Data.SqlClient.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\runtimes\win-arm64\native\sni.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\runtimes\win-x64\native\sni.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\runtimes\win-x86\native\sni.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.SqlClient.dll

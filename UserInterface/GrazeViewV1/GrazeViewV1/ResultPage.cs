@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,13 +15,16 @@ namespace GrazeViewV1
     {
         private PictureBox outputImage;
         private bool IsNavigating;
+        private readonly DBConnections _dbConnections;
 
         // Hold instances of the opened pages
         private MainPage _mainPage;
 
         public ResultPage(Image resultImage, MainPage mainPage)  // Build page with resulting image from ML and previous page's size/location
         {
-            IsNavigating = false; 
+            IsNavigating = false;
+            _dbConnections = new DBConnections(new DBSettings("your-server", "your-database", "your-username", "your-password"));
+
             InitializeComponent();
             this.Size = ConsistentForm.FormSize;                // Set form size to the same as the previous page
             this.Location = ConsistentForm.FormLocation;        // Set form location to the same as previous page
@@ -192,7 +196,9 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;    // If false, do not set next screen to fullscreen
             }
 
-            DataLibrary datalibrary = new DataLibrary(_mainPage);    // Create new dataLibrary
+            
+            var dbQueries = new DBQueries(_dbConnections.ConnectionString); // Ensure connectionString is correct
+            DataLibrary datalibrary = new DataLibrary(_mainPage, dbQueries);
             datalibrary.Size = this.Size;                       // Set next page to the same size as this page
             datalibrary.Location = this.Location;               // Set next page to the same location as this page
             datalibrary.Show();                                 // Show dataLibrary

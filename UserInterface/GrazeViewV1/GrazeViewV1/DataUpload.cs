@@ -28,6 +28,7 @@ namespace GrazeViewV1
         public DataUpload(MainPage mainpage)
         {
             IsNavigating = false;   // user is no longer using (default setting)
+
             // Enable double buffering
             this.SetStyle(ControlStyles.ResizeRedraw, true);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);

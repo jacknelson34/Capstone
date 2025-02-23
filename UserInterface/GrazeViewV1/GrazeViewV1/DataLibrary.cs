@@ -15,10 +15,12 @@ namespace GrazeViewV1
     {
         private MainPage _mainPage;    // hold reference to Main Page form
         private bool IsNavigating;     // boolean variable that checks if the user is still using the app
+        private readonly DBQueries _dbQueries;
 
-        public DataLibrary(MainPage mainpage)
+        public DataLibrary(MainPage mainpage, DBQueries dbQueries)
         {
             IsNavigating = false;      // user is no longer using (default setting)
+            _dbQueries = dbQueries ?? throw new ArgumentNullException(nameof(dbQueries));
 
             // Form Properties
             InitializeComponent();
@@ -41,7 +43,7 @@ namespace GrazeViewV1
 
             // Close MainPage on close
             this.FormClosing += DataLibrary_XOut;
-
+            _dbQueries = dbQueries;
         }
 
         // Override the Windows procedure to intercept window messages
@@ -241,66 +243,39 @@ namespace GrazeViewV1
         }
 
         // Method to add data from DataUpload to the Library
-        public void LoadUploadsFromGlobalData()
+        public async Task LoadUploadsFromGlobalData()
         {
-            /// -------------------------------------------------------- INTEGRATION POINT ------------------------------------------------------ ///
-
-            // Clear the grid to avoid duplicating rows
             dataGridView1.Rows.Clear();
 
-            int uploadCount = GlobalData.Uploads.Count;
-            int mlDataCount = GlobalData.machineLearningData.Count;
+            var uploadsWithML = await _dbQueries.GetUploadsAsync(); //   Uses correct DBQueries instance
 
-            // Add all uploads from GlobalData to the DataGridView
-            for (int i = 0; i < GlobalData.Uploads.Count; i++)
+            int uploadCount = uploadsWithML.Count;
+            for (int i = 0; i < uploadCount; i++)
             {
-                var userUploads = GlobalData.Uploads[i];
+                var (userUploads, mlData) = uploadsWithML[i];
 
-                // Check if there is an image to display, if not pass null
-                // Image imageToDisplay = userUploads.ThumbNail ?? null;
-
-                // Check if there is a corresponding MLData entry (Prevents error from first upload)
-                var mlData = (i < mlDataCount) ? GlobalData.machineLearningData[i] : null;
-
-                // Add information from both UploadInfo and MLData
                 int rowIndex = dataGridView1.Rows.Add(
-                    false,                                             // Checkbox column
-                    userUploads.UploadName,                            // Name of upload
-                    mlData?.qufuPercentage,                            // Qufu percentage
-                    //mlData?.qufustemPercentage,                        // Qufu stem percentage
-                    mlData?.nalePercentage,                            // Nale percentage
-                    mlData?.erciPercentage,                            // Erci Percentage
-                    mlData?.bubblePercentage,                          // Air bubble percentage
-                    FormatDate(userUploads.SampleDate),                             // Date Sample Taken
-                    FormatTime(userUploads.SampleTime),                             // Time Sample Taken
-                    userUploads.UploadTime.ToString("MM/dd/yyyy"),     // Upload Date
-                    userUploads.UploadTime.ToString("hh:mm tt"),       // Upload Time
-                    userUploads.SampleLocation,                        // Sample Location
-                    userUploads.SheepBreed,                            // Sheep Breed
-                    userUploads.Comments                               // Comments
+                    false, userUploads.UploadName, mlData.qufuPercentage,
+                    mlData.nalePercentage, mlData.erciPercentage, mlData.bubblePercentage,
+                    FormatDate(userUploads.SampleDate), FormatTime(userUploads.SampleTime),
+                    userUploads.UploadTime.ToString("MM/dd/yyyy"), userUploads.UploadTime.ToString("hh:mm tt"),
+                    userUploads.SampleLocation, userUploads.SheepBreed, userUploads.Comments
                 );
 
-                // Apply a standardized font to all uploads
                 var row = dataGridView1.Rows[rowIndex];
                 row.DefaultCellStyle.Font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel, 0);
                 dataGridView1.Font = new Font("Times New Roman", 14, FontStyle.Bold, GraphicsUnit.Pixel, 0);
-
             }
 
-            // Adjust comments column
             AdjustCommentsColumnHeight();
-
-            // Refresh the grid to ensure the new data is visible
             dataGridView1.Refresh();
-
-            /// ----------------------------------------------------------------------------- INTEGRATION POINT ------------------------------------------------------------------------///
         }
 
         private string FormatDate(string dateInput)
         {
             if (DateTime.TryParse(dateInput, out DateTime parsedDate))
             {
-                return parsedDate.ToString("MM/dd/yyyy"); // ✅ Returns only date
+                return parsedDate.ToString("MM/dd/yyyy"); //   Returns only date
             }
             return dateInput; // Return original if parsing fails
         }
@@ -309,7 +284,7 @@ namespace GrazeViewV1
         {
             if (DateTime.TryParse(timeInput, out DateTime parsedTime))
             {
-                return parsedTime.ToString("hh:mm tt"); // ✅ Returns only time in 12-hour format (e.g., 08:00 AM)
+                return parsedTime.ToString("hh:mm tt"); //   Returns only time in 12-hour format (e.g., 08:00 AM)
             }
             return timeInput; // Return original if parsing fails
         }
@@ -373,7 +348,7 @@ namespace GrazeViewV1
 
             if (clearDataCheck == DialogResult.Yes)
             { 
-                Program.ClearAllData();
+                Program.ClearAllData(_dbQueries);
                 dataGridView1.Rows.Clear();
             }
 

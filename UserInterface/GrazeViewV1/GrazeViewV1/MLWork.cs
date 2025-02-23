@@ -20,19 +20,19 @@ namespace GrazeViewV1
 
             string modelPath = Program.onnxModelFile;
 
-            // For GUI, need MessageBox instead of Console.WriteLine
+            // For GUI, need MessageBox instead of MessageBox.Show
             //MessageBox.Show("Using Model: " + modelPath);
             //MessageBox.Show("Using Image: " + imagePath);
 
-            //Console.WriteLine($"Using Model: {modelPath}");
-            //Console.WriteLine($"Using Image: {imagePath}");
+            //MessageBox.Show($"Using Model: {modelPath}");
+            //MessageBox.Show($"Using Image: {imagePath}");
 
             MLContext mlContext = new MLContext();
                 var sessionOptions = new SessionOptions();
 
             // Replaced with MessageBox
             //MessageBox.Show("Paths called");
-            //Console.WriteLine("Paths called");
+            //MessageBox.Show("Paths called");
 
                 using (var session = new InferenceSession(modelPath, sessionOptions))
                 {
@@ -43,7 +43,7 @@ namespace GrazeViewV1
 
                     // Replaced with MessageBox
                     //MessageBox.Show("Reading Image");
-                    //Console.WriteLine("Reading Image");
+                    //MessageBox.Show("Reading Image");
 
                     // 2. Load and Preprocess Image (OpenCVSharp4)
                     Mat originalImage = Cv2.ImRead(imagePath);
@@ -53,7 +53,7 @@ namespace GrazeViewV1
 
                     // Replaced with MessageBox
                     //MessageBox.Show($"Number of tiles Split: {imageTiles.Count}");
-                    //Console.WriteLine($"Number of tiles Split: {imageTiles.Count}");
+                    //MessageBox.Show($"Number of tiles Split: {imageTiles.Count}");
 
                     // Set tick amount for loading page based on image split
                     int loadingPagetick = imageTiles.Count;
@@ -79,7 +79,7 @@ namespace GrazeViewV1
 
                         // Replaced with MessageBox
                         //MessageBox.Show("RGB Preprocessing");
-                        //Console.WriteLine("RGB Preprocessing");
+                        //MessageBox.Show("RGB Preprocessing");
                         float[] tileData = new float[targetWidth * targetHeight * 3]; // Assuming 3 channels (RGB or BGR)
                         for (int y = 0; y < targetHeight; y++)
                         {
@@ -94,14 +94,14 @@ namespace GrazeViewV1
 
                         // Replaced with MessageBox
                         //MessageBox.Show("Making Tensor");
-                        //Console.WriteLine("Making Tensor");
+                        //MessageBox.Show("Making Tensor");
                         // 4. Create Input Tensor and NamedOnnxValue
                         var inputTensor = new DenseTensor<float>(tileData, new[] { 1, targetHeight, targetWidth, 3 }); // Shape(batch_size, Height, Width, Channels)
                         var inputNamedValue = NamedOnnxValue.CreateFromTensor<float>(inputName, inputTensor);
 
                         // Replaced with MessageBox
                         //MessageBox.Show("Starting Inference");
-                        //Console.WriteLine("Starting Inference");
+                        //MessageBox.Show("Starting Inference");
                         // 5. Run Inference
                         using (var results = session.Run(new[] { inputNamedValue }))
                         {
@@ -115,10 +115,10 @@ namespace GrazeViewV1
                             var probabilities = outputTensor.ToArray();
 
                             // Get all output tensors
-                            //Console.WriteLine($"Nale: {probabilities[0].ToString(".00")}");
-                            //Console.WriteLine($"Erci: {probabilities[1].ToString(".00")}");
-                            //Console.WriteLine($"Qufu: {probabilities[2].ToString(".00")}");
-                            //Console.WriteLine($"Bubble: {probabilities[3].ToString(".00")}");
+                            //MessageBox.Show($"Nale: {probabilities[0].ToString(".00")}");
+                            //MessageBox.Show($"Erci: {probabilities[1].ToString(".00")}");
+                            //MessageBox.Show($"Qufu: {probabilities[2].ToString(".00")}");
+                            //MessageBox.Show($"Bubble: {probabilities[3].ToString(".00")}");
 
                             // Add all four predictions to growing list
                             classProbabilitiesSum[0] += probabilities[0];
@@ -147,12 +147,12 @@ namespace GrazeViewV1
                     // Print the average predictions
                     // Replaced with MessageBox
                     //MessageBox.Show("Average Predictions: ");
-                    //Console.WriteLine("Average Predictions:");
+                    //MessageBox.Show("Average Predictions:");
                     //for (int j = 0; j < 4; j++)
                     //{
                         // Replaced with MessageBox
                         //MessageBox.Show($"Class {j}: {averageProbabilities[j]}");
-                    //Console.WriteLine($"Class {i}: {averageProbabilities[i]}");
+                    //MessageBox.Show($"Class {i}: {averageProbabilities[i]}");
 
                     //}
 
@@ -219,7 +219,7 @@ namespace GrazeViewV1
                     }
                 }
             }
-            //Console.WriteLine($"Total Tiles: {totalTiles}");
+            //MessageBox.Show($"Total Tiles: {totalTiles}");
 
             return tiles;
         }

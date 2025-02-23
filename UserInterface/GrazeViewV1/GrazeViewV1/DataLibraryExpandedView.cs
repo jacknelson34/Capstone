@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing.Printing;
+using System.Data.Common;
 
 namespace GrazeViewV1
 {
@@ -16,10 +17,13 @@ namespace GrazeViewV1
         private MainPage _mainPage;                 // Hold reference for mainPage for dataLibrary
         private Bitmap memoryImage;                 // For printing
         private bool IsNavigating;                  // Boolean to determine if the user is navigating the application
+        private readonly DBConnections _dbConnections;
 
         public DataLibraryExpandedView(MainPage mainPage)
         {
             IsNavigating = false;           // Initially, set navigating to false, unless found otherwise
+
+            _dbConnections = new DBConnections(new DBSettings("your-server", "your-database", "your-username", "your-password"));
 
             _mainPage = mainPage;           // Hold reference to mainPage
             InitializeComponent();          // Build DLExpanded view
@@ -71,7 +75,8 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;
             }
 
-            var dataLibrary = new DataLibrary(_mainPage);           // Initialize a new dataLibrary with reference to mainPage
+            var dbQueries = new DBQueries(_dbConnections.ConnectionString); // Ensure connectionString is correct
+            var dataLibrary = new DataLibrary(_mainPage, dbQueries);           // Initialize a new dataLibrary with reference to mainPage
             dataLibrary.Size = this.Size;                           // Set the dataLibrary equal to this page's size
             dataLibrary.Location = this.Location;                   // and location
             dataLibrary.Show();                                     // Show the new dataLibrary

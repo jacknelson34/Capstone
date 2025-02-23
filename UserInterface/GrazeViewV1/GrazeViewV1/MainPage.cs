@@ -2,6 +2,7 @@
 using System.Collections.Generic; 
 using System.ComponentModel; 
 using System.Data;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Drawing; 
 using System.Linq; 
@@ -14,10 +15,10 @@ namespace GrazeViewV1
     public partial class MainPage : Form 
     {
         private DataLibrary _datalibrary; // Reference to the DataLibrary form instance
-
+        private readonly DBConnections _dbConnections;
 
         // Constructor for initializing MainPage
-        public MainPage()
+        public MainPage(DBQueries dbQueries)
         {
             InitializeComponent(); // Initialize form components
             // Enable double buffering
@@ -36,7 +37,10 @@ namespace GrazeViewV1
             }
 
             this.Text = "GrazeView"; // Set the title of the MainPage form
-            _datalibrary = new DataLibrary(this); // Instantiate DataLibrary with a reference to MainPage
+
+            _dbConnections = new DBConnections(new DBSettings("your-server", "your-database", "your-username", "your-password"));
+            dbQueries = new DBQueries(_dbConnections.ConnectionString); // Ensure connectionString is correct
+            var dataLibrary = new DataLibrary(this, dbQueries);
 
             this.Resize += MainPage_Resize; // Attach the resize event handler
             this.Load += MainPage_Load; // Attach the load event handler for initial adjustments
@@ -56,7 +60,8 @@ namespace GrazeViewV1
         // Event handler for the Data Viewer button click
         private void dataViewerButton_Click(object? sender, EventArgs e)
         {
-            DataLibrary datalibrary = new DataLibrary(this); // Create a new instance of DataLibrary form
+            var dbQueries = new DBQueries(_dbConnections.ConnectionString); // Ensure connectionString is correct
+            DataLibrary datalibrary = new DataLibrary(this, dbQueries);
             datalibrary.Size = this.Size; // Set the size of the new form to match MainPage
             datalibrary.Location = this.Location; // Set the location of the new form to match MainPage
             datalibrary.WindowState = this.WindowState;
