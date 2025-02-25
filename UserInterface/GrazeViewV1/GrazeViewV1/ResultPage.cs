@@ -23,7 +23,12 @@ namespace GrazeViewV1
         public ResultPage(Image resultImage, MainPage mainPage)  // Build page with resulting image from ML and previous page's size/location
         {
             IsNavigating = false;
-            _dbConnections = new DBConnections(new DBSettings("your-server", "your-database", "your-username", "your-password"));
+            _dbConnections = new DBConnections(new DBSettings(
+                    server: "sqldatabase404.database.windows.net",
+                    database: "404ImageDBsql",
+                    username: "sql404admin",
+                    password: "sheepstool404()"
+                    ));
 
             InitializeComponent();
             this.Size = ConsistentForm.FormSize;                // Set form size to the same as the previous page

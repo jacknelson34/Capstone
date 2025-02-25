@@ -23,6 +23,9 @@ namespace GrazeViewV1
                 SetProcessDpiAwareness(PROCESS_DPI_AWARENESS.Process_Per_Monitor_DPI_Aware);
             }
 
+                        Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
             // Initialize db variables
             DBQueries dbQueries;
             DBConnections dbConnections;
@@ -34,7 +37,13 @@ namespace GrazeViewV1
                 Application.DoEvents(); // Allow UI to refresh while loading
 
                 // Connect to database
-                dbConnections = new DBConnections(new DBSettings("your-server", "your-database", "your-username", "your-password"));
+                dbConnections = new DBConnections(new DBSettings(
+                    server: "sqldatabase404.database.windows.net",
+                    database: "404ImageDBsql",
+                    username: "sql404admin",
+                    password: "sheepstool404()"
+                    ));
+
                 dbQueries = new DBQueries(dbConnections.ConnectionString);
 
                 bool isConnected = dbConnections.TestConnectionAsync().GetAwaiter().GetResult(); // Blocking call for sync context
@@ -57,8 +66,6 @@ namespace GrazeViewV1
             LoadGlobalDataAsync(dbQueries);
 
             // Start application
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainPage(dbQueries));
         }
 
@@ -75,7 +82,12 @@ namespace GrazeViewV1
         // Method handler for application close
         private static void OnApplicationExit(object sender, EventArgs e)
         {
-            var dbConnections = new DBConnections(new DBSettings("your-server", "your-database", "your-username", "your-password"));
+            var dbConnections = new DBConnections(new DBSettings(
+                server: "sqldatabase404.database.windows.net",
+                database: "404ImageDBsql",
+                username: "sql404admin",
+                password: "sheepstool404()"
+            ));
             var dbQueries = new DBQueries(dbConnections.ConnectionString); // Define dbQueries before use
 
             // Save data to files

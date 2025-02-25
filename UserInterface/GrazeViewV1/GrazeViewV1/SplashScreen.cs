@@ -45,7 +45,12 @@ namespace GrazeViewV1
         {
             await Task.Delay(3000); // Simulated DB delay
 
-            var dbConnections = new DBConnections(new DBSettings("your-server", "your-database", "your-username", "your-password"));
+            var dbConnections = new DBConnections(new DBSettings(
+                server: "sqldatabase404.database.windows.net",
+                database: "404ImageDBsql",
+                username: "sql404admin",
+                password: "sheepstool404()"
+            ));
             var dbQueries = new DBQueries(dbConnections.ConnectionString);
 
             return await dbConnections.TestConnectionAsync(); //   Actual DB test
