@@ -63,7 +63,7 @@ namespace GrazeViewV1
             EnsureAppDataFolderExists();
 
             // Load data from database
-            LoadGlobalDataAsync(dbQueries);
+
 
             // Start application
             Application.Run(new MainPage(dbQueries));
@@ -128,7 +128,7 @@ namespace GrazeViewV1
                     var mlData = GlobalData.machineLearningData
                         .FirstOrDefault(m => m != null && m.nalePercentage == upload.UploadName);
 
-                    await dbQueries.InsertUploadAsync(upload, mlData ?? new MLData());
+                    //await dbQueries.InsertUploadAsync(upload, mlData ?? new MLData());
                 }
 
                 MessageBox.Show("All data saved to SQL successfully.");
@@ -140,30 +140,7 @@ namespace GrazeViewV1
         }
 
 
-        // Load data from previous runs
-        private static async Task LoadGlobalDataAsync(DBQueries dbQueries)
-        {
-            try
-            {
-                var uploadsWithML = await dbQueries.GetUploadsAsync();
 
-                // Clear existing data before loading new data
-                GlobalData.Uploads.Clear();
-                GlobalData.machineLearningData.Clear();
-
-                foreach (var (upload, mlData) in uploadsWithML)
-                {
-                    GlobalData.Uploads.Add(upload);
-                    GlobalData.machineLearningData.Add(mlData);
-                }
-
-                MessageBox.Show("All data loaded from SQL successfully.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading data from database: {ex.Message}", "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
 
         private static string NormalizeTextForSave(string input)

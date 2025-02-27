@@ -112,26 +112,30 @@ namespace GrazeViewV1
                                                  .ToList();
 
             // Only allow one upload at a time for the preview button
-            if (selectedRows.Count != 1)
+            if (selectedRows.Count < 1)
             {
                 // Output message
-                MessageBox.Show("Only 1 Upload can be previewed at a time", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select 1 Upload to Preview.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }else if(selectedRows.Count > 1)
+            {
+                // Output message
+                MessageBox.Show("Only one Upload may be selected at a time for Preview.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             else
             {
                 // Get the selected row
                 var selectedRow = selectedRows.First();
-                int rowIndex = selectedRow.Index;
+                int rowIndex = selectedRow.Index + 1;
 
-                // Ensure the selected index is valid
-                if (rowIndex < GlobalData.Uploads.Count)
-                {
-                    // Variable to hold the image of the selected row index
-                    var uploadInfo = GlobalData.Uploads[rowIndex];
+                    // Retrieve image from database
 
-                    // Check if image exists in uploadInfo
-                    if (uploadInfo.ImageFile == null)
+                    DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;");
+                    Bitmap retrievedImage = dbQueries.RetrieveImageFromDB(rowIndex);
+
+                    // Check if image retrieval was successful
+                    if (retrievedImage == null)
                     {
                         MessageBox.Show("No image available for the selected upload.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
@@ -147,7 +151,7 @@ namespace GrazeViewV1
                     // Picture Box to hold the image in the Preview form
                     PictureBox pictureBox = new PictureBox
                     {
-                        Image = uploadInfo.ImageFile,
+                        Image = retrievedImage,
                         SizeMode = PictureBoxSizeMode.Zoom,
                         Dock = DockStyle.Fill
                     };
@@ -155,11 +159,7 @@ namespace GrazeViewV1
                     // Adds picture box to controls
                     imagePreviewForm.Controls.Add(pictureBox);
                     imagePreviewForm.ShowDialog(); // Show as a dialog to keep the context
-                }
-                else
-                {
-                    MessageBox.Show("Invalid selection. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+
             }
         }
 
@@ -245,34 +245,41 @@ namespace GrazeViewV1
         // Method to add data from DataUpload to the Library
         public async Task LoadUploadsFromGlobalData()
         {
-            dataGridView1.Rows.Clear();
-
-            MessageBox.Show("Loading data...");
-
-            var uploadsWithML = await _dbQueries.GetUploadsAsync(); //   Uses correct DBQueries instance
-
-            int uploadCount = uploadsWithML.Count;
-            for (int i = 0; i < uploadCount; i++)
+            try
             {
-                var (userUploads, mlData) = uploadsWithML[i];
+                dataGridView1.Rows.Clear();
 
-                int rowIndex = dataGridView1.Rows.Add(
-                    false, userUploads.UploadName, mlData.qufuPercentage,
-                    mlData.nalePercentage, mlData.erciPercentage, mlData.bubblePercentage,
-                    FormatDate(userUploads.SampleDate), FormatTime(userUploads.SampleTime),
-                    userUploads.UploadTime.ToString("MM/dd/yyyy"), userUploads.UploadTime.ToString("hh:mm tt"),
-                    userUploads.SampleLocation, userUploads.SheepBreed, userUploads.Comments
-                );
+                var csvData = await _dbQueries.GetCSVDBDataAsync();
 
-                var row = dataGridView1.Rows[rowIndex];
-                row.DefaultCellStyle.Font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-                dataGridView1.Font = new Font("Times New Roman", 14, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+                if (csvData.Count > 0)
+                {
+                    // Ensure columns match database schema
+                    dataGridView1.ColumnCount = csvData[0].Count;
 
-                MessageBox.Show("Upload #" + uploadCount);
+                    // Set column headers dynamically
+                    int colIndex = 0;
+                    foreach (var column in csvData[0].Keys)
+                    {
+                        dataGridView1.Columns[colIndex].Name = column;
+                        colIndex++;
+                    }
+
+                    // Populate rows
+                    foreach (var row in csvData)
+                    {
+                        int rowIndex = dataGridView1.Rows.Add(row.Values.ToArray());
+                        dataGridView1.Rows[rowIndex].Cells[0].Value = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No data found in CSVDB.");
+                }
             }
-
-            AdjustCommentsColumnHeight();
-            dataGridView1.Refresh();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading CSVDB data: {ex.Message}");
+            }
         }
 
         private string FormatDate(string dateInput)
@@ -332,11 +339,11 @@ namespace GrazeViewV1
         // Method for adjusting row height if comments exceed 500 pixels
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == dataGridView1.Columns["CommentsCol"].Index)
+            /*if (e.ColumnIndex == dataGridView1.Columns["CommentsCol"].Index)
             {
                 // Adjust the height of the row for the changed cell
                 dataGridView1.AutoResizeRow(e.RowIndex, DataGridViewAutoSizeRowMode.AllCells);
-            }
+            }*/
         }
 
         // Temporary Method for clearing Data

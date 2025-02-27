@@ -358,6 +358,11 @@ namespace GrazeViewV1
             // Add the new upload info to the GlobalData uploads list
             GlobalData.Uploads.Add(uploadInfo);
 
+            // Upload Imagefile to DB
+            string imagePath = imageFilePath;
+            DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;");
+            dbQueries.UploadImageToDB(imagePath);
+
             // Add user inputs and image to data library
             var dataLibrary = _mainPage.GetDataLibrary();
             if (dataLibrary != null)
@@ -376,8 +381,6 @@ namespace GrazeViewV1
                 // Test calling MLWork
                 try
                 {
-                    // This file path does not work !!!!!!!!!!!!
-                    string imagePath = imageFilePath;
 
                     ConsistentForm.FormLocation = this.Location;
                     ConsistentForm.FormSize = this.Size;

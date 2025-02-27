@@ -261,34 +261,6 @@ namespace GrazeViewV1
         [JsonIgnore]
         public Image ImageFile { get; set; }
 
-        // Serialize Image as Base64
-        public string ImageBase64
-        {
-            get
-            {
-                if (ImageFile == null) return null;
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    ImageFile.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                    return Convert.ToBase64String(ms.ToArray());
-                }
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    ImageFile = null;
-                }
-                else
-                {
-                    byte[] bytes = Convert.FromBase64String(value);
-                    using (MemoryStream ms = new MemoryStream(bytes))
-                    {
-                        ImageFile = Image.FromStream(ms);
-                    }
-                }
-            }
-        }
     }
 
     // Class to store all the data given from the ML model relating to each image upload

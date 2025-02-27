@@ -131,20 +131,18 @@
 
             // Add columns (these should match the data you're adding in AddUploadToGrid)
             dataGridView1.Columns.Add(new DataGridViewCheckBoxColumn { Name = "SelectCol", HeaderText = "Select Uploads" });            // 0
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "NameCol", HeaderText = "Upload Name", Width = 150 });     // 1
-            //dataGridView1.Columns.Add(new DataGridViewImageColumn { Name = "ImageCol", HeaderText = "Sample Image Preview" });          // 2
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "QufuCol", HeaderText = "Qufu(%):" });                     // 3
-            //dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "QufuStemCol", HeaderText = "Qufu Stem(%):" });            // 4
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "NaleCol", HeaderText = "Nale(%):" });                     // 5
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "ErciCol", HeaderText = "Erci(%):" });                     // 6
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "AirBubbleCol", HeaderText = "Air Bubble(%):" });          // 7
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleDateCol", HeaderText = "Date Sample Taken" });      // 8
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleTimeCol", HeaderText = "Time Sample Taken" });      // 9
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "UploadDateCol", HeaderText = "Upload Date" });            // 10
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "UploadTimeCol", HeaderText = "Upload Time" });            // 11
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleLocationCol", HeaderText = "Sample Location" });    // 12
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SheepBreedCol", HeaderText = "Sheep Breed" });            // 13
-            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "CommentsCol", HeaderText = "Comments", Width = 300, AutoSizeMode = DataGridViewAutoSizeColumnMode.None });                 // 14
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "NameCol", HeaderText = "Upload Name", Width = 150 });     // 1 - Class A
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "QufuCol", HeaderText = "Qufu(%):" });                     // 2 - Class B
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "NaleCol", HeaderText = "Nale(%):" });                     // 3 - Class B
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "ErciCol", HeaderText = "Erci(%):" });                     // 4 - Class B
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "AirBubbleCol", HeaderText = "Air Bubble(%):" });          // 5 - Class B
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleDateCol", HeaderText = "Date Sample Taken" });      // 6 - Class A
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleTimeCol", HeaderText = "Time Sample Taken" });      // 7 - Class A
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "UploadDateCol", HeaderText = "Upload Date" });            // 8 - Class A
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "UploadTimeCol", HeaderText = "Upload Time" });            // 9 - Class A
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SampleLocationCol", HeaderText = "Sample Location" });    // 10 - Class A
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "SheepBreedCol", HeaderText = "Sheep Breed" });            // 11 - Class A
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn { Name = "CommentsCol", HeaderText = "Comments", Width = 300, AutoSizeMode = DataGridViewAutoSizeColumnMode.None }); // 12 - Class B
 
             // Set text wrapping for comments
             dataGridView1.Columns["CommentsCol"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;

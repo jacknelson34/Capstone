@@ -59,7 +59,7 @@ namespace GrazeViewV1
         private async Task RunProgressAnimationAsync()
         {
             int moveSpeed = 5;
-            int resetPosition = 310;
+            int resetPosition = 290;
 
             while (isRunning) //   Keep animating until stopped
             {

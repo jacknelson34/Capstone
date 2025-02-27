@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Globalization;
 
 namespace GrazeViewV1
 {
     // Class to connect the UI to the DB - TODO
     public class DBQueries
     {
-    
+
         private readonly string _connectionString;
         private SqlConnection? _connection;
         private bool _disposed;
@@ -24,134 +25,143 @@ namespace GrazeViewV1
             _connection = new SqlConnection(_connectionString);
         }
 
-        // New Method for adding uploaded data to DB - Jack
-        public async Task InsertUploadAsync(UploadInfo upload, MLData mlData)
+        // Pull CSV Data from DB - Works
+        public async Task<List<Dictionary<string, object>>> GetCSVDBDataAsync()
         {
-            if (upload == null) throw new ArgumentNullException(nameof(upload));
-            if (mlData == null) throw new ArgumentNullException(nameof(mlData));
+            var results = new List<Dictionary<string, object>>();
 
             try
             {
                 await EnsureConnectionOpenAsync();
-
-                // Insert UploadInfo into Uploads table
-                string insertUploadQuery = @"
-            INSERT INTO Uploads (UploadName, SampleDate, SampleTime, UploadTime, SampleLocation, SheepBreed, Comments, ImageData)
-            VALUES (@UploadName, @SampleDate, @SampleTime, @UploadTime, @SampleLocation, @SheepBreed, @Comments, @ImageData)";
-
-                using (var command = new SqlCommand(insertUploadQuery, _connection))
-                {
-                    command.Parameters.AddWithValue("@UploadName", upload.UploadName);
-                    command.Parameters.AddWithValue("@SampleDate", upload.SampleDate);
-                    command.Parameters.AddWithValue("@SampleTime", upload.SampleTime);
-                    command.Parameters.AddWithValue("@UploadTime", upload.UploadTime);
-                    command.Parameters.AddWithValue("@SampleLocation", upload.SampleLocation);
-                    command.Parameters.AddWithValue("@SheepBreed", upload.SheepBreed);
-                    command.Parameters.AddWithValue("@Comments", upload.Comments ?? (object)DBNull.Value);
-
-                    // Convert Image to Byte Array
-                    if (upload.ImageFile != null)
-                    {
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            upload.ImageFile.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                            command.Parameters.AddWithValue("@ImageData", ms.ToArray());
-                        }
-                    }
-                    else
-                    {
-                        command.Parameters.AddWithValue("@ImageData", DBNull.Value);
-                    }
-
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                // Insert MLData into MLData table
-                string insertMLDataQuery = @"
-            INSERT INTO MLData (UploadName, nalePercentage, qufuPercentage, erciPercentage, bubblePercentage)
-            VALUES (@UploadName, @nalePercentage, @qufuPercentage, @erciPercentage, @bubblePercentage)";
-
-                using (var command = new SqlCommand(insertMLDataQuery, _connection))
-                {
-                    command.Parameters.AddWithValue("@UploadName", upload.UploadName);
-                    command.Parameters.AddWithValue("@nalePercentage", mlData.nalePercentage ?? ".00");
-                    command.Parameters.AddWithValue("@qufuPercentage", mlData.qufuPercentage ?? ".00");
-                    command.Parameters.AddWithValue("@erciPercentage", mlData.erciPercentage ?? ".00");
-                    command.Parameters.AddWithValue("@bubblePercentage", mlData.bubblePercentage ?? ".00");
-
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                MessageBox.Show($"Upload '{upload.UploadName}' and associated ML data inserted successfully.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error inserting upload and ML data: {ex.Message}");
-                throw;
-            }
-        }
-
-        // New method for pulling data from DB
-        public async Task<List<(UploadInfo, MLData)>> GetUploadsAsync()
-        {
-            var uploadsWithML = new List<(UploadInfo, MLData)>();
-
-            try
-            {
-                await EnsureConnectionOpenAsync();
-
-                string query = @"
-            SELECT u.UploadName, u.SampleDate, u.SampleTime, u.UploadTime, u.SampleLocation, u.SheepBreed, u.Comments, u.ImageData,
-                   m.nalePercentage, m.qufuPercentage, m.erciPercentage, m.bubblePercentage
-            FROM Uploads u
-            LEFT JOIN MLData m ON u.UploadName = m.UploadName";
+                string query = "SELECT * FROM CSVDB";
 
                 using (var command = new SqlCommand(query, _connection))
                 using (var reader = await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
-                        var upload = new UploadInfo
+                        var row = new Dictionary<string, object>();
+                        for (int i = 0; i < reader.FieldCount; i++)
                         {
-                            UploadName = reader.GetString(0),
-                            SampleDate = reader.GetString(1),
-                            SampleTime = reader.GetString(2),
-                            UploadTime = reader.GetDateTime(3),
-                            SampleLocation = reader.GetString(4),
-                            SheepBreed = reader.GetString(5),
-                            Comments = reader.IsDBNull(6) ? null : reader.GetString(6),
-                        };
-
-                        // Retrieve Image Data
-                        if (!reader.IsDBNull(7))
-                        {
-                            byte[] imageData = (byte[])reader[7];
-                            using (MemoryStream ms = new MemoryStream(imageData))
-                            {
-                                upload.ImageFile = Image.FromStream(ms);
-                            }
+                            row[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
                         }
-
-                        var mlData = new MLData
-                        {
-                            nalePercentage = reader.IsDBNull(8) ? "0" : reader.GetString(8),
-                            qufuPercentage = reader.IsDBNull(9) ? "0" : reader.GetString(9),
-                            erciPercentage = reader.IsDBNull(10) ? "0" : reader.GetString(10),
-                            bubblePercentage = reader.IsDBNull(11) ? "0" : reader.GetString(11)
-                        };
-
-                        uploadsWithML.Add((upload, mlData));
+                        results.Add(row);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error fetching uploads with ML data: {ex.Message}");
-                throw;
+                MessageBox.Show($"Error fetching CSVDB data: {ex.Message}");
             }
 
-            return uploadsWithML;
+            return results;
         }
+
+        // Pull Image Data From DB - Works
+        public Bitmap RetrieveImageFromDB(int imageIndex)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    // Debugging: Show all available images before searching
+                    string availableImages = "Available Images in DB:\n";
+                    using (SqlCommand listCmd = new SqlCommand("SELECT ImageID, ImageName FROM Images", conn))
+                    using (SqlDataReader reader = listCmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            availableImages += $"{reader["ImageID"]}: {reader["ImageName"]}\n";
+                        }
+                    }
+                    MessageBox.Show(availableImages, "Database Debug Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Fetch image using index
+                    string query = "SELECT ImageData FROM Images ORDER BY ImageID OFFSET @Index ROWS FETCH NEXT 1 ROWS ONLY";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Index", imageIndex);
+                        var result = cmd.ExecuteScalar();
+
+                        if (result == null || result == DBNull.Value)
+                        {
+                            MessageBox.Show($"No image found at index {imageIndex}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return null;
+                        }
+
+                        // Convert byte array to Bitmap
+                        byte[] imageBytes = (byte[])result;
+                        using (MemoryStream ms = new MemoryStream(imageBytes))
+                        {
+                            return new Bitmap(ms);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error retrieving image: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        // Push Image Data to DB - Works
+        public void UploadImageToDB(string imagePath)
+        {
+
+            try
+            {
+                if (!File.Exists(imagePath))
+                {
+                    MessageBox.Show($"Error: File not found - {imagePath}");
+                    return;
+                }
+
+                string imageName = Path.GetFileName(imagePath);
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    // Check if the image already exists in the database
+                    string checkQuery = "SELECT COUNT(*) FROM Images WHERE ImageName = @ImageName";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@ImageName", imageName);
+                        int count = (int)checkCmd.ExecuteScalar();
+
+                        if (count > 0)
+                        {
+                            MessageBox.Show($"Skipped: Image '{imageName}' already exists in the database.");
+                            return;
+                        }
+                    }
+
+                    // Convert the image to a byte array
+                    byte[] imageBytes = File.ReadAllBytes(imagePath);
+
+                    // Insert image into the database
+                    string insertQuery = "INSERT INTO Images (ImageName, ImageData) VALUES (@ImageName, @ImageData)";
+                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                    {
+                        insertCmd.Parameters.AddWithValue("@ImageName", imageName);
+                        insertCmd.Parameters.AddWithValue("@ImageData", imageBytes);
+                        insertCmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show($"Uploaded: {imageName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}");
+            }
+        }
+
+        // Push CSV Data to DB - TODO
+
 
         // New Method for clearing DB data 
         public async Task ClearAllUploadsAsync()
@@ -178,10 +188,10 @@ namespace GrazeViewV1
         {
             if (_connection?.State != ConnectionState.Open)
             {
-                MessageBox.Show("Opening new database connection...");
+                //MessageBox.Show("Opening new database connection...");
                 _connection = new SqlConnection(_connectionString);
                 await _connection.OpenAsync();
-                MessageBox.Show($"Connection opened. State: {_connection.State}");
+                //MessageBox.Show($"Connection opened. State: {_connection.State}");
             }
         }
 
@@ -189,17 +199,17 @@ namespace GrazeViewV1
         {
             if (_connection != null)
             {
-                MessageBox.Show("\nStarting connection cleanup...");
+                //MessageBox.Show("\nStarting connection cleanup...");
                 if (_connection.State == ConnectionState.Open)
                 {
-                    MessageBox.Show("Closing open connection...");
+                    //MessageBox.Show("Closing open connection...");
                     await _connection.CloseAsync();
-                    MessageBox.Show("Connection closed successfully.");
+                    //MessageBox.Show("Connection closed successfully.");
                 }
-                MessageBox.Show("Disposing connection...");
+                //MessageBox.Show("Disposing connection...");
                 await _connection.DisposeAsync();
                 _connection = null;
-                MessageBox.Show("Connection disposed.");
+                //MessageBox.Show("Connection disposed.");
             }
         }
 
