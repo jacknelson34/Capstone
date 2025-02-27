@@ -146,7 +146,7 @@ namespace GrazeViewV1
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error fetching uploads with ML data: {ex.Message}");
+                MessageBox.Show($"Error fetching uploads with ML data: {ex.Message}");
                 throw;
             }
 
@@ -165,11 +165,11 @@ namespace GrazeViewV1
                     await command.ExecuteNonQueryAsync();
                 }
 
-                Console.WriteLine("All uploads cleared from the database.");
+                MessageBox.Show("All uploads cleared from the database.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error clearing uploads: {ex.Message}");
+                MessageBox.Show($"Error clearing uploads: {ex.Message}");
                 throw;
             }
         }

@@ -131,7 +131,7 @@ namespace GrazeViewV1
                     await dbQueries.InsertUploadAsync(upload, mlData ?? new MLData());
                 }
 
-                Console.WriteLine("All data saved to SQL successfully.");
+                MessageBox.Show("All data saved to SQL successfully.");
             }
             catch (Exception ex)
             {
@@ -157,7 +157,7 @@ namespace GrazeViewV1
                     GlobalData.machineLearningData.Add(mlData);
                 }
 
-                Console.WriteLine("All data loaded from SQL successfully.");
+                MessageBox.Show("All data loaded from SQL successfully.");
             }
             catch (Exception ex)
             {

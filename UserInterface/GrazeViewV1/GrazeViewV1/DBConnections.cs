@@ -40,9 +40,9 @@ namespace GrazeViewV1
 
         public async Task<bool> TestConnectionAsync()
         {
-            MessageBox.Show("Attempting to connect to SQL Server...");
-            MessageBox.Show($"Server: {_settings.Server}");
-            MessageBox.Show($"Database: {_settings.Database}");
+            //MessageBox.Show("Attempting to connect to SQL Server...");
+            //MessageBox.Show($"Server: {_settings.Server}");
+            //MessageBox.Show($"Database: {_settings.Database}");
 
             for (int attempt = 1; attempt <= MaxRetries; attempt++)
             {
@@ -52,13 +52,13 @@ namespace GrazeViewV1
                     {
                         if (attempt > 1)
                         {
-                            MessageBox.Show($"\nRetry attempt {attempt} of {MaxRetries}...");
+                            //MessageBox.Show($"\nRetry attempt {attempt} of {MaxRetries}...");
                             await Task.Delay(RetryDelayMs);
                         }
 
                         await connection.OpenAsync();
-                        MessageBox.Show($"Server Version: {connection.ServerVersion}");
-                        MessageBox.Show($"Database: {connection.Database}");
+                       //MessageBox.Show($"Server Version: {connection.ServerVersion}");
+                        //MessageBox.Show($"Database: {connection.Database}");
                         return true;
                     }
                     catch (SqlException ex)

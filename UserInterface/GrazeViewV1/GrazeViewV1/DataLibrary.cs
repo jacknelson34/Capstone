@@ -247,6 +247,8 @@ namespace GrazeViewV1
         {
             dataGridView1.Rows.Clear();
 
+            MessageBox.Show("Loading data...");
+
             var uploadsWithML = await _dbQueries.GetUploadsAsync(); //   Uses correct DBQueries instance
 
             int uploadCount = uploadsWithML.Count;
@@ -265,6 +267,8 @@ namespace GrazeViewV1
                 var row = dataGridView1.Rows[rowIndex];
                 row.DefaultCellStyle.Font = new Font("Times New Roman", 14, FontStyle.Regular, GraphicsUnit.Pixel, 0);
                 dataGridView1.Font = new Font("Times New Roman", 14, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+
+                MessageBox.Show("Upload #" + uploadCount);
             }
 
             AdjustCommentsColumnHeight();
