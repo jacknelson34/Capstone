@@ -193,47 +193,27 @@ namespace GrazeViewV1
         // Event handler for when export button is click 
         private void exportButton_Click(object sender, EventArgs e)
         {
-            IsNavigating = true;   // User is still using the app
+            IsNavigating = true;
 
-            // Maintain consistent form sizing
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                ConsistentForm.IsFullScreen = true;
-            }
-            else
-            {
-                ConsistentForm.IsFullScreen = false;
-            }
+            // Check if fullscreen should be applied to the next page
+            ConsistentForm.IsFullScreen = (this.WindowState == FormWindowState.Maximized);
 
-            // List to hold each user selected upload
-            // Get selected rows
-            var selectedRows = dataGridView1.Rows.Cast<DataGridViewRow>()
-                                                 .Where(row => Convert.ToBoolean(row.Cells[0].Value))  // Assuming checkbox is at index 0
-                                                 .ToList();
+            // Collect selected row indexes
+            List<int> selectedIndexes = dataGridView1.Rows
+                .Cast<DataGridViewRow>()
+                .Where(row => Convert.ToBoolean(row.Cells[0].Value)) // Assuming checkbox is at index 0
+                .Select(row => row.Index)
+                .ToList();
 
-            // Check to make sure at least one upload was selected
-            // Output message if 0
-            if (selectedRows.Count == 0)
+            // Check if at least one row is selected
+            if (!selectedIndexes.Any())
             {
                 MessageBox.Show("Must select at least one upload", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Open DataLibraryExpandedView
-            DataLibraryExpandedView expandedView = new DataLibraryExpandedView(_mainPage);
-
-            // Loop through each row and add selected rows to a list
-            foreach (var row in selectedRows)
-            {
-                int rowIndex = row.Index;
-                if (rowIndex < GlobalData.Uploads.Count && rowIndex < GlobalData.machineLearningData.Count)
-                {
-                    var uploadInfo = GlobalData.Uploads[rowIndex];
-                    var mlData = GlobalData.machineLearningData[rowIndex];
-                    expandedView.AddUploadPanel(uploadInfo, mlData);
-                }
-            }
-
+            // Pass selected indexes to the expanded view
+            DataLibraryExpandedView expandedView = new DataLibraryExpandedView(_mainPage, _dbQueries, selectedIndexes);
             expandedView.Size = this.Size;
             expandedView.Location = this.Location;
 
@@ -268,8 +248,10 @@ namespace GrazeViewV1
                     foreach (var row in csvData)
                     {
                         int rowIndex = dataGridView1.Rows.Add(row.Values.ToArray());
+                        //dataGridView1.Rows[rowIndex].DefaultCellStyle.Font = new Font("Times New Roman", 10, FontStyle.Regular);
                         dataGridView1.Rows[rowIndex].Cells[0].Value = false;
                     }
+
                 }
                 else
                 {
@@ -280,24 +262,6 @@ namespace GrazeViewV1
             {
                 MessageBox.Show($"Error loading CSVDB data: {ex.Message}");
             }
-        }
-
-        private string FormatDate(string dateInput)
-        {
-            if (DateTime.TryParse(dateInput, out DateTime parsedDate))
-            {
-                return parsedDate.ToString("MM/dd/yyyy"); //   Returns only date
-            }
-            return dateInput; // Return original if parsing fails
-        }
-
-        private string FormatTime(string timeInput)
-        {
-            if (DateTime.TryParse(timeInput, out DateTime parsedTime))
-            {
-                return parsedTime.ToString("hh:mm tt"); //   Returns only time in 12-hour format (e.g., 08:00 AM)
-            }
-            return timeInput; // Return original if parsing fails
         }
 
         // Uploads all data to the data viewer

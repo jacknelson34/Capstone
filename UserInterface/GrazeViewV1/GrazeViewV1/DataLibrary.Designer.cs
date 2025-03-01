@@ -153,7 +153,10 @@
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(0, 0);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Font = new Font("Times New Roman", 14, FontStyle.Bold, GraphicsUnit.Pixel, 0);
+            // Set the font for the entire DataGridView to Times New Roman (Regular)
+            dataGridView1.DefaultCellStyle.Font = new Font("Times New Roman", 10, FontStyle.Regular);
+            // Set the column headers to be bold
+            dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Times New Roman", 12, FontStyle.Bold);
             //dataGridView1.RowHeadersWidth = 82;
             //dataGridView1.ReadOnly = true;
             dataGridView1.RowTemplate.Height = 40;

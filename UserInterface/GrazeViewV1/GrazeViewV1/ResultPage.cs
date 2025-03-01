@@ -107,6 +107,9 @@ namespace GrazeViewV1
             this.Resize += ResultsPage_Resize;      // Handle form resize
             this.FormClosing += ResultsPage_XOut;   // handle form being closed
 
+            // Save data to DB
+            SaveResultsToCSVAndUpload();
+
         }
 
         // Override the Windows procedure to intercept window messages
@@ -163,6 +166,7 @@ namespace GrazeViewV1
             // If user intentionally closes, close all app processes
             if (e.CloseReason == CloseReason.UserClosing)
             {
+                ClearGlobalData();
                 _mainPage.Close();      // Close reference to mainpage
             }
         }
@@ -270,6 +274,74 @@ namespace GrazeViewV1
         private void helpButton_Click(object sender, EventArgs e)
         {
             UserGuide.ShowHelpGuide(); // Open the user guide, ensuring only one instance is active
+        }
+
+        // Method for saving ML results and strings to DB
+        public void SaveResultsToCSVAndUpload()
+        {
+            if (!GlobalData.Uploads.Any() || !GlobalData.machineLearningData.Any())
+            {
+                MessageBox.Show("Error: Missing required data to save.");
+                return;
+            }
+
+            UploadInfo lastUpload = GlobalData.Uploads.Last();
+            MLData lastMLProcess = GlobalData.machineLearningData.Last();
+
+            List<string> csvData = new List<string>
+            {
+                lastUpload.UploadName,  // SourceFile
+                ConvertToFloatString(lastMLProcess.qufuPercentage),  // QufuPercent
+                ConvertToFloatString(lastMLProcess.nalePercentage),  // NalePercent
+                ConvertToFloatString(lastMLProcess.erciPercentage),  // ErciPercent
+                ConvertToFloatString(lastMLProcess.bubblePercentage),  // AirBubblePercent
+                ConvertToValidDateTime(lastUpload.SampleTime),  // DateSampleTaken
+                DateTime.Now.ToString("HH:mm:ss"),  // TimeSampleTaken (assuming current time)
+                lastUpload.UploadTime.ToString("yyyy-MM-dd"),  // UploadDate
+                lastUpload.UploadTime.ToString("HH:mm:ss"),  // UploadTime
+                lastUpload.SampleLocation,  // SampleLocation
+                lastUpload.SheepBreed,  // SheepBreed
+                "No Comments"  // Default comment field
+            };
+
+            DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;");
+            bool success = dbQueries.UploadCSVToDB(csvData);
+
+            if (success)
+            {
+                MessageBox.Show("Results successfully saved to the database.");
+            }
+            else
+            {
+                MessageBox.Show("Error saving results to the database.");
+            }
+        }
+
+        // Method for clearing GlobalData after each upload
+        private void ClearGlobalData()
+        {
+            GlobalData.Uploads.Clear();               // Clears all uploaded data
+            GlobalData.machineLearningData.Clear();   // Clears all ML processed data
+        }
+
+        private string ConvertToFloatString(string input)
+        {
+            if (float.TryParse(input, out float result))
+            {
+                return result.ToString(); // Convert back to string but in a float-compatible format
+            }
+
+            return "0"; // Default to 0 if conversion fails
+        }
+
+        private string ConvertToValidDateTime(string input)
+        {
+            if (DateTime.TryParse(input, out DateTime result))
+            {
+                return result.ToString("yyyy-MM-dd"); // Ensure correct format
+            }
+
+            return DateTime.Now.ToString("yyyy-MM-dd"); // Default to today’s date if invalid
         }
     }
 }
