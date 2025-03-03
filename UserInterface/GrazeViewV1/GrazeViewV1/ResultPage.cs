@@ -312,7 +312,7 @@ namespace GrazeViewV1
                 "No Comments"  // Default comment field
             };
 
-            DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;");
+            DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
             bool success = dbQueries.UploadCSVToDB(csvData);
 
             if (success)

@@ -21,6 +21,7 @@ namespace GrazeViewV1
         private bool IsNavigating;                  // Boolean to determine if the user is navigating the application
         private readonly DBConnections _dbConnections;
         private readonly DBQueries _dbQueries;
+        private DBSettings _dbSettings;
         private readonly List<int> _selectedIndexes;
 
         public DataLibraryExpandedView(MainPage mainPage, DBQueries dbQueries, List<int> selectedIndexes)
@@ -30,12 +31,13 @@ namespace GrazeViewV1
             _dbQueries = dbQueries ?? throw new ArgumentNullException(nameof(dbQueries));
             _selectedIndexes = selectedIndexes ?? new List<int>();
 
-            _dbConnections = new DBConnections(new DBSettings(
-                    server: "sqldatabase404.database.windows.net",
-                    database: "404ImageDBsql",
-                    username: "sql404admin",
-                    password: "sheepstool404()"
-                    ));
+            _dbSettings = new DBSettings(server: "sqldatabase404.database.windows.net",
+                database: "404ImageDBsql",
+                username: "sql404admin",
+                password: "sheepstool404()",
+                connectionOptions: "MultipleActiveResultSets=True;");
+
+            _dbConnections = new DBConnections(_dbSettings);
 
             _mainPage = mainPage;           // Hold reference to mainPage
             InitializeComponent();          // Build DLExpanded view
@@ -44,6 +46,11 @@ namespace GrazeViewV1
             if (ConsistentForm.IsFullScreen)    // Check to see if previous page was fullscreen
             {
                 SetFullScreen();                // If so, set this page to fullscreen
+            }
+
+            for(int i=0; i < selectedIndexes.Count; i++)
+            {
+                MessageBox.Show("Index: " + selectedIndexes[i]);
             }
 
             // Event handler for close
@@ -57,9 +64,9 @@ namespace GrazeViewV1
         {
             try
             {
-                if (!_selectedIndexes.Any())
+                if (_selectedIndexes == null || !_selectedIndexes.Any())
                 {
-                    MessageBox.Show("No data selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("No data selected for expansion.", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -69,6 +76,7 @@ namespace GrazeViewV1
                 foreach (int index in _selectedIndexes)
                 {
                     // Load data in the background
+                    MessageBox.Show("Generating panel " + index.ToString());
                     panelTasks.Add(Task.Run(() => CreateUploadPanel(index)));
                 }
 
@@ -123,6 +131,7 @@ namespace GrazeViewV1
 
             if (row == null || row.Count == 0)
             {
+                MessageBox.Show("Null returned(1)");
                 return null; // Skip if no data
             }
 
@@ -151,6 +160,10 @@ namespace GrazeViewV1
                 bubblePercentage = row.ContainsKey("AirBubblePercent") ? FormatPercentage(row["AirBubblePercent"]) : "0.00%"
             };
 
+            // Add debugging
+            MessageBox.Show($"Adding panel for: {uploadInfo.UploadName}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
             return GeneratePanel(uploadInfo, mlData);
         }
 
@@ -158,31 +171,36 @@ namespace GrazeViewV1
         {
             Panel uploadPanel = new Panel
             {
-                BorderStyle = BorderStyle.Fixed3D,
+                BorderStyle = BorderStyle.FixedSingle,
                 Padding = new Padding(10),
                 Margin = new Padding(10),
-                Width = 800, // Keep width fixed
-                AutoSize = true, // Automatically fit content
-                AutoSizeMode = AutoSizeMode.GrowAndShrink // Prevent unnecessary extra space
+                Width = 900, // Adjusted width to match original UI
+                Height = 300, // Reduced height to fit content better
+                BackColor = Color.White // Ensure clean background
             };
 
             TableLayoutPanel mainLayout = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 ColumnCount = 2, // Two columns: Left (Info) & Right (Image)
-                AutoSize = true // Let it grow dynamically
+                AutoSize = false,
+                Width = 880,
+                Height = 280
             };
 
-            // Ensure columns take equal space
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Left: Info
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Right: Image
+            // Adjust column widths (left: 60%, right: 40%)
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
 
             // Create Info Panel (Stacked UploadInfo + MLData)
             FlowLayoutPanel infoPanel = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.TopDown,
                 AutoSize = true,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                Margin = new Padding(5),
+                Padding = new Padding(5),
+                Width = 500
             };
 
             // Add Upload Info (Stacked)
@@ -201,21 +219,25 @@ namespace GrazeViewV1
             infoPanel.Controls.Add(CreateInfoLabel("Erci (%):", mlData.erciPercentage));
             infoPanel.Controls.Add(CreateInfoLabel("Bubbles (%):", mlData.bubblePercentage));
 
-            // Create Image Panel (Centered)
+            // Create Image Panel (Centered in Right Column)
             FlowLayoutPanel imagePanel = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.LeftToRight,
-                AutoSize = true,
                 Dock = DockStyle.Fill,
-                WrapContents = false
+                AutoSize = true,
+                WrapContents = false,
+                Padding = new Padding(5),
+                Margin = new Padding(5),
+                Width = 350 // Adjust width for better fit
             };
 
             PictureBox uploadImage = new PictureBox
             {
                 Image = uploadInfo.ImageFile,
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Size = new Size(250, 250), // Adjust if necessary
-                Margin = new Padding(10)
+                Size = new Size(250, 250), // Ensures proper scaling
+                Margin = new Padding(5),
+                Anchor = AnchorStyles.Right
             };
 
             imagePanel.Controls.Add(uploadImage); // Center image
@@ -229,6 +251,7 @@ namespace GrazeViewV1
 
             return uploadPanel;
         }
+
 
 
         // Event handler for exitButton
@@ -358,82 +381,6 @@ namespace GrazeViewV1
             e.Graphics.DrawImage(memoryImage, 0, 0); // Draw the captured image (memoryImage) at the top-left corner of the page
         }
 
-        // Method to create a new panel per each selected upload (Public as it is called from DataLibrary)
-        private void AddUploadPanel(UploadInfo uploadInfo, MLData mlData)
-        {
-            Panel uploadPanel = new Panel
-            {
-                BorderStyle = BorderStyle.Fixed3D,
-                Padding = new Padding(10),
-                Margin = new Padding(10),
-                Width = 800,
-                Height = 500, // Increased height to fit ML data below
-                Anchor = AnchorStyles.Top
-            };
-
-            // Create a TableLayoutPanel for vertical stacking
-            TableLayoutPanel mainLayout = new TableLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                ColumnCount = 1, // Only one column (stacked layout)
-                RowCount = 2, // Two rows (Upload Info, ML Data)
-                AutoSize = true
-            };
-
-            // Create UploadInfo panel
-            FlowLayoutPanel uploadInfoPanel = new FlowLayoutPanel
-            {
-                FlowDirection = FlowDirection.TopDown,
-                AutoSize = true,
-                Dock = DockStyle.Fill
-            };
-
-            uploadInfoPanel.Controls.Add(CreateInfoLabel("Upload Name:", uploadInfo.UploadName));
-            uploadInfoPanel.Controls.Add(CreateInfoLabel("Date of Sample:", uploadInfo.SampleDate));
-            uploadInfoPanel.Controls.Add(CreateInfoLabel("Sample Location:", uploadInfo.SampleLocation));
-            uploadInfoPanel.Controls.Add(CreateInfoLabel("Sheep Breed:", uploadInfo.SheepBreed));
-            uploadInfoPanel.Controls.Add(CreateInfoLabel("Comments:", uploadInfo.Comments));
-
-            // Image Display
-            PictureBox uploadImage = new PictureBox
-            {
-                Image = uploadInfo.ImageFile,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Size = new Size(250, 250),
-                Dock = DockStyle.Top,
-                Margin = new Padding(10)
-            };
-
-            // Create ML Data panel
-            FlowLayoutPanel mlDataPanel = new FlowLayoutPanel
-            {
-                FlowDirection = FlowDirection.TopDown,
-                AutoSize = true,
-                Dock = DockStyle.Fill
-            };
-
-            mlDataPanel.Controls.Add(CreateInfoLabel("Nale (%):", mlData.nalePercentage));
-            mlDataPanel.Controls.Add(CreateInfoLabel("Qufu (%):", mlData.qufuPercentage));
-            mlDataPanel.Controls.Add(CreateInfoLabel("Erci (%):", mlData.erciPercentage));
-            mlDataPanel.Controls.Add(CreateInfoLabel("Bubbles (%):", mlData.bubblePercentage));
-
-            // Add Upload Info (Row 0)
-            mainLayout.Controls.Add(uploadInfoPanel, 0, 0);
-
-            // Add Image in the middle
-            mainLayout.Controls.Add(uploadImage, 0, 1);
-
-            // Add ML Data (Row 2)
-            mainLayout.Controls.Add(mlDataPanel, 0, 2);
-
-            // Add layout to the upload panel
-            uploadPanel.Controls.Add(mainLayout);
-
-            // Add to the main UI
-            flowLayoutPanel.Controls.Add(uploadPanel);
-        }
-
-
         // Helper method to create a label with title and value for display in the panel
         private Label CreateInfoLabel(string title, string value) // Method to create a Label displaying a title and value
         {
@@ -446,18 +393,6 @@ namespace GrazeViewV1
             };
         }
 
-        // Helper method to create a title label for each section (User Data / Model Data)
-        private Label CreatePanelTitle(string title) // Method to create a Label styled as a panel title
-        {
-            return new Label
-            {
-                Text = title,                                      // Set the label text to the provided title
-                Font = new Font("Times New Roman", 10, FontStyle.Bold), // Use Times New Roman, size 10, with bold style
-                AutoSize = true,                                  // Allow the label to adjust its size based on the content
-                //Margin = new Padding(3, 10, 3, 5),               // (Optional) Uncomment to add custom padding around the label
-                Anchor = AnchorStyles.Top                         // Anchor the label to the top of its parent container
-            };
-        }
 
     }
 }

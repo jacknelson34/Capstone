@@ -12,13 +12,19 @@ namespace GrazeViewV1
         public string Database { get; init; }
         public string Username { get; init; }
         public string Password { get; init; }
+        public string ConnectionOptions { get; init; }
 
-        public DBSettings(string server, string database, string username, string password)
+        public DBSettings(string server, string database, string username, string password, string connectionOptions = "")
         {
             Server = server ?? throw new ArgumentNullException(nameof(server));
             Database = database ?? throw new ArgumentNullException(nameof(database));
             Username = username ?? throw new ArgumentNullException(nameof(username));
             Password = password ?? throw new ArgumentNullException(nameof(password));
+            ConnectionOptions = connectionOptions;
+        }
+        public string GetConnectionString()
+        {
+            return $"Server={Server};Database={Database};User Id={Username};Password={Password};{ConnectionOptions}";
         }
 
     }

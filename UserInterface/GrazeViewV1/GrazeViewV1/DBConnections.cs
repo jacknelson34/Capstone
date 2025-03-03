@@ -64,14 +64,14 @@ namespace GrazeViewV1
                     catch (SqlException ex)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        MessageBox.Show($"SQL Server Error: {ex.Message}");
-                        MessageBox.Show($"Error Number: {ex.Number}");
-                        MessageBox.Show($"Error State: {ex.State}");
-                        Console.ResetColor();
+                        //MessageBox.Show($"SQL Server Error: {ex.Message}");
+                        //MessageBox.Show($"Error Number: {ex.Number}");
+                        //MessageBox.Show($"Error State: {ex.State}");
+                        //Console.ResetColor();
 
                         if (attempt == MaxRetries)
                         {
-                            MessageBox.Show("Maximum retry attempts reached.");
+                            MessageBox.Show("Error Connecting to Server:  Please check your internet connection and try again.");
                             return false;
                         }
                     }
@@ -84,7 +84,7 @@ namespace GrazeViewV1
 
                         if (attempt == MaxRetries)
                         {
-                            MessageBox.Show("Maximum retry attempts reached.");
+                            MessageBox.Show("Error Connecting to Server:  Please check your internet connection and try again.");
                             return false;
                         }
                     }

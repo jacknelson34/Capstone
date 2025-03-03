@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace GrazeViewV1
 {
@@ -189,7 +190,7 @@ namespace GrazeViewV1
                             DateTime currentTime = DateTime.Now;
 
                             // Access upload #
-                            int uploadNum = GlobalData.Uploads.Count + 1;
+                            int uploadNum = GetUploadCountFromDB() + 1;
                             string nameForcurrentTime = currentTime.ToString("MM-dd-yyyy-") + uploadNum + ".png";
                             filenameTextbox.Text = "Upload-" + nameForcurrentTime;
 
@@ -203,6 +204,35 @@ namespace GrazeViewV1
                 }
             }
         }
+
+        // Helper method to count uploads
+        private int GetUploadCountFromDB()
+        {
+            int count = 0;
+
+            string _connectionString = "Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;";
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT COUNT(*) FROM CSVDB"; // Use actual table name
+
+                    using (SqlCommand command = new SqlCommand(query, conn))
+                    {
+                        count = (int)command.ExecuteScalar(); // Get row count
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return count; // Return total uploads
+        }
+
 
         // when an image file is dragged to the picture box
         private void fileuploadPictureBox_DragEnter(object sender, DragEventArgs e)
@@ -360,8 +390,13 @@ namespace GrazeViewV1
 
             // Upload Imagefile to DB
             string imagePath = imageFilePath;
-            DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;");
-            dbQueries.UploadImageToDB(imagePath);
+            DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
+            int uploadCheck = dbQueries.UploadImageToDB(imagePath);
+
+            if (uploadCheck == 0 || uploadCheck == 1)
+            {
+                return;
+            }
 
             // checks to see if a file was uploaded to the picturebox
             if (fileuploadPictureBox.Image != null)

@@ -125,7 +125,7 @@ namespace GrazeViewV1
             }
 
             var selectedRow = selectedRows.First();
-            int rowIndex = selectedRow.Index + 1;
+            int rowIndex = selectedRow.Index;
 
             // Position and show the loading spinner over the button
             loadingSpinner.Location = new Point(btn.Location.X + (btn.Width - loadingSpinner.Width) / 2,
@@ -136,7 +136,7 @@ namespace GrazeViewV1
             // Load the image in the background
             Bitmap retrievedImage = await Task.Run(() =>
             {
-                DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;");
+                DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
                 return dbQueries.RetrieveImageFromDB(rowIndex);
             });
 
@@ -261,7 +261,7 @@ namespace GrazeViewV1
                 }
                 else
                 {
-                    MessageBox.Show("No data found in CSVDB.");
+                    //MessageBox.Show("No data found in CSVDB.");
                 }
             }
             catch (Exception ex)
@@ -322,7 +322,7 @@ namespace GrazeViewV1
         {
 
             DialogResult clearDataCheck = MessageBox.Show(
-                "Are you sure you want to clear all data?",         // Message
+                "Are you sure you want to clear all data?  This cannot be undone.",         // Message
                 "Confirm Action",                                   // Title
                 MessageBoxButtons.YesNo,                            // Buttons
                 MessageBoxIcon.Question                             // Icon

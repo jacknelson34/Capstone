@@ -131,7 +131,7 @@ namespace GrazeViewV1
                     //await dbQueries.InsertUploadAsync(upload, mlData ?? new MLData());
                 }
 
-                MessageBox.Show("All data saved to SQL successfully.");
+                //MessageBox.Show("All data saved to SQL successfully.");
             }
             catch (Exception ex)
             {
@@ -153,6 +153,7 @@ namespace GrazeViewV1
             return input?.Replace("\\n", "\n").Replace("\\r", "\r"); // Restore newlines and carriage returns
         }
 
+        // TODO
         public static async Task ClearAllData(DBQueries dbQueries)
         {
             try
@@ -161,7 +162,7 @@ namespace GrazeViewV1
                 GlobalData.Uploads.Clear();
                 GlobalData.machineLearningData.Clear();
 
-                MessageBox.Show("All data has been cleared successfully.", "Data Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("All data has been cleared successfully.", "Data Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

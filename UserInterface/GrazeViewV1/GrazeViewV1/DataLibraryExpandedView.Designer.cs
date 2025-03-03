@@ -36,7 +36,7 @@
             FormBorderStyle = FormBorderStyle.Sizable;
             AutoScaleMode = AutoScaleMode.Dpi;
             StartPosition = FormStartPosition.Manual;
-            MinimumSize = new Size(1280, 918);
+            //MinimumSize = new Size(1280, 700);
             Name = "DataLibraryExpandedView";
             Text = "DataLibraryExpandedView";
             BackColor = Color.White;
@@ -85,7 +85,7 @@
             this.printButton.Click += new EventHandler(this.printButton_Click); 
             this.controlPanel.Controls.Add(this.printButton);
 
-            MinimumSize = new Size(1050, 550);
+            MinimumSize = new Size(900, 550);
 
 
         }

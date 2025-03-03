@@ -108,7 +108,7 @@ namespace GrazeViewV1
         }
 
         // Push Image Data to DB - Works
-        public void UploadImageToDB(string imagePath)
+        public int UploadImageToDB(string imagePath)
         {
 
             try
@@ -116,7 +116,7 @@ namespace GrazeViewV1
                 if (!File.Exists(imagePath))
                 {
                     MessageBox.Show($"Error: File not found - {imagePath}");
-                    return;
+                    return 0;
                 }
 
                 string imageName = Path.GetFileName(imagePath);
@@ -134,8 +134,19 @@ namespace GrazeViewV1
 
                         if (count > 0)
                         {
-                            MessageBox.Show($"Skipped: Image '{imageName}' already exists in the database.");
-                            return;
+                            DialogResult doubleUploadCheck = MessageBox.Show("This image has already been uploaded.  Would you like to upload again?",
+                                            "Duplicate Image",
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question 
+                                            );
+
+
+                            if (doubleUploadCheck == DialogResult.No) 
+                            {
+                                // Cancel Upload
+                                return 1;    
+                            }
+
                         }
                     }
 
@@ -151,16 +162,22 @@ namespace GrazeViewV1
                         insertCmd.ExecuteNonQuery();
                     }
 
-                    MessageBox.Show($"Uploaded: {imageName}");
+                    //MessageBox.Show($"Uploaded: {imageName}");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Database error: {ex.Message}");
+                return 0;
             }
+
+            // 0 - Error
+            // 1 - Upload Cancelled by User
+            // 2 - Continue with Upload
+            return 2;
         }
 
-        // Push CSV Data to DB - TODO
+        // Push CSV Data to DB - Works
         public bool UploadCSVToDB(List<string> csvData)
         {
             bool success = false;
@@ -181,8 +198,8 @@ namespace GrazeViewV1
                 {
                     // Assuming csvData contains values in the exact order of the database fields
                     command.Parameters.AddWithValue("@SourceFile", csvData[0]);
-                    command.Parameters.AddWithValue("@QufuPercent", csvData[1]);
-                    command.Parameters.AddWithValue("@NalePercent", csvData[2]);
+                    command.Parameters.AddWithValue("@QufuPercent", csvData[2]);
+                    command.Parameters.AddWithValue("@NalePercent", csvData[1]);
                     command.Parameters.AddWithValue("@ErciPercent", csvData[3]);
                     command.Parameters.AddWithValue("@AirBubblePercent", csvData[4]);
                     command.Parameters.AddWithValue("@DateSampleTaken", csvData[5]);
@@ -211,7 +228,7 @@ namespace GrazeViewV1
             if (_connection == null)
             {
                 // Initialize the connection with a valid connection string
-                string connectionString = "Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;";
+                string connectionString = "Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;";
                 _connection = new SqlConnection(connectionString);
             }
 
@@ -221,61 +238,96 @@ namespace GrazeViewV1
             }
         }
 
-        // New Method for clearing DB data 
+        // New Method for clearing DB data - Works
         public async Task ClearAllUploadsAsync()
         {
             try
             {
                 await EnsureConnectionOpenAsync();
 
-                using (var command = new SqlCommand("DELETE FROM Uploads; DELETE FROM MLData;", _connection))
+                // Start a transaction to ensure both deletions occur together
+                using (var transaction = _connection.BeginTransaction())
                 {
-                    await command.ExecuteNonQueryAsync();
-                }
-
-                MessageBox.Show("All uploads cleared from the database.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error clearing uploads: {ex.Message}");
-                throw;
-            }
-        }
-
-        // Query for DataLibraryExpandedView
-        public async Task<Dictionary<string, object>> GetRowByIndexAsync(int rowIndex)
-        {
-            Dictionary<string, object> rowData = new Dictionary<string, object>();
-
-            try
-            {
-                await EnsureConnectionOpenAsync();
-
-                string query = "SELECT * FROM CSVDB WHERE ID = @RowIndex";
-
-                using (var command = new SqlCommand(query, _connection))
-                {
-                    command.Parameters.AddWithValue("@RowIndex", rowIndex);
-
-                    using (var reader = await command.ExecuteReaderAsync())
+                    try
                     {
-                        if (await reader.ReadAsync())
+                        // Delete images from the Images table (modify table name if needed)
+                        string deleteImagesQuery = "TRUNCATE TABLE Images";
+
+                        using (var imageCommand = new SqlCommand(deleteImagesQuery, _connection, transaction))
                         {
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                rowData[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
-                            }
+                            int imagesDeleted = await imageCommand.ExecuteNonQueryAsync();
+                            Console.WriteLine($"Deleted {imagesDeleted} images.");
                         }
+
+                        // Delete upload records from CSVDB 
+                        string deleteUploadsQuery = "DELETE FROM CSVDB";
+
+                        using (var uploadCommand = new SqlCommand(deleteUploadsQuery, _connection, transaction))
+                        {
+                            int uploadsDeleted = await uploadCommand.ExecuteNonQueryAsync();
+                            Console.WriteLine($"Deleted {uploadsDeleted} uploads.");
+                        }
+
+                        // Commit transaction if both deletions succeed
+                        transaction.Commit();
+                        MessageBox.Show("All uploads and images successfully deleted.", "Clear Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Rollback transaction if an error occurs
+                        transaction.Rollback();
+                        MessageBox.Show($"Error clearing database: {ex.Message}", "Clear Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error retrieving row data: {ex.Message}");
+                MessageBox.Show($"Error clearing database: {ex.Message}", "Clear Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            return rowData;
         }
+
+        // Query for DataLibraryExpandedView
+        public async Task<Dictionary<string, object>> GetRowByIndexAsync(int index)
+        {
+            try
+            {
+                await EnsureConnectionOpenAsync(); // Ensure the connection is open
+
+                string query = "SELECT * FROM CSVDB WHERE ID = @Index"; // Ensure 'ID' is the correct primary key
+
+                using (var command = new SqlCommand(query, _connection))
+                {
+                    command.Parameters.AddWithValue("@Index", index);
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        if (!reader.HasRows)
+                        {
+                            MessageBox.Show($"No row found for index {index}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return null; // No data found
+                        }
+
+                        Dictionary<string, object> row = new Dictionary<string, object>();
+
+                        while (await reader.ReadAsync())
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                row[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                            }
+                        }
+
+                        return row;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
 
 
         private async Task EnsureConnectionOpenAsync()
