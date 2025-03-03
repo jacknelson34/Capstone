@@ -363,18 +363,6 @@ namespace GrazeViewV1
             DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;");
             dbQueries.UploadImageToDB(imagePath);
 
-            // Add user inputs and image to data library
-            var dataLibrary = _mainPage.GetDataLibrary();
-            if (dataLibrary != null)
-            {
-                // Ensure the DataLibrary updates its grid with all uploads
-                dataLibrary.LoadUploadsFromGlobalData();  // Call the new method to reload all data from GlobalData
-            }
-            else
-            {
-                MessageBox.Show("DataLibrary not connected.");
-            }
-
             // checks to see if a file was uploaded to the picturebox
             if (fileuploadPictureBox.Image != null)
             {

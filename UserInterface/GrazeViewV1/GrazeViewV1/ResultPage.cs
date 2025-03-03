@@ -288,13 +288,21 @@ namespace GrazeViewV1
             UploadInfo lastUpload = GlobalData.Uploads.Last();
             MLData lastMLProcess = GlobalData.machineLearningData.Last();
 
+            // Debugging
+            MessageBox.Show($"Uploading Data:\n" +
+                $"Qufu: {lastMLProcess.qufuPercentage}\n" +
+                $"Nale: {lastMLProcess.nalePercentage}\n" +
+                $"Erci: {lastMLProcess.erciPercentage}\n" +
+                $"Bubbles: {lastMLProcess.bubblePercentage}");
+
+
             List<string> csvData = new List<string>
             {
                 lastUpload.UploadName,  // SourceFile
-                ConvertToFloatString(lastMLProcess.qufuPercentage),  // QufuPercent
-                ConvertToFloatString(lastMLProcess.nalePercentage),  // NalePercent
-                ConvertToFloatString(lastMLProcess.erciPercentage),  // ErciPercent
-                ConvertToFloatString(lastMLProcess.bubblePercentage),  // AirBubblePercent
+                lastMLProcess.qufuPercentage.Replace("%", ""),  // QufuPercent
+                lastMLProcess.nalePercentage.Replace("%", ""),  // NalePercent
+                lastMLProcess.erciPercentage.Replace("%", ""),  // ErciPercent
+                lastMLProcess.bubblePercentage.Replace("%", ""),  // AirBubblePercent
                 ConvertToValidDateTime(lastUpload.SampleTime),  // DateSampleTaken
                 DateTime.Now.ToString("HH:mm:ss"),  // TimeSampleTaken (assuming current time)
                 lastUpload.UploadTime.ToString("yyyy-MM-dd"),  // UploadDate
@@ -324,15 +332,6 @@ namespace GrazeViewV1
             GlobalData.machineLearningData.Clear();   // Clears all ML processed data
         }
 
-        private string ConvertToFloatString(string input)
-        {
-            if (float.TryParse(input, out float result))
-            {
-                return result.ToString(); // Convert back to string but in a float-compatible format
-            }
-
-            return "0"; // Default to 0 if conversion fails
-        }
 
         private string ConvertToValidDateTime(string input)
         {

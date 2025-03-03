@@ -47,7 +47,7 @@
             label1.Size = new Size(237, 40);
             label1.TabIndex = 0;
             label1.Text = "GRAZEVIEW";
-            label1.TextAlign = ContentAlignment.TopRight;
+            label1.TextAlign = ContentAlignment.TopCenter;
             // 
             // panel1
             // 

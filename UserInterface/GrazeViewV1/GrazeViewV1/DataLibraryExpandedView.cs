@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Printing;
 using System.Data.Common;
 using System.Runtime.CompilerServices;
+using OpenCvSharp.Flann;
 
 namespace GrazeViewV1
 {
@@ -62,65 +63,48 @@ namespace GrazeViewV1
                     return;
                 }
 
-                // Fetch all data from the database
-                var allData = await _dbQueries.GetCSVDBDataAsync();
-
-                if (allData == null || allData.Count == 0)
-                {
-                    MessageBox.Show("No data retrieved from the database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                // Use a list to store the tasks for parallel processing
+                List<Task<Panel>> panelTasks = new List<Task<Panel>>();
 
                 foreach (int index in _selectedIndexes)
                 {
-                    if (index >= 0 && index < allData.Count)
-                    {
-                        var row = allData[index];
-
-                        // Extract values safely
-                        string uploadName = row.ContainsKey("Upload Name") && row["Upload Name"] != null ? row["Upload Name"].ToString() : "N/A";
-                        string sampleDate = row.ContainsKey("Date Sample Taken") && row["Date Sample Taken"] != null ? row["Date Sample Taken"].ToString() : "N/A";
-                        string sampleLocation = row.ContainsKey("Sample Location") && row["Sample Location"] != null ? row["Sample Location"].ToString() : "N/A";
-                        string sheepBreed = row.ContainsKey("Sheep Breed") && row["Sheep Breed"] != null ? row["Sheep Breed"].ToString() : "N/A";
-                        string comments = row.ContainsKey("Comments") && row["Comments"] != null ? row["Comments"].ToString() : "N/A";
-
-                        string qufuPercent = row.ContainsKey("Qufu(%)") && row["Qufu(%)"] != null ? row["Qufu(%)"].ToString() : "0.00";
-                        string nalePercent = row.ContainsKey("Nale(%)") && row["Nale(%)"] != null ? row["Nale(%)"].ToString() : "0.00";
-                        string erciPercent = row.ContainsKey("Erci(%)") && row["Erci(%)"] != null ? row["Erci(%)"].ToString() : "0.00";
-                        string bubblePercent = row.ContainsKey("Air Bubble(%)") && row["Air Bubble(%)"] != null ? row["Air Bubble(%)"].ToString() : "0.00";
-
-                        // Retrieve Image from database using Upload Name or ID
-                        Bitmap image = _dbQueries.RetrieveImageFromDB(index);
-
-                        // Create UploadInfo and MLData objects
-                        UploadInfo uploadInfo = new UploadInfo
-                        {
-                            UploadName = uploadName,
-                            SampleDate = sampleDate,
-                            SampleLocation = sampleLocation,
-                            SheepBreed = sheepBreed,
-                            Comments = comments,
-                            ImageFile = image
-                        };
-
-                        MLData mlData = new MLData
-                        {
-                            qufuPercentage = qufuPercent,
-                            nalePercentage = nalePercent,
-                            erciPercentage = erciPercent,
-                            bubblePercentage = bubblePercent
-                        };
-
-                        MessageBox.Show("$Adding panel for Upload Name: {uploadInfo.UploadName}, Sample Date: {uploadInfo.SampleDate}");
-
-                        // Add the data to the expanded view
-                        AddUploadPanel(uploadInfo, mlData);
-                    }
+                    // Load data in the background
+                    panelTasks.Add(Task.Run(() => CreateUploadPanel(index)));
                 }
+
+                // Wait for all panels to be generated
+                var panels = await Task.WhenAll(panelTasks);
+
+                // Add them to the UI in one go (improves performance)
+                flowLayoutPanel.SuspendLayout();
+                foreach (var panel in panels)
+                {
+                    flowLayoutPanel.Controls.Add(panel);
+                }
+                flowLayoutPanel.ResumeLayout();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading selected data: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string FormatPercentage(object value)
+        {
+            if (value == null) return "0.00%";
+            if (float.TryParse(value.ToString(), out float percentage))
+            {
+                return percentage.ToString("0.00") + "%";
+            }
+            return "0.00%";
+        }
+
+        private void DLExpanded_XOut(object sender, FormClosingEventArgs e)
+        {
+            if (IsNavigating) return;
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                _mainPage.Close();
             }
         }
 
@@ -132,18 +116,120 @@ namespace GrazeViewV1
             this.Bounds = Screen.PrimaryScreen.Bounds;          // Set bounds to max
         }
 
-        // Event handler for X out
-        private void DLExpanded_XOut(object sender, FormClosingEventArgs e)
+
+        private Panel CreateUploadPanel(int index)
         {
-            if (IsNavigating)       // Check if the user chose to exit the application
-            {       
-                return;             // If so, continue running
+            var row = _dbQueries.GetRowByIndexAsync(index).Result ?? new Dictionary<string, object>();
+
+            if (row == null || row.Count == 0)
+            {
+                return null; // Skip if no data
             }
-            if (e.CloseReason == CloseReason.UserClosing)   // If not,
-            {   
-                _mainPage.Close();                          // Close entire application
+
+            if (_dbQueries == null)
+            {
+                MessageBox.Show("Database connection is not initialized.", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
+
+            UploadInfo uploadInfo = new UploadInfo
+            {
+                UploadName = row.ContainsKey("SourceFile") && row["SourceFile"] != null ? row["SourceFile"].ToString() : "N/A",
+                SampleDate = row.ContainsKey("DateSampleTaken") && row["DateSampleTaken"] != null ? row["DateSampleTaken"].ToString() : "N/A",
+                SampleLocation = row.ContainsKey("SampleLocation") && row["SampleLocation"] != null ? row["SampleLocation"].ToString() : "N/A",
+                SheepBreed = row.ContainsKey("SheepBreed") && row["SheepBreed"] != null ? row["SheepBreed"].ToString() : "N/A",
+                Comments = row.ContainsKey("Comments") && row["Comments"] != null ? row["Comments"].ToString() : "N/A",
+                ImageFile = _dbQueries.RetrieveImageFromDB(index) ?? new Bitmap(250, 250) // Default image
+            };
+
+
+            MLData mlData = new MLData
+            {
+                qufuPercentage = row.ContainsKey("QufuPercent") ? FormatPercentage(row["QufuPercent"]) : "0.00%",
+                nalePercentage = row.ContainsKey("NalePercent") ? FormatPercentage(row["NalePercent"]) : "0.00%",
+                erciPercentage = row.ContainsKey("ErciPercent") ? FormatPercentage(row["ErciPercent"]) : "0.00%",
+                bubblePercentage = row.ContainsKey("AirBubblePercent") ? FormatPercentage(row["AirBubblePercent"]) : "0.00%"
+            };
+
+            return GeneratePanel(uploadInfo, mlData);
         }
+
+        private Panel GeneratePanel(UploadInfo uploadInfo, MLData mlData)
+        {
+            Panel uploadPanel = new Panel
+            {
+                BorderStyle = BorderStyle.Fixed3D,
+                Padding = new Padding(10),
+                Margin = new Padding(10),
+                Width = 800, // Keep width fixed
+                AutoSize = true, // Automatically fit content
+                AutoSizeMode = AutoSizeMode.GrowAndShrink // Prevent unnecessary extra space
+            };
+
+            TableLayoutPanel mainLayout = new TableLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                ColumnCount = 2, // Two columns: Left (Info) & Right (Image)
+                AutoSize = true // Let it grow dynamically
+            };
+
+            // Ensure columns take equal space
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Left: Info
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Right: Image
+
+            // Create Info Panel (Stacked UploadInfo + MLData)
+            FlowLayoutPanel infoPanel = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.TopDown,
+                AutoSize = true,
+                Dock = DockStyle.Fill
+            };
+
+            // Add Upload Info (Stacked)
+            infoPanel.Controls.Add(CreateInfoLabel("Upload Name:", uploadInfo.UploadName));
+            infoPanel.Controls.Add(CreateInfoLabel("Date of Sample:", uploadInfo.SampleDate));
+            infoPanel.Controls.Add(CreateInfoLabel("Sample Location:", uploadInfo.SampleLocation));
+            infoPanel.Controls.Add(CreateInfoLabel("Sheep Breed:", uploadInfo.SheepBreed));
+            infoPanel.Controls.Add(CreateInfoLabel("Comments:", uploadInfo.Comments));
+
+            // Add spacing
+            infoPanel.Controls.Add(new Label { Text = " ", AutoSize = true });
+
+            // Add ML Data (Stacked)
+            infoPanel.Controls.Add(CreateInfoLabel("Nale (%):", mlData.nalePercentage));
+            infoPanel.Controls.Add(CreateInfoLabel("Qufu (%):", mlData.qufuPercentage));
+            infoPanel.Controls.Add(CreateInfoLabel("Erci (%):", mlData.erciPercentage));
+            infoPanel.Controls.Add(CreateInfoLabel("Bubbles (%):", mlData.bubblePercentage));
+
+            // Create Image Panel (Centered)
+            FlowLayoutPanel imagePanel = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.LeftToRight,
+                AutoSize = true,
+                Dock = DockStyle.Fill,
+                WrapContents = false
+            };
+
+            PictureBox uploadImage = new PictureBox
+            {
+                Image = uploadInfo.ImageFile,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Size = new Size(250, 250), // Adjust if necessary
+                Margin = new Padding(10)
+            };
+
+            imagePanel.Controls.Add(uploadImage); // Center image
+
+            // Add panels to main layout
+            mainLayout.Controls.Add(infoPanel, 0, 0);
+            mainLayout.Controls.Add(imagePanel, 1, 0);
+
+            // Add layout to the upload panel
+            uploadPanel.Controls.Add(mainLayout);
+
+            return uploadPanel;
+        }
+
 
         // Event handler for exitButton
         private void exitButton_Click(object sender, EventArgs e)
@@ -273,90 +359,80 @@ namespace GrazeViewV1
         }
 
         // Method to create a new panel per each selected upload (Public as it is called from DataLibrary)
-        public void AddUploadPanel(UploadInfo uploadInfo, MLData mlData)
+        private void AddUploadPanel(UploadInfo uploadInfo, MLData mlData)
         {
-            try
+            Panel uploadPanel = new Panel
             {
-                // Debugging: Ensure method is being called
-                MessageBox.Show($"Creating panel for: {uploadInfo.UploadName}");
+                BorderStyle = BorderStyle.Fixed3D,
+                Padding = new Padding(10),
+                Margin = new Padding(10),
+                Width = 800,
+                Height = 500, // Increased height to fit ML data below
+                Anchor = AnchorStyles.Top
+            };
 
-                // Create a new panel for the upload
-                Panel uploadPanel = new Panel
-                {
-                    BorderStyle = BorderStyle.Fixed3D,
-                    Padding = new Padding(10),
-                    Margin = new Padding(10),
-                    Width = 1000,
-                    Height = 400,
-                    Anchor = AnchorStyles.Top
-                };
-
-                // Main layout panel
-                TableLayoutPanel mainLayout = new TableLayoutPanel
-                {
-                    Dock = DockStyle.Fill,
-                    ColumnCount = 2,
-                    RowCount = 1,
-                    AutoSize = false
-                };
-
-                mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-                mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-
-                // Left Panel for User Data
-                FlowLayoutPanel userFlowLayout = new FlowLayoutPanel
-                {
-                    FlowDirection = FlowDirection.TopDown,
-                    AutoSize = true,
-                    Dock = DockStyle.Fill
-                };
-
-                userFlowLayout.Controls.Add(CreateInfoLabel("Upload Name:", uploadInfo.UploadName));
-                userFlowLayout.Controls.Add(CreateInfoLabel("Date of Sample:", uploadInfo.SampleDate));
-                userFlowLayout.Controls.Add(CreateInfoLabel("Sample Location:", uploadInfo.SampleLocation));
-                userFlowLayout.Controls.Add(CreateInfoLabel("Sheep Breed:", uploadInfo.SheepBreed));
-                userFlowLayout.Controls.Add(CreateInfoLabel("Comments:", uploadInfo.Comments));
-
-                // Left Panel for Model Data
-                FlowLayoutPanel modelFlowLayout = new FlowLayoutPanel
-                {
-                    FlowDirection = FlowDirection.TopDown,
-                    AutoSize = true,
-                    Dock = DockStyle.Fill
-                };
-
-                modelFlowLayout.Controls.Add(CreateInfoLabel("Nale (%):", mlData.nalePercentage));
-                modelFlowLayout.Controls.Add(CreateInfoLabel("Qufu (%):", mlData.qufuPercentage));
-                modelFlowLayout.Controls.Add(CreateInfoLabel("Erci (%):", mlData.erciPercentage));
-                modelFlowLayout.Controls.Add(CreateInfoLabel("Bubbles (%):", mlData.bubblePercentage));
-
-                // Image Display
-                PictureBox uploadImage = new PictureBox
-                {
-                    Image = uploadInfo.ImageFile ?? new Bitmap(250, 250),
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Dock = DockStyle.Fill,
-                    Margin = new Padding(10)
-                };
-
-                // Add components to layout
-                mainLayout.Controls.Add(userFlowLayout, 0, 0);
-                mainLayout.Controls.Add(modelFlowLayout, 1, 0);
-
-                // Add layout to the panel
-                uploadPanel.Controls.Add(mainLayout);
-
-                // Add panel to the UI
-                flowLayoutPanel.Controls.Add(uploadPanel);
-
-                // Debugging: Confirm the panel is added
-                MessageBox.Show($"Panel successfully added for: {uploadInfo.UploadName}");
-            }
-            catch (Exception ex)
+            // Create a TableLayoutPanel for vertical stacking
+            TableLayoutPanel mainLayout = new TableLayoutPanel
             {
-                MessageBox.Show($"Error adding upload panel: {ex.Message}", "Panel Creation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                Dock = DockStyle.Fill,
+                ColumnCount = 1, // Only one column (stacked layout)
+                RowCount = 2, // Two rows (Upload Info, ML Data)
+                AutoSize = true
+            };
+
+            // Create UploadInfo panel
+            FlowLayoutPanel uploadInfoPanel = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.TopDown,
+                AutoSize = true,
+                Dock = DockStyle.Fill
+            };
+
+            uploadInfoPanel.Controls.Add(CreateInfoLabel("Upload Name:", uploadInfo.UploadName));
+            uploadInfoPanel.Controls.Add(CreateInfoLabel("Date of Sample:", uploadInfo.SampleDate));
+            uploadInfoPanel.Controls.Add(CreateInfoLabel("Sample Location:", uploadInfo.SampleLocation));
+            uploadInfoPanel.Controls.Add(CreateInfoLabel("Sheep Breed:", uploadInfo.SheepBreed));
+            uploadInfoPanel.Controls.Add(CreateInfoLabel("Comments:", uploadInfo.Comments));
+
+            // Image Display
+            PictureBox uploadImage = new PictureBox
+            {
+                Image = uploadInfo.ImageFile,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Size = new Size(250, 250),
+                Dock = DockStyle.Top,
+                Margin = new Padding(10)
+            };
+
+            // Create ML Data panel
+            FlowLayoutPanel mlDataPanel = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.TopDown,
+                AutoSize = true,
+                Dock = DockStyle.Fill
+            };
+
+            mlDataPanel.Controls.Add(CreateInfoLabel("Nale (%):", mlData.nalePercentage));
+            mlDataPanel.Controls.Add(CreateInfoLabel("Qufu (%):", mlData.qufuPercentage));
+            mlDataPanel.Controls.Add(CreateInfoLabel("Erci (%):", mlData.erciPercentage));
+            mlDataPanel.Controls.Add(CreateInfoLabel("Bubbles (%):", mlData.bubblePercentage));
+
+            // Add Upload Info (Row 0)
+            mainLayout.Controls.Add(uploadInfoPanel, 0, 0);
+
+            // Add Image in the middle
+            mainLayout.Controls.Add(uploadImage, 0, 1);
+
+            // Add ML Data (Row 2)
+            mainLayout.Controls.Add(mlDataPanel, 0, 2);
+
+            // Add layout to the upload panel
+            uploadPanel.Controls.Add(mainLayout);
+
+            // Add to the main UI
+            flowLayoutPanel.Controls.Add(uploadPanel);
         }
+
 
         // Helper method to create a label with title and value for display in the panel
         private Label CreateInfoLabel(string title, string value) // Method to create a Label displaying a title and value

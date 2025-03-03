@@ -80,12 +80,6 @@ namespace GrazeViewV1
             UserGuide.ShowHelpGuide(); // Open the user guide, ensuring only one instance is active
         }
 
-        // Method to return the current DataLibrary instance
-        public DataLibrary GetDataLibrary()
-        {
-            return _datalibrary; // Return the reference to the DataLibrary instance
-        }
-
         // Event handler for the form's load event
         private void MainPage_Load(object sender, EventArgs e)
         {

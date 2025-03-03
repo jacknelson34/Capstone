@@ -103,65 +103,71 @@ namespace GrazeViewV1
         }
 
         // Method for previewing an uploaded image
-        private void previewButton_Click(object sender, EventArgs e)
+        private async void previewButton_Click(object sender, EventArgs e)
         {
+            Button btn = sender as Button;
+            if (btn == null) return;
 
-            // Determine which rows are selected
+            // Determine selected rows
             var selectedRows = dataGridView1.Rows.Cast<DataGridViewRow>()
-                                                 .Where(row => Convert.ToBoolean(row.Cells[0].Value))  // Assuming checkbox is at index 0
+                                                 .Where(row => Convert.ToBoolean(row.Cells[0].Value))
                                                  .ToList();
 
-            // Only allow one upload at a time for the preview button
             if (selectedRows.Count < 1)
             {
-                // Output message
                 MessageBox.Show("Please select 1 Upload to Preview.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            }else if(selectedRows.Count > 1)
+            }
+            else if (selectedRows.Count > 1)
             {
-                // Output message
                 MessageBox.Show("Only one Upload may be selected at a time for Preview.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            else
+
+            var selectedRow = selectedRows.First();
+            int rowIndex = selectedRow.Index + 1;
+
+            // Position and show the loading spinner over the button
+            loadingSpinner.Location = new Point(btn.Location.X + (btn.Width - loadingSpinner.Width) / 2,
+                                                btn.Location.Y + (btn.Height - loadingSpinner.Height) / 2);
+            loadingSpinner.Visible = true;
+            btn.Visible = false; // Hide the button
+
+            // Load the image in the background
+            Bitmap retrievedImage = await Task.Run(() =>
             {
-                // Get the selected row
-                var selectedRow = selectedRows.First();
-                int rowIndex = selectedRow.Index + 1;
+                DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;");
+                return dbQueries.RetrieveImageFromDB(rowIndex);
+            });
 
-                    // Retrieve image from database
+            // Hide the spinner and show the button again
+            loadingSpinner.Visible = false;
+            btn.Visible = true;
 
-                    DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;");
-                    Bitmap retrievedImage = dbQueries.RetrieveImageFromDB(rowIndex);
-
-                    // Check if image retrieval was successful
-                    if (retrievedImage == null)
-                    {
-                        MessageBox.Show("No image available for the selected upload.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-
-                    // Display the image in a new form
-                    Form imagePreviewForm = new Form
-                    {
-                        Text = "Image Preview",
-                        Size = new Size(800, 600) // Adjust size as needed
-                    };
-
-                    // Picture Box to hold the image in the Preview form
-                    PictureBox pictureBox = new PictureBox
-                    {
-                        Image = retrievedImage,
-                        SizeMode = PictureBoxSizeMode.Zoom,
-                        Dock = DockStyle.Fill
-                    };
-
-                    // Adds picture box to controls
-                    imagePreviewForm.Controls.Add(pictureBox);
-                    imagePreviewForm.ShowDialog(); // Show as a dialog to keep the context
-
+            if (retrievedImage == null)
+            {
+                MessageBox.Show("No image available for the selected upload.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
+
+            // Display the image in a new form
+            Form imagePreviewForm = new Form
+            {
+                Text = "Image Preview",
+                Size = new Size(800, 600) // Adjust size as needed
+            };
+
+            PictureBox pictureBox = new PictureBox
+            {
+                Image = retrievedImage,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Dock = DockStyle.Fill
+            };
+
+            imagePreviewForm.Controls.Add(pictureBox);
+            imagePreviewForm.ShowDialog(); // Show as a dialog
         }
+
 
         // Event handler for when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
@@ -195,32 +201,31 @@ namespace GrazeViewV1
         {
             IsNavigating = true;
 
-            // Check if fullscreen should be applied to the next page
+            // Ensure fullscreen consistency
             ConsistentForm.IsFullScreen = (this.WindowState == FormWindowState.Maximized);
 
             // Collect selected row indexes
             List<int> selectedIndexes = dataGridView1.Rows
                 .Cast<DataGridViewRow>()
-                .Where(row => Convert.ToBoolean(row.Cells[0].Value)) // Assuming checkbox is at index 0
-                .Select(row => row.Index)
+                .Where(row => Convert.ToBoolean(row.Cells[0].Value)) // Checkbox checked
+                .Select(row => row.Index + 1) // Adjust index if SQL ID starts from 1
                 .ToList();
 
-            // Check if at least one row is selected
             if (!selectedIndexes.Any())
             {
-                MessageBox.Show("Must select at least one upload", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Must select at least one upload.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Pass selected indexes to the expanded view
+            // Open DataLibraryExpandedView and pass selected indexes
             DataLibraryExpandedView expandedView = new DataLibraryExpandedView(_mainPage, _dbQueries, selectedIndexes);
             expandedView.Size = this.Size;
             expandedView.Location = this.Location;
 
             expandedView.Show();
             this.Close();
-
         }
+
 
         // Method to add data from DataUpload to the Library
         public async Task LoadUploadsFromGlobalData()
@@ -250,6 +255,7 @@ namespace GrazeViewV1
                         int rowIndex = dataGridView1.Rows.Add(row.Values.ToArray());
                         //dataGridView1.Rows[rowIndex].DefaultCellStyle.Font = new Font("Times New Roman", 10, FontStyle.Regular);
                         dataGridView1.Rows[rowIndex].Cells[0].Value = false;
+
                     }
 
                 }
@@ -263,6 +269,7 @@ namespace GrazeViewV1
                 MessageBox.Show($"Error loading CSVDB data: {ex.Message}");
             }
         }
+
 
         // Uploads all data to the data viewer
         protected override void OnShown(EventArgs e)

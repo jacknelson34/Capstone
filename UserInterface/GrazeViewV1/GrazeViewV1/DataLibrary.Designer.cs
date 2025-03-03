@@ -285,6 +285,17 @@
             dataGridView1.Columns["SampleLocationCol"].Width = 200;  // "Sample Location"
             dataGridView1.Columns["SheepBreedCol"].Width = 150;      // "Sheep Breed"
             dataGridView1.Columns["CommentsCol"].Width = 300;
+            // Create the loading spinner PictureBox
+            loadingSpinner = new PictureBox
+            {
+                Size = new Size(32, 32), // Adjust size as needed
+                Image = Properties.Resources.Help_Icon, // Add a spinner GIF to your Resources
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.Transparent,
+                Visible = false // Initially hidden
+            };
+            buttonPanel.Controls.Add(loadingSpinner);
+
             //
             // permanent clear button
             //
@@ -346,6 +357,7 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private PictureBox loadingSpinner;
 
         // Temp button
         private roundButton clearDataButton;

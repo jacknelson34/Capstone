@@ -76,7 +76,7 @@ namespace GrazeViewV1
                             availableImages += $"{reader["ImageID"]}: {reader["ImageName"]}\n";
                         }
                     }
-                    MessageBox.Show(availableImages, "Database Debug Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show(availableImages, "Database Debug Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Fetch image using index
                     string query = "SELECT ImageData FROM Images ORDER BY ImageID OFFSET @Index ROWS FETCH NEXT 1 ROWS ONLY";
@@ -241,6 +241,42 @@ namespace GrazeViewV1
                 throw;
             }
         }
+
+        // Query for DataLibraryExpandedView
+        public async Task<Dictionary<string, object>> GetRowByIndexAsync(int rowIndex)
+        {
+            Dictionary<string, object> rowData = new Dictionary<string, object>();
+
+            try
+            {
+                await EnsureConnectionOpenAsync();
+
+                string query = "SELECT * FROM CSVDB WHERE ID = @RowIndex";
+
+                using (var command = new SqlCommand(query, _connection))
+                {
+                    command.Parameters.AddWithValue("@RowIndex", rowIndex);
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                rowData[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error retrieving row data: {ex.Message}");
+            }
+
+            return rowData;
+        }
+
 
         private async Task EnsureConnectionOpenAsync()
         {
