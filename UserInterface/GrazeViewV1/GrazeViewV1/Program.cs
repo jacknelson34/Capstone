@@ -67,6 +67,8 @@ namespace GrazeViewV1
 
             // Start application
             Application.Run(new MainPage(dbQueries));
+
+
         }
 
         [DllImport("Shcore.dll")]

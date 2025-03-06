@@ -288,10 +288,11 @@
             // Create the loading spinner PictureBox
             loadingSpinner = new PictureBox
             {
-                Size = new Size(32, 32), // Adjust size as needed
-                Image = Properties.Resources.Help_Icon, // Add a spinner GIF to your Resources
+                Size = new Size(50, 50), // Adjust size as needed
+                Image = Properties.Resources.LoadingGif, // Add a spinner GIF to your Resources
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.Transparent,
+                Anchor = AnchorStyles.Right & AnchorStyles.Left,
                 Visible = false // Initially hidden
             };
             buttonPanel.Controls.Add(loadingSpinner);
@@ -358,8 +359,6 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
         private PictureBox loadingSpinner;
-
-        // Temp button
         private roundButton clearDataButton;
     }
 }

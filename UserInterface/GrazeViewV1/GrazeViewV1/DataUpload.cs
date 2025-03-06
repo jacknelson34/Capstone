@@ -388,6 +388,8 @@ namespace GrazeViewV1
             // Add the new upload info to the GlobalData uploads list
             GlobalData.Uploads.Add(uploadInfo);
 
+            MessageBox.Show("Uploading image...");
+
             // Upload Imagefile to DB
             string imagePath = imageFilePath;
             DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");

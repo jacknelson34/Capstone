@@ -28,71 +28,62 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             label1 = new Label();
-            panel1 = new Panel();
-            panelSlide = new Panel();
             label2 = new Label();
-            panel1.SuspendLayout();
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
+            ClientSize = new Size(800, 450);
             // 
             // label1
             // 
-            label1.Anchor = AnchorStyles.Top;
             label1.AutoSize = true;
-            label1.Font = new Font("Times New Roman", 26.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(258, 150);
-            label1.Name = "label1";
             label1.BackColor = Color.Transparent;
-            label1.Size = new Size(237, 40);
+            label1.Size = new Size(281, 51);
+            label1.Font = new Font("Times New Roman", 30F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label1.Location = new Point((ClientSize.Width - label1.Width) / 2, ClientSize.Height / 3 - 50);
+            label1.Name = "label1";
             label1.TabIndex = 0;
             label1.Text = "GRAZEVIEW";
-            label1.TextAlign = ContentAlignment.TopCenter;
+            label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Top;
-            panel1.BackColor = Color.FromArgb(0, 192, 192);
-            panel1.Controls.Add(panelSlide);
-            panel1.Location = new Point(207, 250);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(385, 13);
-            panel1.TabIndex = 1;
-            // 
-            // panelSlide
-            // 
-            panelSlide.BackColor = Color.LimeGreen;
-            panelSlide.Location = new Point(287, 0);
-            panelSlide.Name = "panelSlide";
-            panelSlide.Size = new Size(98, 13);
-            panelSlide.TabIndex = 2;
-            // 
-            // label2
+            // label2 (Initializing Application...)
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Times New Roman", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(325, 225);
-            label2.Name = "label2";
             label2.BackColor = Color.Transparent;
-            label2.Size = new Size(136, 15);
+            label2.Size = new Size(176, 19);
+            label2.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point((ClientSize.Width - label2.Width) / 2, label1.Bottom + 50);
+            label2.Name = "label2";
             label2.TabIndex = 2;
             label2.Text = "Initializing Application...";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox1 (Loading Icon)
+            // 
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.Size = new Size(200, 30);
+            pictureBox1.Image = Properties.Resources.SplashScreen2;
+            pictureBox1.Location = new Point((ClientSize.Width - pictureBox1.Width - 25) / 2, label2.Bottom + 10);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.TabIndex = 3;
+            pictureBox1.TabStop = false;
+            
             // 
             // SplashScreen
             // 
             AutoScaleMode = AutoScaleMode.None;
-            //BackColor = Color.FromArgb(116, 231, 247);
             BackgroundImage = Properties.Resources.BackgroundImage12;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(800, 450);
+            Controls.Add(pictureBox1);
             Controls.Add(label2);
-            Controls.Add(panel1);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "SplashScreen";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SplashScreen";
-            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -100,8 +91,7 @@
         #endregion
 
         private Label label1;
-        private Panel panel1;
-        private Panel panelSlide;
         private Label label2;
+        private PictureBox pictureBox1;
     }
 }

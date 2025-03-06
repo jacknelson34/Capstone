@@ -287,46 +287,40 @@ namespace GrazeViewV1
         }
 
         // Query for DataLibraryExpandedView
-        public async Task<Dictionary<string, object>> GetRowByIndexAsync(int index)
+        public async Task<Dictionary<string, object>> GetRowByIndexAsync(int rowIndex)
         {
+            Dictionary<string, object> rowData = new Dictionary<string, object>();
+
             try
             {
-                await EnsureConnectionOpenAsync(); // Ensure the connection is open
+                await EnsureConnectionOpenAsync();
 
-                string query = "SELECT * FROM CSVDB WHERE ID = @Index"; // Ensure 'ID' is the correct primary key
+                string query = "SELECT * FROM CSVDB WHERE ID = @RowIndex";
 
                 using (var command = new SqlCommand(query, _connection))
                 {
-                    command.Parameters.AddWithValue("@Index", index);
+                    command.Parameters.AddWithValue("@RowIndex", rowIndex);
 
                     using (var reader = await command.ExecuteReaderAsync())
                     {
-                        if (!reader.HasRows)
-                        {
-                            MessageBox.Show($"No row found for index {index}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return null; // No data found
-                        }
-
-                        Dictionary<string, object> row = new Dictionary<string, object>();
-
-                        while (await reader.ReadAsync())
+                        if (await reader.ReadAsync())
                         {
                             for (int i = 0; i < reader.FieldCount; i++)
                             {
-                                row[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                rowData[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
                             }
                         }
-
-                        return row;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
+                MessageBox.Show($"Error retrieving row data: {ex.Message}");
             }
+
+            return rowData;
         }
+
 
 
 

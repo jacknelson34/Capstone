@@ -129,12 +129,6 @@ namespace GrazeViewV1
         {
             var row = _dbQueries.GetRowByIndexAsync(index).Result ?? new Dictionary<string, object>();
 
-            if (row == null || row.Count == 0)
-            {
-                MessageBox.Show("Null returned(1)");
-                return null; // Skip if no data
-            }
-
             if (_dbQueries == null)
             {
                 MessageBox.Show("Database connection is not initialized.", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -171,36 +165,31 @@ namespace GrazeViewV1
         {
             Panel uploadPanel = new Panel
             {
-                BorderStyle = BorderStyle.FixedSingle,
+                BorderStyle = BorderStyle.Fixed3D,
                 Padding = new Padding(10),
                 Margin = new Padding(10),
-                Width = 900, // Adjusted width to match original UI
-                Height = 300, // Reduced height to fit content better
-                BackColor = Color.White // Ensure clean background
+                Width = 800, // Keep width fixed
+                AutoSize = true, // Automatically fit content
+                AutoSizeMode = AutoSizeMode.GrowAndShrink // Prevent unnecessary extra space
             };
 
             TableLayoutPanel mainLayout = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 ColumnCount = 2, // Two columns: Left (Info) & Right (Image)
-                AutoSize = false,
-                Width = 880,
-                Height = 280
+                AutoSize = true // Let it grow dynamically
             };
 
-            // Adjust column widths (left: 60%, right: 40%)
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F));
+            // Ensure columns take equal space
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Left: Info
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Right: Image
 
             // Create Info Panel (Stacked UploadInfo + MLData)
             FlowLayoutPanel infoPanel = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.TopDown,
                 AutoSize = true,
-                Dock = DockStyle.Fill,
-                Margin = new Padding(5),
-                Padding = new Padding(5),
-                Width = 500
+                Dock = DockStyle.Fill
             };
 
             // Add Upload Info (Stacked)
@@ -219,25 +208,21 @@ namespace GrazeViewV1
             infoPanel.Controls.Add(CreateInfoLabel("Erci (%):", mlData.erciPercentage));
             infoPanel.Controls.Add(CreateInfoLabel("Bubbles (%):", mlData.bubblePercentage));
 
-            // Create Image Panel (Centered in Right Column)
+            // Create Image Panel (Centered)
             FlowLayoutPanel imagePanel = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.LeftToRight,
-                Dock = DockStyle.Fill,
                 AutoSize = true,
-                WrapContents = false,
-                Padding = new Padding(5),
-                Margin = new Padding(5),
-                Width = 350 // Adjust width for better fit
+                Dock = DockStyle.Fill,
+                WrapContents = false
             };
 
             PictureBox uploadImage = new PictureBox
             {
                 Image = uploadInfo.ImageFile,
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Size = new Size(250, 250), // Ensures proper scaling
-                Margin = new Padding(5),
-                Anchor = AnchorStyles.Right
+                Size = new Size(250, 250), // Adjust if necessary
+                Margin = new Padding(10)
             };
 
             imagePanel.Controls.Add(uploadImage); // Center image
