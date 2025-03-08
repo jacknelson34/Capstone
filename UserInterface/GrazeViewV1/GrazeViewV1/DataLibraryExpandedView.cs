@@ -125,7 +125,7 @@ namespace GrazeViewV1
         }
 
 
-        private Panel CreateUploadPanel(int index)
+        private async Task<Panel> CreateUploadPanel(int index)
         {
             var row = _dbQueries.GetRowByIndexAsync(index).Result ?? new Dictionary<string, object>();
 
@@ -142,7 +142,8 @@ namespace GrazeViewV1
                 SampleLocation = row.ContainsKey("SampleLocation") && row["SampleLocation"] != null ? row["SampleLocation"].ToString() : "N/A",
                 SheepBreed = row.ContainsKey("SheepBreed") && row["SheepBreed"] != null ? row["SheepBreed"].ToString() : "N/A",
                 Comments = row.ContainsKey("Comments") && row["Comments"] != null ? row["Comments"].ToString() : "N/A",
-                ImageFile = _dbQueries.RetrieveImageFromDB(index) ?? new Bitmap(250, 250) // Default image
+                ImageFile = await _dbQueries.RetrieveImageFromDB(index) ?? new Bitmap(250, 250),
+
             };
 
 

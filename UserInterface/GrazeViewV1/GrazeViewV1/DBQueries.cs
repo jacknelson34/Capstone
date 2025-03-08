@@ -58,44 +58,49 @@ namespace GrazeViewV1
         }
 
         // Pull Image Data From DB - Works
-        public Bitmap RetrieveImageFromDB(int imageIndex)
+        public async Task<Bitmap> RetrieveImageFromDB(int imageIndex)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync(); // Ensure async database connection
 
-                    // Debugging: Show all available images before searching
-                    string availableImages = "Available Images in DB:\n";
-                    using (SqlCommand listCmd = new SqlCommand("SELECT ImageID, ImageName FROM Images", conn))
-                    using (SqlDataReader reader = listCmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            availableImages += $"{reader["ImageID"]}: {reader["ImageName"]}\n";
-                        }
-                    }
-                    //MessageBox.Show(availableImages, "Database Debug Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Use TOP 1 for better performance (avoids OFFSET issues)
+                    string query = "SELECT ImageData FROM Images WHERE ImageID = @Index";
 
-                    // Fetch image using index
-                    string query = "SELECT ImageData FROM Images ORDER BY ImageID OFFSET @Index ROWS FETCH NEXT 1 ROWS ONLY";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Index", imageIndex);
-                        var result = cmd.ExecuteScalar();
+                        cmd.CommandTimeout = 120; // Increase timeout for large images
 
-                        if (result == null || result == DBNull.Value)
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync(CommandBehavior.SequentialAccess))
                         {
-                            MessageBox.Show($"No image found at index {imageIndex}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return null;
-                        }
+                            if (!await reader.ReadAsync())
+                            {
+                                MessageBox.Show($"No image found at index {imageIndex}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return null;
+                            }
 
-                        // Convert byte array to Bitmap
-                        byte[] imageBytes = (byte[])result;
-                        using (MemoryStream ms = new MemoryStream(imageBytes))
-                        {
-                            return new Bitmap(ms);
+                            // Read image stream instead of loading full byte array
+                            using (MemoryStream ms = new MemoryStream())
+                            {
+                                const int bufferSize = 4096; // Read in 4KB chunks
+                                byte[] buffer = new byte[bufferSize];
+                                long bytesRead;
+                                int readCount;
+
+                                // Read stream in chunks for large images
+                                using (var stream = reader.GetStream(0))
+                                {
+                                    while ((readCount = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                                    {
+                                        ms.Write(buffer, 0, readCount);
+                                    }
+                                }
+
+                                return new Bitmap(ms);
+                            }
                         }
                     }
                 }
