@@ -189,12 +189,6 @@ namespace GrazeViewV1
                 openFileDialog.Filter = "PNG Files|*.png;";
                 openFileDialog.Title = "Select a PNG Image";
 
-                if(openFileDialog.ShowDialog() == DialogResult.Cancel)
-                {
-                    pictureBoxLoader.Visible = false;
-                    return;
-                }
-
                 // If the user selects a file and clicks OK
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -228,6 +222,13 @@ namespace GrazeViewV1
                         // Handle any errors that occur during image loading
                         MessageBox.Show("An error occurred while trying to load the image: " + ex.Message);
                     }
+                }
+                else
+                {
+                    pictureBoxLoader.Visible = false;
+                    pictureBoxLoader.SendToBack();
+                    fileuploadPictureBox.Update();
+                    return;
                 }
             }
         }
@@ -346,7 +347,7 @@ namespace GrazeViewV1
         }
 
         // when the upload button is clicked on
-        private void uploadButton_Click(object? sender, EventArgs e)
+        private async void uploadButton_Click(object? sender, EventArgs e)
         {
             IsNavigating = true;  // User is still using the app
             string selectedDate = DateTime.Parse(datePicker.Text).ToString();    // Variables to check valid dates/times
@@ -362,12 +363,26 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;
             }
 
+            // Center the loader inside fileuploadPictureBox
+            uploadLoader.Location = new Point(
+                uploadButton.Left + (uploadButton.Width - uploadLoader.Width) / 2,
+                uploadButton.Top + (uploadButton.Height - uploadLoader.Height) / 2
+            );
+
+            // Ensure loader appears on top
+            uploadLoader.BringToFront();
+            uploadLoader.Visible = true;
+            uploadButton.Text = "";
+
             // Date/Time Input Validation
             // Make sure date is after Jan 1st, 2000 and before current date
             if (DateTime.Parse(datePicker.Text) < new DateTime(2000, 1, 1) || DateTime.Parse(datePicker.Text) > DateTime.Today)
             {
                 MessageBox.Show("Please Enter a Date between January 1st, 2000 and today.",
                     "Invalid Date Entered");
+
+                uploadButton.Text = "Upload";
+                uploadLoader.Visible = false;
                 return;
             }
             // Handle format errors from user/validate input
@@ -381,6 +396,9 @@ namespace GrazeViewV1
                     MessageBox.Show("Please enter a valid time.",
                         "Invalid Time");
                     timePicker.Text = "0800AM";
+
+                    uploadButton.Text = "Upload";
+                    uploadLoader.Visible = false;
                     return;
                 }
             }
@@ -390,6 +408,9 @@ namespace GrazeViewV1
                                 "Invalid Time",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
+
+                uploadButton.Text = "Upload";
+                uploadLoader.Visible = false;
                 return;
             }
             //MessageBox.Show(selectedTime + "\n" + (DateTime.Today.AddHours(8)).ToString());
@@ -433,16 +454,29 @@ namespace GrazeViewV1
             // Debugging
             //MessageBox.Show("Uploading image...");
 
+            // Add loading box in place of upload button
+
+
+
             // Upload Imagefile to DB
             string imagePath = imageFilePath;
             DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
-            int uploadCheck = dbQueries.UploadImageToDB(imagePath);
+
+            int uploadCheck = await Task.Run(() =>
+            {
+                int result = dbQueries.UploadImageToDB(imageFilePath);
+                dbQueries.Dispose();
+                return result;
+            });
 
             if (uploadCheck == 0 || uploadCheck == 1)
             {
                 ClearImage();
                 dbQueries.Dispose();
                 IsNavigating = false;
+
+                uploadButton.Text = "Upload";
+                uploadLoader.Visible = false;
                 return;
             }
 
@@ -466,6 +500,9 @@ namespace GrazeViewV1
                 }
                 catch (Exception ex)
                 {
+                    uploadButton.Visible = true;
+                    uploadLoader.Visible = false;
+
                     MessageBox.Show($"Error running ML model: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
@@ -475,6 +512,8 @@ namespace GrazeViewV1
             {
                 // Show error message if no valid image was uploaded
                 MessageBox.Show("Please upload a valid image file.", "Invalid Upload", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                uploadButton.Text = "Upload";
+                uploadLoader.Visible = false;
             }
 
             /// ---------------------------------------------------- INTEGRATION POINT -----------------------------------------------------///

@@ -217,11 +217,11 @@
 
             pictureBoxLoader = new PictureBox
             {
-                Size = new Size(100, 100),
+                Size = new Size(250, 250),
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.White,
                 Visible = false,
-                Image = Properties.Resources.LoadingGif
+                Image = Properties.Resources.SplashScreen2
             };
             Controls.Add(pictureBoxLoader);
 
@@ -229,7 +229,7 @@
             {
                 Size = new Size(50, 50),
                 SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Transparent,
+                BackColor = Color.LightGreen,
                 Visible = false,
                 Image = Properties.Resources.LoadingGif
             };
