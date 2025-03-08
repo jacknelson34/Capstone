@@ -297,6 +297,18 @@
             };
             buttonPanel.Controls.Add(loadingSpinner);
 
+            // Loader for expandedview
+            exportLoader = new PictureBox
+            {
+                Size = new Size(50, 50),
+                Image = Properties.Resources.LoadingGif,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.Transparent,
+                Anchor = AnchorStyles.Right & AnchorStyles.Left,
+                Visible = false
+            };
+            buttonPanel.Controls.Add(exportLoader);
+
             //
             // permanent clear button
             //
@@ -359,6 +371,7 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
         private PictureBox loadingSpinner;
+        private PictureBox exportLoader;
         private roundButton clearDataButton;
     }
 }

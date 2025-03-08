@@ -48,19 +48,21 @@ namespace GrazeViewV1
                 SetFullScreen();                // If so, set this page to fullscreen
             }
 
-            for(int i=0; i < selectedIndexes.Count; i++)
+            // Debugging
+            /*for(int i=0; i < selectedIndexes.Count; i++)
             {
                 MessageBox.Show("Index: " + selectedIndexes[i]);
             }
+            */
 
             // Event handler for close
             this.FormClosing += DLExpanded_XOut;        // Add event handler for user exiting the app
 
             // Load selected data from database
-            LoadSelectedData();
+            //LoadSelectedData();
         }
 
-        private async void LoadSelectedData()
+        public async Task PreparePanelsAsync()
         {
             try
             {
@@ -70,24 +72,27 @@ namespace GrazeViewV1
                     return;
                 }
 
+
                 // Use a list to store the tasks for parallel processing
                 List<Task<Panel>> panelTasks = new List<Task<Panel>>();
 
                 foreach (int index in _selectedIndexes)
                 {
                     // Load data in the background
-                    MessageBox.Show("Generating panel " + index.ToString());
                     panelTasks.Add(Task.Run(() => CreateUploadPanel(index)));
                 }
 
-                // Wait for all panels to be generated
+                // Wait for all panels to be generated before showing the form
                 var panels = await Task.WhenAll(panelTasks);
 
                 // Add them to the UI in one go (improves performance)
                 flowLayoutPanel.SuspendLayout();
+                flowLayoutPanel.Width = 1200;
+                flowLayoutPanel.AutoScroll = true;
                 foreach (var panel in panels)
                 {
-                    flowLayoutPanel.Controls.Add(panel);
+                    if (panel != null)
+                        flowLayoutPanel.Controls.Add(panel);
                 }
                 flowLayoutPanel.ResumeLayout();
             }
@@ -96,6 +101,7 @@ namespace GrazeViewV1
                 MessageBox.Show($"Error loading selected data: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private string FormatPercentage(object value)
         {
@@ -155,8 +161,8 @@ namespace GrazeViewV1
                 bubblePercentage = row.ContainsKey("AirBubblePercent") ? FormatPercentage(row["AirBubblePercent"]) : "0.00%"
             };
 
-            // Add debugging
-            MessageBox.Show($"Adding panel for: {uploadInfo.UploadName}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // debugging
+            //MessageBox.Show($"Adding panel for: {uploadInfo.UploadName}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
             return GeneratePanel(uploadInfo, mlData);
@@ -170,6 +176,7 @@ namespace GrazeViewV1
                 Padding = new Padding(10),
                 Margin = new Padding(10),
                 Width = 800, // Keep width fixed
+                Height = 400,
                 AutoSize = true, // Automatically fit content
                 AutoSizeMode = AutoSizeMode.GrowAndShrink // Prevent unnecessary extra space
             };
@@ -178,12 +185,13 @@ namespace GrazeViewV1
             {
                 Dock = DockStyle.Fill,
                 ColumnCount = 2, // Two columns: Left (Info) & Right (Image)
-                AutoSize = true // Let it grow dynamically
+                AutoSize = true, // Let it grow dynamically
+                AutoSizeMode = AutoSizeMode.GrowAndShrink
             };
 
             // Ensure columns take equal space
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Left: Info
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F)); // Right: Image
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F)); // Left: Info
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F)); // Right: Image
 
             // Create Info Panel (Stacked UploadInfo + MLData)
             FlowLayoutPanel infoPanel = new FlowLayoutPanel
@@ -194,6 +202,7 @@ namespace GrazeViewV1
             };
 
             // Add Upload Info (Stacked)
+            infoPanel.Controls.Add(new Label { Text = "Upload Information", AutoSize = true, Font = new Font("Times New Roman", 12, FontStyle.Bold) });
             infoPanel.Controls.Add(CreateInfoLabel("Upload Name:", uploadInfo.UploadName));
             infoPanel.Controls.Add(CreateInfoLabel("Date of Sample:", uploadInfo.SampleDate));
             infoPanel.Controls.Add(CreateInfoLabel("Sample Location:", uploadInfo.SampleLocation));
@@ -202,10 +211,12 @@ namespace GrazeViewV1
 
             // Add spacing
             infoPanel.Controls.Add(new Label { Text = " ", AutoSize = true });
+            infoPanel.Controls.Add(new Label { Text = " ", AutoSize = true });
+            infoPanel.Controls.Add(new Label { Text = "Percentages", AutoSize = true, Font = new Font("Times New Roman", 12, FontStyle.Bold) });
 
             // Add ML Data (Stacked)
-            infoPanel.Controls.Add(CreateInfoLabel("Nale (%):", mlData.nalePercentage));
-            infoPanel.Controls.Add(CreateInfoLabel("Qufu (%):", mlData.qufuPercentage));
+            infoPanel.Controls.Add(CreateInfoLabel("Qufu (%):", mlData.nalePercentage));    // These are flipped for a reason
+            infoPanel.Controls.Add(CreateInfoLabel("Nale (%):", mlData.qufuPercentage));
             infoPanel.Controls.Add(CreateInfoLabel("Erci (%):", mlData.erciPercentage));
             infoPanel.Controls.Add(CreateInfoLabel("Bubbles (%):", mlData.bubblePercentage));
 
@@ -222,7 +233,8 @@ namespace GrazeViewV1
             {
                 Image = uploadInfo.ImageFile,
                 SizeMode = PictureBoxSizeMode.Zoom,
-                Size = new Size(250, 250), // Adjust if necessary
+                Width = 275,
+                Height = 275,
                 Margin = new Padding(10)
             };
 
@@ -329,7 +341,7 @@ namespace GrazeViewV1
             }
 
             // Get the full size of the flowLayoutPanel's content (not just visible area)
-            int totalWidth = flowLayoutPanel.DisplayRectangle.Width;
+            int totalWidth = flowLayoutPanel.DisplayRectangle.Width + SystemInformation.VerticalScrollBarWidth + 75;
             int totalHeight = flowLayoutPanel.DisplayRectangle.Height;
 
             // Create a bitmap to hold the entire content
@@ -373,7 +385,7 @@ namespace GrazeViewV1
             return new Label
             {
                 Text = $"{title} {value}",                          // Set the label text to combine the title and value
-                Font = new Font("Times New Roman", 10, FontStyle.Regular), // Use Times New Roman, size 10, with regular style
+                Font = new Font("Times New Roman", 12, FontStyle.Regular), // Use Times New Roman, size 10, with regular style
                 AutoSize = true,                                    // Allow the label to adjust its size based on the content
                 Margin = new Padding(3)                            // Add a 3-pixel margin around the label
             };

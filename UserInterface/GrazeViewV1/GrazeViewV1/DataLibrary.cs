@@ -39,7 +39,6 @@ namespace GrazeViewV1
 
             // Handle data errors
             dataGridView1.DataError += dataGridView1_DataError;
-            dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
 
             // Close MainPage on close
             this.FormClosing += DataLibrary_XOut;
@@ -125,7 +124,7 @@ namespace GrazeViewV1
             }
 
             var selectedRow = selectedRows.First();
-            int rowIndex = selectedRow.Index;
+            int rowIndex = selectedRow.Index + 1;
 
             // Position and show the loading spinner over the button
             loadingSpinner.Location = new Point(btn.Location.X + (btn.Width - loadingSpinner.Width) / 2,
@@ -196,13 +195,24 @@ namespace GrazeViewV1
             UserGuide.ShowHelpGuide();  // Call Method to only allow one instance open at a time
         }
 
-        // Event handler for when export button is click 
-        private void exportButton_Click(object sender, EventArgs e)
+
+        private async void exportButton_Click(object sender, EventArgs e)
         {
-            IsNavigating = true;
+            IsNavigating= true;
 
             // Ensure fullscreen consistency
             ConsistentForm.IsFullScreen = (this.WindowState == FormWindowState.Maximized);
+
+            Button btn = sender as Button;
+            if (btn == null) return;
+
+            // Create PictureBox (loader) in same position as button
+            // Position and show the loading spinner over the button
+            exportLoader.Location = new Point(btn.Location.X + (btn.Width - exportLoader.Width) / 2,
+                                                btn.Location.Y + (btn.Height - exportLoader.Height) / 2);
+            exportLoader.Visible = true;
+            btn.Visible = false; // Hide the button
+            exportLoader.BringToFront();
 
             // Collect selected row indexes
             List<int> selectedIndexes = dataGridView1.Rows
@@ -211,9 +221,19 @@ namespace GrazeViewV1
                 .Select(row => row.Index + 1) // Adjust index if SQL ID starts from 1
                 .ToList();
 
+            // Debugging
+            /*
+            foreach (int index in selectedIndexes)
+            {
+                MessageBox.Show($"Fetching row for index: {index}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            */
+
             if (!selectedIndexes.Any())
             {
                 MessageBox.Show("Must select at least one upload.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                exportLoader.Visible = false;
+                btn.Visible = true;
                 return;
             }
 
@@ -222,8 +242,18 @@ namespace GrazeViewV1
             expandedView.Size = this.Size;
             expandedView.Location = this.Location;
 
+            // Run export process in background
+            await expandedView.PreparePanelsAsync();
+
             expandedView.Show();
             this.Close();
+
+            // Remove loading icon and restore button after completion
+            exportLoader.Visible = false;
+            btn.Visible = true;
+
+            // Debugging
+            //MessageBox.Show("Export complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 
@@ -285,39 +315,8 @@ namespace GrazeViewV1
             e.ThrowException = false;  // Prevent the exception from crashing the application
         }
 
-        // Method for adjust comments column height based on length
-        private void AdjustCommentsColumnHeight()
-        {
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                if (row.Cells["CommentsCol"].Value != null)
-                {
-                    // string to hold the comment in each row
-                    string comment = row.Cells["CommentsCol"].Value.ToString();
-                    using (Graphics g = dataGridView1.CreateGraphics())
-                    {
-                        SizeF size = g.MeasureString(comment, dataGridView1.DefaultCellStyle.Font, 300); // Measure with max width
-                        int requiredHeight = (int)Math.Ceiling(size.Height) + 10; // Add padding
-                        row.Height = Math.Max(requiredHeight, dataGridView1.RowTemplate.Height); // Ensure height is not less than default
-                    }
-                }
-            }
 
-            
-
-        }
-
-        // Method for adjusting row height if comments exceed 500 pixels
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            /*if (e.ColumnIndex == dataGridView1.Columns["CommentsCol"].Index)
-            {
-                // Adjust the height of the row for the changed cell
-                dataGridView1.AutoResizeRow(e.RowIndex, DataGridViewAutoSizeRowMode.AllCells);
-            }*/
-        }
-
-        // Temporary Method for clearing Data
+        // Method for clearing Data
         private void clearDataButton_Click(object sender, EventArgs e)
         {
 

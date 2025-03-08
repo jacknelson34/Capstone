@@ -20,6 +20,7 @@ namespace GrazeViewV1
         Image uploadImage;           // variable to hold user-uploaded image
         private bool IsNavigating;   // boolean variable that checks if the user is still using the app
         public string imageFilePath;    // String to pass image file path to MLWork
+        private string promptText;
 
 
         // variable that tracks if a file has or has not been uploaded
@@ -135,9 +136,9 @@ namespace GrazeViewV1
         private void fileuploadPictureBox_Prompt(object sender, PaintEventArgs e)
         {
             // Only show text if no image is loaded
-            if (!imageUploaded)
+            if (!imageUploaded && !pictureBoxLoader.Visible)
             {
-                string promptText = "Click or Drop Your Files Here";
+                promptText = "Click or Drop Your Files Here";
                 Font font = new Font("Times New Roman", 14, FontStyle.Regular);
                 SizeF textSize = e.Graphics.MeasureString(promptText, font);
 
@@ -152,18 +153,47 @@ namespace GrazeViewV1
                 e.Graphics.DrawString(promptText, font, Brushes.Gray,
                     (fileuploadPictureBox.Width - textSize.Width) / 2,
                     (fileuploadPictureBox.Height - textSize.Height) / 2);
+
+
+                pictureBoxLoader.SendToBack();
+
+                this.Update();
             }
         }
 
         // when the file upload picture box is clicked on
-        private void fileuploadPictureBox_Click(object sender, EventArgs e)
+        private async void fileuploadPictureBox_Click(object sender, EventArgs e)
         {
+
             // Open a file dialog to allow the user to select an image file
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
+                // Ensure loader appears on top
+                pictureBoxLoader.BringToFront();
+                pictureBoxLoader.Visible = true;
+
+                // Center the loader inside fileuploadPictureBox
+                pictureBoxLoader.Location = new Point(
+                    fileuploadPictureBox.Left + (fileuploadPictureBox.Width - pictureBoxLoader.Width) / 2,
+                    fileuploadPictureBox.Top + (fileuploadPictureBox.Height - pictureBoxLoader.Height) / 2
+                );
+
+                // Remove any existing text from fileuploadPictureBox
+                fileuploadPictureBox.Invalidate();
+
+                // Force UI refresh to show the loading icon immediately
+                fileuploadPictureBox.Update();
+                pictureBoxLoader.Update();
+
                 // Set the filter to allow only image files
                 openFileDialog.Filter = "PNG Files|*.png;";
                 openFileDialog.Title = "Select a PNG Image";
+
+                if(openFileDialog.ShowDialog() == DialogResult.Cancel)
+                {
+                    pictureBoxLoader.Visible = false;
+                    return;
+                }
 
                 // If the user selects a file and clicks OK
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -173,13 +203,10 @@ namespace GrazeViewV1
                         // Generate Thumbnail for display
                         Image thumbnail = CreateThumbnail(openFileDialog.FileName, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
 
-                        // Load the selected image into the PictureBox
-                        fileuploadPictureBox.Image = thumbnail;
-                        fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-
                         // Delete Text in the Picture Box
                         imageUploaded = true;
                         imageFilePath = openFileDialog.FileName;
+                        await LoadImageAsync(imageFilePath); // Load image asynchronously
                         uploadImage = Image.FromFile(openFileDialog.FileName);
 
                         // If the textbox is empty, populate it with the upload time/date
@@ -255,11 +282,28 @@ namespace GrazeViewV1
         }
 
         // when an image file is dragged and dropped onto the picture box
-        private void fileuploadPictureBox_DragDrop(object sender, DragEventArgs e)
+        private async void fileuploadPictureBox_DragDrop(object sender, DragEventArgs e)
         {
             // Get the file(s) that are dropped
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
+                // Ensure loader appears on top
+                pictureBoxLoader.BringToFront();
+                pictureBoxLoader.Visible = true;
+
+                // Center the loader inside fileuploadPictureBox
+                pictureBoxLoader.Location = new Point(
+                    fileuploadPictureBox.Left + (fileuploadPictureBox.Width - pictureBoxLoader.Width) / 2,
+                    fileuploadPictureBox.Top + (fileuploadPictureBox.Height - pictureBoxLoader.Height) / 2
+                );
+
+                // Remove any existing text from fileuploadPictureBox
+                fileuploadPictureBox.Invalidate();
+
+                // Force UI refresh to show the loading icon immediately
+                fileuploadPictureBox.Update();
+                pictureBoxLoader.Update();
+
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
                 // Load the first .png image file into the PictureBox
@@ -275,9 +319,7 @@ namespace GrazeViewV1
                         // Generate a thumbnail like Click Upload
                         Image thumbnail = CreateThumbnail(imageFilePath, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
 
-                        // Display thumbnail in PictureBox
-                        fileuploadPictureBox.Image = thumbnail;
-                        fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                        await LoadImageAsync(imageFilePath); // Load image asynchronously
 
                         uploadImage = fileuploadPictureBox.Image;
 
@@ -388,7 +430,8 @@ namespace GrazeViewV1
             // Add the new upload info to the GlobalData uploads list
             GlobalData.Uploads.Add(uploadInfo);
 
-            MessageBox.Show("Uploading image...");
+            // Debugging
+            //MessageBox.Show("Uploading image...");
 
             // Upload Imagefile to DB
             string imagePath = imageFilePath;
@@ -397,6 +440,9 @@ namespace GrazeViewV1
 
             if (uploadCheck == 0 || uploadCheck == 1)
             {
+                ClearImage();
+                dbQueries.Dispose();
+                IsNavigating = false;
                 return;
             }
 
@@ -434,6 +480,12 @@ namespace GrazeViewV1
             /// ---------------------------------------------------- INTEGRATION POINT -----------------------------------------------------///
         }
 
+        // Method to clear picturebox
+        private void ClearImage()
+        {
+            fileuploadPictureBox.Image = null;
+            imageUploaded = false;
+        }
 
         private async void DataUpload_Resize(object sender, EventArgs e)
         {
@@ -532,5 +584,33 @@ namespace GrazeViewV1
                 return thumbnail;
             }
         }
+
+        // Method to shown loader while image is pulled
+        private async Task LoadImageAsync(string imagePath)
+        {
+            try
+            {
+
+                // Load image asynchronously
+                Image loadedImage = await Task.Run(() =>
+                {
+                    return CreateThumbnail(imagePath, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
+                });
+
+                // Assign the image to the PictureBox on the UI thread
+                fileuploadPictureBox.Invoke((Action)(() =>
+                {
+                    fileuploadPictureBox.Image = loadedImage;
+                    fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                    pictureBoxLoader.Visible = false; // Hide the loader
+                }));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading image: {ex.Message}", "Image Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                pictureBoxLoader.Visible = false; // Hide loader on error
+            }
+        }
+
     }
 }

@@ -214,6 +214,27 @@
             commentsTextbox.Name = "commentsTextbox";
             commentsTextbox.Size = new Size(552, 192);
             commentsTextbox.TabIndex = 15;
+
+            pictureBoxLoader = new PictureBox
+            {
+                Size = new Size(100, 100),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.White,
+                Visible = false,
+                Image = Properties.Resources.LoadingGif
+            };
+            Controls.Add(pictureBoxLoader);
+
+            uploadLoader = new PictureBox
+            {
+                Size = new Size(50, 50),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BackColor = Color.Transparent,
+                Visible = false,
+                Image = Properties.Resources.LoadingGif
+            };
+            Controls.Add(uploadLoader);
+
             // 
             // DataUpload
             // 
@@ -267,5 +288,7 @@
         private TextBox breedTextbox;
         private Label commentsLabel;
         private TextBox commentsTextbox;
+        private PictureBox pictureBoxLoader;
+        private PictureBox uploadLoader;
     }
 }

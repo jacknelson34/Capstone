@@ -8,6 +8,7 @@ using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Globalization;
+using OpenCvSharp.Flann;
 
 namespace GrazeViewV1
 {
@@ -60,6 +61,7 @@ namespace GrazeViewV1
         // Pull Image Data From DB - Works
         public async Task<Bitmap> RetrieveImageFromDB(int imageIndex)
         {
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -265,7 +267,7 @@ namespace GrazeViewV1
                         }
 
                         // Delete upload records from CSVDB 
-                        string deleteUploadsQuery = "DELETE FROM CSVDB";
+                        string deleteUploadsQuery = "DELETE FROM CSVDB; DBCC CHECKIDENT ('CSVDB', RESEED, 0);";
 
                         using (var uploadCommand = new SqlCommand(deleteUploadsQuery, _connection, transaction))
                         {
@@ -292,39 +294,56 @@ namespace GrazeViewV1
         }
 
         // Query for DataLibraryExpandedView
-        public async Task<Dictionary<string, object>> GetRowByIndexAsync(int rowIndex)
+        public async Task<Dictionary<string, object>> GetRowByIndexAsync(int index)
         {
-            Dictionary<string, object> rowData = new Dictionary<string, object>();
-
             try
             {
-                await EnsureConnectionOpenAsync();
+                var result = new Dictionary<string, object>();
 
-                string query = "SELECT * FROM CSVDB WHERE ID = @RowIndex";
-
-                using (var command = new SqlCommand(query, _connection))
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    command.Parameters.AddWithValue("@RowIndex", rowIndex);
+                    await conn.OpenAsync();
 
-                    using (var reader = await command.ExecuteReaderAsync())
+                    // Check if index exists before querying
+                    string checkQuery = "SELECT COUNT(*) FROM CSVDB WHERE ID = @Index";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
                     {
-                        if (await reader.ReadAsync())
+                        checkCmd.Parameters.AddWithValue("@Index", index);
+                        int count = (int)await checkCmd.ExecuteScalarAsync();
+                        if (count == 0)
                         {
-                            for (int i = 0; i < reader.FieldCount; i++)
+                            MessageBox.Show($"No row found for index {index}.", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return null;
+                        }
+                    }
+
+                    // Fetch data
+                    string query = "SELECT * FROM CSVDB WHERE ID = @Index";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Index", index);
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync()) // ✅ Row found
                             {
-                                rowData[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                for (int i = 0; i < reader.FieldCount; i++)
+                                {
+                                    result[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                }
                             }
                         }
                     }
                 }
+                return result;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error retrieving row data: {ex.Message}");
+                MessageBox.Show($"Error retrieving row data: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
-
-            return rowData;
         }
+
+
 
 
 
