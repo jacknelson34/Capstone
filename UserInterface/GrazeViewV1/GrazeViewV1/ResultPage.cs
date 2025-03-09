@@ -289,11 +289,11 @@ namespace GrazeViewV1
             MLData lastMLProcess = GlobalData.machineLearningData.Last();
 
             // Debugging
-            MessageBox.Show($"Uploading Data:\n" +
+            /*MessageBox.Show($"Uploading Data:\n" +
                 $"Qufu: {lastMLProcess.qufuPercentage}\n" +
                 $"Nale: {lastMLProcess.nalePercentage}\n" +
                 $"Erci: {lastMLProcess.erciPercentage}\n" +
-                $"Bubbles: {lastMLProcess.bubblePercentage}");
+                $"Bubbles: {lastMLProcess.bubblePercentage}");*/
 
 
             List<string> csvData = new List<string>
@@ -317,7 +317,7 @@ namespace GrazeViewV1
 
             if (success)
             {
-                MessageBox.Show("Results successfully saved to the database.");
+                //MessageBox.Show("Results successfully saved to the database.");
             }
             else
             {

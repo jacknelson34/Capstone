@@ -40,6 +40,8 @@ namespace GrazeViewV1
             // Handle data errors
             dataGridView1.DataError += dataGridView1_DataError;
 
+            //dataGridView1.CellFormatting += dataGridView1_CellFormatting;
+
             // Close MainPage on close
             this.FormClosing += DataLibrary_XOut;
             _dbQueries = dbQueries;
@@ -95,7 +97,7 @@ namespace GrazeViewV1
             {
                 return;
             }
-            if(e.CloseReason == CloseReason.UserClosing)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
                 _mainPage.Close();
             }
@@ -198,7 +200,7 @@ namespace GrazeViewV1
 
         private async void exportButton_Click(object sender, EventArgs e)
         {
-            IsNavigating= true;
+            IsNavigating = true;
 
             // Ensure fullscreen consistency
             ConsistentForm.IsFullScreen = (this.WindowState == FormWindowState.Maximized);
@@ -283,8 +285,52 @@ namespace GrazeViewV1
                     foreach (var row in csvData)
                     {
                         int rowIndex = dataGridView1.Rows.Add(row.Values.ToArray());
-                        //dataGridView1.Rows[rowIndex].DefaultCellStyle.Font = new Font("Times New Roman", 10, FontStyle.Regular);
                         dataGridView1.Rows[rowIndex].Cells[0].Value = false;
+
+                        // Apply column by column formatting
+                        foreach (DataGridViewColumn column in dataGridView1.Columns)
+                        {
+                            var cell = dataGridView1.Rows[rowIndex].Cells[column.Index];
+
+                            // Apply percentage formatting for respective columns
+                            if (column.HeaderText.EndsWith("(%):"))
+                            {
+
+                                //Debugging
+                                //MessageBox.Show("Column[" + cell.ColumnIndex.ToString() + "]: " + cell.Value.ToString());
+
+                                if (decimal.TryParse(cell.Value?.ToString(), out decimal value))
+                                {
+                                    cell.Value = (value / 100).ToString("P2");
+                                }
+                            }
+
+                            // Apply date formatting so only the date is shown
+                            if (column.HeaderText == "Date Sample Taken" || column.HeaderText == "Upload Date")
+                            {
+                                if (DateTime.TryParse(cell.Value?.ToString(), out DateTime dateValue))
+                                {
+                                    cell.Value = dateValue.ToString("MM/dd/yyyy"); // Format to "MM/dd/yyyy"
+                                }
+                            }
+
+                        }
+
+                        // Convert cell values to DateTime and extract only the date part to fix
+                        if (DateTime.TryParse(dataGridView1.Rows[rowIndex].Cells[6].Value?.ToString(), out DateTime sampleDate) &&
+                            DateTime.TryParse(dataGridView1.Rows[rowIndex].Cells[8].Value?.ToString(), out DateTime uploadDate))
+                        {
+                            // Debugging
+                            //MessageBox.Show("Upload: " + uploadDate.ToString() + "\nSample: " + sampleDate.ToString());
+
+                            // Compare only the date parts
+                            if (sampleDate.Date == uploadDate.Date)
+                            {
+                                dataGridView1.Rows[rowIndex].Cells[6].Value = "N/A";
+                                dataGridView1.Rows[rowIndex].Cells[7].Value = "N/A";
+                            }
+                        }
+
 
                     }
 
@@ -328,11 +374,70 @@ namespace GrazeViewV1
                 );
 
             if (clearDataCheck == DialogResult.Yes)
-            { 
+            {
                 Program.ClearAllData(_dbQueries);
                 dataGridView1.Rows.Clear();
             }
 
         }
+
+        /*private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridView1.Columns[e.ColumnIndex].HeaderText.EndsWith("(%)")) // Only percentage columns
+            {
+                if (e.Value != null && decimal.TryParse(e.Value.ToString(), out decimal value))
+                {
+                    e.Value = (value / 100).ToString("P2"); // Converts "16.5" → "16.50%"
+                    e.FormattingApplied = true;
+                }
+            }
+
+            string columnName = dataGridView1.Columns[e.ColumnIndex].HeaderText;
+            var cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            // Format Date Fields
+            if (columnName.Contains("Date Sample Taken") || columnName.Contains("Upload Date"))
+            {
+                if (e.Value != null && DateTime.TryParse(e.Value.ToString(), out DateTime dateValue))
+                {
+                    e.Value = dateValue.ToString("MM/dd/yyyy");
+                    e.FormattingApplied = true;
+                }
+            }
+
+            // Apply "N/A" if Sample Date/Time is within 1 hour of Upload Date/Time
+            if (columnName.Contains("Time Sample Taken"))
+            {
+                DateTime? sampleDateTime = null;
+                DateTime? uploadDateTime = null;
+
+                // Get values
+                if (DateTime.TryParse(dataGridView1.Rows[e.RowIndex].Cells["Date Sample Taken"]?.Value?.ToString(), out DateTime sampleDate) &&
+                    DateTime.TryParse(e.Value?.ToString(), out DateTime sampleTime))
+                {
+                    sampleDateTime = sampleDate.Date.Add(sampleTime.TimeOfDay);
+                }
+
+                if (DateTime.TryParse(dataGridView1.Rows[e.RowIndex].Cells["Upload Date"]?.Value?.ToString(), out DateTime uploadDate) &&
+                    DateTime.TryParse(dataGridView1.Rows[e.RowIndex].Cells["Upload Time"]?.Value?.ToString(), out DateTime uploadTime))
+                {
+                    uploadDateTime = uploadDate.Date.Add(uploadTime.TimeOfDay);
+                }
+
+                // Check if within 1 hour, set to "N/A"
+                if (sampleDateTime.HasValue && uploadDateTime.HasValue)
+                {
+                    if ((uploadDateTime.Value - sampleDateTime.Value).TotalMinutes <= 60)
+                    {
+                        e.Value = "N/A";
+                        e.FormattingApplied = true;
+                    }
+                }
+
+            }
+
+
+        }*/
     }
 }
+

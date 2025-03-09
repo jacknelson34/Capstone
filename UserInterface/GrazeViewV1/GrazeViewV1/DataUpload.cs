@@ -414,13 +414,13 @@ namespace GrazeViewV1
                 return;
             }
             //MessageBox.Show(selectedTime + "\n" + (DateTime.Today.AddHours(8)).ToString());
-            if (DateTime.TryParse(selectedTime, out DateTime parsedTime))
+            if (DateTime.TryParse(selectedDate, out DateTime parsedTime))
             {
                 // Construct the expected "08:00 AM" DateTime for today
                 DateTime expectedTime = DateTime.Today.AddHours(8); // 08:00 AM today
 
                 // Compare both DateTime objects
-                if (parsedTime == expectedTime)
+                if (parsedTime.Day == expectedTime.Day)
                 {
                     //MessageBox.Show("Worked");
                     selectedDate = "N/A";
@@ -434,6 +434,9 @@ namespace GrazeViewV1
             string comments = string.IsNullOrWhiteSpace(commentsTextbox.Text) ? "N/A" : commentsTextbox.Text;
 
             /// ---------------------------------------------- INTEGRATION POINT --------------------------------------------------///
+
+            // Debugging
+            //MessageBox.Show("Sample Date: " + selectedDate);
 
             // Create a new instance of UploadInfo
             UploadInfo uploadInfo = new UploadInfo
