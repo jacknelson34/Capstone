@@ -22,6 +22,7 @@ namespace GrazeViewV1
         {
             InitializeComponent(); // Initialize form components
             // Enable double buffering
+            this.BringToFront();
             this.SetStyle(ControlStyles.ResizeRedraw, true);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);

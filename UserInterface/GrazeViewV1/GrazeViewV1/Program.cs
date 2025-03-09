@@ -26,48 +26,56 @@ namespace GrazeViewV1
                         Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Initialize db variables
+            // Initialize DB variables
             DBQueries dbQueries;
             DBConnections dbConnections;
 
-            // Show SplashScreen while database is connecting
-            using (SplashScreen splashScreen = new SplashScreen())
+            // Show SplashScreen in a separate thread
+            SplashScreen splashScreen = new SplashScreen();
+            Thread splashThread = new Thread(() => Application.Run(splashScreen));
+            splashThread.SetApartmentState(ApartmentState.STA);
+            splashThread.Start();
+
+            try
             {
-                splashScreen.Show();
-                Application.DoEvents(); // Allow UI to refresh while loading
+                // Allow UI to refresh while loading
+                Application.DoEvents();
 
                 // Connect to database
                 dbConnections = new DBConnections(new DBSettings(
                     server: "sqldatabase404.database.windows.net",
-                    database: "404ImageDBsql",
+                    database: "404ImageDBSql",
                     username: "sql404admin",
                     password: "sheepstool404()"
-                    ));
+                ));
 
                 dbQueries = new DBQueries(dbConnections.ConnectionString);
 
-                bool isConnected = dbConnections.TestConnectionAsync().GetAwaiter().GetResult(); // Blocking call for sync context
+                bool isConnected = dbConnections.TestConnectionAsync().GetAwaiter().GetResult(); // Blocking call
 
                 if (!isConnected)
                 {
-                    MessageBox.Show("Failed to connect to the database. Exiting application.", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to connect to the database. Exiting application.",
+                                    "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-                splashScreen.Close();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing application: {ex.Message}", "Startup Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Close the splash screen once everything is ready
+            splashScreen.Invoke(new Action(() => splashScreen.Close()));
+            splashThread.Join();  // Ensure the splash screen thread fully exits before continuing
 
             // Ensure proper storage handling
             Application.ApplicationExit += async (sender, e) => await SaveGlobalDataAsync(dbQueries);
-
             EnsureAppDataFolderExists();
-
-            // Load data from database
-
 
             // Start application
             Application.Run(new MainPage(dbQueries));
-
 
         }
 
