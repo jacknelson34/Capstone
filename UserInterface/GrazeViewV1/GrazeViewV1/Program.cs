@@ -9,7 +9,7 @@ namespace GrazeViewV1
         private static readonly string appDataFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ApplicationGlobalData");
 
         // Integrated ML Path
-        public static readonly string onnxModelFile = Path.Combine(appDataFolder, "GrazeView_accur91_fixedNale.onnx");
+        public static readonly string onnxModelFile = Path.Combine(appDataFolder, "GrazeView_accur93_FinalModel.onnx");
 
         /// <summary>
         ///  The main entry point for the application.

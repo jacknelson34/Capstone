@@ -321,7 +321,7 @@ namespace GrazeViewV1
                             DateTime.TryParse(dataGridView1.Rows[rowIndex].Cells[8].Value?.ToString(), out DateTime uploadDate))
                         {
                             // Debugging
-                            MessageBox.Show("Upload Date: " + uploadDate.ToShortDateString() + "\nSample Date: " + sampleDate.ToShortDateString());
+                            //MessageBox.Show("Upload Date: " + uploadDate.ToShortDateString() + "\nSample Date: " + sampleDate.ToShortDateString());
 
                             // Compare only the date parts (ignoring time)
                             if (sampleDate.Date == uploadDate.Date)
@@ -335,7 +335,7 @@ namespace GrazeViewV1
                             DateTime.TryParse(dataGridView1.Rows[rowIndex].Cells[9].Value?.ToString(), out DateTime uploadTime))
                         {
                             // Debugging
-                            MessageBox.Show("Upload Time: " + uploadTime.ToLongTimeString() + "\nSample Time: " + sampleTime.ToLongTimeString());
+                            //MessageBox.Show("Upload Time: " + uploadTime.ToLongTimeString() + "\nSample Time: " + sampleTime.ToLongTimeString());
 
                             // Compare only the time parts (ignoring date), allowing up to 1-minute difference
                             if (Math.Abs((sampleTime - uploadTime).TotalMinutes) <= 1)

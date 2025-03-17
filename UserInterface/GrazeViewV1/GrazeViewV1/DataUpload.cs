@@ -493,7 +493,7 @@ namespace GrazeViewV1
             /// ---------------------------------------------- INTEGRATION POINT --------------------------------------------------///
 
             // Debugging
-            MessageBox.Show("Sample Date: " + finalDate +"\nSample Time: " + finalTime);
+            //MessageBox.Show("Sample Date: " + finalDate +"\nSample Time: " + finalTime);
             
 
             // Create a new instance of UploadInfo
