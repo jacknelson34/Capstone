@@ -194,14 +194,32 @@ namespace GrazeViewV1
                 {
                     try
                     {
+
                         // Generate Thumbnail for display
                         Image thumbnail = CreateThumbnail(openFileDialog.FileName, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
 
                         // Delete Text in the Picture Box
                         imageUploaded = true;
                         imageFilePath = openFileDialog.FileName;
+
+                        // Check if image is a duplicate in the background
+                        DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
+                        int dupCheck = await Task.Run(() => dbQueries.DuplicateImageCheck(imageFilePath));
+
+                        if(dupCheck != 2)
+                        {
+                            ClearImage();
+                            dbQueries.Dispose();
+                            IsNavigating = false;
+
+                            uploadButton.Text = "Upload";
+                            uploadLoader.Visible = false;
+                            return;
+                        }
+
                         await LoadImageAsync(imageFilePath); // Load image asynchronously
                         uploadImage = Image.FromFile(openFileDialog.FileName);
+
 
                         // If the textbox is empty, populate it with the upload time/date
                         if (string.IsNullOrWhiteSpace(filenameTextbox.Text))
@@ -216,6 +234,7 @@ namespace GrazeViewV1
                             filenameTextbox.Text = "Upload-" + nameForcurrentTime;
 
                         }
+                        dbQueries.Dispose();
                     }
                     catch (Exception ex)
                     {
@@ -320,6 +339,21 @@ namespace GrazeViewV1
                         // Generate a thumbnail like Click Upload
                         Image thumbnail = CreateThumbnail(imageFilePath, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
 
+                        // Check if image is a duplicate in the background
+                        DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
+                        int dupCheck = await Task.Run(() => dbQueries.DuplicateImageCheck(imageFilePath));
+
+                        if (dupCheck != 2)
+                        {
+                            ClearImage();
+                            dbQueries.Dispose();
+                            IsNavigating = false;
+
+                            uploadButton.Text = "Upload";
+                            uploadLoader.Visible = false;
+                            return;
+                        }
+
                         await LoadImageAsync(imageFilePath); // Load image asynchronously
 
                         uploadImage = fileuploadPictureBox.Image;
@@ -329,6 +363,7 @@ namespace GrazeViewV1
                         {
                             filenameTextbox.Text = Path.GetFileName(files[0]); // Extracts just the file name
                         }
+                        dbQueries.Dispose();
                     }
                     catch (Exception ex)
                     {
@@ -464,24 +499,8 @@ namespace GrazeViewV1
             // Upload Imagefile to DB
             string imagePath = imageFilePath;
             DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
+            await Task.Run(()=> dbQueries.UploadImageToDB(imageFilePath));
 
-            int uploadCheck = await Task.Run(() =>
-            {
-                int result = dbQueries.UploadImageToDB(imageFilePath);
-                dbQueries.Dispose();
-                return result;
-            });
-
-            if (uploadCheck == 0 || uploadCheck == 1)
-            {
-                ClearImage();
-                dbQueries.Dispose();
-                IsNavigating = false;
-
-                uploadButton.Text = "Upload";
-                uploadLoader.Visible = false;
-                return;
-            }
 
             // checks to see if a file was uploaded to the picturebox
             if (fileuploadPictureBox.Image != null)
@@ -518,6 +537,8 @@ namespace GrazeViewV1
                 uploadButton.Text = "Upload";
                 uploadLoader.Visible = false;
             }
+
+            dbQueries.Dispose();
 
             /// ---------------------------------------------------- INTEGRATION POINT -----------------------------------------------------///
         }

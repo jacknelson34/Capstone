@@ -114,9 +114,12 @@ namespace GrazeViewV1
             }
         }
 
-        // Push Image Data to DB - Works
-        public int UploadImageToDB(string imagePath)
+        // Check db for duplicate upload
+        public async Task<int> DuplicateImageCheck(string imagePath)
         {
+            // 0 - Error
+            // 1 - Upload Cancelled by User
+            // 2 - Continue with Upload
 
             try
             {
@@ -128,7 +131,7 @@ namespace GrazeViewV1
 
                 string imageName = Path.GetFileName(imagePath);
 
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                using (SqlConnection conn = new SqlConnection(_connectionString)) 
                 {
                     conn.Open();
 
@@ -144,18 +147,45 @@ namespace GrazeViewV1
                             DialogResult doubleUploadCheck = MessageBox.Show("This image has already been uploaded.  Would you like to upload again?",
                                             "Duplicate Image",
                                             MessageBoxButtons.YesNo,
-                                            MessageBoxIcon.Question 
+                                            MessageBoxIcon.Question
                                             );
 
 
-                            if (doubleUploadCheck == DialogResult.No) 
+                            if (doubleUploadCheck == DialogResult.No)
                             {
                                 // Cancel Upload
-                                return 1;    
+                                return 1;
                             }
 
                         }
                     }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Database error: {ex.Message}");
+                return 0;
+            }
+            return 2;
+        }
+
+        // Push Image Data to DB - Works
+        public async Task UploadImageToDB(string imagePath)
+        {
+
+            try
+            {
+                if (!File.Exists(imagePath))
+                {
+                    MessageBox.Show($"Error: File not found - {imagePath}");
+                }
+
+                string imageName = Path.GetFileName(imagePath);
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
 
                     // Convert the image to a byte array
                     byte[] imageBytes = File.ReadAllBytes(imagePath);
@@ -175,13 +205,8 @@ namespace GrazeViewV1
             catch (Exception ex)
             {
                 MessageBox.Show($"Database error: {ex.Message}");
-                return 0;
             }
 
-            // 0 - Error
-            // 1 - Upload Cancelled by User
-            // 2 - Continue with Upload
-            return 2;
         }
 
         // Push CSV Data to DB - Works
