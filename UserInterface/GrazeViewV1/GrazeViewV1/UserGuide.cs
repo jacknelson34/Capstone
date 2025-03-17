@@ -28,7 +28,7 @@ namespace GrazeViewV1
             helpTextBox.Dock = DockStyle.Fill;                       // Set helpTextBox to fill the page
             helpTextBox.ReadOnly = true;                             // Enable read only for the user guide
             helpTextBox.TabStop = false;                             // Don't allow user to type or highlight
-            helpTextBox.BackColor = Color.LightBlue;
+            helpTextBox.BackColor = Color.LightCyan;
 
             helpTextBox.ScrollBars = RichTextBoxScrollBars.Vertical; // Ensure a vertical scrollbar
             helpTextBox.Font = new Font("Oswald", 12);      // Set font for user guide
@@ -44,41 +44,54 @@ namespace GrazeViewV1
         {
             helpTextBox.Clear();
 
-            // Define content for each section
-            // Section 1 - Header and How to Upload Data
-            AppendSection(helpTextBox, "Welcome to GRAZEVIEW\n\n--- How to Upload Data ---",
-                "1. Select Upload New Data on the Main Page\n" +
-                "2. Fill out Data Fields in the Data Uploader.  None are required.\n" +
-                "3. Select a Microscope Image to upload by either dragging an image into the box or by clicking the image box.\n" +
-                "      - A preview of the image will appear if the upload was successful.\n" +
-                "4. Click 'Upload' to save the data to the system.\n" +
-                "      - Once uploaded, there is an option to return to upload more from the results page.\n");
+            // Section 1 - Welcome & Uploading Data
+            AppendSection(helpTextBox, "WELCOME TO GRAZEVIEW",
+                "GrazeView allows users to upload, view, and analyze microscope images alongside sample data. " +
+                "This guide explains how to use the system effectively.\n\n");
 
-            // Section 2 - How to View Data
-            AppendSection(helpTextBox, "--- How to View Data ---",
-                "1. Select Data Viewer on the Main Page\n" +
-                "      - Once uploads have been saved, there is an option to view data directly from the results page. \n" +
-                "2. Saved Data can be sorted by each field by clicking on the respective column header.\n" +
-                "      - A preview of the image will appear if the upload was successful.\n");
+            AppendSection(helpTextBox, "HOW TO UPLOAD DATA",
+                "1. Select 'Upload New Data' from the Main Page.\n" +
+                "2. Enter Sample Information (Optional fields: Location, Breed, Comments, etc.).\n" +
+                "3. Upload a Microscope Image by:\n" +
+                "   - Dragging an image into the upload box\n" +
+                "   - Clicking the upload box to select an image manually\n" +
+                "   - A preview will appear if the upload is successful.\n" +
+                "4. Click 'Upload' to store the data.\n" +
+                "   - After uploading, you can return and upload more data.\n");
 
-            // Section 3 - How to Export and Print data
-            AppendSection(helpTextBox, "--- How to Export/Print Data ---",
-                "1. Ensure that Data has been uploaded previously(If there is no data uploaded, there is no data to export).\n" +
-                "2. Select Data Viewer from the Main Page. \n" +
-                "3. In the Data Viewer, select up to 5 uploads to export and view.\n" +
-                "      - This may take a moment, depending on the size of the image files.\n" +
-                "4. Once Uploads are loaded, click the print button to print the page.\n");
+            // Section 2 - Viewing Data
+            AppendSection(helpTextBox, "HOW TO VIEW DATA",
+                "1. Open 'Data Viewer' from the Main Page.\n" +
+                "   - You can also access the Data Viewer directly after an upload.\n" +
+                "2. Sort Data: Click column headers to sort by a specific field.\n" +
+                "3. Preview an Image: Click the Preview Button next to an upload.\n");
+
+            // Section 3 - Exporting & Printing Data
+            AppendSection(helpTextBox, "HOW TO EXPORT & PRINT DATA",
+                "1. Ensure Data is Uploaded (Only saved data can be exported).\n" +
+                "2. Open 'Data Viewer' from the Main Page.\n" +
+                "3. Select Up to 5 Uploads to export.\n" +
+                "   - Large image files may take extra time to load.\n" +
+                "4. Click 'Print' to generate a printable view.\n");
 
             // Section 4 - Clearing Data
-            AppendSection(helpTextBox, "--- How to Clear all Data ---",
-                "1. Once data has been uploaded, there is the option to clear it using 'Clear All Data' in the control panel.\n" +
-                "2. If clicked, the application will prompt the user to confirm.\n" +
-                "3. Click confirm in order to clear all data.\n" +
-                "      - NOTE : Once data is cleared, there is no way to recover it.\n" +
-                "      - NOTE : Clearing data occasionally will improve application performace.\n");
+            AppendSection(helpTextBox, "HOW TO CLEAR DATA",
+                "1. Click 'Clear All Data' in the Control Panel.\n" +
+                "2. A confirmation prompt will appear.\n" +
+                "3. Click 'Confirm' to delete all data.\n" +
+                "   - WARNING: This action is irreversible.\n" +
+                "   - TIP: Clearing old data occasionally improves performance.\n");
 
-            AppendSection(helpTextBox, "", 
-                "Created by Jack Nelson, Nate Scott, Arnav Gokhale, and Godson Edewor");
+            // Section 5 - Troubleshooting
+            AppendSection(helpTextBox, "TROUBLESHOOTING & SUPPORT",
+                "1. Slow performance? Try clearing old data.\n" +
+                "2. Image preview not working? Try re-uploading.\n" +
+                "3. Database connection issues? Ensure internet is active.\n" +
+                "4. App freezing? Restart the application.\n");
+
+            // Credits
+            AppendSection(helpTextBox, "CREATED BY",
+                "Jack Nelson, Nate Scott, Arnav Gokhale, and Godson Edewor.");
 
         }
         
