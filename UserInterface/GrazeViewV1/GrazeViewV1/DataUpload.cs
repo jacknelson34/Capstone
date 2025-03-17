@@ -21,6 +21,7 @@ namespace GrazeViewV1
         private bool IsNavigating;   // boolean variable that checks if the user is still using the app
         public string imageFilePath;    // String to pass image file path to MLWork
         private string promptText;
+        private bool imageLoading = false;
 
 
         // variable that tracks if a file has or has not been uploaded
@@ -196,6 +197,7 @@ namespace GrazeViewV1
                     {
 
                         // Generate Thumbnail for display
+                        imageLoading = true;
                         Image thumbnail = CreateThumbnail(openFileDialog.FileName, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
 
                         // Delete Text in the Picture Box
@@ -230,8 +232,7 @@ namespace GrazeViewV1
 
                             // Access upload #
                             int uploadNum = GetUploadCountFromDB() + 1;
-                            string nameForcurrentTime = currentTime.ToString("MM-dd-yyyy-") + uploadNum + ".png";
-                            filenameTextbox.Text = "Upload-" + nameForcurrentTime;
+                            filenameTextbox.Text = "Upload-" + uploadNum + ".png";
 
                         }
                         dbQueries.Dispose();
@@ -240,6 +241,7 @@ namespace GrazeViewV1
                     {
                         // Handle any errors that occur during image loading
                         MessageBox.Show("An error occurred while trying to load the image: " + ex.Message);
+                        imageLoading = false;
                     }
                 }
                 else
@@ -247,8 +249,10 @@ namespace GrazeViewV1
                     pictureBoxLoader.Visible = false;
                     pictureBoxLoader.SendToBack();
                     fileuploadPictureBox.Update();
+                    imageLoading = false;
                     return;
                 }
+                imageLoading = false;
             }
         }
 
@@ -335,6 +339,7 @@ namespace GrazeViewV1
                         // Delete Text in the Picture Box
                         imageUploaded = true;
                         imageFilePath = files[0];
+                        imageLoading= true;
 
                         // Generate a thumbnail like Click Upload
                         Image thumbnail = CreateThumbnail(imageFilePath, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
@@ -351,6 +356,7 @@ namespace GrazeViewV1
 
                             uploadButton.Text = "Upload";
                             uploadLoader.Visible = false;
+                            imageLoading = false;
                             return;
                         }
 
@@ -369,7 +375,9 @@ namespace GrazeViewV1
                     {
                         // Handle any errors that occur during image loading
                         MessageBox.Show("An error occurred while trying to load the image: " + ex.Message);
+                        imageLoading = false;
                     }
+                    imageLoading = false;
                 }
             }
         }
@@ -385,8 +393,22 @@ namespace GrazeViewV1
         private async void uploadButton_Click(object? sender, EventArgs e)
         {
             IsNavigating = true;  // User is still using the app
-            string selectedDate = DateTime.Parse(datePicker.Text).ToString();    // Variables to check valid dates/times
-            string selectedTime = DateTime.Parse(timePicker.Text).ToString();
+
+            try
+            {
+
+                string selectedDate = DateTime.Parse(datePicker.Text).ToString();    // Variables to check valid dates/times
+                string selectedTime = DateTime.Parse(timePicker.Text).ToString();
+
+            }
+            catch(FormatException)
+            {
+                MessageBox.Show($"Invalid Time Entered: {timePicker.Text}.  Please provide a valid time.",
+                "Invalid Time",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+                return;
+            }
 
             // Maintain consistent form sizing
             if (this.WindowState == FormWindowState.Maximized)
@@ -448,20 +470,20 @@ namespace GrazeViewV1
                 uploadLoader.Visible = false;
                 return;
             }
-            //MessageBox.Show(selectedTime + "\n" + (DateTime.Today.AddHours(8)).ToString());
-            if (DateTime.TryParse(selectedDate, out DateTime parsedTime))
-            {
-                // Construct the expected "08:00 AM" DateTime for today
-                DateTime expectedTime = DateTime.Today.AddHours(8); // 08:00 AM today
 
-                // Compare both DateTime objects
-                if (parsedTime.Day == expectedTime.Day)
-                {
-                    //MessageBox.Show("Worked");
-                    selectedDate = "N/A";
-                    selectedTime = "N/A";
-                }
-            }
+            // Check if date was entered by user
+
+            // Get selected date and time from controls
+            DateTime selectedDate2 = datePicker.Value;
+            DateTime selectedTime2 = DateTime.Parse(timePicker.Text);
+
+            // Check if user changed the values
+            bool isDateDefault = (selectedDate2.Date == DateTime.Today); // Assuming default is today
+            bool isTimeDefault = (selectedTime2.TimeOfDay == new TimeSpan(8, 0, 0)); // Assuming default is 08:00 AM
+
+            // Only set to "N/A" if the user did not change the values
+            string finalDate = isDateDefault ? "N/A" : selectedDate2.ToString("MM/dd/yyyy");
+            string finalTime = isTimeDefault ? "N/A" : selectedTime2.ToString("HH:mm:ss");
 
             // Check if the Sample Location, Sheep Breed, or Comments are empty, and set them to "N/A" if they are
             string sampleLocation = string.IsNullOrWhiteSpace(locationTextbox.Text) ? "N/A" : locationTextbox.Text;
@@ -471,15 +493,16 @@ namespace GrazeViewV1
             /// ---------------------------------------------- INTEGRATION POINT --------------------------------------------------///
 
             // Debugging
-            //MessageBox.Show("Sample Date: " + selectedDate);
+            MessageBox.Show("Sample Date: " + finalDate +"\nSample Time: " + finalTime);
+            
 
             // Create a new instance of UploadInfo
             UploadInfo uploadInfo = new UploadInfo
             {
                 UploadName = filenameTextbox.Text,             // Store the upload name
                 SampleLocation = sampleLocation,               // Store the sample location (or N/A)
-                SampleDate = selectedDate,  // Store the sample date
-                SampleTime = selectedTime,  // Assuming sampleTime.Text is a valid date/time string
+                SampleDate = finalDate,  // Store the sample date
+                SampleTime = finalTime,  // Assuming sampleTime.Text is a valid date/time string
                 UploadTime = DateTime.Now,                     // Store the current time of upload
                 SheepBreed = sheepBreed,                       // Store the sheep breed (or N/A)
                 Comments = comments,                           // Store user comments (or N/A)
@@ -489,17 +512,11 @@ namespace GrazeViewV1
             // Add the new upload info to the GlobalData uploads list
             GlobalData.Uploads.Add(uploadInfo);
 
-            // Debugging
-            //MessageBox.Show("Uploading image...");
-
-            // Add loading box in place of upload button
-
-
 
             // Upload Imagefile to DB
             string imagePath = imageFilePath;
             DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
-            await Task.Run(()=> dbQueries.UploadImageToDB(imageFilePath));
+            Task uploadTask = Task.Run(()=> dbQueries.UploadImageToDB(imageFilePath));
 
 
             // checks to see if a file was uploaded to the picturebox
@@ -517,6 +534,11 @@ namespace GrazeViewV1
                     // Run ML on a new task to keep ML responsive
                     Task.Run (() => MLWork.MLMain(imagePath, loadingPage));
 
+                    this.Hide();
+
+                    // Wait on upload to DB to close page and end task
+                    await Task.WhenAll(uploadTask);
+
                     //MessageBox.Show("Image sent to MLWork for processing.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
@@ -532,15 +554,22 @@ namespace GrazeViewV1
             }
             else
             {
+                if (imageLoading)
+                {
+                    // Show error message if image is still loading
+                    MessageBox.Show("Please wait for image to load before uploading.", "Image Processing...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    uploadButton.Text = "Upload";
+                    uploadLoader.Visible = false;
+                    return;
+                }
+
                 // Show error message if no valid image was uploaded
                 MessageBox.Show("Please upload a valid image file.", "Invalid Upload", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 uploadButton.Text = "Upload";
                 uploadLoader.Visible = false;
             }
-
             dbQueries.Dispose();
 
-            /// ---------------------------------------------------- INTEGRATION POINT -----------------------------------------------------///
         }
 
         // Method to clear picturebox

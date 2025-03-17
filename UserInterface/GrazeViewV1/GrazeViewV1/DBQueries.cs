@@ -114,7 +114,7 @@ namespace GrazeViewV1
             }
         }
 
-        // Check db for duplicate upload
+        // Check db for duplicate upload - DONE
         public async Task<int> DuplicateImageCheck(string imagePath)
         {
             // 0 - Error
@@ -144,7 +144,8 @@ namespace GrazeViewV1
 
                         if (count > 0)
                         {
-                            DialogResult doubleUploadCheck = MessageBox.Show("This image has already been uploaded.  Would you like to upload again?",
+                            DialogResult doubleUploadCheck = MessageBox.Show(
+                                            "This image has already been uploaded.  Would you like to upload again?",
                                             "Duplicate Image",
                                             MessageBoxButtons.YesNo,
                                             MessageBoxIcon.Question
@@ -170,7 +171,7 @@ namespace GrazeViewV1
             return 2;
         }
 
-        // Push Image Data to DB - Works
+        // Push Image Data to DB - Need to adjust time it takes
         public async Task UploadImageToDB(string imagePath)
         {
 
@@ -185,7 +186,7 @@ namespace GrazeViewV1
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
 
                     // Convert the image to a byte array
                     byte[] imageBytes = File.ReadAllBytes(imagePath);
@@ -367,10 +368,6 @@ namespace GrazeViewV1
                 return null;
             }
         }
-
-
-
-
 
 
         private async Task EnsureConnectionOpenAsync()

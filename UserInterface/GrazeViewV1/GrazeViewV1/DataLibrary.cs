@@ -316,20 +316,34 @@ namespace GrazeViewV1
 
                         }
 
-                        // Convert cell values to DateTime and extract only the date part to fix
+                        // Check Sample Date Values
                         if (DateTime.TryParse(dataGridView1.Rows[rowIndex].Cells[6].Value?.ToString(), out DateTime sampleDate) &&
                             DateTime.TryParse(dataGridView1.Rows[rowIndex].Cells[8].Value?.ToString(), out DateTime uploadDate))
                         {
                             // Debugging
-                            //MessageBox.Show("Upload: " + uploadDate.ToString() + "\nSample: " + sampleDate.ToString());
+                            MessageBox.Show("Upload Date: " + uploadDate.ToShortDateString() + "\nSample Date: " + sampleDate.ToShortDateString());
 
-                            // Compare only the date parts
+                            // Compare only the date parts (ignoring time)
                             if (sampleDate.Date == uploadDate.Date)
                             {
                                 dataGridView1.Rows[rowIndex].Cells[6].Value = "N/A";
+                            }
+                        }
+
+                        // Check Sample Time Values
+                        if (DateTime.TryParse(dataGridView1.Rows[rowIndex].Cells[7].Value?.ToString(), out DateTime sampleTime) &&
+                            DateTime.TryParse(dataGridView1.Rows[rowIndex].Cells[9].Value?.ToString(), out DateTime uploadTime))
+                        {
+                            // Debugging
+                            MessageBox.Show("Upload Time: " + uploadTime.ToLongTimeString() + "\nSample Time: " + sampleTime.ToLongTimeString());
+
+                            // Compare only the time parts (ignoring date), allowing up to 1-minute difference
+                            if (Math.Abs((sampleTime - uploadTime).TotalMinutes) <= 1)
+                            {
                                 dataGridView1.Rows[rowIndex].Cells[7].Value = "N/A";
                             }
                         }
+
 
 
                     }

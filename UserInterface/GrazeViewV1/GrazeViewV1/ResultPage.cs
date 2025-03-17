@@ -62,7 +62,17 @@ namespace GrazeViewV1
                 UploadInfo lastUpload = GlobalData.Uploads.Last();            // Get the most recent upload
                 uploadNameTextBox.Text = lastUpload.UploadName;               // Upload Name
                 dateUploadedTextBox.Text = lastUpload.UploadTime.ToString();  // Date Uploaded
-                dateOfSampleTextBox.Text = lastUpload.SampleTime;  // Date of Sample
+
+                // Check if sample datetime is N/A
+                if(lastUpload.SampleDate == "N/A" || lastUpload.SampleTime == "N/A")
+                {
+                    dateOfSampleTextBox.Text = "N/A";
+                }
+                else
+                {
+                    dateOfSampleTextBox.Text = (lastUpload.SampleDate + " " + lastUpload.SampleTime).ToString();  // Date of Sample
+                }
+
                 sampleLocationTextBox.Text = lastUpload.SampleLocation;       // Location of Sample
                 sheepBreedTextBox.Text = lastUpload.SheepBreed;               // Sheep Breed
 
@@ -303,13 +313,13 @@ namespace GrazeViewV1
                 lastMLProcess.nalePercentage.Replace("%", ""),  // NalePercent
                 lastMLProcess.erciPercentage.Replace("%", ""),  // ErciPercent
                 lastMLProcess.bubblePercentage.Replace("%", ""),  // AirBubblePercent
-                ConvertToValidDateTime(lastUpload.SampleTime),  // DateSampleTaken
-                DateTime.Now.ToString("HH:mm:ss"),  // TimeSampleTaken (assuming current time)
+                ConvertToValidDateTime(lastUpload.SampleDate),  // DateSampleTaken
+                ConvertToValidTime(lastUpload.SampleTime),          // TimeSampleTaken (assuming current time)
                 lastUpload.UploadTime.ToString("yyyy-MM-dd"),  // UploadDate
                 lastUpload.UploadTime.ToString("HH:mm:ss"),  // UploadTime
                 lastUpload.SampleLocation,  // SampleLocation
                 lastUpload.SheepBreed,  // SheepBreed
-                "No Comments"  // Default comment field
+                lastUpload.Comments  // Default comment field
             };
 
             DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
@@ -342,5 +352,16 @@ namespace GrazeViewV1
 
             return DateTime.Now.ToString("yyyy-MM-dd"); // Default to today’s date if invalid
         }
+
+        private string ConvertToValidTime(string input)
+        {
+            if (DateTime.TryParse(input, out DateTime result))
+            {
+                return result.ToString("HH:mm:ss"); // Ensure correct format
+            }
+
+            return DateTime.Now.ToString("HH:mm:ss"); // Default to today’s date if invalid
+        }
+
     }
 }
