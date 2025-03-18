@@ -30,56 +30,54 @@ namespace GrazeViewV1
             DBQueries dbQueries;
             DBConnections dbConnections;
 
-            // Test SplashScreen
-            Application.Run(new SplashScreen());
 
-            //// Show SplashScreen in a separate thread
-            //SplashScreen splashScreen = new SplashScreen();
-            //Thread splashThread = new Thread(() => Application.Run(splashScreen));
-            //splashThread.SetApartmentState(ApartmentState.STA);
-            //splashThread.Start();
+            // Show SplashScreen in a separate thread
+            SplashScreen splashScreen = new SplashScreen();
+            Thread splashThread = new Thread(() => Application.Run(splashScreen));
+            splashThread.SetApartmentState(ApartmentState.STA);
+            splashThread.Start();
 
-            //try
-            //{
-            //    // Allow UI to refresh while loading
-            //    Application.DoEvents();
+            try
+            {
+                // Allow UI to refresh while loading
+                Application.DoEvents();
 
-            //    // Connect to database
-            //    dbConnections = new DBConnections(new DBSettings(
-            //        driver: "ODBC Driver 18 for SQL Server",
-            //        server: "sqldatabase404.database.windows.net",
-            //        database: "404ImageDBSql",
-            //        username: "sql404admin",
-            //        password: "sheepstool404()"
-            //    ));
+                // Connect to database
+                dbConnections = new DBConnections(new DBSettings(
+                    driver: "ODBC Driver 18 for SQL Server",
+                    server: "sqldatabase404.database.windows.net",
+                    database: "404ImageDBSql",
+                    username: "sql404admin",
+                    password: "sheepstool404()"
+                ));
 
-            //    dbQueries = new DBQueries(dbConnections.ConnectionString);
+                dbQueries = new DBQueries(dbConnections.ConnectionString);
 
-            //    bool isConnected = dbConnections.TestConnectionAsync().GetAwaiter().GetResult(); // Blocking call
+                bool isConnected = dbConnections.TestConnectionAsync().GetAwaiter().GetResult(); // Blocking call
 
-            //    if (!isConnected)
-            //    {
-            //        MessageBox.Show("Failed to connect to the database. Exiting application.",
-            //                        "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        return;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Error initializing application: {ex.Message}", "Startup Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
+                if (!isConnected)
+                {
+                    MessageBox.Show("Failed to connect to the database. Exiting application.",
+                                    "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing application: {ex.Message}", "Startup Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-            //// Close the splash screen once everything is ready
-            //splashScreen.Invoke(new Action(() => splashScreen.Close()));
-            //splashThread.Join();  // Ensure the splash screen thread fully exits before continuing
+            // Close the splash screen once everything is ready
+            splashScreen.Invoke(new Action(() => splashScreen.Close()));
+            splashThread.Join();  // Ensure the splash screen thread fully exits before continuing
 
-            //// Ensure proper storage handling
-            //Application.ApplicationExit += async (sender, e) => await SaveGlobalDataAsync(dbQueries);
-            //EnsureAppDataFolderExists();
+            // Ensure proper storage handling
+            Application.ApplicationExit += async (sender, e) => await SaveGlobalDataAsync(dbQueries);
+            EnsureAppDataFolderExists();
 
-            //// Start application
-            //Application.Run(new MainPage(dbQueries));
+            // Start application
+            Application.Run(new MainPage(dbQueries));
 
         }
 

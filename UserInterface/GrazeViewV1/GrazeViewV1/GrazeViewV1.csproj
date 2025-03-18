@@ -16,13 +16,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Properties\Resources\BackgroundImage12.jpg" />
+    <None Remove="Properties\Resources\BackgroundImage25.jpg" />
+    <None Remove="Properties\Resources\BackgroundImage65.jpg" />
+    <None Remove="Properties\Resources\BackgroundImage80.jpg" />
+    <None Remove="Properties\Resources\Help_Icon.png" />
+    <None Remove="Properties\Resources\LoadingGif.gif" />
+    <None Remove="Properties\Resources\MainPageBackground.jpg" />
     <None Remove="Properties\Resources\sheepGif.gif" />
+    <None Remove="Properties\Resources\SplashScreen2.gif" />
+    <None Remove="Properties\Resources\SplashScreenLoader.gif" />
     <None Remove="Properties\Resources\uploadGif.gif" />
+    <None Remove="Properties\Resources\uploadGif2.gif" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources\BackgroundImage12.jpg" />
+    <EmbeddedResource Include="Properties\Resources\BackgroundImage25.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources\BackgroundImage65.jpg" />
+    <EmbeddedResource Include="Properties\Resources\BackgroundImage80.jpg" />
+    <EmbeddedResource Include="Properties\Resources\Help_Icon.png" />
+    <EmbeddedResource Include="Properties\Resources\LoadingGif.gif" />
+    <EmbeddedResource Include="Properties\Resources\MainPageBackground.jpg" />
     <EmbeddedResource Include="Properties\Resources\sheepGif.gif" />
+    <EmbeddedResource Include="Properties\Resources\SplashScreen2.gif" />
+    <EmbeddedResource Include="Properties\Resources\SplashScreenLoader.gif" />
     <EmbeddedResource Include="Properties\Resources\uploadGif.gif" />
+    <EmbeddedResource Include="Properties\Resources\uploadGif2.gif" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,9 +79,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Properties\Resources\BackgroundImage25.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -73,6 +73,36 @@ namespace GrazeViewV1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap BackgroundImage25 {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundImage25", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap BackgroundImage65 {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundImage65", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap BackgroundImage80 {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundImage80", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Help_Icon {
             get {
                 object obj = ResourceManager.GetObject("Help_Icon", resourceCulture);
@@ -86,6 +116,16 @@ namespace GrazeViewV1.Properties {
         public static System.Drawing.Bitmap LoadingGif {
             get {
                 object obj = ResourceManager.GetObject("LoadingGif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap MainPageBackground {
+            get {
+                object obj = ResourceManager.GetObject("MainPageBackground", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -126,6 +166,16 @@ namespace GrazeViewV1.Properties {
         public static System.Drawing.Bitmap uploadGif {
             get {
                 object obj = ResourceManager.GetObject("uploadGif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap uploadGif2 {
+            get {
+                object obj = ResourceManager.GetObject("uploadGif2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

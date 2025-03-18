@@ -22,6 +22,7 @@ namespace GrazeViewV1
         public string imageFilePath;    // String to pass image file path to MLWork
         private string promptText;
         private bool imageLoading = false;
+        private bool queryInProgress = false;
 
 
         // variable that tracks if a file has or has not been uploaded
@@ -108,6 +109,12 @@ namespace GrazeViewV1
         // Event handler for when the back button is clicked on
         private void backButton_Click(object? sender, EventArgs e)
         {
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             IsNavigating = true;   // User is still using the app
 
 
@@ -136,6 +143,7 @@ namespace GrazeViewV1
         // add text inside the picture box to prompt the user to either click on or drag-and-drop files
         private void fileuploadPictureBox_Prompt(object sender, PaintEventArgs e)
         {
+
             // Only show text if no image is loaded
             if (!imageUploaded && !pictureBoxLoader.Visible)
             {
@@ -165,6 +173,12 @@ namespace GrazeViewV1
         // when the file upload picture box is clicked on
         private async void fileuploadPictureBox_Click(object sender, EventArgs e)
         {
+
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // Open a file dialog to allow the user to select an image file
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -288,6 +302,12 @@ namespace GrazeViewV1
         // when an image file is dragged to the picture box
         private void fileuploadPictureBox_DragEnter(object sender, DragEventArgs e)
         {
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // Check if the dragged item is a file and is a .png image
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -308,6 +328,12 @@ namespace GrazeViewV1
         // when an image file is dragged and dropped onto the picture box
         private async void fileuploadPictureBox_DragDrop(object sender, DragEventArgs e)
         {
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             // Get the file(s) that are dropped
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
@@ -392,6 +418,14 @@ namespace GrazeViewV1
         // when the upload button is clicked on
         private async void uploadButton_Click(object? sender, EventArgs e)
         {
+
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            queryInProgress = true;
+
             IsNavigating = true;  // User is still using the app
 
             try
@@ -569,7 +603,7 @@ namespace GrazeViewV1
                 uploadLoader.Visible = false;
             }
             dbQueries.Dispose();
-
+            queryInProgress = false;
         }
 
         // Method to clear picturebox

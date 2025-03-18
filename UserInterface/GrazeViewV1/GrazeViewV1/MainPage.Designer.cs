@@ -1,4 +1,6 @@
-﻿namespace GrazeViewV1
+﻿using System.Windows.Forms;
+
+namespace GrazeViewV1
 {
     partial class MainPage
     {
@@ -35,6 +37,7 @@
             dataViewerButton = new roundButton();
             dataUploadButton = new roundButton();
             helpButton = new PictureBox();
+            sheep = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
             DoubleBuffered = true;
@@ -98,12 +101,23 @@
             helpButton.TabIndex = 3;
             helpButton.TabStop = false;
             helpButton.Click += helpButton_Click;
+            //
+            // sheep gif
+            //
+            sheep.Image = Properties.Resources.sheepGif;
+            sheep.SizeMode = PictureBoxSizeMode.StretchImage;
+            sheep.Location = new Point(50, 50);
+            sheep.Name = "helpButton";
+            sheep.Size = new Size(50, 50);
+            sheep.TabIndex = 4;
+            sheep.TabStop = false;
             // 
             // MainPage
             // 
             Controls.Add(dataViewerButton);
             Controls.Add(dataUploadButton);
             Controls.Add(mainLabel);
+            Controls.Add(sheep);
 
             //AutoScaleDimensions = new SizeF((float)((this.DeviceDpi / 96F) * 200F), (float)((this.DeviceDpi / 96F) * 200F));
 
@@ -133,5 +147,6 @@
         private roundButton dataUploadButton;
         private roundButton dataViewerButton;
         private PictureBox helpButton;
+        private PictureBox sheep;
     }
 }

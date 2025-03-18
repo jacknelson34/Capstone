@@ -221,7 +221,7 @@
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.White,
                 Visible = false,
-                Image = Properties.Resources.uploadGif
+                Image = Properties.Resources.uploadGif2
             };
             Controls.Add(pictureBoxLoader);
 

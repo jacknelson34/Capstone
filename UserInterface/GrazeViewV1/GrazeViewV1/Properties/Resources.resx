@@ -121,11 +121,23 @@
   <data name="BackgroundImage12" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\BackgroundImage12.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BackgroundImage25" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\BackgroundImage25.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundImage65" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\BackgroundImage65.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundImage80" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\BackgroundImage80.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Help_Icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Help_Icon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LoadingGif" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\LoadingGif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MainPageBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\MainPageBackground.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="sheepGif" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\sheepGif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -138,5 +150,8 @@
   </data>
   <data name="uploadGif" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\uploadGif.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="uploadGif2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\uploadGif2.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
