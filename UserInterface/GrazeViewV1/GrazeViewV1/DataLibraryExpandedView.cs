@@ -217,8 +217,8 @@ namespace GrazeViewV1
             infoPanel.Controls.Add(new Label { Text = "Percentages", AutoSize = true, Font = new Font("Times New Roman", 12, FontStyle.Bold) });
 
             // Add ML Data (Stacked)
-            infoPanel.Controls.Add(CreateInfoLabel("Qufu (%):", mlData.nalePercentage));    // These are flipped for a reason
-            infoPanel.Controls.Add(CreateInfoLabel("Nale (%):", mlData.qufuPercentage));
+            infoPanel.Controls.Add(CreateInfoLabel("Qufu (%):", mlData.qufuPercentage));    // These are flipped for a reason
+            infoPanel.Controls.Add(CreateInfoLabel("Nale (%):", mlData.nalePercentage));
             infoPanel.Controls.Add(CreateInfoLabel("Erci (%):", mlData.erciPercentage));
             infoPanel.Controls.Add(CreateInfoLabel("Bubbles (%):", mlData.bubblePercentage));
 

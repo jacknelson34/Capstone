@@ -150,9 +150,8 @@ namespace GrazeViewV1
                     //MessageBox.Show("Average Predictions:");
                     //for (int j = 0; j < 4; j++)
                     //{
-                        // Replaced with MessageBox
-                        //MessageBox.Show($"Class {j}: {averageProbabilities[j]}");
-                    //MessageBox.Show($"Class {i}: {averageProbabilities[i]}");
+                    //     //Replaced with MessageBox
+                    //    MessageBox.Show($"Class {j}: {averageProbabilities[j]}");
 
                     //}
 
@@ -163,8 +162,8 @@ namespace GrazeViewV1
                     MLData mlData = new MLData
                     {
                         nalePercentage = (((averageProbabilities[0] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
-                        erciPercentage = (((averageProbabilities[2] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
-                        qufuPercentage = (((averageProbabilities[1] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
+                        erciPercentage = (((averageProbabilities[1] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
+                        qufuPercentage = (((averageProbabilities[2] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%"),
                         bubblePercentage = (((averageProbabilities[3] / percentagesWithoutWhiteSpace) * 100).ToString("0.00") + "%")
                     };
 

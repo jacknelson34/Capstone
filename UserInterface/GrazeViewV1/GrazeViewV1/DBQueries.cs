@@ -46,8 +46,8 @@ namespace GrazeViewV1
                     AirBubblePercent,
                     DateSampleTaken,
                     CAST(TimeSampleTaken AS VARCHAR(8)) AS TimeSampleTaken, 
-                    CAST(UploadTime AS VARCHAR(8)) AS UploadTime,
                     UploadDate,
+                    CAST(UploadTime AS VARCHAR(8)) AS UploadTime,
                     SampleLocation,
                     SheepBreed,
                     Comments
@@ -79,6 +79,7 @@ namespace GrazeViewV1
         // Pull image from DB - take 2
         public async Task<Bitmap> RetrieveImageFromDB(int imageIndex)
         {
+            imageIndex--; // INdexing between tables is off one for some reason
 
             try
             {
@@ -108,6 +109,8 @@ namespace GrazeViewV1
                                 long length = reader.GetBytes(0, 0, null, 0, 0);
                                 byte[] buffer = new byte[length];
                                 reader.GetBytes(0, 0, buffer, 0, (int)length);
+
+                                //MessageBox.Show("Returning image at index: " + imageIndex);
 
                                 return new Bitmap(new MemoryStream(buffer));
                             }
@@ -238,8 +241,8 @@ namespace GrazeViewV1
                 {
                     // Assuming csvData contains values in the exact order of the database fields
                     command.Parameters.AddWithValue("?", csvData[0]);                   // SourceFile
-                    command.Parameters.AddWithValue("?", csvData[2]);                   // Qufu 
-                    command.Parameters.AddWithValue("?", csvData[1]);                   // Nale
+                    command.Parameters.AddWithValue("?", csvData[1]);                   // Qufu 
+                    command.Parameters.AddWithValue("?", csvData[2]);                   // Nale
                     command.Parameters.AddWithValue("?", csvData[3]);                   // Erci
                     command.Parameters.AddWithValue("?", csvData[4]);                   // Air bubble
                     command.Parameters.AddWithValue("?", csvData[5]);                   // Sample Date
@@ -285,36 +288,36 @@ namespace GrazeViewV1
             {
                 await EnsureConnectionOpenAsync();
 
-                // Start a transaction to ensure both deletions occur together
+                // Start transaction for safety
                 using (var transaction = _connection.BeginTransaction())
                 {
                     try
                     {
-                        // Delete images from the Images table (modify table name if needed)
-                        string deleteImagesQuery = "TRUNCATE TABLE Images";
+                        // DELETE instead of TRUNCATE for better ODBC compatibility
+                        string deleteImagesQuery = "DELETE FROM Images; DBCC CHECKIDENT ('Images', RESEED, 0);";
 
                         using (var imageCommand = new OdbcCommand(deleteImagesQuery, _connection, transaction))
                         {
                             int imagesDeleted = await imageCommand.ExecuteNonQueryAsync();
-                            Console.WriteLine($"Deleted {imagesDeleted} images.");
+                            MessageBox.Show($"Deleted {imagesDeleted} images.");
                         }
 
-                        // Delete upload records from CSVDB 
+                        // Ensure CSVDB records are fully reset
                         string deleteUploadsQuery = "DELETE FROM CSVDB; DBCC CHECKIDENT ('CSVDB', RESEED, 0);";
 
                         using (var uploadCommand = new OdbcCommand(deleteUploadsQuery, _connection, transaction))
                         {
                             int uploadsDeleted = await uploadCommand.ExecuteNonQueryAsync();
-                            Console.WriteLine($"Deleted {uploadsDeleted} uploads.");
+                            MessageBox.Show($"Deleted {uploadsDeleted} uploads.");
                         }
 
-                        // Commit transaction if both deletions succeed
+                        // Commit transaction to apply changes
                         transaction.Commit();
                         MessageBox.Show("All uploads and images successfully deleted.", "Clear Data", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        // Rollback transaction if an error occurs
+                        // Rollback transaction on failure
                         transaction.Rollback();
                         MessageBox.Show($"Error clearing database: {ex.Message}", "Clear Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -325,6 +328,7 @@ namespace GrazeViewV1
                 MessageBox.Show($"Error clearing database: {ex.Message}", "Clear Data Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // Query for DataLibraryExpandedView
         public async Task<Dictionary<string, object>> GetRowByIndexAsync(int index)
@@ -440,30 +444,38 @@ namespace GrazeViewV1
         {
             if (_connection != null)
             {
-                if (_connection.State != ConnectionState.Closed) // Check if connection is valid
+                try
                 {
-                    try
+                    // Ensure connection is open before closing
+                    if (_connection.State != ConnectionState.Closed && _connection.State != ConnectionState.Broken)
                     {
                         await _connection.CloseAsync();
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error closing connection: {ex.Message}");
-                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error closing connection: {ex.Message}");
                 }
 
                 try
                 {
-                    await _connection.DisposeAsync();
+                    // Ensure the connection handle exists before disposing
+                    if (_connection != null)
+                    {
+                        await _connection.DisposeAsync();
+                    }
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error disposing connection: {ex.Message}");
                 }
 
-                _connection = null; // Reset connection after closing
+                _connection = null; // Reset connection after cleanup
             }
         }
+
+
+
 
 
         public void Dispose()
