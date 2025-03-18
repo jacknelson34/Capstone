@@ -1,4 +1,6 @@
-﻿namespace GrazeViewV1
+﻿using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+
+namespace GrazeViewV1
 {
     partial class SplashScreen
     {
@@ -31,6 +33,7 @@
             label1 = new Label();
             label2 = new Label();
             pictureBox1 = new PictureBox();
+            pictureBox2 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             ClientSize = new Size(800, 450);
@@ -53,7 +56,7 @@
             label2.BackColor = Color.Transparent;
             label2.Size = new Size(176, 19);
             label2.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point((ClientSize.Width - label2.Width) / 2, label1.Bottom + 50);
+            label2.Location = new Point((ClientSize.Width - label2.Width) / 2, label1.Bottom + 70);
             label2.Name = "label2";
             label2.TabIndex = 2;
             label2.Text = "Initializing Application...";
@@ -65,20 +68,32 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.Size = new Size(200, 30);
             pictureBox1.Image = Properties.Resources.SplashScreen2;
-            pictureBox1.Location = new Point((ClientSize.Width - pictureBox1.Width - 25) / 2, label2.Bottom + 10);
+            pictureBox1.Location = new Point((ClientSize.Width - pictureBox1.Width - 25) / 2, label2.Bottom + 5);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
-            
+            //
+            // pictureBox2 (Sheep)
+            //
+            pictureBox2.BackColor = Color.Transparent;
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.Size = new Size(200, 60);
+            pictureBox2.Image = Properties.Resources.sheepGif;
+            pictureBox2.Location = new Point((ClientSize.Width - pictureBox1.Width - 25) / 2, label1.Bottom -5);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.TabIndex = 4;
+            pictureBox2.TabStop = false;
             // 
             // SplashScreen
             // 
             AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Properties.Resources.BackgroundImage12;
             BackgroundImageLayout = ImageLayout.Stretch;
+            Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
             Controls.Add(label2);
             Controls.Add(label1);
+
             FormBorderStyle = FormBorderStyle.None;
             Name = "SplashScreen";
             StartPosition = FormStartPosition.CenterScreen;
@@ -93,5 +108,6 @@
         private Label label1;
         private Label label2;
         private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
     }
 }

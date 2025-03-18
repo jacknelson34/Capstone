@@ -93,6 +93,16 @@ namespace GrazeViewV1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap sheepGif {
+            get {
+                object obj = ResourceManager.GetObject("sheepGif", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap SplashScreen2 {
             get {
                 object obj = ResourceManager.GetObject("SplashScreen2", resourceCulture);
@@ -106,6 +116,16 @@ namespace GrazeViewV1.Properties {
         public static System.Drawing.Bitmap SplashScreenLoader {
             get {
                 object obj = ResourceManager.GetObject("SplashScreenLoader", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap uploadGif {
+            get {
+                object obj = ResourceManager.GetObject("uploadGif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

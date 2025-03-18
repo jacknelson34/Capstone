@@ -16,6 +16,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Properties\Resources\sheepGif.gif" />
+    <None Remove="Properties\Resources\uploadGif.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources\sheepGif.gif" />
+    <EmbeddedResource Include="Properties\Resources\uploadGif.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
     <PackageReference Include="Microsoft.ML" Version="4.0.1" />
     <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.20.1" />

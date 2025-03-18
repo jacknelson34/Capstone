@@ -221,7 +221,7 @@
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BackColor = Color.White,
                 Visible = false,
-                Image = Properties.Resources.SplashScreen2
+                Image = Properties.Resources.uploadGif
             };
             Controls.Add(pictureBoxLoader);
 
