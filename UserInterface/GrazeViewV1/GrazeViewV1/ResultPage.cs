@@ -24,6 +24,7 @@ namespace GrazeViewV1
         {
             IsNavigating = false;
             _dbConnections = new DBConnections(new DBSettings(
+                    driver: "ODBC Driver 18 for SQL Server",
                     server: "sqldatabase404.database.windows.net",
                     database: "404ImageDBsql",
                     username: "sql404admin",
@@ -322,7 +323,7 @@ namespace GrazeViewV1
                 lastUpload.Comments  // Default comment field
             };
 
-            DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
+            DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
             bool success = dbQueries.UploadCSVToDB(csvData);
 
             if (success)

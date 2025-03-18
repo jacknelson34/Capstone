@@ -40,11 +40,16 @@ namespace GrazeViewV1
             this.Text = "GrazeView"; // Set the title of the MainPage form
 
             _dbConnections = new DBConnections(new DBSettings(
-                    server: "sqldatabase404.database.windows.net",
-                    database: "404ImageDBsql",
-                    username: "sql404admin",
-                    password: "sheepstool404()"
-                    ));
+                "ODBC Driver 18 for SQL Server", // Driver
+                "sqldatabase404.database.windows.net", // Server
+                "404ImageDBsql", // Database
+                "sql404admin", // Username
+                "sheepstool404()", // Password
+                "TrustServerCertificate=Yes;" // Connection Options
+            ));
+
+            //MessageBox.Show("Connection: " + _dbConnections.ConnectionString);
+
             dbQueries = new DBQueries(_dbConnections.ConnectionString); // Ensure connectionString is correct
             var dataLibrary = new DataLibrary(this, dbQueries);
 

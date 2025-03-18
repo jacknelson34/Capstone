@@ -31,7 +31,9 @@ namespace GrazeViewV1
             _dbQueries = dbQueries ?? throw new ArgumentNullException(nameof(dbQueries));
             _selectedIndexes = selectedIndexes ?? new List<int>();
 
-            _dbSettings = new DBSettings(server: "sqldatabase404.database.windows.net",
+            _dbSettings = new DBSettings(
+                driver: "ODBC Driver 18 for SQL Server",
+                server: "sqldatabase404.database.windows.net",
                 database: "404ImageDBsql",
                 username: "sql404admin",
                 password: "sheepstool404()",

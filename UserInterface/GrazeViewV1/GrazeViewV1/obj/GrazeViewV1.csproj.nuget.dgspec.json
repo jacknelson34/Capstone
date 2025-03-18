@@ -75,6 +75,10 @@
               "target": "Package",
               "version": "[4.10.0.20241108, )"
             },
+            "System.Data.Odbc": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.9.0, )"

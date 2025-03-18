@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.Odbc;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,19 +24,29 @@ namespace GrazeViewV1
             _connectionString = BuildConnectionString();
         }
 
+        //private string BuildConnectionString()
+        //{
+        //    var builder = new SqlConnectionStringBuilder
+        //    {
+        //        DataSource = _settings.Server,
+        //        InitialCatalog = _settings.Database,
+        //        UserID = _settings.Username,
+        //        Password = _settings.Password,
+        //        TrustServerCertificate = true,
+        //        ConnectTimeout = 30
+        //    };
+
+        //    return builder.ConnectionString;
+        //}
+
         private string BuildConnectionString()
         {
-            var builder = new SqlConnectionStringBuilder
-            {
-                DataSource = _settings.Server,
-                InitialCatalog = _settings.Database,
-                UserID = _settings.Username,
-                Password = _settings.Password,
-                TrustServerCertificate = true,
-                ConnectTimeout = 30
-            };
-
-            return builder.ConnectionString;
+            return $"Driver={_settings.Driver};" +
+                   $"Server={_settings.Server};" +
+                   $"Database={_settings.Database};" +
+                   $"Uid={_settings.Username};" +
+                   $"Pwd={_settings.Password};" +
+                   $"{_settings.ConnectionOptions}";
         }
 
         public async Task<bool> TestConnectionAsync()
@@ -46,7 +57,7 @@ namespace GrazeViewV1
 
             for (int attempt = 1; attempt <= MaxRetries; attempt++)
             {
-                using (var connection = new SqlConnection(_connectionString))
+                using (var connection = new OdbcConnection(_connectionString))
                 {
                     try
                     {
@@ -61,7 +72,7 @@ namespace GrazeViewV1
                         //MessageBox.Show($"Database: {connection.Database}");
                         return true;
                     }
-                    catch (SqlException ex)
+                    catch (OdbcException ex)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         //MessageBox.Show($"SQL Server Error: {ex.Message}");

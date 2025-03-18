@@ -205,7 +205,7 @@ namespace GrazeViewV1
                         imageFilePath = openFileDialog.FileName;
 
                         // Check if image is a duplicate in the background
-                        DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
+                        DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
                         int dupCheck = await Task.Run(() => dbQueries.DuplicateImageCheck(imageFilePath));
 
                         if(dupCheck != 2)
@@ -261,7 +261,7 @@ namespace GrazeViewV1
         {
             int count = 0;
 
-            string _connectionString = "Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;";
+            string _connectionString = "Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;";
 
             try
             {
@@ -345,7 +345,7 @@ namespace GrazeViewV1
                         Image thumbnail = CreateThumbnail(imageFilePath, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
 
                         // Check if image is a duplicate in the background
-                        DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
+                        DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
                         int dupCheck = await Task.Run(() => dbQueries.DuplicateImageCheck(imageFilePath));
 
                         if (dupCheck != 2)
@@ -515,7 +515,7 @@ namespace GrazeViewV1
 
             // Upload Imagefile to DB
             string imagePath = imageFilePath;
-            DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
+            DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
             Task uploadTask = Task.Run(()=> dbQueries.UploadImageToDB(imageFilePath));
 
 

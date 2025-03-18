@@ -43,6 +43,7 @@ namespace GrazeViewV1
 
                 // Connect to database
                 dbConnections = new DBConnections(new DBSettings(
+                    driver: "ODBC Driver 18 for SQL Server",
                     server: "sqldatabase404.database.windows.net",
                     database: "404ImageDBSql",
                     username: "sql404admin",
@@ -93,6 +94,7 @@ namespace GrazeViewV1
         private static void OnApplicationExit(object sender, EventArgs e)
         {
             var dbConnections = new DBConnections(new DBSettings(
+                driver: "ODBC Driver 18 for SQL Server",
                 server: "sqldatabase404.database.windows.net",
                 database: "404ImageDBsql",
                 username: "sql404admin",
@@ -147,20 +149,6 @@ namespace GrazeViewV1
             {
                 MessageBox.Show($"Error saving data to database: {ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-
-
-
-
-        private static string NormalizeTextForSave(string input)
-        {
-            return input?.Replace("\n", "\\n").Replace("\r", "\\r"); // Escape newlines and carriage returns
-        }
-
-        private static string RestoreTextFormatting(string input)
-        {
-            return input?.Replace("\\n", "\n").Replace("\\r", "\r"); // Restore newlines and carriage returns
         }
 
         // TODO

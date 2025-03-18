@@ -137,7 +137,7 @@ namespace GrazeViewV1
             // Load the image in the background
             Bitmap retrievedImage = await Task.Run(() =>
             {
-                DBQueries dbQueries = new DBQueries("Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;");
+                DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
                 return dbQueries.RetrieveImageFromDB(rowIndex);
             });
 
@@ -395,63 +395,6 @@ namespace GrazeViewV1
 
         }
 
-        /*private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (dataGridView1.Columns[e.ColumnIndex].HeaderText.EndsWith("(%)")) // Only percentage columns
-            {
-                if (e.Value != null && decimal.TryParse(e.Value.ToString(), out decimal value))
-                {
-                    e.Value = (value / 100).ToString("P2"); // Converts "16.5" → "16.50%"
-                    e.FormattingApplied = true;
-                }
-            }
-
-            string columnName = dataGridView1.Columns[e.ColumnIndex].HeaderText;
-            var cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
-            // Format Date Fields
-            if (columnName.Contains("Date Sample Taken") || columnName.Contains("Upload Date"))
-            {
-                if (e.Value != null && DateTime.TryParse(e.Value.ToString(), out DateTime dateValue))
-                {
-                    e.Value = dateValue.ToString("MM/dd/yyyy");
-                    e.FormattingApplied = true;
-                }
-            }
-
-            // Apply "N/A" if Sample Date/Time is within 1 hour of Upload Date/Time
-            if (columnName.Contains("Time Sample Taken"))
-            {
-                DateTime? sampleDateTime = null;
-                DateTime? uploadDateTime = null;
-
-                // Get values
-                if (DateTime.TryParse(dataGridView1.Rows[e.RowIndex].Cells["Date Sample Taken"]?.Value?.ToString(), out DateTime sampleDate) &&
-                    DateTime.TryParse(e.Value?.ToString(), out DateTime sampleTime))
-                {
-                    sampleDateTime = sampleDate.Date.Add(sampleTime.TimeOfDay);
-                }
-
-                if (DateTime.TryParse(dataGridView1.Rows[e.RowIndex].Cells["Upload Date"]?.Value?.ToString(), out DateTime uploadDate) &&
-                    DateTime.TryParse(dataGridView1.Rows[e.RowIndex].Cells["Upload Time"]?.Value?.ToString(), out DateTime uploadTime))
-                {
-                    uploadDateTime = uploadDate.Date.Add(uploadTime.TimeOfDay);
-                }
-
-                // Check if within 1 hour, set to "N/A"
-                if (sampleDateTime.HasValue && uploadDateTime.HasValue)
-                {
-                    if ((uploadDateTime.Value - sampleDateTime.Value).TotalMinutes <= 60)
-                    {
-                        e.Value = "N/A";
-                        e.FormattingApplied = true;
-                    }
-                }
-
-            }
-
-
-        }*/
     }
 }
 

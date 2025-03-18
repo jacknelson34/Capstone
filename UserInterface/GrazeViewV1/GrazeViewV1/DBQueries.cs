@@ -9,6 +9,8 @@ using Microsoft.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Globalization;
 using OpenCvSharp.Flann;
+using System.Data.Odbc;
+using System.Diagnostics;
 
 namespace GrazeViewV1
 {
@@ -17,13 +19,13 @@ namespace GrazeViewV1
     {
 
         private readonly string _connectionString;
-        private SqlConnection? _connection;
+        private OdbcConnection? _connection;
         private bool _disposed;
 
         public DBQueries(string connectionString)
         {
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
-            _connection = new SqlConnection(_connectionString);
+            _connection = new OdbcConnection(_connectionString);
         }
 
         // Pull CSV Data from DB - Works
@@ -34,12 +36,28 @@ namespace GrazeViewV1
             try
             {
                 await EnsureConnectionOpenAsync();
-                string query = "SELECT * FROM CSVDB";
+                string query = @"
+                SELECT 
+                    ID,
+                    SourceFile,
+                    QufuPercent,
+                    NalePercent,
+                    ErciPercent,
+                    AirBubblePercent,
+                    DateSampleTaken,
+                    CAST(TimeSampleTaken AS VARCHAR(8)) AS TimeSampleTaken, 
+                    CAST(UploadTime AS VARCHAR(8)) AS UploadTime,
+                    UploadDate,
+                    SampleLocation,
+                    SheepBreed,
+                    Comments
+                FROM CSVDB";
 
-                using (var command = new SqlCommand(query, _connection))
+
+                using (OdbcCommand command = new OdbcCommand(query, _connection))
                 using (var reader = await command.ExecuteReaderAsync())
                 {
-                    while (await reader.ReadAsync())
+                    while (reader.Read())
                     {
                         var row = new Dictionary<string, object>();
                         for (int i = 0; i < reader.FieldCount; i++)
@@ -58,27 +76,27 @@ namespace GrazeViewV1
             return results;
         }
 
-        // Pull Image Data From DB - Works
+        // Pull image from DB - take 2
         public async Task<Bitmap> RetrieveImageFromDB(int imageIndex)
         {
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                using (OdbcConnection conn = new OdbcConnection(_connectionString))
                 {
                     await conn.OpenAsync(); // Ensure async database connection
 
                     // Use TOP 1 for better performance (avoids OFFSET issues)
-                    string query = "SELECT ImageData FROM Images WHERE ImageID = @Index";
+                    string query = "SELECT ImageData FROM Images WHERE ImageID = ?";
 
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Index", imageIndex);
+                        cmd.Parameters.AddWithValue("?", imageIndex);
                         cmd.CommandTimeout = 120; // Increase timeout for large images
 
-                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync(CommandBehavior.SequentialAccess))
+                        using (OdbcDataReader reader = (OdbcDataReader) cmd.ExecuteReader())
                         {
-                            if (!await reader.ReadAsync())
+                            if (!reader.Read())
                             {
                                 MessageBox.Show($"No image found at index {imageIndex}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return null;
@@ -87,21 +105,11 @@ namespace GrazeViewV1
                             // Read image stream instead of loading full byte array
                             using (MemoryStream ms = new MemoryStream())
                             {
-                                const int bufferSize = 4096; // Read in 4KB chunks
-                                byte[] buffer = new byte[bufferSize];
-                                long bytesRead;
-                                int readCount;
+                                long length = reader.GetBytes(0, 0, null, 0, 0);
+                                byte[] buffer = new byte[length];
+                                reader.GetBytes(0, 0, buffer, 0, (int)length);
 
-                                // Read stream in chunks for large images
-                                using (var stream = reader.GetStream(0))
-                                {
-                                    while ((readCount = await stream.ReadAsync(buffer, 0, buffer.Length)) > 0)
-                                    {
-                                        ms.Write(buffer, 0, readCount);
-                                    }
-                                }
-
-                                return new Bitmap(ms);
+                                return new Bitmap(new MemoryStream(buffer));
                             }
                         }
                     }
@@ -131,15 +139,15 @@ namespace GrazeViewV1
 
                 string imageName = Path.GetFileName(imagePath);
 
-                using (SqlConnection conn = new SqlConnection(_connectionString)) 
+                using (OdbcConnection conn = new OdbcConnection(_connectionString)) 
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
 
                     // Check if the image already exists in the database
-                    string checkQuery = "SELECT COUNT(*) FROM Images WHERE ImageName = @ImageName";
-                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
+                    string checkQuery = "SELECT COUNT(*) FROM Images WHERE ImageName = ?";
+                    using (OdbcCommand checkCmd = new OdbcCommand(checkQuery, conn))
                     {
-                        checkCmd.Parameters.AddWithValue("@ImageName", imageName);
+                        checkCmd.Parameters.Add(new OdbcParameter("?", OdbcType.VarChar, 255) { Value = imageName });
                         int count = (int)checkCmd.ExecuteScalar();
 
                         if (count > 0)
@@ -184,20 +192,21 @@ namespace GrazeViewV1
 
                 string imageName = Path.GetFileName(imagePath);
 
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                using (OdbcConnection conn = new OdbcConnection(_connectionString))
                 {
                     await conn.OpenAsync();
 
                     // Convert the image to a byte array
-                    byte[] imageBytes = File.ReadAllBytes(imagePath);
+                    byte[] imageBytes = await File.ReadAllBytesAsync(imagePath);
 
                     // Insert image into the database
-                    string insertQuery = "INSERT INTO Images (ImageName, ImageData) VALUES (@ImageName, @ImageData)";
-                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                    string insertQuery = "INSERT INTO Images (ImageName, ImageData) VALUES (?, ?)";
+                    using (OdbcCommand insertCmd = new OdbcCommand(insertQuery, conn))
                     {
-                        insertCmd.Parameters.AddWithValue("@ImageName", imageName);
-                        insertCmd.Parameters.AddWithValue("@ImageData", imageBytes);
-                        insertCmd.ExecuteNonQuery();
+                        insertCmd.Parameters.Add("?", OdbcType.VarChar, 255).Value = imageName;
+                        insertCmd.Parameters.Add("?", OdbcType.Image, imageBytes.Length).Value = imageBytes;
+
+                        await insertCmd.ExecuteNonQueryAsync();
                     }
 
                     //MessageBox.Show($"Uploaded: {imageName}");
@@ -219,29 +228,27 @@ namespace GrazeViewV1
         INSERT INTO CSVDB (SourceFile, QufuPercent, NalePercent, ErciPercent, 
         AirBubblePercent, DateSampleTaken, TimeSampleTaken, UploadDate, UploadTime, 
         SampleLocation, SheepBreed, Comments) 
-        VALUES (@SourceFile, @QufuPercent, @NalePercent, @ErciPercent, @AirBubblePercent, 
-        @DateSampleTaken, @TimeSampleTaken, @UploadDate, @UploadTime, @SampleLocation, 
-        @SheepBreed, @Comments);";
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
             try
             {
                 EnsureConnectionOpen(); // Assuming this method ensures the connection is open
 
-                using (var command = new SqlCommand(insertQuery, _connection))
+                using (OdbcCommand command = new OdbcCommand(insertQuery, _connection))
                 {
                     // Assuming csvData contains values in the exact order of the database fields
-                    command.Parameters.AddWithValue("@SourceFile", csvData[0]);
-                    command.Parameters.AddWithValue("@QufuPercent", csvData[2]);
-                    command.Parameters.AddWithValue("@NalePercent", csvData[1]);
-                    command.Parameters.AddWithValue("@ErciPercent", csvData[3]);
-                    command.Parameters.AddWithValue("@AirBubblePercent", csvData[4]);
-                    command.Parameters.AddWithValue("@DateSampleTaken", csvData[5]);
-                    command.Parameters.AddWithValue("@TimeSampleTaken", csvData[6]);
-                    command.Parameters.AddWithValue("@UploadDate", csvData[7]);
-                    command.Parameters.AddWithValue("@UploadTime", csvData[8]);
-                    command.Parameters.AddWithValue("@SampleLocation", csvData[9]);
-                    command.Parameters.AddWithValue("@SheepBreed", csvData[10]);
-                    command.Parameters.AddWithValue("@Comments", csvData[11]);
+                    command.Parameters.AddWithValue("?", csvData[0]);                   // SourceFile
+                    command.Parameters.AddWithValue("?", csvData[2]);                   // Qufu 
+                    command.Parameters.AddWithValue("?", csvData[1]);                   // Nale
+                    command.Parameters.AddWithValue("?", csvData[3]);                   // Erci
+                    command.Parameters.AddWithValue("?", csvData[4]);                   // Air bubble
+                    command.Parameters.AddWithValue("?", csvData[5]);                   // Sample Date
+                    command.Parameters.AddWithValue("?", csvData[6]);                   // Sample Time
+                    command.Parameters.AddWithValue("?", csvData[7]);                   // Upload Date
+                    command.Parameters.AddWithValue("?", csvData[8]);                   // Upload Time
+                    command.Parameters.AddWithValue("?", csvData[9]);                   // Location
+                    command.Parameters.AddWithValue("?", csvData[10]);                  // Sheep Breed
+                    command.Parameters.AddWithValue("?", csvData[11]);                  // Comments
 
                     int rowsAffected = command.ExecuteNonQuery();
                     success = rowsAffected > 0;
@@ -261,8 +268,8 @@ namespace GrazeViewV1
             if (_connection == null)
             {
                 // Initialize the connection with a valid connection string
-                string connectionString = "Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;User Id=sql404admin;Password=sheepstool404();TrustServerCertificate=False;MultipleActiveResultSets=True;";
-                _connection = new SqlConnection(connectionString);
+                string connectionString = "Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;";
+                _connection = new OdbcConnection(connectionString);
             }
 
             if (_connection.State != ConnectionState.Open)
@@ -286,7 +293,7 @@ namespace GrazeViewV1
                         // Delete images from the Images table (modify table name if needed)
                         string deleteImagesQuery = "TRUNCATE TABLE Images";
 
-                        using (var imageCommand = new SqlCommand(deleteImagesQuery, _connection, transaction))
+                        using (var imageCommand = new OdbcCommand(deleteImagesQuery, _connection, transaction))
                         {
                             int imagesDeleted = await imageCommand.ExecuteNonQueryAsync();
                             Console.WriteLine($"Deleted {imagesDeleted} images.");
@@ -295,7 +302,7 @@ namespace GrazeViewV1
                         // Delete upload records from CSVDB 
                         string deleteUploadsQuery = "DELETE FROM CSVDB; DBCC CHECKIDENT ('CSVDB', RESEED, 0);";
 
-                        using (var uploadCommand = new SqlCommand(deleteUploadsQuery, _connection, transaction))
+                        using (var uploadCommand = new OdbcCommand(deleteUploadsQuery, _connection, transaction))
                         {
                             int uploadsDeleted = await uploadCommand.ExecuteNonQueryAsync();
                             Console.WriteLine($"Deleted {uploadsDeleted} uploads.");
@@ -326,15 +333,32 @@ namespace GrazeViewV1
             {
                 var result = new Dictionary<string, object>();
 
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                using (OdbcConnection conn = new OdbcConnection(_connectionString))
                 {
                     await conn.OpenAsync();
 
                     // Check if index exists before querying
-                    string checkQuery = "SELECT COUNT(*) FROM CSVDB WHERE ID = @Index";
-                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
+                    // Fetch row data while ensuring TIME values are formatted properly
+                    string checkQuery = @"
+                        SELECT 
+                            ID, 
+                            SourceFile, 
+                            QufuPercent, 
+                            NalePercent, 
+                            ErciPercent, 
+                            AirBubblePercent, 
+                            DateSampleTaken, 
+                            CONVERT(VARCHAR, TimeSampleTaken, 108) AS TimeSampleTaken, -- Fix TIME issue
+                            UploadDate, 
+                            CONVERT(VARCHAR, UploadTime, 108) AS UploadTime, -- Fix TIME issue
+                            SampleLocation, 
+                            SheepBreed, 
+                            Comments
+                        FROM CSVDB
+                        WHERE ID = ?;"; // ODBC uses '?' for parameters
+                    using (OdbcCommand checkCmd = new OdbcCommand(checkQuery, conn))
                     {
-                        checkCmd.Parameters.AddWithValue("@Index", index);
+                        checkCmd.Parameters.AddWithValue("?", index);
                         int count = (int)await checkCmd.ExecuteScalarAsync();
                         if (count == 0)
                         {
@@ -343,18 +367,49 @@ namespace GrazeViewV1
                         }
                     }
 
-                    // Fetch data
-                    string query = "SELECT * FROM CSVDB WHERE ID = @Index";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    // Fetch row data while ensuring TIME values are formatted properly
+                    string query = @"
+                        SELECT 
+                            ID, 
+                            SourceFile, 
+                            QufuPercent, 
+                            NalePercent, 
+                            ErciPercent, 
+                            AirBubblePercent, 
+                            DateSampleTaken, 
+                            CONVERT(VARCHAR, TimeSampleTaken, 108) AS TimeSampleTaken, -- Fix TIME issue
+                            UploadDate, 
+                            CONVERT(VARCHAR, UploadTime, 108) AS UploadTime, -- Fix TIME issue
+                            SampleLocation, 
+                            SheepBreed, 
+                            Comments
+                        FROM CSVDB
+                        WHERE ID = ?;"; 
+                    using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Index", index);
-                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                        cmd.Parameters.AddWithValue("?", index);
+                        using (OdbcDataReader reader = (OdbcDataReader)await cmd.ExecuteReaderAsync())
                         {
-                            if (await reader.ReadAsync()) // ✅ Row found
+                            if (await reader.ReadAsync()) // Row found
                             {
                                 for (int i = 0; i < reader.FieldCount; i++)
                                 {
-                                    result[reader.GetName(i)] = reader.IsDBNull(i) ? null : reader.GetValue(i);
+                                    if (!reader.IsDBNull(i))
+                                    {
+                                        object value = reader.GetValue(i);
+                                        if (value is TimeSpan timeSpan)
+                                        {
+                                            result[reader.GetName(i)] = timeSpan.ToString(@"hh\:mm\:ss");
+                                        }
+                                        else
+                                        {
+                                            result[reader.GetName(i)] = value;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        result[reader.GetName(i)] = null;
+                                    }
                                 }
                             }
                         }
@@ -375,7 +430,7 @@ namespace GrazeViewV1
             if (_connection?.State != ConnectionState.Open)
             {
                 //MessageBox.Show("Opening new database connection...");
-                _connection = new SqlConnection(_connectionString);
+                _connection = new OdbcConnection(_connectionString);
                 await _connection.OpenAsync();
                 //MessageBox.Show($"Connection opened. State: {_connection.State}");
             }
@@ -385,19 +440,31 @@ namespace GrazeViewV1
         {
             if (_connection != null)
             {
-                //MessageBox.Show("\nStarting connection cleanup...");
-                if (_connection.State == ConnectionState.Open)
+                if (_connection.State != ConnectionState.Closed) // Check if connection is valid
                 {
-                    //MessageBox.Show("Closing open connection...");
-                    await _connection.CloseAsync();
-                    //MessageBox.Show("Connection closed successfully.");
+                    try
+                    {
+                        await _connection.CloseAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error closing connection: {ex.Message}");
+                    }
                 }
-                //MessageBox.Show("Disposing connection...");
-                await _connection.DisposeAsync();
-                _connection = null;
-                //MessageBox.Show("Connection disposed.");
+
+                try
+                {
+                    await _connection.DisposeAsync();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error disposing connection: {ex.Message}");
+                }
+
+                _connection = null; // Reset connection after closing
             }
         }
+
 
         public void Dispose()
         {
