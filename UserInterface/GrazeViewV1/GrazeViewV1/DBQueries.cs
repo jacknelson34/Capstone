@@ -454,7 +454,7 @@ namespace GrazeViewV1
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error closing connection: {ex.Message}");
+                    //MessageBox.Show($"Error closing connection: {ex.Message}");
                 }
 
                 try
@@ -473,8 +473,6 @@ namespace GrazeViewV1
                 _connection = null; // Reset connection after cleanup
             }
         }
-
-
 
 
 

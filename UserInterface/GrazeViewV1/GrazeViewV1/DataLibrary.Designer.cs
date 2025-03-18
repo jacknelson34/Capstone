@@ -96,7 +96,7 @@
             previewButton.Name = "previewButton";
             previewButton.Size = new Size(350, 60);
             previewButton.TabIndex = 2;
-            previewButton.Text = "Preview Uploaded Image";
+            previewButton.Text = "Preview Selected Image";
             previewButton.UseVisualStyleBackColor = false;
             previewButton.Click += previewButton_Click;
             // 
@@ -291,7 +291,7 @@
                 Size = new Size(50, 50), // Adjust size as needed
                 Image = Properties.Resources.LoadingGif, // Add a spinner GIF to your Resources
                 SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Transparent,
+                BackColor = Color.LightGreen,
                 Anchor = AnchorStyles.Right & AnchorStyles.Left,
                 Visible = false // Initially hidden
             };
@@ -303,8 +303,8 @@
                 Size = new Size(50, 50),
                 Image = Properties.Resources.LoadingGif,
                 SizeMode = PictureBoxSizeMode.Zoom,
-                BackColor = Color.Transparent,
-                Anchor = AnchorStyles.Right & AnchorStyles.Left,
+                BackColor = Color.LightGreen,
+                Anchor = AnchorStyles.Right,
                 Visible = false
             };
             buttonPanel.Controls.Add(exportLoader);

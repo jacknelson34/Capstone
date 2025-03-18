@@ -16,6 +16,7 @@ namespace GrazeViewV1
         private MainPage _mainPage;    // hold reference to Main Page form
         private bool IsNavigating;     // boolean variable that checks if the user is still using the app
         private readonly DBQueries _dbQueries;
+        private bool queryInProgress = false;
 
         public DataLibrary(MainPage mainpage, DBQueries dbQueries)
         {
@@ -97,6 +98,11 @@ namespace GrazeViewV1
             {
                 return;
             }
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (e.CloseReason == CloseReason.UserClosing)
             {
                 _mainPage.Close();
@@ -106,6 +112,13 @@ namespace GrazeViewV1
         // Method for previewing an uploaded image
         private async void previewButton_Click(object sender, EventArgs e)
         {
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            queryInProgress = true;
+
             Button btn = sender as Button;
             if (btn == null) return;
 
@@ -132,7 +145,9 @@ namespace GrazeViewV1
             loadingSpinner.Location = new Point(btn.Location.X + (btn.Width - loadingSpinner.Width) / 2,
                                                 btn.Location.Y + (btn.Height - loadingSpinner.Height) / 2);
             loadingSpinner.Visible = true;
-            btn.Visible = false; // Hide the button
+            loadingSpinner.BringToFront();
+            //btn.Visible = false; // Hide the button
+            btn.Text = "";
 
             // Load the image in the background
             Bitmap retrievedImage = await Task.Run(() =>
@@ -143,7 +158,8 @@ namespace GrazeViewV1
 
             // Hide the spinner and show the button again
             loadingSpinner.Visible = false;
-            btn.Visible = true;
+            //btn.Visible = true;
+            btn.Text = "Preview Selected Image";
 
             if (retrievedImage == null)
             {
@@ -167,6 +183,9 @@ namespace GrazeViewV1
 
             imagePreviewForm.Controls.Add(pictureBox);
             imagePreviewForm.ShowDialog(); // Show as a dialog
+
+
+            queryInProgress = false;
         }
 
 
@@ -174,6 +193,12 @@ namespace GrazeViewV1
         private void backButton_Click(object? sender, EventArgs e)
         {
             IsNavigating = true;   // User is still using the app
+
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // Checks to make sure MainPage form is not null
             if (_mainPage != null)
@@ -202,6 +227,13 @@ namespace GrazeViewV1
         {
             IsNavigating = true;
 
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            queryInProgress = true;
+
             // Ensure fullscreen consistency
             ConsistentForm.IsFullScreen = (this.WindowState == FormWindowState.Maximized);
 
@@ -213,7 +245,7 @@ namespace GrazeViewV1
             exportLoader.Location = new Point(btn.Location.X + (btn.Width - exportLoader.Width) / 2,
                                                 btn.Location.Y + (btn.Height - exportLoader.Height) / 2);
             exportLoader.Visible = true;
-            btn.Visible = false; // Hide the button
+            btn.Text = ""; // Hide the button text
             exportLoader.BringToFront();
 
             // Collect selected row indexes
@@ -235,7 +267,7 @@ namespace GrazeViewV1
             {
                 MessageBox.Show("Must select at least one upload.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 exportLoader.Visible = false;
-                btn.Visible = true;
+                btn.Text = "Export to Printview";
                 return;
             }
 
@@ -252,10 +284,12 @@ namespace GrazeViewV1
 
             // Remove loading icon and restore button after completion
             exportLoader.Visible = false;
-            btn.Visible = true;
+            btn.Text = "Export to Printview";
 
             // Debugging
             //MessageBox.Show("Export complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            queryInProgress = false;
         }
 
 
@@ -379,6 +413,12 @@ namespace GrazeViewV1
         // Method for clearing Data
         private void clearDataButton_Click(object sender, EventArgs e)
         {
+
+            if (queryInProgress)
+            {
+                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             DialogResult clearDataCheck = MessageBox.Show(
                 "Are you sure you want to clear all data?  This cannot be undone.",         // Message
