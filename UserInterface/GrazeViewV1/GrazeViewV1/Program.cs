@@ -118,7 +118,7 @@ namespace GrazeViewV1
             if (!IsODBCDriverInstalled("ODBC Driver 18 for SQL Server"))
             {
                 Process process = new Process();
-                process.StartInfo.FileName = "msodbcsql18.msi";
+                process.StartInfo.FileName = "msodbcsql.msi";
                 process.StartInfo.Arguments = "/quiet /norestart";
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.CreateNoWindow = true;
