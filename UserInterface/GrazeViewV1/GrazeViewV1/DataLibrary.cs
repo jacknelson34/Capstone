@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +18,7 @@ namespace GrazeViewV1
         private bool IsNavigating;     // boolean variable that checks if the user is still using the app
         private readonly DBQueries _dbQueries;
         private bool queryInProgress = false;
+        private CancellationTokenSource _cancelToken = new CancellationTokenSource();
 
         public DataLibrary(MainPage mainpage, DBQueries dbQueries)
         {
@@ -100,7 +102,7 @@ namespace GrazeViewV1
             }
             if (queryInProgress)
             {
-                MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Process.GetCurrentProcess().Kill();
                 return;
             }
             if (e.CloseReason == CloseReason.UserClosing)
@@ -117,7 +119,6 @@ namespace GrazeViewV1
                 MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            queryInProgress = true;
 
             Button btn = sender as Button;
             if (btn == null) return;
@@ -137,6 +138,7 @@ namespace GrazeViewV1
                 MessageBox.Show("Only one Upload may be selected at a time for Preview.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            queryInProgress = true;
 
             var selectedRow = selectedRows.First();
             int rowIndex = selectedRow.Index + 1;
@@ -149,43 +151,46 @@ namespace GrazeViewV1
             //btn.Visible = false; // Hide the button
             btn.Text = "";
 
+            Bitmap retrievedImage = null;
+
             // Load the image in the background
-            Bitmap retrievedImage = await Task.Run(() =>
-            {
-                DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
-                return dbQueries.RetrieveImageFromDB(rowIndex);
-            });
+                retrievedImage = await Task.Run(() =>
+                    {
+                        DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
+                        return dbQueries.RetrieveImageFromDB(rowIndex);
+                    });
 
-            // Hide the spinner and show the button again
-            loadingSpinner.Visible = false;
-            //btn.Visible = true;
-            btn.Text = "Preview Selected Image";
+                // Hide the spinner and show the button again
+                loadingSpinner.Visible = false;
+                //btn.Visible = true;
+                btn.Text = "Preview Selected Image";
 
-            if (retrievedImage == null)
-            {
-                MessageBox.Show("No image available for the selected upload.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                if (retrievedImage == null)
+                {
+                    MessageBox.Show("No image available for the selected upload.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            // Display the image in a new form
-            Form imagePreviewForm = new Form
-            {
-                Text = "Image Preview",
-                Size = new Size(800, 600) // Adjust size as needed
-            };
+                // Display the image in a new form
+                Form imagePreviewForm = new Form
+                {
+                    Text = "Image Preview",
+                    Size = new Size(800, 600) // Adjust size as needed
+                };
 
-            PictureBox pictureBox = new PictureBox
-            {
-                Image = retrievedImage,
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Dock = DockStyle.Fill
-            };
+                PictureBox pictureBox = new PictureBox
+                {
+                    Image = retrievedImage,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Dock = DockStyle.Fill
+                };
 
-            imagePreviewForm.Controls.Add(pictureBox);
-            imagePreviewForm.ShowDialog(); // Show as a dialog
+                imagePreviewForm.Controls.Add(pictureBox);
+                imagePreviewForm.ShowDialog(); // Show as a dialog
 
 
-            queryInProgress = false;
+                queryInProgress = false;
+
         }
 
 

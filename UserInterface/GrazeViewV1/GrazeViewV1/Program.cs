@@ -1,5 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Diagnostics;
+using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace GrazeViewV1
 {
@@ -42,6 +45,13 @@ namespace GrazeViewV1
                 // Allow UI to refresh while loading
                 Application.DoEvents();
 
+                bool driverCheck = IsODBCDriverInstalled("ODBC Driver 18 for SQL Server");
+                if (!driverCheck)
+                {
+                    MessageBox.Show("Driver being downloaded.");
+                    InstallODBCDriver();
+                }
+
                 // Connect to database
                 dbConnections = new DBConnections(new DBSettings(
                     driver: "ODBC Driver 18 for SQL Server",
@@ -59,7 +69,7 @@ namespace GrazeViewV1
                 {
                     MessageBox.Show("Failed to connect to the database. Exiting application.",
                                     "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    throw new Exception("Connection to Database failed.");
                 }
             }
             catch (Exception ex)
@@ -73,7 +83,7 @@ namespace GrazeViewV1
             splashThread.Join();  // Ensure the splash screen thread fully exits before continuing
 
             // Ensure proper storage handling
-            Application.ApplicationExit += async (sender, e) => await SaveGlobalDataAsync(dbQueries);
+            Application.ApplicationExit += (s, e) => Process.GetCurrentProcess().Kill();
             EnsureAppDataFolderExists();
 
             // Start application
@@ -91,21 +101,32 @@ namespace GrazeViewV1
             Process_Per_Monitor_DPI_Aware = 2
         }
 
-        // Method handler for application close
-        private static void OnApplicationExit(object sender, EventArgs e)
+        private static bool IsODBCDriverInstalled(string driverName)
         {
-            var dbConnections = new DBConnections(new DBSettings(
-                driver: "ODBC Driver 18 for SQL Server",
-                server: "sqldatabase404.database.windows.net",
-                database: "404ImageDBsql",
-                username: "sql404admin",
-                password: "sheepstool404()"
-            ));
-            var dbQueries = new DBQueries(dbConnections.ConnectionString); // Define dbQueries before use
-
-            // Save data to files
-            SaveGlobalDataAsync(dbQueries);
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\ODBC\ODBCINST.INI\ODBC Drivers"))
+            {
+                if (key != null && key.GetValue(driverName) != null)
+                {
+                    return true; // Driver exists
+                }
+            }
+            return false; // Driver is missing
         }
+
+        private static void InstallODBCDriver()
+        {
+            if (!IsODBCDriverInstalled("ODBC Driver 18 for SQL Server"))
+            {
+                Process process = new Process();
+                process.StartInfo.FileName = "msodbcsql18.msi";
+                process.StartInfo.Arguments = "/quiet /norestart";
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+                process.Start();
+                process.WaitForExit();
+            }
+        }
+
 
         // Check for valid folder storage
         private static void EnsureAppDataFolderExists()
@@ -131,28 +152,6 @@ namespace GrazeViewV1
             }
         }
 
-        // Save data
-        private static async Task SaveGlobalDataAsync(DBQueries dbQueries)
-        {
-            try
-            {
-                foreach (var upload in GlobalData.Uploads)
-                {
-                    var mlData = GlobalData.machineLearningData
-                        .FirstOrDefault(m => m != null && m.nalePercentage == upload.UploadName);
-
-                    //await dbQueries.InsertUploadAsync(upload, mlData ?? new MLData());
-                }
-
-                //MessageBox.Show("All data saved to SQL successfully.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error saving data to database: {ex.Message}", "Save Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        // TODO
         public static async Task ClearAllData(DBQueries dbQueries)
         {
             try

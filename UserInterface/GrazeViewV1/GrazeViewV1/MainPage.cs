@@ -97,6 +97,11 @@ namespace GrazeViewV1
         private async void MainPage_Resize(object sender, EventArgs e)
         {
 
+            if(this.WindowState == FormWindowState.Minimized)
+            {
+                return;
+            }
+
             float fontSize = Math.Min(65, this.ClientSize.Width / 25f); // Calculate font size based on form width
             //MessageBox.Show("Main Page Width : " + this.ClientSize.Width.ToString() + "\nFont Size : " + fontSize.ToString());
             mainLabel.Font = new Font("Times New Roman", fontSize, FontStyle.Bold, GraphicsUnit.Point, 0); // Set label font
