@@ -31,6 +31,7 @@ namespace GrazeViewV1
             _dbQueries = dbQueries ?? throw new ArgumentNullException(nameof(dbQueries));
             _selectedIndexes = selectedIndexes ?? new List<int>();
 
+
             _dbSettings = new DBSettings(
                 driver: "ODBC Driver 18 for SQL Server",
                 server: "sqldatabase404.database.windows.net",
@@ -135,6 +136,7 @@ namespace GrazeViewV1
 
         private async Task<Panel> CreateUploadPanel(int index)
         {
+
             var row = _dbQueries.GetRowByIndexAsync(index).Result ?? new Dictionary<string, object>();
 
             if (_dbQueries == null)

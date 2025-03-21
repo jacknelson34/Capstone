@@ -237,7 +237,6 @@ namespace GrazeViewV1
                 MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            queryInProgress = true;
 
             // Ensure fullscreen consistency
             ConsistentForm.IsFullScreen = (this.WindowState == FormWindowState.Maximized);
@@ -275,6 +274,7 @@ namespace GrazeViewV1
                 btn.Text = "Export to Printview";
                 return;
             }
+            queryInProgress = true;
 
             // Open DataLibraryExpandedView and pass selected indexes
             DataLibraryExpandedView expandedView = new DataLibraryExpandedView(_mainPage, _dbQueries, selectedIndexes);

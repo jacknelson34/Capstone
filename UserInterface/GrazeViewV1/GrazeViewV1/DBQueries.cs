@@ -79,7 +79,6 @@ namespace GrazeViewV1
         // Pull image from DB - take 2
         public async Task<Bitmap> RetrieveImageFromDB(int imageIndex)
         {
-            imageIndex--; // INdexing between tables is off one for some reason
 
             try
             {
@@ -294,21 +293,21 @@ namespace GrazeViewV1
                     try
                     {
                         // DELETE instead of TRUNCATE for better ODBC compatibility
-                        string deleteImagesQuery = "DELETE FROM Images; DBCC CHECKIDENT ('Images', RESEED, 0);";
+                        string deleteImagesQuery = "SET NOCOUNT ON; DELETE FROM Images; DBCC CHECKIDENT ('Images', RESEED, 0);";
 
                         using (var imageCommand = new OdbcCommand(deleteImagesQuery, _connection, transaction))
                         {
                             int imagesDeleted = await imageCommand.ExecuteNonQueryAsync();
-                            MessageBox.Show($"Deleted {imagesDeleted} images.");
+                            //MessageBox.Show($"Deleted {imagesDeleted} images.");
                         }
 
                         // Ensure CSVDB records are fully reset
-                        string deleteUploadsQuery = "DELETE FROM CSVDB; DBCC CHECKIDENT ('CSVDB', RESEED, 0);";
+                        string deleteUploadsQuery = "SET NOCOUNT ON; DELETE FROM CSVDB; DBCC CHECKIDENT ('CSVDB', RESEED, 0);";
 
                         using (var uploadCommand = new OdbcCommand(deleteUploadsQuery, _connection, transaction))
                         {
                             int uploadsDeleted = await uploadCommand.ExecuteNonQueryAsync();
-                            MessageBox.Show($"Deleted {uploadsDeleted} uploads.");
+                            //MessageBox.Show($"Deleted {uploadsDeleted} uploads.");
                         }
 
                         // Commit transaction to apply changes
@@ -330,9 +329,11 @@ namespace GrazeViewV1
         }
 
 
+
         // Query for DataLibraryExpandedView
         public async Task<Dictionary<string, object>> GetRowByIndexAsync(int index)
         {
+            index--;
             try
             {
                 var result = new Dictionary<string, object>();

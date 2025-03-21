@@ -1,10 +1,14 @@
+C:\Users\jackn\Desktop\GrazeView1.0\InstallerActions.cs
 C:\Users\jackn\Desktop\GrazeView1.0\GrazeViewV1.exe
+C:\Users\jackn\Desktop\GrazeView1.0\onnxruntime.dll
+C:\Users\jackn\Desktop\GrazeView1.0\onnxruntime_providers_shared.dll
 C:\Users\jackn\Desktop\GrazeView1.0\GrazeViewV1.dll
 C:\Users\jackn\Desktop\GrazeView1.0\GrazeViewV1.deps.json
 C:\Users\jackn\Desktop\GrazeView1.0\GrazeViewV1.runtimeconfig.json
 C:\Users\jackn\Desktop\GrazeView1.0\GrazeViewV1.pdb
 C:\Users\jackn\Desktop\GrazeView1.0\Azure.Core.dll
 C:\Users\jackn\Desktop\GrazeView1.0\Azure.Identity.dll
+C:\Users\jackn\Desktop\GrazeView1.0\System.Configuration.Install.dll
 C:\Users\jackn\Desktop\GrazeView1.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\jackn\Desktop\GrazeView1.0\Microsoft.Bcl.Cryptography.dll
 C:\Users\jackn\Desktop\GrazeView1.0\Microsoft.Data.SqlClient.dll
@@ -36,6 +40,7 @@ C:\Users\jackn\Desktop\GrazeView1.0\Newtonsoft.Json.dll
 C:\Users\jackn\Desktop\GrazeView1.0\OpenCvSharp.dll
 C:\Users\jackn\Desktop\GrazeView1.0\System.ClientModel.dll
 C:\Users\jackn\Desktop\GrazeView1.0\System.Configuration.ConfigurationManager.dll
+C:\Users\jackn\Desktop\GrazeView1.0\System.Data.Odbc.dll
 C:\Users\jackn\Desktop\GrazeView1.0\System.Data.SqlClient.dll
 C:\Users\jackn\Desktop\GrazeView1.0\System.Diagnostics.EventLog.dll
 C:\Users\jackn\Desktop\GrazeView1.0\System.IdentityModel.Tokens.Jwt.dll
@@ -100,6 +105,8 @@ C:\Users\jackn\Desktop\GrazeView1.0\runtimes\win-x86\native\opencv_videoio_ffmpe
 C:\Users\jackn\Desktop\GrazeView1.0\runtimes\win-arm64\native\sni.dll
 C:\Users\jackn\Desktop\GrazeView1.0\runtimes\win-x64\native\sni.dll
 C:\Users\jackn\Desktop\GrazeView1.0\runtimes\win-x86\native\sni.dll
+C:\Users\jackn\Desktop\GrazeView1.0\runtimes\unix\lib\net8.0\System.Data.Odbc.dll
+C:\Users\jackn\Desktop\GrazeView1.0\runtimes\win\lib\net8.0\System.Data.Odbc.dll
 C:\Users\jackn\Desktop\GrazeView1.0\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
 C:\Users\jackn\Desktop\GrazeView1.0\runtimes\win\lib\net8.0\System.Data.SqlClient.dll
 C:\Users\jackn\Desktop\GrazeView1.0\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll

@@ -424,7 +424,6 @@ namespace GrazeViewV1
                 MessageBox.Show("Please wait for content to load.", "Query in Progress", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            queryInProgress = true;
 
             IsNavigating = true;  // User is still using the app
 

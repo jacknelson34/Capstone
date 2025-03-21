@@ -117,11 +117,11 @@ namespace GrazeViewV1
             mainLabel.Location = new Point((this.ClientSize.Width / 2) - (mainLabel.Width / 2), // Center the label horizontally
                                            (this.ClientSize.Height / 6) - 40); // Position the label vertically
 
-            int sheepSize = Math.Min(this.ClientSize.Width / 10, 125); // Adjust proportionally, max 150
+            int sheepSize = Math.Min(this.ClientSize.Width / 10, 100); // Adjust proportionally, max 150
             sheep.Size = new Size(sheepSize, sheepSize);
             sheep.Location = new Point(
                                             (this.ClientSize.Width - sheep.Width) / 2,  // Center horizontally
-                                            mainLabel.Bottom + 10  // Adjust vertical positioning with a small margin
+                                            mainLabel.Bottom + 5  // Adjust vertical positioning with a small margin
                                         );
 
 

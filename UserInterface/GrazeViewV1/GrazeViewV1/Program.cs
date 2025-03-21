@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.Windows.Forms.Design;
 
 namespace GrazeViewV1
 {
@@ -42,15 +43,12 @@ namespace GrazeViewV1
 
             try
             {
+
+                // Check for driver
+                CheckandInstallDriver();
+
                 // Allow UI to refresh while loading
                 Application.DoEvents();
-
-                bool driverCheck = IsODBCDriverInstalled("ODBC Driver 18 for SQL Server");
-                if (!driverCheck)
-                {
-                    MessageBox.Show("Driver being downloaded.");
-                    InstallODBCDriver();
-                }
 
                 // Connect to database
                 dbConnections = new DBConnections(new DBSettings(
@@ -67,14 +65,13 @@ namespace GrazeViewV1
 
                 if (!isConnected)
                 {
-                    MessageBox.Show("Failed to connect to the database. Exiting application.",
-                                    "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    throw new Exception("Connection to Database failed.");
+                    throw new Exception("Unable to connect to Database.  Check your internet connection and try again.");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error initializing application: {ex.Message}", "Startup Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
                 return;
             }
 
@@ -101,32 +98,147 @@ namespace GrazeViewV1
             Process_Per_Monitor_DPI_Aware = 2
         }
 
+        private static void ConfigureODBC_DSN()
+        {
+            try
+            {
+                string dsnName = "GrazeViewDSN";
+                string server = "sqldatabase404.database.windows.net";
+                string database = "404ImageDBSql";
+                string username = "sql404admin";
+                string password = "sheepstool404()";
+
+                // Command to add the DSN
+                string arguments = $@"/a {{CONFIGDSN ""ODBC Driver 18 for SQL Server"" ""DSN={dsnName}|Description=My ODBC Connection|Server={server}|Database={database}|Trusted_Connection=Yes""}}";
+
+
+                Process process = new Process();
+                process.StartInfo.FileName = "odbcconf.exe";
+                process.StartInfo.Arguments = arguments;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.CreateNoWindow = true;
+
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+
+                if(process.ExitCode == 0)
+                {
+                    MessageBox.Show("ODBC DSN Successfully configured", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Failed to configure ODBC DSN. \nError:  {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private static bool IsODBCDriverInstalled(string driverName)
         {
             using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\ODBC\ODBCINST.INI\ODBC Drivers"))
             {
-                if (key != null && key.GetValue(driverName) != null)
+                if (key != null)
                 {
-                    return true; // Driver exists
+                    object value = key.GetValue(driverName);
+                    return value != null;
                 }
             }
-            return false; // Driver is missing
+            return false;
+        }
+
+        private static void CheckandInstallDriver()
+        {
+            string driverName = "ODBC Driver 18 for SQL Server";
+
+            if (!IsODBCDriverInstalled(driverName))
+            {
+                DialogResult result = MessageBox.Show(
+                    "The required ODBC Driver is not installed.  Would you like to install in now?",
+                    "ODBC Driver Missing",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if(result == DialogResult.Yes)
+                {
+                    InstallODBCDriver();
+                }
+                else
+                {
+                    MessageBox.Show("The application may not function correctly without the required driver.",
+                        "Warning",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                }
+
+            }
+
         }
 
         private static void InstallODBCDriver()
         {
-            if (!IsODBCDriverInstalled("ODBC Driver 18 for SQL Server"))
+            try
             {
+                string installerPath = Path.Combine(appDataFolder, "msodbcsql.msi");
+
+                if (!File.Exists(installerPath))
+                {
+                    MessageBox.Show("Driver installer not found.  Please download the ODBC Driver manually.",
+                        "Installation Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                    Application.Exit();
+
+                    return;
+                }
+
                 Process process = new Process();
-                process.StartInfo.FileName = "msodbcsql.msi";
-                process.StartInfo.Arguments = "/quiet /norestart";
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.FileName = "msiexec.exe";
+                process.StartInfo.Arguments = $"/i \"{installerPath}\"";
+                process.StartInfo.UseShellExecute = true;
+                process.StartInfo.CreateNoWindow = false;
                 process.Start();
+
+                MessageBox.Show("The ODBC Driver is being installed.  Please restart the application after installation.",
+                    "Installation in progress.",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
                 process.WaitForExit();
+
+                if(process.ExitCode == 0)
+                {
+                    MessageBox.Show("Installation Complete.  The DSN will configure now.",
+                                        "Please wait",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
+
+                    ConfigureODBC_DSN();
+
+
+                    MessageBox.Show("Configuration Complete.  App will close now.",
+                                        "Installation/Configuration Complete",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
+                    Environment.Exit(0);
+
+                }
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Failed to install the ODBC Driver: {ex.Message}",
+                    "Installation Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                Application.Exit();
             }
         }
-
 
         // Check for valid folder storage
         private static void EnsureAppDataFolderExists()

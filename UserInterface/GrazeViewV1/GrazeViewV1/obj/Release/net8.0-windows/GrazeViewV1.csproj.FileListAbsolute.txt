@@ -127,3 +127,10 @@ C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\Graz
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Release\net8.0-windows\GrazeViewV1.csproj.AssemblyReference.cache
 C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\obj\Release\net8.0-windows\GrazeVie.FD6A3540.Up2Date
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\onnxruntime.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\onnxruntime_providers_shared.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\InstallerActions.cs
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\System.Configuration.Install.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\System.Data.Odbc.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\runtimes\unix\lib\net8.0\System.Data.Odbc.dll
+C:\Users\jackn\OneDrive\Documents\GitHub\Capstone\UserInterface\GrazeViewV1\GrazeViewV1\bin\Release\net8.0-windows\runtimes\win\lib\net8.0\System.Data.Odbc.dll

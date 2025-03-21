@@ -269,23 +269,12 @@ namespace GrazeViewV1
             if (e.CloseReason == CloseReason.UserClosing)       // If user decides to close the app...
             {
 
-                // Confirm close by user
-                DialogResult confirmClose = MessageBox.Show(
-                    "Are you sure you want to close while data is loading?",
-                    "Confirm Close.",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (confirmClose == DialogResult.Yes)       // If user confirms close,
-                {
-                    // Close if user says yes
-                    _mainPage.Close();                      // Close the entire applications    
-                }
-                else
-                {
-                    e.Cancel = true;                        // If user cancels close, continue running
-                }
-
+                MessageBox.Show(
+                    "Please do not close this window.",
+                    "Image Processing...",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+                e.Cancel = true;    
             }
 
         }
