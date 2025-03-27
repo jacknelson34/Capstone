@@ -34,7 +34,6 @@ namespace GrazeViewV1
             DBQueries dbQueries;
             DBConnections dbConnections;
 
-
             // Show SplashScreen in a separate thread
             SplashScreen splashScreen = new SplashScreen();
             Thread splashThread = new Thread(() => Application.Run(splashScreen));
@@ -85,6 +84,7 @@ namespace GrazeViewV1
 
             // Start application
             Application.Run(new MainPage(dbQueries));
+            
 
         }
 

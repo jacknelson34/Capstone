@@ -184,24 +184,45 @@ namespace GrazeViewV1
         // Push Image Data to DB - Need to adjust time it takes
         public async Task UploadImageToDB(string imagePath)
         {
-
             try
             {
                 if (!File.Exists(imagePath))
                 {
-                    MessageBox.Show($"Error: File not found - {imagePath}");
+                    MessageBox.Show($"Error: File not found – {imagePath}");
+                    return;
                 }
 
                 string imageName = Path.GetFileName(imagePath);
+                byte[] imageBytes;
+
+                using (var originalImage = new Bitmap(imagePath))
+                {
+                    // Resize proportionally to fit within 1920x1080
+                    int maxWidth = 1920;
+                    int maxHeight = 1080;
+
+                    float ratioX = (float)maxWidth / originalImage.Width;
+                    float ratioY = (float)maxHeight / originalImage.Height;
+                    float ratio = Math.Min(ratioX, ratioY);
+
+                    int newWidth = (int)(originalImage.Width * ratio);
+                    int newHeight = (int)(originalImage.Height * ratio);
+
+                    using (var resizedImage = new Bitmap(originalImage, new Size(newWidth, newHeight)))
+                    {
+                        // Convert resized image to byte array
+                        using (var ms = new MemoryStream())
+                        {
+                            resizedImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg); // Or PNG if preferred
+                            imageBytes = ms.ToArray();
+                        }
+                    }
+                }
 
                 using (OdbcConnection conn = new OdbcConnection(_connectionString))
                 {
                     await conn.OpenAsync();
 
-                    // Convert the image to a byte array
-                    byte[] imageBytes = await File.ReadAllBytesAsync(imagePath);
-
-                    // Insert image into the database
                     string insertQuery = "INSERT INTO Images (ImageName, ImageData) VALUES (?, ?)";
                     using (OdbcCommand insertCmd = new OdbcCommand(insertQuery, conn))
                     {
@@ -210,16 +231,16 @@ namespace GrazeViewV1
 
                         await insertCmd.ExecuteNonQueryAsync();
                     }
-
-                    //MessageBox.Show($"Uploaded: {imageName}");
                 }
+
+                //MessageBox.Show($"Uploaded: {imageName}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Database error: {ex.Message}");
             }
-
         }
+
 
         // Push CSV Data to DB - Works
         public bool UploadCSVToDB(List<string> csvData)
