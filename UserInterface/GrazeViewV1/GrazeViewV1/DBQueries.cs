@@ -181,7 +181,7 @@ namespace GrazeViewV1
             return 2;
         }
 
-        // Push Image Data to DB - Need to adjust time it takes
+        // Push Image Data to DB
         public async Task UploadImageToDB(string imagePath)
         {
             try
@@ -192,6 +192,7 @@ namespace GrazeViewV1
                     return;
                 }
 
+                // Resize Image
                 string imageName = Path.GetFileName(imagePath);
                 byte[] imageBytes;
 
@@ -213,7 +214,7 @@ namespace GrazeViewV1
                         // Convert resized image to byte array
                         using (var ms = new MemoryStream())
                         {
-                            resizedImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg); // Or PNG if preferred
+                            resizedImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png); // Or PNG if preferred
                             imageBytes = ms.ToArray();
                         }
                     }
@@ -314,7 +315,7 @@ namespace GrazeViewV1
                     try
                     {
                         // DELETE instead of TRUNCATE for better ODBC compatibility
-                        string deleteImagesQuery = "SET NOCOUNT ON; DELETE FROM Images; DBCC CHECKIDENT ('Images', RESEED, 0);";
+                        string deleteImagesQuery = "TRUNCATE TABLE Images";
 
                         using (var imageCommand = new OdbcCommand(deleteImagesQuery, _connection, transaction))
                         {
@@ -323,7 +324,7 @@ namespace GrazeViewV1
                         }
 
                         // Ensure CSVDB records are fully reset
-                        string deleteUploadsQuery = "SET NOCOUNT ON; DELETE FROM CSVDB; DBCC CHECKIDENT ('CSVDB', RESEED, 0);";
+                        string deleteUploadsQuery = "TRUNCATE TABLE CSVDB";
 
                         using (var uploadCommand = new OdbcCommand(deleteUploadsQuery, _connection, transaction))
                         {
@@ -354,7 +355,7 @@ namespace GrazeViewV1
         // Query for DataLibraryExpandedView
         public async Task<Dictionary<string, object>> GetRowByIndexAsync(int index)
         {
-            index--;
+
             try
             {
                 var result = new Dictionary<string, object>();
