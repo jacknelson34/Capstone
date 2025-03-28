@@ -272,7 +272,25 @@ namespace GrazeViewV1
         }
 
         // Method to indicate completion
-        public void CompleteProgress(string message)
+        public void CompleteMLProgress(string message)
+        {
+            if (loadingBar.InvokeRequired)
+            {
+                loadingBar.Invoke(new Action(() =>
+                {
+                    loadingBar.Value = loadingBar.Maximum;
+                    statusUpdates.Text = message;
+                }));
+            }
+            else
+            {
+                loadingBar.Value = loadingBar.Maximum;
+                statusUpdates.Text = message;
+            }
+        }
+
+        // Method to indicate completion
+        public void CompleteFullProgress(string message, Bitmap originalImage, Bitmap HeatMap)
         {
             if (loadingBar.InvokeRequired)
             {
@@ -281,7 +299,7 @@ namespace GrazeViewV1
                     loadingBar.Value = loadingBar.Maximum;
                     statusUpdates.Text = message;
                     //MessageBox.Show("ML Processing Complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    nextPage();
+                    nextPage(originalImage, HeatMap);
                 }));
             }
             else
@@ -289,7 +307,7 @@ namespace GrazeViewV1
                 loadingBar.Value = loadingBar.Maximum;
                 statusUpdates.Text = message;
                 //MessageBox.Show("ML Processing Complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                nextPage();
+                nextPage(originalImage, HeatMap);
             }
         }
 
@@ -314,10 +332,10 @@ namespace GrazeViewV1
 
         }
 
-        private void nextPage()     // Method for going to resultsPage
+        private void nextPage(Bitmap originalImage, Bitmap Heatmap)     // Method for going to resultsPage
         {
             IsNavigating = true;                                                                // Ensure user is navigating the app and not exiting
-            ResultPage resultsPage = new ResultPage(resultsImage, _mainPage);                   // Initialize new page
+            ResultPage resultsPage = new ResultPage(_mainPage, originalImage, Heatmap);                   // Initialize new page
             resultsPage.Show();                                                                 // Show new page
             this.Close();                                                                       // Hide current page
         }

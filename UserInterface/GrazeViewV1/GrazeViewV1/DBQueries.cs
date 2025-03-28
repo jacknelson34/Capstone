@@ -77,52 +77,56 @@ namespace GrazeViewV1
         }
 
         // Pull image from DB - take 2
-        public async Task<Bitmap> RetrieveImageFromDB(int imageIndex)
+        public async Task<(Bitmap, Bitmap)> RetrieveImagesFromDB(int imageIndex)
         {
-
             try
             {
                 using (OdbcConnection conn = new OdbcConnection(_connectionString))
                 {
-                    await conn.OpenAsync(); // Ensure async database connection
+                    await conn.OpenAsync();
 
-                    // Use TOP 1 for better performance (avoids OFFSET issues)
-                    string query = "SELECT ImageData FROM Images WHERE ImageID = ?";
+                    string query = "SELECT ImageData, HeatMapImage FROM Images WHERE ImageID = ?;";
 
                     using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("?", imageIndex);
-                        cmd.CommandTimeout = 120; // Increase timeout for large images
+                        cmd.CommandTimeout = 120;
 
                         using (OdbcDataReader reader = (OdbcDataReader) cmd.ExecuteReader())
                         {
                             if (!reader.Read())
                             {
                                 MessageBox.Show($"No image found at index {imageIndex}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return null;
+                                return (null, null);
                             }
 
-                            // Read image stream instead of loading full byte array
-                            using (MemoryStream ms = new MemoryStream())
+                            Bitmap imageData = null;
+                            Bitmap heatMap = null;
+
+                            if (!reader.IsDBNull(0))
                             {
-                                long length = reader.GetBytes(0, 0, null, 0, 0);
-                                byte[] buffer = new byte[length];
-                                reader.GetBytes(0, 0, buffer, 0, (int)length);
-
-                                //MessageBox.Show("Returning image at index: " + imageIndex);
-
-                                return new Bitmap(new MemoryStream(buffer));
+                                byte[] buffer = (byte[])reader[0];
+                                imageData = new Bitmap(new MemoryStream(buffer));
                             }
+
+                            if (!reader.IsDBNull(1))
+                            {
+                                byte[] buffer = (byte[])reader[1];
+                                heatMap = new Bitmap(new MemoryStream(buffer));
+                            }
+
+                            return (imageData, heatMap);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error retrieving image: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
+                MessageBox.Show($"Error retrieving images: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return (null, null);
             }
         }
+
 
         // Check db for duplicate upload - DONE
         public async Task<int> DuplicateImageCheck(string imagePath)
@@ -181,60 +185,46 @@ namespace GrazeViewV1
             return 2;
         }
 
-        // Push Image Data to DB
-        public async Task UploadImageToDB(string imagePath)
+
+        // New Image push that pushes imagename, originalImage, and Heat map image
+        public async Task UploadImageToDB(string imageName, Bitmap originalImage, Bitmap heatmapImage)
         {
             try
             {
-                if (!File.Exists(imagePath))
+                byte[] imageBytes;
+                byte[] heatmapBytes;
+
+                // Convert original image to byte array
+                using (var ms = new MemoryStream())
                 {
-                    MessageBox.Show($"Error: File not found – {imagePath}");
-                    return;
+                    originalImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    imageBytes = ms.ToArray();
                 }
 
-                // Resize Image
-                string imageName = Path.GetFileName(imagePath);
-                byte[] imageBytes;
-
-                using (var originalImage = new Bitmap(imagePath))
+                // Convert heatmap image to byte array
+                using (var ms = new MemoryStream())
                 {
-                    // Resize proportionally to fit within 1920x1080
-                    int maxWidth = 1920;
-                    int maxHeight = 1080;
-
-                    float ratioX = (float)maxWidth / originalImage.Width;
-                    float ratioY = (float)maxHeight / originalImage.Height;
-                    float ratio = Math.Min(ratioX, ratioY);
-
-                    int newWidth = (int)(originalImage.Width * ratio);
-                    int newHeight = (int)(originalImage.Height * ratio);
-
-                    using (var resizedImage = new Bitmap(originalImage, new Size(newWidth, newHeight)))
-                    {
-                        // Convert resized image to byte array
-                        using (var ms = new MemoryStream())
-                        {
-                            resizedImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png); // Or PNG if preferred
-                            imageBytes = ms.ToArray();
-                        }
-                    }
+                    heatmapImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    heatmapBytes = ms.ToArray();
                 }
 
                 using (OdbcConnection conn = new OdbcConnection(_connectionString))
                 {
                     await conn.OpenAsync();
 
-                    string insertQuery = "INSERT INTO Images (ImageName, ImageData) VALUES (?, ?)";
+                    string insertQuery = "INSERT INTO Images (ImageName, ImageData, HeatMapImage) VALUES (?, ?, ?)";
                     using (OdbcCommand insertCmd = new OdbcCommand(insertQuery, conn))
                     {
                         insertCmd.Parameters.Add("?", OdbcType.VarChar, 255).Value = imageName;
-                        insertCmd.Parameters.Add("?", OdbcType.Image, imageBytes.Length).Value = imageBytes;
+                        insertCmd.Parameters.Add("?", OdbcType.VarBinary, imageBytes.Length).Value = imageBytes;
+                        insertCmd.Parameters.Add("?", OdbcType.VarBinary, heatmapBytes.Length).Value = heatmapBytes;
 
                         await insertCmd.ExecuteNonQueryAsync();
                     }
                 }
 
-                //MessageBox.Show($"Uploaded: {imageName}");
+                // Optionally show success
+                //MessageBox.Show($"Uploaded {imageName}");
             }
             catch (Exception ex)
             {

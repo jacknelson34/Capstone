@@ -454,7 +454,9 @@ namespace GrazeViewV1
         // The image file uploaded by the user, typically a sample image or any visual data associated with the sample.
         // Exclude ImageFile from serialization
         [JsonIgnore]
-        public Image ImageFile { get; set; }
+        public Bitmap ImageFile { get; set; }
+
+        public Bitmap HeatMap { get; set; }
 
     }
 
