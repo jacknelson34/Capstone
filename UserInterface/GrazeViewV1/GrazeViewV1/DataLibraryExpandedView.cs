@@ -145,6 +145,8 @@ namespace GrazeViewV1
                 return null;
             }
 
+            var (originalImage, heatmapImage) = await _dbQueries.RetrieveImagesFromDB(index);
+
             UploadInfo uploadInfo = new UploadInfo
             {
                 UploadName = row.ContainsKey("SourceFile") && row["SourceFile"] != null ? row["SourceFile"].ToString() : "N/A",
@@ -152,8 +154,8 @@ namespace GrazeViewV1
                 SampleLocation = row.ContainsKey("SampleLocation") && row["SampleLocation"] != null ? row["SampleLocation"].ToString() : "N/A",
                 SheepBreed = row.ContainsKey("SheepBreed") && row["SheepBreed"] != null ? row["SheepBreed"].ToString() : "N/A",
                 Comments = row.ContainsKey("Comments") && row["Comments"] != null ? row["Comments"].ToString() : "N/A",
-                ImageFile = await _dbQueries.RetrieveImageFromDB(index) ?? new Bitmap(250, 250),
-
+                ImageFile = originalImage ?? new Bitmap(250, 250),
+                HeatMap = heatmapImage ?? new Bitmap(250, 250)
             };
 
 
@@ -194,8 +196,8 @@ namespace GrazeViewV1
             };
 
             // Ensure columns take equal space
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F)); // Left: Info
-            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F)); // Right: Image
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 40F)); // Left: Info
+            mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F)); // Right: Image
 
             // Create Info Panel (Stacked UploadInfo + MLData)
             FlowLayoutPanel infoPanel = new FlowLayoutPanel
@@ -233,6 +235,7 @@ namespace GrazeViewV1
                 WrapContents = false
             };
 
+            // Original image box
             PictureBox uploadImage = new PictureBox
             {
                 Image = uploadInfo.ImageFile,
@@ -242,7 +245,19 @@ namespace GrazeViewV1
                 Margin = new Padding(10)
             };
 
-            imagePanel.Controls.Add(uploadImage); // Center image
+            // Heatmap image box
+            PictureBox heatmapImage = new PictureBox
+            {
+                Image = uploadInfo.HeatMap,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Width = 275,
+                Height = 275,
+                Margin = new Padding(10)
+            };
+
+            // Add both images side by side
+            imagePanel.Controls.Add(uploadImage);
+            imagePanel.Controls.Add(heatmapImage);
 
             // Add panels to main layout
             mainLayout.Controls.Add(infoPanel, 0, 0);

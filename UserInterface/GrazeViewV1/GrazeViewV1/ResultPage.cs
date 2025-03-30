@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Common;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,14 +14,18 @@ namespace GrazeViewV1
 {
     public partial class ResultPage : Form
     {
-        private PictureBox outputImage;
         private bool IsNavigating;
         private readonly DBConnections _dbConnections;
+        private int imageIndex = GlobalData.Uploads.Count;
+
+        // Initialize PictureBoxes for original and heat map images
+        PictureBox originalImageBox = new PictureBox();
+        PictureBox heatmapImageBox = new PictureBox();
 
         // Hold instances of the opened pages
         private MainPage _mainPage;
 
-        public ResultPage(Image resultImage, MainPage mainPage)  // Build page with resulting image from ML and previous page's size/location
+        public ResultPage(MainPage mainPage, Bitmap originalImage, Bitmap heatMap)  // Build page with resulting image from ML and previous page's size/location
         {
             IsNavigating = false;
             _dbConnections = new DBConnections(new DBSettings(
@@ -43,19 +48,38 @@ namespace GrazeViewV1
             this.UpdateStyles();
 
             if (ConsistentForm.IsFullScreen)                    // Check if the previous page was set to fullscreen
-            {   
+            {
                 SetFullScreen();    // Set this form to fullscreen if true
             }
 
-            // Initialize Results Image
-            outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
-            outputImage.Image = resultImage;                                          // Insert image into pictureBox
-            outputImage.SizeMode = PictureBoxSizeMode.Zoom;                          // Zoom image to fit size
-            outputImage.Size = new Size(800, 400);                                    // Size image to 300 x 200
-            outputImage.Location = new Point(                                         // Position Image to center top of the page
-                (resultsPagePanel.Width / 2)-(outputImage.Width / 2),
-                (resultsPagePanel.Height / 2)-(outputImage.Height / 2));
-            resultsPagePanel.Controls.Add(outputImage);                                           // Create new picturebox on page
+            //// Initialize Results Image
+            //outputImage = new PictureBox();                                           // Initialize new pictureBox to hold results
+            ////outputImage.Image = resultImage;                                          // Insert image into pictureBox
+            //outputImage.SizeMode = PictureBoxSizeMode.Zoom;                          // Zoom image to fit size
+            //outputImage.Size = new Size(800, 400);                                    // Size image to 300 x 200
+            //outputImage.Location = new Point(                                         // Position Image to center top of the page
+            //    (resultsPagePanel.Width / 2)-(outputImage.Width / 2),
+            //    (resultsPagePanel.Height / 2)-(outputImage.Height / 2));
+            //resultsPagePanel.Controls.Add(outputImage);                                           // Create new picturebox on page
+
+            // Set size and mode
+            originalImageBox.SizeMode = PictureBoxSizeMode.Zoom;
+            heatmapImageBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+            int imageWidth = resultsPagePanel.Width / 2;
+            int imageHeight = resultsPagePanel.Height - UserOutputPanel.Height;
+
+            originalImageBox.Size = new Size(imageWidth, imageHeight);
+            heatmapImageBox.Size = new Size(imageWidth, imageHeight);
+
+            originalImageBox.Location = new Point(0, 0);
+            heatmapImageBox.Location = new Point(imageWidth, 0);
+
+            originalImageBox.Image = originalImage;
+            heatmapImageBox.Image = heatMap;
+
+            resultsPagePanel.Controls.Add(originalImageBox);
+            resultsPagePanel.Controls.Add(heatmapImageBox);
 
             // Populate user provided data text boxes with data from the last upload
             if (GlobalData.Uploads.Any())
@@ -65,7 +89,7 @@ namespace GrazeViewV1
                 dateUploadedTextBox.Text = lastUpload.UploadTime.ToString();  // Date Uploaded
 
                 // Check if sample datetime is N/A
-                if(lastUpload.SampleDate == "N/A" || lastUpload.SampleTime == "N/A")
+                if (lastUpload.SampleDate == "N/A" || lastUpload.SampleTime == "N/A")
                 {
                     dateOfSampleTextBox.Text = "N/A";
                 }
@@ -117,10 +141,16 @@ namespace GrazeViewV1
             // Event Handlers
             this.Resize += ResultsPage_Resize;      // Handle form resize
             this.FormClosing += ResultsPage_XOut;   // handle form being closed
+            this.Load += ResultPage_Load;
 
             // Save data to DB
             SaveResultsToCSVAndUpload();
 
+        }
+
+        private void ResultPage_Load(object? sender, EventArgs e)
+        {
+            CenterPanel();
         }
 
         // Override the Windows procedure to intercept window messages
@@ -159,7 +189,7 @@ namespace GrazeViewV1
         }
 
         // Method to set full screen
-        private void SetFullScreen()    
+        private void SetFullScreen()
         {
             this.WindowState = FormWindowState.Maximized;       // Maximize the form
             this.FormBorderStyle = FormBorderStyle.Sizable;     // Set the border style for fullscreen
@@ -216,7 +246,7 @@ namespace GrazeViewV1
                 ConsistentForm.IsFullScreen = false;    // If false, do not set next screen to fullscreen
             }
 
-            
+
             var dbQueries = new DBQueries(_dbConnections.ConnectionString); // Ensure connectionString is correct
             DataLibrary datalibrary = new DataLibrary(_mainPage, dbQueries);
             datalibrary.Size = this.Size;                       // Set next page to the same size as this page
@@ -265,17 +295,33 @@ namespace GrazeViewV1
                 (this.ClientSize.Height / 2) - (resultsPagePanel.Height / 2) - 50
             );
 
+            // Define spacing between images (optional)
+            int spacing = 100;
+
+            // Define standard image size (adjust as needed)
+            int imageWidth = resultsPagePanel.Width / 3;   // Each image takes 1/3 of panel
+            int imageHeight = (int)(resultsPagePanel.Height * 0.8); // 80% of panel height
+
+            // Calculate total width needed to center both image boxes with spacing
+            int totalWidth = (imageWidth * 2) + spacing;
+            int startX = (resultsPagePanel.Width - totalWidth) / 2;
+            int startY = ((resultsPagePanel.Height - imageHeight) / 2) - 50;
+
+            // Apply sizes and locations
+            originalImageBox.Size = new Size(imageWidth, imageHeight);
+            heatmapImageBox.Size = new Size(imageWidth, imageHeight);
+
+            originalImageBox.Location = new Point(startX, startY);
+            heatmapImageBox.Location = new Point(startX + imageWidth + spacing, startY);
+
             // Adjust UserOutputPanel
-            UserOutputPanel.Size = new Size((int)(resultsPagePanel.Width * 0.63), 125); // 63% width
-            UserOutputPanel.Location = new Point(0, resultsPagePanel.Height - UserOutputPanel.Height); // Align bottom left
+            UserOutputPanel.Size = new Size((int)(originalImageBox.Width), 125); // 63% width
+            UserOutputPanel.Location = new Point(originalImageBox.Location.X, resultsPagePanel.Height - UserOutputPanel.Height); // Align bottom left
 
             // Adjust MLOutputPanel
-            MLOutputPanel.Size = new Size((int)(resultsPagePanel.Width * 0.37), 125); // 37% width
-            MLOutputPanel.Location = new Point(UserOutputPanel.Width, resultsPagePanel.Height - MLOutputPanel.Height); // Align to the right of UserOutputPanel
+            MLOutputPanel.Size = new Size((int)(heatmapImageBox.Width), 125); // 37% width
+            MLOutputPanel.Location = new Point(heatmapImageBox.Location.X, UserOutputPanel.Location.Y); // Align to the right of UserOutputPanel
 
-            // Adjust PictureBox to fill the remaining space
-            outputImage.Size = new Size(resultsPagePanel.Width, resultsPagePanel.Height - UserOutputPanel.Height);
-            outputImage.Location = new Point(0, 0); // Align top left of resultsPagePanel
 
             this.Refresh(); // Refresh to apply changes
             resultsPagePanel.Visible = true;

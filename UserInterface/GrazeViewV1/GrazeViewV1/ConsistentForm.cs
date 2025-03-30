@@ -13,6 +13,8 @@ using System.Drawing.Design;
 using System.Net.Http.Headers;
 using System.Text.Json.Serialization;
 
+
+
 namespace GrazeViewV1
 {
     /*--------------------Page Sizing-------------------------------------*/
@@ -24,7 +26,7 @@ namespace GrazeViewV1
     public static class ConsistentForm // Public class to store form resize for consistency
     {
         public static Size FormSize { get; set; } = new Size(1280, 720); // Default of 1280, 918
-        public static Point FormLocation { get; set; } = new Point(Screen.PrimaryScreen.WorkingArea.Width / 4, 
+        public static Point FormLocation { get; set; } = new Point(Screen.PrimaryScreen.WorkingArea.Width / 4,
                                                                    Screen.PrimaryScreen.WorkingArea.Height / 6); // Default of center screen-ish
         public static bool IsFullScreen { get; set; } = false;  // Default bool set to not full screen
 
@@ -32,6 +34,198 @@ namespace GrazeViewV1
 
 
     /*---------------------Custom Controls--------------------------------*/
+
+    // minecraft labels
+    public class SplashTextLabel : Label
+    {
+        private static readonly List<string> CommonSplashTexts = new()
+        {
+        "Baa means no!",
+        "Woolly good at surviving cold!",
+        "Sheep have rectangular pupils!",
+        "Natural lawnmowers since 9000 B.C.!",
+        "Over 1 billion sheep worldwide!",
+        "Can recognize over 50 sheep faces!",
+        "Got lanolin?",
+        "Baaarilliant idea!",
+        "Graze like nobody's watching!",
+        "Crop rotation? Try sheep rotation!",
+        "Bubble trouble!",
+        "Fluff with purpose!",
+        "More fiber than your internet!",
+        "Sheep intel incoming!",
+        "Zooming in on that grass bit...",
+        "Texas turf? Tasty!"
+        // Add more common splash texts...
+        };
+
+        private static readonly List<string> RareSplashTexts = new()
+        {
+        "Gig 'em, Sheep!",
+        "Maroon fleece detected!",
+        "You've unlocked... the Golden Sheep!",
+        "GrazeView knows what *ewe* ate!",
+        "Initiating Operation: Fleece Force!",
+        "99% grass. 1% attitude."
+        // Add more rare ones as needed...
+         };
+
+        private readonly Random rnd = new();
+        private float angle = -15f;
+        private bool wobble = false;
+        private bool increasing = true;
+        private System.Windows.Forms.Timer wobbleTimer;
+        private float pulseAlpha = 1f;
+        private bool fadingOut = true;
+        private System.Windows.Forms.Timer pulseTimer;
+
+
+        public bool EnableWobble
+        {
+            get => wobble;
+            set
+            {
+                wobble = value;
+                if (wobble)
+                    StartWobble();
+                else
+                    StopWobble();
+            }
+        }
+
+        public SplashTextLabel()
+        {
+            Font = new Font("Arial", 12, FontStyle.Bold | FontStyle.Italic);
+            ForeColor = Color.Green;
+            BackColor = Color.Transparent;
+            TextAlign = ContentAlignment.BottomRight;
+            AutoSize = true;
+            SetRandomSplashText();
+            SetStyle(ControlStyles.UserPaint |
+            ControlStyles.AllPaintingInWmPaint |
+            ControlStyles.OptimizedDoubleBuffer |
+            ControlStyles.ResizeRedraw |
+            ControlStyles.SupportsTransparentBackColor, true);
+
+            UpdateStyles();
+
+            pulseTimer = new System.Windows.Forms.Timer();
+            pulseTimer.Interval = 50; // adjust for speed
+            pulseTimer.Tick += (s, e) =>
+            {
+                float delta = 0.05f;
+
+                if (fadingOut)
+                {
+                    pulseAlpha -= delta;
+                    if (pulseAlpha <= 0.4f)
+                    {
+                        pulseAlpha = 0.4f;
+                        fadingOut = false;
+                    }
+                }
+                else
+                {
+                    pulseAlpha += delta;
+                    if (pulseAlpha >= 1f)
+                    {
+                        pulseAlpha = 1f;
+                        fadingOut = true;
+                    }
+                }
+
+                Invalidate();
+            };
+
+            pulseTimer.Start();
+
+
+        }
+
+        public void SetRandomSplashText()
+        {
+            string text;
+
+            if (rnd.Next(50) == 0 && RareSplashTexts.Count > 0)
+                text = RareSplashTexts[rnd.Next(RareSplashTexts.Count)];
+            else
+                text = CommonSplashTexts[rnd.Next(CommonSplashTexts.Count)];
+
+            Text = text;
+
+            using (Graphics g = CreateGraphics())
+            {
+                StringFormat sf = StringFormat.GenericTypographic;
+                SizeF textSize = g.MeasureString(Text, Font, int.MaxValue, sf);
+
+                float diagonal = (float)Math.Sqrt(textSize.Width * textSize.Width + textSize.Height * textSize.Height);
+
+                this.Invalidate();
+                this.PerformLayout();
+            }
+
+            Invalidate();
+        }
+
+        public override Size GetPreferredSize(Size proposedSize)
+        {
+            using (Graphics g = CreateGraphics())
+            {
+                StringFormat sf = StringFormat.GenericTypographic;
+                SizeF textSize = g.MeasureString(Text, Font, int.MaxValue, sf);
+
+                int width = (int)Math.Ceiling(textSize.Width) + 40;
+                int height = (int)Math.Ceiling(textSize.Height * 3); // ✅ 3x height
+
+                return new Size(width, height);
+            }
+        }
+
+
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+
+            e.Graphics.TranslateTransform(Width / 2f, Height / 2f);
+            e.Graphics.RotateTransform(angle);
+
+            StringFormat sf = StringFormat.GenericTypographic;
+            SizeF textSize = e.Graphics.MeasureString(Text, Font, int.MaxValue, sf);
+
+            // 🟢 Pulse-aware alpha color
+            Color fadedColor = Color.FromArgb((int)(pulseAlpha * 255), ForeColor);
+            using (Brush brush = new SolidBrush(fadedColor))
+            {
+                e.Graphics.DrawString(Text, Font, brush, -textSize.Width / 2f, -textSize.Height / 2f, sf);
+            }
+        }
+
+
+
+
+        private void StartWobble()
+        {
+            wobbleTimer ??= new System.Windows.Forms.Timer();
+            wobbleTimer.Interval = 100;
+            wobbleTimer.Tick += (s, e) =>
+            {
+                angle += increasing ? 1 : -1;
+                if (angle >= 0) increasing = false;
+                if (angle <= -5) increasing = true;
+                Invalidate(); // force redraw
+            };
+            wobbleTimer.Start();
+        }
+
+        private void StopWobble()
+        {
+            wobbleTimer?.Stop();
+            angle = -2;
+            Invalidate();
+        }
+    }
 
     // Public Class to create consistent button design with rounded edges - WORKS
     public class roundButton : Button
@@ -131,7 +325,7 @@ namespace GrazeViewV1
             this.Parent.BackColorChanged += new EventHandler(Container_BackColorChanged);
         }
 
-        private void Container_BackColorChanged(object sender, EventArgs e) 
+        private void Container_BackColorChanged(object sender, EventArgs e)
         {
             if (this.DesignMode)
             {
@@ -259,12 +453,14 @@ namespace GrazeViewV1
         // The image file uploaded by the user, typically a sample image or any visual data associated with the sample.
         // Exclude ImageFile from serialization
         [JsonIgnore]
-        public Image ImageFile { get; set; }
+        public Bitmap ImageFile { get; set; }
+
+        public Bitmap HeatMap { get; set; }
 
     }
 
     // Class to store all the data given from the ML model relating to each image upload
-    public class MLData 
+    public class MLData
     {
         // Public string to store the percentage of nale grass in an image
         public string nalePercentage { get; set; }
@@ -281,7 +477,7 @@ namespace GrazeViewV1
         // Public string to store the percentage of qufu stems in an image
         //public string qufustemPercentage { get; set; }
         // No longer using
-        
+
     }
 
 

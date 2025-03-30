@@ -30,33 +30,24 @@ namespace GrazeViewV1
         /// </summary>
         private void InitializeComponent()
         {
-            Image image = Properties.Resources.BackgroundImage12;
-
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
             mainLabel = new Label();
             dataViewerButton = new roundButton();
             dataUploadButton = new roundButton();
             helpButton = new PictureBox();
-            sheep = new PictureBox();
+            splashText = new SplashTextLabel();
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
-            DoubleBuffered = true;
-
-            // DPI UnAware Setting
-            ClientSize = new Size(600, 500);
-            MinimumSize = new Size(600, 500);
-
             // 
             // mainLabel
             // 
             mainLabel.AutoSize = true;
-            mainLabel.Text = "GRAZE VIEW";
             mainLabel.Font = new Font("Times New Roman", 30F, FontStyle.Bold);
-            mainLabel.TextAlign = ContentAlignment.MiddleCenter;
             mainLabel.Location = new Point(274, 229);
             mainLabel.Name = "mainLabel";
-            mainLabel.Size = new Size(787, 128);
+            mainLabel.Size = new Size(351, 57);
             mainLabel.TabIndex = 0;
+            mainLabel.Text = "GRAZE VIEW";
+            mainLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // dataViewerButton
             // 
@@ -65,7 +56,6 @@ namespace GrazeViewV1
             dataViewerButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataViewerButton.ForeColor = Color.Black;
             dataViewerButton.Location = new Point(274, 229);
-            dataViewerButton.borderRadius = 50;
             dataViewerButton.Name = "dataViewerButton";
             dataViewerButton.Size = new Size(274, 150);
             dataViewerButton.TabIndex = 2;
@@ -79,7 +69,6 @@ namespace GrazeViewV1
             dataUploadButton.FlatStyle = FlatStyle.Flat;
             dataUploadButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dataUploadButton.ForeColor = Color.Black;
-            dataUploadButton.borderRadius = 50;
             dataUploadButton.Location = new Point(274, 229);
             dataUploadButton.Name = "dataUploadButton";
             dataUploadButton.Size = new Size(274, 150);
@@ -91,54 +80,48 @@ namespace GrazeViewV1
             // helpButton
             // 
             helpButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            helpButton.BackColor = Color.Transparent;
             helpButton.Cursor = Cursors.Hand;
             helpButton.Image = Properties.Resources.Help_Icon;
-            helpButton.BackColor = Color.Transparent;
-            helpButton.Location = new Point(560, 12);
+            helpButton.Location = new Point(844, 12);
             helpButton.Name = "helpButton";
             helpButton.Size = new Size(25, 25);
             helpButton.SizeMode = PictureBoxSizeMode.StretchImage;
             helpButton.TabIndex = 3;
             helpButton.TabStop = false;
             helpButton.Click += helpButton_Click;
-            //
-            // sheep gif
-            //
-            sheep.Image = Properties.Resources.sheepGif;
-            sheep.SizeMode = PictureBoxSizeMode.StretchImage;
-            sheep.Location = new Point(50, 50);
-            sheep.Name = "helpButton";
-            sheep.Size = new Size(50, 50);
-            sheep.TabIndex = 4;
-            sheep.TabStop = false;
+            // 
+            // splashText
+            // 
+            splashText.BackColor = Color.Transparent;
+            splashText.EnableWobble = true;
+            splashText.Font = new Font("Arial", 12F, FontStyle.Bold | FontStyle.Italic);
+            splashText.ForeColor = Color.Green;
+            splashText.Location = new Point(0, 0);
+            splashText.Name = "splashText";
+            splashText.Size = new Size(150, 150);
+            splashText.TabIndex = 3;
+            splashText.Text = "Natural lawnmowers since 9000 B.C.!";
             // 
             // MainPage
             // 
+            AutoScaleMode = AutoScaleMode.None;
+            BackColor = Color.FromArgb(116, 231, 247);
+            BackgroundImage = Properties.Resources.BackgroundImage12;
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(884, 491);
             Controls.Add(dataViewerButton);
             Controls.Add(dataUploadButton);
             Controls.Add(mainLabel);
-            Controls.Add(sheep);
-
-            //AutoScaleDimensions = new SizeF((float)((this.DeviceDpi / 96F) * 200F), (float)((this.DeviceDpi / 96F) * 200F));
-
-            AutoScaleDimensions = new SizeF(13F, 32F);
-            FormBorderStyle = FormBorderStyle.Sizable;
-            AutoScaleMode = AutoScaleMode.None;
-
-            // Original
-            //AutoScaleDimensions = new SizeF(200F, 200F);
-            //FormBorderStyle = FormBorderStyle.Sizable;
-            //AutoScaleMode = AutoScaleMode.Dpi;
-
-            BackgroundImage = image;
-            BackgroundImageLayout = ImageLayout.Stretch;
+            Controls.Add(splashText);
             Controls.Add(helpButton);
-            BackColor = Color.FromArgb(116, 231, 247);
             DoubleBuffered = true;
+            MinimumSize = new Size(600, 500);
             Name = "MainPage";
             Text = "MainPage";
             ((System.ComponentModel.ISupportInitialize)helpButton).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -147,6 +130,6 @@ namespace GrazeViewV1
         private roundButton dataUploadButton;
         private roundButton dataViewerButton;
         private PictureBox helpButton;
-        private PictureBox sheep;
+        private SplashTextLabel splashText;
     }
 }

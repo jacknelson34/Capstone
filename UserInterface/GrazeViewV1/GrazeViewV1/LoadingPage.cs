@@ -12,13 +12,14 @@ using System.Windows.Forms;
 
 namespace GrazeViewV1
 {
-    public partial class LoadingPage: Form
+    public partial class LoadingPage : Form
     {
         private PictureBox uploadedSlide;       // Initialize picturebox for the uploaded image
         private ProgressBar loadingBar;         // Initialize the loading bar
         private Image resultsImage;             // Initialize variable for the output image
         private TextBox statusUpdates;          // Initialize the textbox used to hold status updates from ML
         private TextBox percentageLoading;
+
 
         // Hold instances of other pages
         private MainPage _mainPage;             // Initialize held instance of mainPage
@@ -57,7 +58,7 @@ namespace GrazeViewV1
             // Create loading bar progress
             // For now, will work on a timer,
             // Once connected to ML, will provide accurate updates
-            loadingBar = new ProgressBar();  
+            loadingBar = new ProgressBar();
             //loadingBar.Maximum = 60;                                                // Give loadingBar a max of 30 ticks
             loadingBar.Step = 1;                                                    // 1 tick per step
             loadingBar.Size = new Size(600, 20);                                    // Size of loadingBar
@@ -65,6 +66,9 @@ namespace GrazeViewV1
                 (this.ClientSize.Width / 2) - (loadingBar.Width / 2),
                 (this.ClientSize.Height / 2));                                      // Location for loadingBar
             this.Controls.Add(loadingBar);                                          // Add loadingBar control to page
+
+
+
 
 
             // Initialize Text Box with status updates
@@ -95,7 +99,7 @@ namespace GrazeViewV1
                 loadingBar.Location.X + 350,                                              // Horizontally align with the loading bar
                 (this.ClientSize.Height / 2) - 20);
             this.Controls.Add(percentageLoading);
-            
+
             /*--------------------------------------DEMO ONLY : NOT IN USE---------------------------------------*/
             /*(
             // Demo for randomized grass percentages
@@ -200,6 +204,7 @@ namespace GrazeViewV1
 
         }
 
+
         // Method to set progress bar max
         public void SetProgressBarMax(int maxTiles)
         {
@@ -236,8 +241,27 @@ namespace GrazeViewV1
 
         }
 
+
         // Method to indicate completion
-        public void CompleteProgress(string message)
+        public void CompleteMLProgress(string message)
+        {
+            if (loadingBar.InvokeRequired)
+            {
+                loadingBar.Invoke(new Action(() =>
+                {
+                    loadingBar.Value = loadingBar.Maximum;
+                    statusUpdates.Text = message;
+                }));
+            }
+            else
+            {
+                loadingBar.Value = loadingBar.Maximum;
+                statusUpdates.Text = message;
+            }
+        }
+
+        // Method to indicate completion
+        public void CompleteFullProgress(string message, Bitmap originalImage, Bitmap HeatMap)
         {
             if (loadingBar.InvokeRequired)
             {
@@ -246,7 +270,7 @@ namespace GrazeViewV1
                     loadingBar.Value = loadingBar.Maximum;
                     statusUpdates.Text = message;
                     //MessageBox.Show("ML Processing Complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    nextPage();
+                    nextPage(originalImage, HeatMap);
                 }));
             }
             else
@@ -254,7 +278,7 @@ namespace GrazeViewV1
                 loadingBar.Value = loadingBar.Maximum;
                 statusUpdates.Text = message;
                 //MessageBox.Show("ML Processing Complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                nextPage();
+                nextPage(originalImage, HeatMap);
             }
         }
 
@@ -274,15 +298,15 @@ namespace GrazeViewV1
                     "Image Processing...",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
-                e.Cancel = true;    
+                e.Cancel = true;
             }
 
         }
 
-        private void nextPage()     // Method for going to resultsPage
+        private void nextPage(Bitmap originalImage, Bitmap Heatmap)     // Method for going to resultsPage
         {
             IsNavigating = true;                                                                // Ensure user is navigating the app and not exiting
-            ResultPage resultsPage = new ResultPage(resultsImage, _mainPage);                   // Initialize new page
+            ResultPage resultsPage = new ResultPage(_mainPage, originalImage, Heatmap);                   // Initialize new page
             resultsPage.Show();                                                                 // Show new page
             this.Close();                                                                       // Hide current page
         }

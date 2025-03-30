@@ -123,6 +123,8 @@ namespace GrazeViewV1
             Button btn = sender as Button;
             if (btn == null) return;
 
+
+
             // Determine selected rows
             var selectedRows = dataGridView1.Rows.Cast<DataGridViewRow>()
                                                  .Where(row => Convert.ToBoolean(row.Cells[0].Value))
@@ -131,11 +133,13 @@ namespace GrazeViewV1
             if (selectedRows.Count < 1)
             {
                 MessageBox.Show("Please select 1 Upload to Preview.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                queryInProgress = false;
                 return;
             }
             else if (selectedRows.Count > 1)
             {
                 MessageBox.Show("Only one Upload may be selected at a time for Preview.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                queryInProgress = false;
                 return;
             }
             queryInProgress = true;
@@ -151,45 +155,71 @@ namespace GrazeViewV1
             //btn.Visible = false; // Hide the button
             btn.Text = "";
 
-            Bitmap retrievedImage = null;
+            //Bitmap retrievedImage = null;
 
             // Load the image in the background
-                retrievedImage = await Task.Run(() =>
-                    {
-                        DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
-                        return dbQueries.RetrieveImageFromDB(rowIndex);
-                    });
+            (Bitmap originalImage, Bitmap heatmapImage) = await Task.Run(() =>
+            {
+                DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
+                return dbQueries.RetrieveImagesFromDB(rowIndex);
+            });
 
-                // Hide the spinner and show the button again
-                loadingSpinner.Visible = false;
-                //btn.Visible = true;
-                btn.Text = "Preview Selected Image";
+            // MessageBox.Show($"Image Dimensions: {retrievedImage.Width} x {retrievedImage.Height}");
 
-                if (retrievedImage == null)
-                {
-                    MessageBox.Show("No image available for the selected upload.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+            // Hide the spinner and show the button again
+            loadingSpinner.Visible = false;
+            //btn.Visible = true;
+            btn.Text = "Preview Selected Image";
 
-                // Display the image in a new form
-                Form imagePreviewForm = new Form
-                {
-                    Text = "Image Preview",
-                    Size = new Size(800, 600) // Adjust size as needed
-                };
+            if (originalImage == null)
+            {
+                MessageBox.Show("No original image found for the selected index.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (heatmapImage == null)
+            {
+                MessageBox.Show("No heat map image found for the selected index.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                PictureBox pictureBox = new PictureBox
-                {
-                    Image = retrievedImage,
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Dock = DockStyle.Fill
-                };
+            // Display the image in a new form
+            Form originalImagePreviewForm = new Form
+            {
+                Text = "Uploaded Image Preview",
+                Size = new Size(800, 600) // Adjust size as needed
+            };
 
-                imagePreviewForm.Controls.Add(pictureBox);
-                imagePreviewForm.ShowDialog(); // Show as a dialog
+            PictureBox ogpictureBox = new PictureBox
+            {
+                Image = originalImage,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Dock = DockStyle.Fill
+            };
+            originalImagePreviewForm.Controls.Add(ogpictureBox);
+            originalImagePreviewForm.StartPosition = FormStartPosition.Manual;
+            originalImagePreviewForm.Location = new Point(100, 100);
+            originalImagePreviewForm.Show(); // Show
+
+            // Display the image in a new form
+            Form heatImagePreviewForm = new Form
+            {
+                Text = "Heat Map Preview",
+                Size = new Size(800, 600) // Adjust size as needed
+            };
+
+            PictureBox heatpictureBox = new PictureBox
+            {
+                Image = heatmapImage,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Dock = DockStyle.Fill
+            };
+            heatImagePreviewForm.Controls.Add(heatpictureBox);
+            heatImagePreviewForm.StartPosition = FormStartPosition.Manual;
+            heatImagePreviewForm.Location = new Point(originalImagePreviewForm.Location.X + originalImagePreviewForm.Width + 20, 100);
+            heatImagePreviewForm.Show(); // Show
 
 
-                queryInProgress = false;
+            queryInProgress = false;
 
         }
 
@@ -260,12 +290,12 @@ namespace GrazeViewV1
                 .ToList();
 
             // Debugging
-            /*
-            foreach (int index in selectedIndexes)
-            {
-                MessageBox.Show($"Fetching row for index: {index}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            */
+
+            //foreach (int index in selectedIndexes)
+            //{
+            //    MessageBox.Show($"Fetching row for index: {index}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+
 
             if (!selectedIndexes.Any())
             {

@@ -129,7 +129,7 @@ namespace GrazeViewV1
                 _mainPage.ExternalResize(this.Size, this.Location);
 
             }
-                
+
             //MessageBox.Show("Main Page State Final: " + _mainPage.WindowState.ToString() + "\nMain Page Size : " + _mainPage.ClientSize.ToString());
             this.Close();// Close Data Upload Page
         }
@@ -209,10 +209,7 @@ namespace GrazeViewV1
                 {
                     try
                     {
-
-                        // Generate Thumbnail for display
                         imageLoading = true;
-                        Image thumbnail = CreateThumbnail(openFileDialog.FileName, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
 
                         // Delete Text in the Picture Box
                         imageUploaded = true;
@@ -222,7 +219,7 @@ namespace GrazeViewV1
                         DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
                         int dupCheck = await Task.Run(() => dbQueries.DuplicateImageCheck(imageFilePath));
 
-                        if(dupCheck != 2)
+                        if (dupCheck != 2)
                         {
                             ClearImage();
                             dbQueries.Dispose();
@@ -365,10 +362,7 @@ namespace GrazeViewV1
                         // Delete Text in the Picture Box
                         imageUploaded = true;
                         imageFilePath = files[0];
-                        imageLoading= true;
-
-                        // Generate a thumbnail like Click Upload
-                        Image thumbnail = CreateThumbnail(imageFilePath, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
+                        imageLoading = true;
 
                         // Check if image is a duplicate in the background
                         DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
@@ -434,7 +428,7 @@ namespace GrazeViewV1
                 string selectedTime = DateTime.Parse(timePicker.Text).ToString();
 
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 MessageBox.Show($"Invalid Time Entered: {timePicker.Text}.  Please provide a valid time.",
                 "Invalid Time",
@@ -527,7 +521,7 @@ namespace GrazeViewV1
 
             // Debugging
             //MessageBox.Show("Sample Date: " + finalDate +"\nSample Time: " + finalTime);
-            
+
 
             // Create a new instance of UploadInfo
             UploadInfo uploadInfo = new UploadInfo
@@ -539,17 +533,13 @@ namespace GrazeViewV1
                 UploadTime = DateTime.Now,                     // Store the current time of upload
                 SheepBreed = sheepBreed,                       // Store the sheep breed (or N/A)
                 Comments = comments,                           // Store user comments (or N/A)
-                ImageFile = uploadImage                        // Store image
+                ImageFile = null,
+                HeatMap = null
             };
 
             // Add the new upload info to the GlobalData uploads list
             GlobalData.Uploads.Add(uploadInfo);
-
-
-            // Upload Imagefile to DB
             string imagePath = imageFilePath;
-            DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
-            Task uploadTask = Task.Run(()=> dbQueries.UploadImageToDB(imageFilePath));
 
 
             // checks to see if a file was uploaded to the picturebox
@@ -565,12 +555,7 @@ namespace GrazeViewV1
                     loadingPage.Show();
 
                     // Run ML on a new task to keep ML responsive
-                    Task.Run (() => MLWork.MLMain(imagePath, loadingPage));
-
-                    this.Hide();
-
-                    // Wait on upload to DB to close page and end task
-                    await Task.WhenAll(uploadTask);
+                    Task.Run(() => MLWork.MLMain(imagePath, loadingPage));
 
                     //MessageBox.Show("Image sent to MLWork for processing.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
@@ -583,7 +568,7 @@ namespace GrazeViewV1
                     MessageBox.Show($"Error running ML model: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                
+
             }
             else
             {
@@ -601,8 +586,6 @@ namespace GrazeViewV1
                 uploadButton.Text = "Upload";
                 uploadLoader.Visible = false;
             }
-            dbQueries.Dispose();
-            queryInProgress = false;
         }
 
         // Method to clear picturebox
@@ -678,64 +661,72 @@ namespace GrazeViewV1
 
         }
 
-        private Image CreateThumbnail(string imagePath, int thumbWidth, int thumbHeight)
+        private Image CreateThumbnailInternal(Image originalImage, int thumbWidth, int thumbHeight)
         {
-            // Load the original image
-            using (Image originalImage = Image.FromFile(imagePath))
+            float aspectRatio = (float)originalImage.Width / originalImage.Height;
+
+            if (thumbWidth / (float)thumbHeight > aspectRatio)
             {
-                // Calculate aspect ratio
-                float aspectRatio = (float)originalImage.Width / originalImage.Height;
-                if (thumbWidth / (float)thumbHeight > aspectRatio)
-                {
-                    thumbWidth = (int)(thumbHeight * aspectRatio);
-                }
-                else
-                {
-                    thumbHeight = (int)(thumbWidth / aspectRatio);
-                }
-
-                // Create the thumbnail
-                Bitmap thumbnail = new Bitmap(thumbWidth, thumbHeight);
-                using (Graphics graphics = Graphics.FromImage(thumbnail))
-                {
-                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-
-                    // Draw the resized image onto the thumbnail
-                    graphics.DrawImage(originalImage, 0, 0, thumbWidth, thumbHeight);
-                }
-
-                return thumbnail;
+                thumbWidth = (int)(thumbHeight * aspectRatio);
             }
+            else
+            {
+                thumbHeight = (int)(thumbWidth / aspectRatio);
+            }
+
+            Bitmap thumbnail = new Bitmap(thumbWidth, thumbHeight);
+
+            using (Graphics graphics = Graphics.FromImage(thumbnail))
+            {
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+                graphics.DrawImage(originalImage, 0, 0, thumbWidth, thumbHeight);
+            }
+
+            return thumbnail;
         }
+
 
         // Method to shown loader while image is pulled
         private async Task LoadImageAsync(string imagePath)
         {
             try
             {
-
-                // Load image asynchronously
+                // Load and process the image off the UI thread
                 Image loadedImage = await Task.Run(() =>
                 {
-                    return CreateThumbnail(imagePath, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
+                    using (var original = Image.FromFile(imagePath))
+                    {
+                        return CreateThumbnailInternal(original, fileuploadPictureBox.Width, fileuploadPictureBox.Height);
+                    }
                 });
 
                 // Assign the image to the PictureBox on the UI thread
-                fileuploadPictureBox.Invoke((Action)(() =>
+                if (fileuploadPictureBox.InvokeRequired)
+                {
+                    fileuploadPictureBox.Invoke(() =>
+                    {
+                        fileuploadPictureBox.Image = loadedImage;
+                        fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBoxLoader.Visible = false;
+                    });
+                }
+                else
                 {
                     fileuploadPictureBox.Image = loadedImage;
                     fileuploadPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                    pictureBoxLoader.Visible = false; // Hide the loader
-                }));
+                    pictureBoxLoader.Visible = false;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading image: {ex.Message}", "Image Load Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                pictureBoxLoader.Visible = false; // Hide loader on error
+                pictureBoxLoader.Visible = false;
             }
         }
+
 
     }
 }

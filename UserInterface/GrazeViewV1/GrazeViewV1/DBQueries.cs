@@ -77,52 +77,56 @@ namespace GrazeViewV1
         }
 
         // Pull image from DB - take 2
-        public async Task<Bitmap> RetrieveImageFromDB(int imageIndex)
+        public async Task<(Bitmap, Bitmap)> RetrieveImagesFromDB(int imageIndex)
         {
-
             try
             {
                 using (OdbcConnection conn = new OdbcConnection(_connectionString))
                 {
-                    await conn.OpenAsync(); // Ensure async database connection
+                    await conn.OpenAsync();
 
-                    // Use TOP 1 for better performance (avoids OFFSET issues)
-                    string query = "SELECT ImageData FROM Images WHERE ImageID = ?";
+                    string query = "SELECT ImageData, HeatMapImage FROM Images WHERE ImageID = ?;";
 
                     using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("?", imageIndex);
-                        cmd.CommandTimeout = 120; // Increase timeout for large images
+                        cmd.CommandTimeout = 120;
 
-                        using (OdbcDataReader reader = (OdbcDataReader) cmd.ExecuteReader())
+                        using (OdbcDataReader reader = (OdbcDataReader)cmd.ExecuteReader())
                         {
                             if (!reader.Read())
                             {
                                 MessageBox.Show($"No image found at index {imageIndex}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return null;
+                                return (null, null);
                             }
 
-                            // Read image stream instead of loading full byte array
-                            using (MemoryStream ms = new MemoryStream())
+                            Bitmap imageData = null;
+                            Bitmap heatMap = null;
+
+                            if (!reader.IsDBNull(0))
                             {
-                                long length = reader.GetBytes(0, 0, null, 0, 0);
-                                byte[] buffer = new byte[length];
-                                reader.GetBytes(0, 0, buffer, 0, (int)length);
-
-                                //MessageBox.Show("Returning image at index: " + imageIndex);
-
-                                return new Bitmap(new MemoryStream(buffer));
+                                byte[] buffer = (byte[])reader[0];
+                                imageData = new Bitmap(new MemoryStream(buffer));
                             }
+
+                            if (!reader.IsDBNull(1))
+                            {
+                                byte[] buffer = (byte[])reader[1];
+                                heatMap = new Bitmap(new MemoryStream(buffer));
+                            }
+
+                            return (imageData, heatMap);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error retrieving image: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
+                MessageBox.Show($"Error retrieving images: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return (null, null);
             }
         }
+
 
         // Check db for duplicate upload - DONE
         public async Task<int> DuplicateImageCheck(string imagePath)
@@ -141,7 +145,7 @@ namespace GrazeViewV1
 
                 string imageName = Path.GetFileName(imagePath);
 
-                using (OdbcConnection conn = new OdbcConnection(_connectionString)) 
+                using (OdbcConnection conn = new OdbcConnection(_connectionString))
                 {
                     await conn.OpenAsync();
 
@@ -181,45 +185,53 @@ namespace GrazeViewV1
             return 2;
         }
 
-        // Push Image Data to DB - Need to adjust time it takes
-        public async Task UploadImageToDB(string imagePath)
-        {
 
+        // New Image push that pushes imagename, originalImage, and Heat map image
+        public async Task UploadImageToDB(string imageName, Bitmap originalImage, Bitmap heatmapImage)
+        {
             try
             {
-                if (!File.Exists(imagePath))
+                byte[] imageBytes;
+                byte[] heatmapBytes;
+
+                // Convert original image to byte array
+                using (var ms = new MemoryStream())
                 {
-                    MessageBox.Show($"Error: File not found - {imagePath}");
+                    originalImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    imageBytes = ms.ToArray();
                 }
 
-                string imageName = Path.GetFileName(imagePath);
+                // Convert heatmap image to byte array
+                using (var ms = new MemoryStream())
+                {
+                    heatmapImage.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+                    heatmapBytes = ms.ToArray();
+                }
 
                 using (OdbcConnection conn = new OdbcConnection(_connectionString))
                 {
                     await conn.OpenAsync();
 
-                    // Convert the image to a byte array
-                    byte[] imageBytes = await File.ReadAllBytesAsync(imagePath);
-
-                    // Insert image into the database
-                    string insertQuery = "INSERT INTO Images (ImageName, ImageData) VALUES (?, ?)";
+                    string insertQuery = "INSERT INTO Images (ImageName, ImageData, HeatMapImage) VALUES (?, ?, ?)";
                     using (OdbcCommand insertCmd = new OdbcCommand(insertQuery, conn))
                     {
                         insertCmd.Parameters.Add("?", OdbcType.VarChar, 255).Value = imageName;
-                        insertCmd.Parameters.Add("?", OdbcType.Image, imageBytes.Length).Value = imageBytes;
+                        insertCmd.Parameters.Add("?", OdbcType.VarBinary, imageBytes.Length).Value = imageBytes;
+                        insertCmd.Parameters.Add("?", OdbcType.VarBinary, heatmapBytes.Length).Value = heatmapBytes;
 
                         await insertCmd.ExecuteNonQueryAsync();
                     }
-
-                    //MessageBox.Show($"Uploaded: {imageName}");
                 }
+
+                // Optionally show success
+                //MessageBox.Show($"Uploaded {imageName}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Database error: {ex.Message}");
             }
-
         }
+
 
         // Push CSV Data to DB - Works
         public bool UploadCSVToDB(List<string> csvData)
@@ -293,7 +305,7 @@ namespace GrazeViewV1
                     try
                     {
                         // DELETE instead of TRUNCATE for better ODBC compatibility
-                        string deleteImagesQuery = "SET NOCOUNT ON; DELETE FROM Images; DBCC CHECKIDENT ('Images', RESEED, 0);";
+                        string deleteImagesQuery = "TRUNCATE TABLE Images";
 
                         using (var imageCommand = new OdbcCommand(deleteImagesQuery, _connection, transaction))
                         {
@@ -302,7 +314,7 @@ namespace GrazeViewV1
                         }
 
                         // Ensure CSVDB records are fully reset
-                        string deleteUploadsQuery = "SET NOCOUNT ON; DELETE FROM CSVDB; DBCC CHECKIDENT ('CSVDB', RESEED, 0);";
+                        string deleteUploadsQuery = "TRUNCATE TABLE CSVDB";
 
                         using (var uploadCommand = new OdbcCommand(deleteUploadsQuery, _connection, transaction))
                         {
@@ -333,7 +345,7 @@ namespace GrazeViewV1
         // Query for DataLibraryExpandedView
         public async Task<Dictionary<string, object>> GetRowByIndexAsync(int index)
         {
-            index--;
+
             try
             {
                 var result = new Dictionary<string, object>();
@@ -389,7 +401,7 @@ namespace GrazeViewV1
                             SheepBreed, 
                             Comments
                         FROM CSVDB
-                        WHERE ID = ?;"; 
+                        WHERE ID = ?;";
                     using (OdbcCommand cmd = new OdbcCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("?", index);
@@ -497,4 +509,3 @@ namespace GrazeViewV1
 
     }
 }
-    
