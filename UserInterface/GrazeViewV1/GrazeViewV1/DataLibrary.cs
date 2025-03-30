@@ -133,13 +133,11 @@ namespace GrazeViewV1
             if (selectedRows.Count < 1)
             {
                 MessageBox.Show("Please select 1 Upload to Preview.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                queryInProgress = false;
                 return;
             }
             else if (selectedRows.Count > 1)
             {
                 MessageBox.Show("Only one Upload may be selected at a time for Preview.", "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                queryInProgress = false;
                 return;
             }
             queryInProgress = true;
@@ -155,68 +153,44 @@ namespace GrazeViewV1
             //btn.Visible = false; // Hide the button
             btn.Text = "";
 
-            //Bitmap retrievedImage = null;
+            Bitmap retrievedImage = null;
 
             // Load the image in the background
-            (Bitmap originalImage, Bitmap heatmapImage) = await Task.Run(() =>
-                {
-                    DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
-                    return dbQueries.RetrieveImagesFromDB(rowIndex);
-                });
+                retrievedImage = await Task.Run(() =>
+                    {
+                        DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
+                        return dbQueries.RetrieveImageFromDB(rowIndex);
+                    });
 
-            // MessageBox.Show($"Image Dimensions: {retrievedImage.Width} x {retrievedImage.Height}");
+           // MessageBox.Show($"Image Dimensions: {retrievedImage.Width} x {retrievedImage.Height}");
 
-            // Hide the spinner and show the button again
-            loadingSpinner.Visible = false;
+                // Hide the spinner and show the button again
+                loadingSpinner.Visible = false;
                 //btn.Visible = true;
                 btn.Text = "Preview Selected Image";
 
-                if (originalImage == null)
+                if (retrievedImage == null)
                 {
-                    MessageBox.Show("No original image found for the selected index.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (heatmapImage == null)
-                {
-                    MessageBox.Show("No heat map image found for the selected index.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("No image available for the selected upload.", "Image Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Display the image in a new form
-                Form originalImagePreviewForm = new Form
+                Form imagePreviewForm = new Form
                 {
-                    Text = "Uploaded Image Preview",
+                    Text = "Image Preview",
                     Size = new Size(800, 600) // Adjust size as needed
                 };
 
-                PictureBox ogpictureBox = new PictureBox
+                PictureBox pictureBox = new PictureBox
                 {
-                    Image = originalImage,
+                    Image = retrievedImage,
                     SizeMode = PictureBoxSizeMode.Zoom,
                     Dock = DockStyle.Fill
                 };
-                originalImagePreviewForm.Controls.Add(ogpictureBox);
-                originalImagePreviewForm.StartPosition = FormStartPosition.Manual;
-                originalImagePreviewForm.Location = new Point(100, 100);
-                originalImagePreviewForm.Show(); // Show
 
-                // Display the image in a new form
-                Form heatImagePreviewForm = new Form
-                {
-                    Text = "Heat Map Preview",
-                    Size = new Size(800, 600) // Adjust size as needed
-                };
-
-                PictureBox heatpictureBox = new PictureBox
-                {
-                    Image = heatmapImage,
-                    SizeMode = PictureBoxSizeMode.Zoom,
-                    Dock = DockStyle.Fill
-                };
-                heatImagePreviewForm.Controls.Add(heatpictureBox);
-                heatImagePreviewForm.StartPosition = FormStartPosition.Manual;
-                heatImagePreviewForm.Location = new Point(originalImagePreviewForm.Location.X + originalImagePreviewForm.Width + 20, 100);
-                heatImagePreviewForm.Show(); // Show
+                imagePreviewForm.Controls.Add(pictureBox);
+                imagePreviewForm.ShowDialog(); // Show as a dialog
 
 
                 queryInProgress = false;

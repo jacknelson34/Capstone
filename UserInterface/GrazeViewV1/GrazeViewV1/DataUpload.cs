@@ -539,13 +539,17 @@ namespace GrazeViewV1
                 UploadTime = DateTime.Now,                     // Store the current time of upload
                 SheepBreed = sheepBreed,                       // Store the sheep breed (or N/A)
                 Comments = comments,                           // Store user comments (or N/A)
-                ImageFile = null,                        
-                HeatMap = null
+                ImageFile = uploadImage                        // Store image
             };
 
             // Add the new upload info to the GlobalData uploads list
             GlobalData.Uploads.Add(uploadInfo);
+
+
+            // Upload Imagefile to DB
             string imagePath = imageFilePath;
+            DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
+            Task uploadTask = Task.Run(()=> dbQueries.UploadImageToDB(imageFilePath));
 
 
             // checks to see if a file was uploaded to the picturebox
@@ -562,6 +566,11 @@ namespace GrazeViewV1
 
                     // Run ML on a new task to keep ML responsive
                     Task.Run (() => MLWork.MLMain(imagePath, loadingPage));
+
+                    this.Hide();
+
+                    // Wait on upload to DB to close page and end task
+                    await Task.WhenAll(uploadTask);
 
                     //MessageBox.Show("Image sent to MLWork for processing.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
@@ -592,6 +601,8 @@ namespace GrazeViewV1
                 uploadButton.Text = "Upload";
                 uploadLoader.Visible = false;
             }
+            dbQueries.Dispose();
+            queryInProgress = false;
         }
 
         // Method to clear picturebox

@@ -152,8 +152,7 @@ namespace GrazeViewV1
                 SampleLocation = row.ContainsKey("SampleLocation") && row["SampleLocation"] != null ? row["SampleLocation"].ToString() : "N/A",
                 SheepBreed = row.ContainsKey("SheepBreed") && row["SheepBreed"] != null ? row["SheepBreed"].ToString() : "N/A",
                 Comments = row.ContainsKey("Comments") && row["Comments"] != null ? row["Comments"].ToString() : "N/A",
-                ImageFile = null,
-                HeatMap = null
+                ImageFile = await _dbQueries.RetrieveImageFromDB(index) ?? new Bitmap(250, 250),
 
             };
 
