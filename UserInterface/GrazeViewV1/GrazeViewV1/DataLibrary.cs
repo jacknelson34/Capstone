@@ -159,8 +159,6 @@ namespace GrazeViewV1
                         DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
                         return dbQueries.RetrieveImageFromDB(rowIndex);
                     });
-                
-            MessageBox.Show($"Image Dimensions: {retrievedImage.Width} x {retrievedImage.Height}");
 
                 // Hide the spinner and show the button again
                 loadingSpinner.Visible = false;
