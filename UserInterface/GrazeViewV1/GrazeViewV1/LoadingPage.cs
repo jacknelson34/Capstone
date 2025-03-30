@@ -19,9 +19,6 @@ namespace GrazeViewV1
         private Image resultsImage;             // Initialize variable for the output image
         private TextBox statusUpdates;          // Initialize the textbox used to hold status updates from ML
         private TextBox percentageLoading;
-        private PictureBox sheep;
-        private System.Windows.Forms.Timer sheepTimer;
-        private int sheepSpeed;
 
         // Hold instances of other pages
         private MainPage _mainPage;             // Initialize held instance of mainPage
@@ -68,27 +65,6 @@ namespace GrazeViewV1
                 (this.ClientSize.Width / 2) - (loadingBar.Width / 2),
                 (this.ClientSize.Height / 2));                                      // Location for loadingBar
             this.Controls.Add(loadingBar);                                          // Add loadingBar control to page
-
-            // Sheep picturebox
-            sheep = new PictureBox();
-            sheep.Image = Properties.Resources.sheepGif;
-            sheep.SizeMode = PictureBoxSizeMode.StretchImage;
-            sheep.Name = "helpButton";
-            sheep.BackColor = Color.Transparent;
-            sheep.Size = new Size(50, 50);
-            sheep.Location = new Point((this.ClientSize.Width) - 100,
-                    (this.ClientSize.Height) - 60);
-            sheep.TabIndex = 4;
-            sheep.TabStop = false;
-            this.Controls.Add(sheep);
-
-            sheepSpeed = 1;
-
-            sheepTimer = new System.Windows.Forms.Timer();
-            sheepTimer.Interval = 20; // milliseconds - smaller = smoother
-            sheepTimer.Tick += SheepTimer_Tick;
-            sheepTimer.Start();
-
 
 
             // Initialize Text Box with status updates
@@ -222,17 +198,6 @@ namespace GrazeViewV1
             // Event handler for Form Close
             this.FormClosing += LoadingPage_Xout;
 
-        }
-
-        private void SheepTimer_Tick(object sender, EventArgs e)
-        {
-            sheep.Left -= sheepSpeed;
-
-            // When it goes off the left side, reset to the right
-            if (sheep.Right < 0)
-            {
-                sheep.Left = this.ClientSize.Width;
-            }
         }
 
         // Method to set progress bar max

@@ -123,8 +123,6 @@ namespace GrazeViewV1
             Button btn = sender as Button;
             if (btn == null) return;
 
-
-
             // Determine selected rows
             var selectedRows = dataGridView1.Rows.Cast<DataGridViewRow>()
                                                  .Where(row => Convert.ToBoolean(row.Cells[0].Value))
@@ -161,8 +159,8 @@ namespace GrazeViewV1
                         DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
                         return dbQueries.RetrieveImageFromDB(rowIndex);
                     });
-
-           // MessageBox.Show($"Image Dimensions: {retrievedImage.Width} x {retrievedImage.Height}");
+                
+            MessageBox.Show($"Image Dimensions: {retrievedImage.Width} x {retrievedImage.Height}");
 
                 // Hide the spinner and show the button again
                 loadingSpinner.Visible = false;
@@ -264,12 +262,12 @@ namespace GrazeViewV1
                 .ToList();
 
             // Debugging
-            
+            /*
             foreach (int index in selectedIndexes)
             {
                 MessageBox.Show($"Fetching row for index: {index}", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            
+            */
 
             if (!selectedIndexes.Any())
             {
