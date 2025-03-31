@@ -40,7 +40,7 @@
             SuspendLayout();
             resultsPagePanel.Visible = false;
             ClientSize = new Size(1280, 918);
-            MinimumSize = new Size(1280, 918);
+            MinimumSize = new Size(1400, 918);
             //
             // buttonPanel
             //
@@ -94,7 +94,7 @@
             exitButton.TabIndex = 0;
             exitButton.Text = "Return to Home";
             exitButton.UseVisualStyleBackColor = false;
-            exitButton.Click += returnButton_Click;
+            exitButton.Click += exitButton_Click;
             Controls.Add(exitButton);
             // 
             // returnToUploadButton

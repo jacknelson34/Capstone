@@ -62,7 +62,7 @@ namespace GrazeViewV1
             splashTimer.Tick += (s, e) =>
             {
                 splashText.SetRandomSplashText();
-                float splashFont = Math.Min(25, this.ClientSize.Width / 80f);
+                float splashFont = Math.Max(8f, (Math.Min(25, this.ClientSize.Width / 80f)));
                 splashText.Font = new Font("Arial", splashFont, FontStyle.Italic | FontStyle.Bold);
 
                 // Update the splash label's text to get accurate size

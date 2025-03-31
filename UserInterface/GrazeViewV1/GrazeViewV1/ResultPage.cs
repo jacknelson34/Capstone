@@ -86,7 +86,7 @@ namespace GrazeViewV1
             {
                 UploadInfo lastUpload = GlobalData.Uploads.Last();            // Get the most recent upload
                 uploadNameTextBox.Text = lastUpload.UploadName;               // Upload Name
-                dateUploadedTextBox.Text = lastUpload.UploadTime.ToString();  // Date Uploaded
+                dateUploadedTextBox.Text = lastUpload.UploadTime.ToString("d");  // Date Uploaded
 
                 // Check if sample datetime is N/A
                 if (lastUpload.SampleDate == "N/A" || lastUpload.SampleTime == "N/A")
@@ -136,6 +136,7 @@ namespace GrazeViewV1
                 MessageBox.Show("Results Error : ML Data is unavailable");
             }
 
+            ControlsResize();
             CenterPanel();
 
             // Event Handlers
@@ -212,7 +213,7 @@ namespace GrazeViewV1
             }
         }
 
-        private void returnButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
+        private void exitButton_Click(object? sender, EventArgs e)  // Method for returning to mainPage
         {
             IsNavigating = true;   // User is still using the app
 
@@ -280,7 +281,46 @@ namespace GrazeViewV1
         // Event handler used to call resizing methods
         private void ResultsPage_Resize(object? sender, EventArgs e)
         {
+            ControlsResize();
+
             CenterPanel();  // Call CenterPanel
+        }
+
+        private void ControlsResize()
+        {
+            if (this.ClientSize.Width < 100 || this.ClientSize.Height < 100)
+                return; // skip logic when minimized or too small
+
+            // === Resize Button Fonts & Sizes ===
+            int fontSize = Math.Max(10, (int)(this.ClientSize.Height * 0.013));
+            Font updatedFont = new Font("Times New Roman", fontSize, FontStyle.Regular, GraphicsUnit.Point, 0);
+
+            int buttonWidth = Math.Min(200, (int)(this.ClientSize.Width * 0.18));
+            int buttonHeight = Math.Min(85, (int)(this.ClientSize.Height * 0.08));
+
+            returnToUploadButton.Font = updatedFont;
+            dataViewButton.Font = updatedFont;
+            exitButton.Font = updatedFont;
+
+            returnToUploadButton.Size = new Size(buttonWidth, buttonHeight);
+            dataViewButton.Size = new Size(buttonWidth, buttonHeight);
+            exitButton.Size = new Size(buttonWidth, buttonHeight);
+
+            // === Center the Two Main Buttons ("Upload" and "Library") ===
+            int spacing = (int)(this.ClientSize.Width * 0.02);
+            int totalWidth = (buttonWidth * 2) + spacing;
+            int startX = (this.ClientSize.Width - totalWidth) / 2;
+            int bottomY = this.ClientSize.Height - buttonHeight - 20;
+
+            returnToUploadButton.Location = new Point(startX, bottomY);
+            dataViewButton.Location = new Point(startX + buttonWidth + spacing, bottomY);
+
+            // === Return to Home (bottom right) ===
+            int margin = 20;
+            exitButton.Location = new Point(
+                this.ClientSize.Width - exitButton.Width - margin,
+                this.ClientSize.Height - exitButton.Height - margin
+            );
         }
 
         // Method to handle resizing - keeps the results panel in the center and handles element repositioning
@@ -314,13 +354,16 @@ namespace GrazeViewV1
             originalImageBox.Location = new Point(startX, startY);
             heatmapImageBox.Location = new Point(startX + imageWidth + spacing, startY);
 
-            // Adjust UserOutputPanel
-            UserOutputPanel.Size = new Size((int)(originalImageBox.Width), 125); // 63% width
-            UserOutputPanel.Location = new Point(originalImageBox.Location.X, resultsPagePanel.Height - UserOutputPanel.Height); // Align bottom left
-
             // Adjust MLOutputPanel
             MLOutputPanel.Size = new Size((int)(heatmapImageBox.Width), 125); // 37% width
             MLOutputPanel.Location = new Point(heatmapImageBox.Location.X, UserOutputPanel.Location.Y); // Align to the right of UserOutputPanel
+
+            // Calculate width between originalImageBox and MLOutputPanel
+            int availableWidth = MLOutputPanel.Location.X - originalImageBox.Location.X;
+
+            // Adjust UserOutputPanel
+            UserOutputPanel.Size = new Size(availableWidth, 125); // 63% width
+            UserOutputPanel.Location = new Point(originalImageBox.Location.X, resultsPagePanel.Height - UserOutputPanel.Height); // Align bottom left
 
 
             this.Refresh(); // Refresh to apply changes
@@ -369,7 +412,7 @@ namespace GrazeViewV1
                 lastUpload.Comments  // Default comment field
             };
 
-            DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;");
+            DBQueries dbQueries = new DBQueries("Driver={ODBC Driver 18 for SQL Server};Server=sqldatabase404.database.windows.net;Database=404ImageDBsql;Uid=sql404admin;Pwd=sheepstool404();TrustServerCertificate=no;MultipleActiveResultSets=True;Connection Timeout=120");
             bool success = dbQueries.UploadCSVToDB(csvData);
 
             if (success)
