@@ -56,7 +56,7 @@
             // 
             resultsPagePanel.Anchor = AnchorStyles.None;
             resultsPagePanel.BorderStyle = BorderStyle.Fixed3D;
-            resultsPagePanel.BackColor = Color.White;
+            resultsPagePanel.BackColor = Color.LightGray;
             resultsPagePanel.Name = "resultsPagePanel";
             resultsPagePanel.Size = new Size((int)(this.ClientSize.Width * 0.637), (int)(this.ClientSize.Height * .708));
             resultsPagePanel.Location = new Point((this.ClientSize.Width / 2)-(resultsPagePanel.Width /2), (this.ClientSize.Height / 2)-(resultsPagePanel.Height / 2) - 100);
@@ -193,27 +193,41 @@
 
             // Create and add controls for each ML data field using seamless textboxes
             qufuLabel = CreateLabel(commonFont, "Qufu (%):", new Point(10, currentYPosition)); // Create a label for "Qufu"
+            qufuLabel.ForeColor = Color.Green;
             qufuTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Qufu"
             panel.Controls.Add(qufuLabel); // Add the label to the panel
             panel.Controls.Add(qufuTextBox); // Add the textbox to the panel
 
             currentYPosition += 30; // Increment vertical position for the next control
             erciLabel = CreateLabel(commonFont, "Erci (%):", new Point(10, currentYPosition)); // Create a label for "Erci"
+            erciLabel.ForeColor = Color.Red;
             erciTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Erci"
             panel.Controls.Add(erciLabel); // Add the label to the panel
             panel.Controls.Add(erciTextBox); // Add the textbox to the panel
 
             currentYPosition += 30; // Increment vertical position for the next control
             naleLabel = CreateLabel(commonFont, "Nale (%):", new Point(10, currentYPosition)); // Create a label for "Nale"
+            naleLabel.ForeColor = Color.Blue;
             naleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Nale"
             panel.Controls.Add(naleLabel); // Add the label to the panel
             panel.Controls.Add(naleTextBox); // Add the textbox to the panel
 
             currentYPosition += 30; // Increment vertical position for the next control
             bubbleLabel = CreateLabel(commonFont, "Bubbles (%):", new Point(10, currentYPosition)); // Create a label for "Bubbles"
+            bubbleLabel.ForeColor = Color.Yellow;
             bubbleTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 80, currentYPosition), textBoxWidth); // Create a seamless textbox for "Bubbles"
             panel.Controls.Add(bubbleLabel); // Add the label to the panel
             panel.Controls.Add(bubbleTextBox); // Add the textbox to the panel
+
+            bubbleTextBox.BackColor = resultsPagePanel.BackColor;
+            erciTextBox.BackColor = resultsPagePanel.BackColor;
+            naleTextBox.BackColor = resultsPagePanel.BackColor;
+            qufuTextBox.BackColor = resultsPagePanel.BackColor;
+
+            // Nale = blue
+            // Qufu = green
+            // Erci = red
+            // bubble = yellow
 
             /*currentYPosition += 30; // Increment vertical position for the next control
             stemLabel = CreateLabel(commonFont, "Stem (%):", new Point(10, currentYPosition)); // Create a label for "Stem"
@@ -263,6 +277,13 @@
             sheepBreedTextBox = CreateSeamlessTextBox(commonFont, new Point(labelWidth + 100, currentYPosition), textBoxWidth); // Create a seamless textbox for "Sheep Breed"
             panel.Controls.Add(sheepBreedLabel); // Add the label to the panel
             panel.Controls.Add(sheepBreedTextBox); // Add the textbox to the panel
+
+            sheepBreedTextBox.BackColor = resultsPagePanel.BackColor;
+            dateUploadedTextBox.BackColor = resultsPagePanel.BackColor;
+            dateOfSampleTextBox.BackColor = resultsPagePanel.BackColor;
+            sampleLocationTextBox.BackColor = resultsPagePanel.BackColor;
+            uploadNameTextBox.BackColor = resultsPagePanel.BackColor;
+
         }
 
         // Helper method to create seamless textboxes

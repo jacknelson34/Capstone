@@ -103,6 +103,16 @@ namespace GrazeViewV1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap HeatMapLegend {
+            get {
+                object obj = ResourceManager.GetObject("HeatMapLegend", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Help_Icon {
             get {
                 object obj = ResourceManager.GetObject("Help_Icon", resourceCulture);

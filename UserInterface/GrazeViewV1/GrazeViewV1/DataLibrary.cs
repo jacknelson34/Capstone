@@ -186,7 +186,7 @@ namespace GrazeViewV1
             Form originalImagePreviewForm = new Form
             {
                 Text = "Uploaded Image Preview",
-                Size = new Size(800, 600) // Adjust size as needed
+                Size = new Size(600, 450) // Adjust size as needed
             };
 
             PictureBox ogpictureBox = new PictureBox
@@ -204,7 +204,7 @@ namespace GrazeViewV1
             Form heatImagePreviewForm = new Form
             {
                 Text = "Heat Map Preview",
-                Size = new Size(800, 600) // Adjust size as needed
+                Size = new Size(600, 450) // Adjust size as needed
             };
 
             PictureBox heatpictureBox = new PictureBox
@@ -217,6 +217,23 @@ namespace GrazeViewV1
             heatImagePreviewForm.StartPosition = FormStartPosition.Manual;
             heatImagePreviewForm.Location = new Point(originalImagePreviewForm.Location.X + originalImagePreviewForm.Width + 20, 100);
             heatImagePreviewForm.Show(); // Show
+
+            PictureBox heatMapLegendImage = new PictureBox
+            {
+                Image = Properties.Resources.HeatMapLegend,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Dock = DockStyle.Fill
+            };
+
+            Form heatmapLegend = new Form
+            {
+                Text = "Heat Map Legend",
+                Size = new Size(200, 200)
+            };
+            heatmapLegend.Controls.Add(heatMapLegendImage);
+            heatmapLegend.StartPosition = FormStartPosition.Manual;
+            heatmapLegend.Location = new Point(heatImagePreviewForm.Location.X + heatImagePreviewForm.Width + 20, 100);
+            heatmapLegend.Show();
 
 
             queryInProgress = false;

@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\datalibrary.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibrary.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\resultpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\resultpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,60 +19,8 @@
       "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\resultpage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\mainpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibrary.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\datalibraryexpandedview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibraryexpandedview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\consistentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\consistentform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\mainpage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\mainpage.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\mlwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\mlwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\dbqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\dbqueries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\heatmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\heatmap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\loadingpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\loadingpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\datalibrary.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\datalibrary.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\installeractions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\installeractions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\grazeviewv1.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\grazeviewv1.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\dbsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\dbsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|c:\\users\\jackn\\onedrive\\documents\\github\\capstone\\userinterface\\grazeviewv1\\grazeviewv1\\properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
+      "RelativeMoniker": "D:0:0:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}|GrazeViewV1\\GrazeViewV1.csproj|solutionrelative:grazeviewv1\\properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -86,177 +42,58 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "Resources.resx",
+              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\Properties\\Resources.resx",
+              "RelativeDocumentMoniker": "GrazeViewV1\\Properties\\Resources.resx",
+              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\Properties\\Resources.resx",
+              "RelativeToolTip": "GrazeViewV1\\Properties\\Resources.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-04-03T00:52:58.158Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "ResultPage.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.Designer.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\ResultPage.Designer.cs",
               "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.Designer.cs",
               "RelativeToolTip": "GrazeViewV1\\ResultPage.Designer.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwCoAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAALMAAAAAAAAAAAAwwNgAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-31T18:00:53.256Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ResultPage.cs",
               "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\ResultPage.cs",
               "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ResultPage.cs",
               "RelativeToolTip": "GrazeViewV1\\ResultPage.cs",
-              "ViewState": "AgIAAHMBAAAAAAAAAAAwwJ0BAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAgwHsBAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-30T03:01:38.502Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "HeatMap.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\HeatMap.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\HeatMap.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\HeatMap.cs",
-              "RelativeToolTip": "GrazeViewV1\\HeatMap.cs",
-              "ViewState": "AgIAAFsAAAAAAAAAAAAgwIQAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T02:25:22.531Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "MLWork.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MLWork.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\MLWork.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MLWork.cs",
-              "RelativeToolTip": "GrazeViewV1\\MLWork.cs",
-              "ViewState": "AgIAAJEAAAAAAAAAAAAkwLIAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T02:24:42.323Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ConsistentForm.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ConsistentForm.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\ConsistentForm.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\ConsistentForm.cs",
-              "RelativeToolTip": "GrazeViewV1\\ConsistentForm.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAqwC8AAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T02:14:25.896Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "MainPage.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.Designer.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\MainPage.Designer.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.Designer.cs",
-              "RelativeToolTip": "GrazeViewV1\\MainPage.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T02:13:45.952Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DataLibraryExpandedView.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibraryExpandedView.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\DataLibraryExpandedView.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibraryExpandedView.cs",
-              "RelativeToolTip": "GrazeViewV1\\DataLibraryExpandedView.cs",
-              "ViewState": "AgIAAK0AAAAAAAAAAAAmwMcAAABgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T20:57:34.907Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "LoadingPage.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\LoadingPage.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\LoadingPage.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\LoadingPage.cs",
-              "RelativeToolTip": "GrazeViewV1\\LoadingPage.cs",
-              "ViewState": "AgIAAMMAAAAAAAAAAAASwNQAAABTAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T20:41:58.576Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "GrazeViewV1",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj",
-              "RelativeDocumentMoniker": "GrazeViewV1\\GrazeViewV1.csproj",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\GrazeViewV1.csproj",
-              "RelativeToolTip": "GrazeViewV1\\GrazeViewV1.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-03-21T19:21:27.204Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "InstallerActions.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\InstallerActions.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\InstallerActions.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\InstallerActions.cs",
-              "RelativeToolTip": "GrazeViewV1\\InstallerActions.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwCcAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-21T18:27:17.111Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainPage.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\MainPage.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\MainPage.cs",
-              "RelativeToolTip": "GrazeViewV1\\MainPage.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAwwEAAAABcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-20T17:21:45.071Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "DBSettings.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DBSettings.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\DBSettings.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DBSettings.cs",
-              "RelativeToolTip": "GrazeViewV1\\DBSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-20T17:01:20.29Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "DBQueries.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DBQueries.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\DBQueries.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DBQueries.cs",
-              "RelativeToolTip": "GrazeViewV1\\DBQueries.cs",
-              "ViewState": "AgIAAH8AAAAAAAAAAAAqwJEAAAA/AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-20T16:45:07.539Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "DataLibrary.cs",
               "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\DataLibrary.cs",
               "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.cs",
               "RelativeToolTip": "GrazeViewV1\\DataLibrary.cs",
-              "ViewState": "AgIAABQBAAAAAAAAAAAIwCIBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAUwOoAAABlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-20T16:43:38.838Z"
+              "WhenOpened": "2025-03-20T16:43:38.838Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 1,
               "Title": "DataLibrary.Designer.cs",
               "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\DataLibrary.Designer.cs",
               "RelativeDocumentMoniker": "GrazeViewV1\\DataLibrary.Designer.cs",
@@ -264,19 +101,8 @@
               "RelativeToolTip": "GrazeViewV1\\DataLibrary.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-20T16:43:35.396Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\Program.cs",
-              "RelativeDocumentMoniker": "GrazeViewV1\\Program.cs",
-              "ToolTip": "C:\\Users\\jackn\\OneDrive\\Documents\\GitHub\\Capstone\\UserInterface\\GrazeViewV1\\GrazeViewV1\\Program.cs",
-              "RelativeToolTip": "GrazeViewV1\\Program.cs",
-              "ViewState": "AgIAAAQBAAAAAAAAAAAIwGgAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-20T16:36:37.105Z"
+              "WhenOpened": "2025-03-20T16:43:35.396Z",
+              "EditorCaption": ""
             }
           ]
         }

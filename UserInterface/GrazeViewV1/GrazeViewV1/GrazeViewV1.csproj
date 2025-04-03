@@ -11,12 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Resources\**" />
-    <EmbeddedResource Remove="Resources\**" />
-    <None Remove="Resources\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Properties\Resources\BackgroundImage12.jpg" />
     <None Remove="Properties\Resources\BackgroundImage25.jpg" />
     <None Remove="Properties\Resources\BackgroundImage65.jpg" />
@@ -29,6 +23,7 @@
     <None Remove="Properties\Resources\SplashScreenLoader.gif" />
     <None Remove="Properties\Resources\uploadGif.gif" />
     <None Remove="Properties\Resources\uploadGif2.gif" />
+    <None Remove="Resources\LoadingGif.gif" />
   </ItemGroup>
 
   <ItemGroup>
@@ -88,6 +83,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>
