@@ -1,0 +1,17 @@
+C:\Users\jackn\Desktop\GrazeView1.0\GrazeViewV1.pdb
+C:\Users\jackn\Desktop\GrazeView1.0\InstallerActions.cs
+C:\Users\jackn\Desktop\GrazeView1.0\onnxruntime.dll
+C:\Users\jackn\Desktop\GrazeView1.0\onnxruntime_providers_shared.dll
+C:\Users\jackn\Desktop\GrazeView1.0\D3DCompiler_47_cor3.dll
+C:\Users\jackn\Desktop\GrazeView1.0\PenImc_cor3.dll
+C:\Users\jackn\Desktop\GrazeView1.0\PresentationNative_cor3.dll
+C:\Users\jackn\Desktop\GrazeView1.0\vcruntime140_cor3.dll
+C:\Users\jackn\Desktop\GrazeView1.0\wpfgfx_cor3.dll
+C:\Users\jackn\Desktop\GrazeView1.0\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\jackn\Desktop\GrazeView1.0\LdaNative.dll
+C:\Users\jackn\Desktop\GrazeView1.0\onnxruntime.lib
+C:\Users\jackn\Desktop\GrazeView1.0\onnxruntime_providers_shared.lib
+C:\Users\jackn\Desktop\GrazeView1.0\OpenCvSharpExtern.dll
+C:\Users\jackn\Desktop\GrazeView1.0\opencv_videoio_ffmpeg4100_64.dll
+C:\Users\jackn\Desktop\GrazeView1.0\sni.dll
+C:\Users\jackn\Desktop\GrazeView1.0\GrazeViewV1.exe

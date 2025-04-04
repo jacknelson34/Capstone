@@ -170,6 +170,9 @@ namespace GrazeViewV1
                             {
                                 // Cancel Upload
                                 return 1;
+                            }else if(doubleUploadCheck == DialogResult.Yes)
+                            {
+                                return 2;
                             }
 
                         }

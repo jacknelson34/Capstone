@@ -6,8 +6,19 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ApplicationIcon>Properties\Resources\GrazeViewLogo (1).ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>AnyCPU;x64</Platforms>
+    <StartupObject>GrazeViewV1.Program</StartupObject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>False</Optimize>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Optimize>False</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +35,10 @@
     <None Remove="Properties\Resources\uploadGif.gif" />
     <None Remove="Properties\Resources\uploadGif2.gif" />
     <None Remove="Resources\LoadingGif.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Properties\Resources\GrazeViewLogo (1).ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,7 +93,14 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<Content Include="bin\x64\Debug\net8.0-windows\ApplicationGlobalData\GrazeView_accur93_FinalModel.onnx">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+
+	<ItemGroup>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

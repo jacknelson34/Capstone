@@ -57,34 +57,34 @@ namespace GrazeViewV1
             this.Resize += MainPage_Resize; // Attach the resize event handler
             this.Load += MainPage_Load; // Attach the load event handler for initial adjustments
 
-            splashTimer = new System.Windows.Forms.Timer();
-            splashTimer.Interval = 3000;
-            splashTimer.Tick += (s, e) =>
-            {
-                splashText.SetRandomSplashText();
-                float splashFont = Math.Max(8f, (Math.Min(25, this.ClientSize.Width / 80f)));
-                splashText.Font = new Font("Arial", splashFont, FontStyle.Italic | FontStyle.Bold);
+        //    splashTimer = new System.Windows.Forms.Timer();
+        //    splashTimer.Interval = 3000;
+        //    splashTimer.Tick += (s, e) =>
+        //    {
+        //        splashText.SetRandomSplashText();
+        //        float splashFont = Math.Max(8f, (Math.Min(25, this.ClientSize.Width / 80f)));
+        //        splashText.Font = new Font("Arial", splashFont, FontStyle.Italic | FontStyle.Bold);
 
-                // Update the splash label's text to get accurate size
-                splashText.SetRandomSplashText();
+        //        // Update the splash label's text to get accurate size
+        //        splashText.SetRandomSplashText();
 
-                // Optionally: Manually resize based on text (in case AutoSize is not reliable)
-                using (Graphics g = splashText.CreateGraphics())
-                {
-                    SizeF textSize = g.MeasureString(splashText.Text, splashText.Font);
-                    splashText.Size = new Size(
-                                (int)(Math.Ceiling(textSize.Width * 2)),
-                                (int)(Math.Ceiling(textSize.Height * 2) * 5) + 20 // 🔼 increased from 4 to 5 and +10 to +20
-                            );
-                }
+        //        // Optionally: Manually resize based on text (in case AutoSize is not reliable)
+        //        using (Graphics g = splashText.CreateGraphics())
+        //        {
+        //            SizeF textSize = g.MeasureString(splashText.Text, splashText.Font);
+        //            splashText.Size = new Size(
+        //                        (int)(Math.Ceiling(textSize.Width * 2)),
+        //                        (int)(Math.Ceiling(textSize.Height * 2) * 5) + 20 // 🔼 increased from 4 to 5 and +10 to +20
+        //                    );
+        //        }
 
-                // Position splashText centered horizontally under mainLabel with some spacing
-                splashText.Location = new Point(
-                    (this.ClientSize.Width - splashText.Width) / 2,
-                    mainLabel.Bottom + 10
-                );
-            };
-            splashTimer.Start();
+        //        // Position splashText centered horizontally under mainLabel with some spacing
+        //        splashText.Location = new Point(
+        //            (this.ClientSize.Width - splashText.Width) / 2,
+        //            mainLabel.Bottom + 10
+        //        );
+        //    };
+        //    splashTimer.Start();
         }
 
         // Event handler for the Data Upload button click
@@ -149,27 +149,27 @@ namespace GrazeViewV1
 
             // Set splash label font size and style
             float splashFont = Math.Min(25, this.ClientSize.Width / 80f);
-            splashText.Font = new Font("Arial", splashFont, FontStyle.Italic | FontStyle.Bold);
+            //splashText.Font = new Font("Arial", splashFont, FontStyle.Italic | FontStyle.Bold);
 
             // Update the splash label's text to get accurate size
-            splashText.SetRandomSplashText();
+           // splashText.SetRandomSplashText();
 
             // Optionally: Manually resize based on text (in case AutoSize is not reliable)
-            using (Graphics g = splashText.CreateGraphics())
-            {
-                SizeF textSize = g.MeasureString(splashText.Text, splashText.Font);
-                splashText.Size = new Size(
-                                                (int)(Math.Ceiling(textSize.Width * 2)),
-                                                (int)(Math.Ceiling(textSize.Height * 2) * 5) + 20 // 🔼 increased from 4 to 5 and +10 to +20
-                                            );
+            //using (Graphics g = splashText.CreateGraphics())
+            //{
+            //    SizeF textSize = g.MeasureString(splashText.Text, splashText.Font);
+            //    splashText.Size = new Size(
+            //                                    (int)(Math.Ceiling(textSize.Width * 2)),
+            //                                    (int)(Math.Ceiling(textSize.Height * 2) * 5) + 20 // 🔼 increased from 4 to 5 and +10 to +20
+            //                                );
 
-            }
+            //}
 
-            // Position splashText centered horizontally under mainLabel with some spacing
-            splashText.Location = new Point(
-                (this.ClientSize.Width - splashText.Width) / 2,
-                mainLabel.Bottom + 10
-            );
+            //// Position splashText centered horizontally under mainLabel with some spacing
+            //splashText.Location = new Point(
+            //    (this.ClientSize.Width - splashText.Width) / 2,
+            //    mainLabel.Bottom + 10
+            //);
 
 
             dataUploadButton.Size = new Size((this.ClientSize.Width / 3), 100); // Set size of the DataUpload button

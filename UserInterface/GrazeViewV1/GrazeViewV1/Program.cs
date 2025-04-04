@@ -50,6 +50,9 @@ namespace GrazeViewV1
                 // Allow UI to refresh while loading
                 Application.DoEvents();
 
+                // Check for ML Model
+                EnsureAppDataFolderExists();
+
                 // Connect to database
                 dbConnections = new DBConnections(new DBSettings(
                     driver: "ODBC Driver 18 for SQL Server",
@@ -81,7 +84,6 @@ namespace GrazeViewV1
 
             // Ensure proper storage handling
             Application.ApplicationExit += (s, e) => Process.GetCurrentProcess().Kill();
-            EnsureAppDataFolderExists();
 
             // Start application
             Application.Run(new MainPage(dbQueries));
@@ -255,6 +257,8 @@ namespace GrazeViewV1
                 if (!File.Exists(onnxModelFile) && File.Exists(defaultModelPath))
                 {
                     File.Copy(defaultModelPath, onnxModelFile, true);
+                    MessageBox.Show("ONNX file copied to AppData.");
+
                 }
 
             }

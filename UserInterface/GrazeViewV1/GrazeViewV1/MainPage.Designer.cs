@@ -34,7 +34,7 @@ namespace GrazeViewV1
             dataViewerButton = new roundButton();
             dataUploadButton = new roundButton();
             helpButton = new PictureBox();
-            splashText = new SplashTextLabel();
+            //splashText = new SplashTextLabel();
             ((System.ComponentModel.ISupportInitialize)helpButton).BeginInit();
             SuspendLayout();
             // 
@@ -93,15 +93,15 @@ namespace GrazeViewV1
             // 
             // splashText
             // 
-            splashText.BackColor = Color.Transparent;
-            splashText.EnableWobble = true;
-            splashText.Font = new Font("Arial", 12F, FontStyle.Bold | FontStyle.Italic);
-            splashText.ForeColor = Color.Green;
-            splashText.Location = new Point(0, 0);
-            splashText.Name = "splashText";
-            splashText.Size = new Size(150, 150);
-            splashText.TabIndex = 3;
-            splashText.Text = "Natural lawnmowers since 9000 B.C.!";
+            //splashText.BackColor = Color.Transparent;
+            //splashText.EnableWobble = true;
+            //splashText.Font = new Font("Arial", 12F, FontStyle.Bold | FontStyle.Italic);
+            //splashText.ForeColor = Color.Green;
+            //splashText.Location = new Point(0, 0);
+            //splashText.Name = "splashText";
+            //splashText.Size = new Size(150, 150);
+            //splashText.TabIndex = 3;
+            //splashText.Text = "Natural lawnmowers since 9000 B.C.!";
             // 
             // MainPage
             // 
@@ -113,7 +113,7 @@ namespace GrazeViewV1
             Controls.Add(dataViewerButton);
             Controls.Add(dataUploadButton);
             Controls.Add(mainLabel);
-            Controls.Add(splashText);
+            //Controls.Add(splashText);
             Controls.Add(helpButton);
             DoubleBuffered = true;
             MinimumSize = new Size(600, 500);
@@ -130,6 +130,6 @@ namespace GrazeViewV1
         private roundButton dataUploadButton;
         private roundButton dataViewerButton;
         private PictureBox helpButton;
-        private SplashTextLabel splashText;
+        //private SplashTextLabel splashText;
     }
 }
