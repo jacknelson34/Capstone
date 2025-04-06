@@ -23,6 +23,9 @@ namespace GrazeViewV1
         private readonly DBQueries _dbQueries;
         private DBSettings _dbSettings;
         private readonly List<int> _selectedIndexes;
+        private List<Bitmap> panelBitmaps;
+        private int currentPrintIndex = 0;
+
 
         public DataLibraryExpandedView(MainPage mainPage, DBQueries dbQueries, List<int> selectedIndexes)
         {
@@ -352,51 +355,89 @@ namespace GrazeViewV1
         // Method to capture the screen for printing
         private void CaptureScreen()
         {
-            // Ensure the flowLayoutPanel exists and has content
-            if (flowLayoutPanel == null || flowLayoutPanel.Controls.Count == 0)
+            panelBitmaps = new List<Bitmap>();
+
+            foreach (Control control in flowLayoutPanel.Controls)
             {
-                MessageBox.Show("Nothing to capture for printing.");
-                return;
+                Bitmap panelImage = new Bitmap(control.Width, control.Height);
+                control.DrawToBitmap(panelImage, new Rectangle(0, 0, control.Width, control.Height));
+                panelBitmaps.Add(panelImage);
             }
 
-            // Get the full size of the flowLayoutPanel's content (not just visible area)
-            int totalWidth = flowLayoutPanel.DisplayRectangle.Width + SystemInformation.VerticalScrollBarWidth + 75;
-            int totalHeight = flowLayoutPanel.DisplayRectangle.Height;
-
-            // Create a bitmap to hold the entire content
-            memoryImage = new Bitmap(totalWidth, totalHeight);
-
-            using (Graphics memoryGraphics = Graphics.FromImage(memoryImage))
-            {
-                // Optional: Fill with a background color (e.g., white)
-                memoryGraphics.Clear(Color.White);
-
-                // Save the original flowLayoutPanel scroll position
-                Point originalScrollPosition = flowLayoutPanel.AutoScrollPosition;
-
-                // Temporarily set the scroll position to the top-left
-                flowLayoutPanel.AutoScrollPosition = new Point(0, 0);
-
-                // Render each control manually onto the bitmap
-                foreach (Control control in flowLayoutPanel.Controls)
-                {
-                    // Get the bounds of the control relative to the FlowLayoutPanel
-                    Rectangle controlBounds = control.Bounds;
-
-                    // Render the control onto the bitmap
-                    control.DrawToBitmap(memoryImage, controlBounds);
-                }
-
-                // Restore the original scroll position
-                flowLayoutPanel.AutoScrollPosition = originalScrollPosition;
-            }
+            currentPrintIndex = 0; // reset for new print job
         }
+
+
 
         // Event handler for PrintPage
-        private void printScreen_PrintPage(object sender, PrintPageEventArgs e) // Event handler for the PrintPage event
+        private void printScreen_PrintPage(object sender, PrintPageEventArgs e)
         {
-            e.Graphics.DrawImage(memoryImage, 0, 0); // Draw the captured image (memoryImage) at the top-left corner of the page
+            int panelsPerPage = 3;
+            int yOffset = e.MarginBounds.Top - 40; // Shift up a bit
+            int printedCount = 0;
+
+            // Reduce margins to make better use of space
+            Rectangle tightBounds = new Rectangle(
+                e.MarginBounds.Left - 30,   // move further left
+                e.MarginBounds.Top - 20,    // move higher up
+                e.MarginBounds.Width + 60,  // allow wider content
+                e.MarginBounds.Height + 40  // allow more height
+            );
+
+            // Set up fonts
+            Font titleFont = new Font("Times New Roman", 14, FontStyle.Bold);
+            Font subFont = new Font("Times New Roman", 10, FontStyle.Italic);
+
+            // Title
+            string headerText = "GrazeView AI – Texas A&M AgriLife";
+            SizeF headerSize = e.Graphics.MeasureString(headerText, titleFont);
+            float xHeader = tightBounds.Left + (tightBounds.Width - headerSize.Width) / 2;
+            float yHeader = yOffset;
+            e.Graphics.DrawString(headerText, titleFont, Brushes.Black, xHeader, yHeader);
+            yOffset += (int)headerSize.Height + 5;
+
+            // Page number
+            int currentPageNumber = (currentPrintIndex / panelsPerPage) + 1;
+            string pageText = $"Page {currentPageNumber}";
+            SizeF pageSize = e.Graphics.MeasureString(pageText, subFont);
+            float xPage = tightBounds.Left + (tightBounds.Width - pageSize.Width) / 2;
+            e.Graphics.DrawString(pageText, subFont, Brushes.Black, xPage, yOffset);
+            yOffset += (int)pageSize.Height + 3;
+
+            // Timestamp
+            string timestamp = "Printed: " + DateTime.Now.ToString("MMMM d, yyyy h:mm tt");
+            SizeF timeSize = e.Graphics.MeasureString(timestamp, subFont);
+            float xTime = tightBounds.Left + (tightBounds.Width - timeSize.Width) / 2;
+            e.Graphics.DrawString(timestamp, subFont, Brushes.Black, xTime, yOffset);
+            yOffset += (int)timeSize.Height + 10;
+
+
+            while (currentPrintIndex < panelBitmaps.Count && printedCount < panelsPerPage)
+            {
+                Bitmap bmp = panelBitmaps[currentPrintIndex];
+
+                float scale = Math.Min(
+                    (float)tightBounds.Width / bmp.Width,
+                    (float)(tightBounds.Height / panelsPerPage) / bmp.Height);
+
+                int scaledWidth = (int)(bmp.Width * scale);
+                int scaledHeight = (int)(bmp.Height * scale);
+
+                int xCentered = tightBounds.Left + (tightBounds.Width - scaledWidth) / 2;
+
+                e.Graphics.DrawImage(bmp, xCentered, yOffset, scaledWidth, scaledHeight);
+                yOffset += scaledHeight + 20; // slightly less vertical space
+
+                currentPrintIndex++;
+                printedCount++;
+            }
+
+            e.HasMorePages = currentPrintIndex < panelBitmaps.Count;
         }
+
+
+
+
 
         // Helper method to create a label with title and value for display in the panel
         private Label CreateInfoLabel(string title, string value) // Method to create a Label displaying a title and value

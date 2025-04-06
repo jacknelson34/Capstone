@@ -15,7 +15,13 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_46070C13BAC94A96A5AD9A52765D8B92"
+        "MsmKey" = "8:_17F302A8C9534559B80531B6E88C509F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_20D209A7734243CB99E44DD060783D37"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -27,19 +33,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_5ADE211366D747008D735A0286159EB5"
+        "MsmKey" = "8:_8A97B98929A249BEB8BFAEB4B591710F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B133AFC5F5634394BA831CB6B961DFE7"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B1B471DD269141578DBB21641FBE0901"
+        "MsmKey" = "8:_8E3C5A2E930141BAA18DF85C64BE53D5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -67,6 +67,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -83,6 +99,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -114,6 +138,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_17F302A8C9534559B80531B6E88C509F"
+            {
+            "SourcePath" = "8:D:\\Before HeatMap\\GrazeViewV1\\bin\\Debug\\net8.0-windows\\ApplicationGlobalData\\msodbcsql.msi"
+            "TargetName" = "8:msodbcsql.msi"
+            "Tag" = "8:"
+            "Folder" = "8:_49CCA1FC5F4C4405B6FB362687D384F8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4E2D6BEA010E464A81934C42687D068B"
             {
             "SourcePath" = "8:..\\GrazeViewV1\\bin\\Debug\\net8.0-windows\\ApplicationGlobalData\\Uploads.json"
@@ -134,12 +178,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5ADE211366D747008D735A0286159EB5"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8A97B98929A249BEB8BFAEB4B591710F"
             {
-            "SourcePath" = "8:..\\GrazeViewV1\\bin\\Debug\\net8.0-windows\\ApplicationGlobalData\\msodbcsql.msi"
-            "TargetName" = "8:msodbcsql.msi"
+            "SourcePath" = "8:D:\\Before HeatMap\\GrazeViewV1\\bin\\Debug\\net8.0-windows\\ApplicationGlobalData\\GrazeView_accur93_FinalModel.onnx"
+            "TargetName" = "8:GrazeView_accur93_FinalModel.onnx"
             "Tag" = "8:"
-            "Folder" = "8:_EAA6E3AC18344AC1BF22E63D210E4771"
+            "Folder" = "8:_49CCA1FC5F4C4405B6FB362687D384F8"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -154,10 +198,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B1B471DD269141578DBB21641FBE0901"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8E3C5A2E930141BAA18DF85C64BE53D5"
             {
-            "SourcePath" = "8:..\\GrazeViewV1\\bin\\Debug\\net8.0-windows\\ApplicationGlobalData\\GrazeView_accur93_FinalModel.onnx"
-            "TargetName" = "8:GrazeView_accur93_FinalModel.onnx"
+            "SourcePath" = "8:..\\GrazeViewV1\\Resources\\favicon.ico"
+            "TargetName" = "8:favicon.ico"
             "Tag" = "8:"
             "Folder" = "8:_EAA6E3AC18344AC1BF22E63D210E4771"
             "Condition" = "8:"
@@ -224,7 +268,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_EAA6E3AC18344AC1BF22E63D210E4771"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -232,6 +276,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_49CCA1FC5F4C4405B6FB362687D384F8"
+                    {
+                    "Name" = "8:ApplicationGlobalData"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_2D37B46346D34E078BF7E1FC5577B700"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -251,7 +306,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:GrazeViewSetup"
         "ProductCode" = "8:{0D2680EC-3CCC-4636-9CF1-5D5088F2F128}"
-        "PackageCode" = "8:{09888DBE-E9BE-4F67-B513-4BA3412AC803}"
+        "PackageCode" = "8:{33A8A7B3-C7F5-481B-A26D-D45C7504A91F}"
         "UpgradeCode" = "8:{1675414A-1E6F-4C7A-811C-20567985479E}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -259,12 +314,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:TAMUECEN"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:GrazeViewSetup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:GrazeViewFiles"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -272,7 +327,7 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:0"
+        "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
@@ -371,6 +426,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_92A749AC3D0F4CD9BECED82E0E4FE126"
+            {
+            "Name" = "8:GrazeView"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_20D209A7734243CB99E44DD060783D37"
+            "Folder" = "8:_595D4A9F10FC4D5CA5EE7633A5A72360"
+            "WorkingFolder" = "8:_EAA6E3AC18344AC1BF22E63D210E4771"
+            "Icon" = "8:_8E3C5A2E930141BAA18DF85C64BE53D5"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -770,12 +839,12 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_46070C13BAC94A96A5AD9A52765D8B92"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_20D209A7734243CB99E44DD060783D37"
             {
-            "SourcePath" = "8:..\\GrazeViewV1\\obj\\x64\\Debug\\net8.0-windows\\GrazeViewV1.dll"
+            "SourcePath" = "8:..\\GrazeViewV1\\obj\\x64\\Debug\\net8.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_595D4A9F10FC4D5CA5EE7633A5A72360"
+            "Folder" = "8:_EAA6E3AC18344AC1BF22E63D210E4771"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -791,7 +860,7 @@
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
+            "OutputGroupCanonicalName" = "8:PublishItems"
             "OutputProjectGuid" = "8:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
@@ -848,34 +917,6 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:DebugSymbolsProjectOutputGroup"
-            "OutputProjectGuid" = "8:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B133AFC5F5634394BA831CB6B961DFE7"
-            {
-            "SourcePath" = "8:..\\GrazeViewV1\\obj\\x64\\Debug\\net8.0-windows\\apphost.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_EAA6E3AC18344AC1BF22E63D210E4771"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:PublishItemsOutputGroup"
             "OutputProjectGuid" = "8:{D6F2537C-DF5D-4517-AB8D-5D223F098F0A}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
